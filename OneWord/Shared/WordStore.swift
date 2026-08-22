@@ -14,11 +14,21 @@ enum WordStore {
     // ponytail: bumped from "refreshOffset" to abandon stale test values (starts at 0 = today's word).
     nonisolated private static let key = "wordOffset"
 
+    nonisolated private static let pinKey = "pinnedTerm"
+
     nonisolated static var offset: Int {
         get { AppGroup.defaults.integer(forKey: key) }
         set { AppGroup.defaults.set(newValue, forKey: key) }
     }
 
-    nonisolated static func advance() { offset += 1 }
-    nonisolated static func reset() { offset = 0 }
+    /// A word you just captured, holding the day until you move off it. Cleared by
+    /// advance/reset so "New Word" isn't a no-op right after a catch; SavedWords
+    /// also expires it at midnight.
+    nonisolated static var pinnedTerm: String? {
+        get { AppGroup.defaults.string(forKey: pinKey) }
+        set { AppGroup.defaults.set(newValue, forKey: pinKey) }
+    }
+
+    nonisolated static func advance() { pinnedTerm = nil; offset += 1 }
+    nonisolated static func reset() { pinnedTerm = nil; offset = 0 }
 }

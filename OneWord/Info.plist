@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Only what GENERATE_INFOPLIST_FILE can't express. NSServices is an array of
+	     dicts, so there is no INFOPLIST_KEY_* equivalent — same reason the widget
+	     target carries its own plist for NSExtension. -->
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Save to One Word</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>saveWord</string>
+			<key>NSPortName</key>
+			<string>One Word</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>public.utf8-plain-text</string>
+				<string>NSStringPboardType</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

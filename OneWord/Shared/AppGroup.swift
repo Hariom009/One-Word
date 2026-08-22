@@ -8,8 +8,14 @@
 
 import Foundation
 
-enum AppGroup {
-    static let id = "group.com.hariom.swift.MacBee"
+// nonisolated: the target defaults to MainActor isolation, but the widget's timeline
+// provider reads this off the main actor. Marking the type is one place; the
+// alternative is a `nonisolated` on every caller in WordStore and SavedWords.
+nonisolated enum AppGroup {
+    // Must match BOTH targets' .entitlements exactly — a mismatch isn't an error,
+    // UserDefaults(suiteName:) just falls back to .standard and the app and widget
+    // silently stop sharing. Renamed with the app (was ...swift.MacBee).
+    static let id = "group.com.hariom.swift.oneword"
 
     /// Falls back to standard defaults if the App Group isn't provisioned yet
     /// (then the app + widget won't share — build once in Xcode to provision it).

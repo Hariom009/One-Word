@@ -22,12 +22,12 @@ struct WordTimelineProvider: AppIntentTimelineProvider {
 
     func placeholder(in context: Context) -> WordEntry {
         let words = WordProvider(resource: WidgetDictionary.words.resource)
-        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordStore.offset))
+        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordStore.offset, pinned: SavedWords.pinned))
     }
 
     func snapshot(for configuration: SelectDictionaryIntent, in context: Context) async -> WordEntry {
         let words = provider(for: configuration)
-        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordStore.offset))
+        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordStore.offset, pinned: SavedWords.pinned))
     }
 
     func timeline(for configuration: SelectDictionaryIntent, in context: Context) async -> Timeline<WordEntry> {
@@ -36,7 +36,9 @@ struct WordTimelineProvider: AppIntentTimelineProvider {
         let shift = WordStore.offset
         let entries = (0..<7).compactMap { dayOffset -> WordEntry? in
             guard let day = calendar.date(byAdding: .day, value: dayOffset, to: today) else { return nil }
-            return WordEntry(date: day, word: words.word(for: day, offset: shift))
+            // The pin is today's only — the rest of the week is the normal sequence.
+            return WordEntry(date: day, word: words.word(for: day, offset: shift,
+                                                         pinned: dayOffset == 0 ? SavedWords.pinned : nil))
         }
         return Timeline(entries: entries, policy: .atEnd)
     }

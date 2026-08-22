@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WidgetKit
+import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
 
 struct WordView: View {
     @State private var model = WordViewModel()
@@ -49,6 +50,10 @@ struct WordView: View {
             }
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active { model.refresh() }
+            }
+            // A catch can land while this window is already open and visible.
+            .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
+                model.refresh()
             }
     }
 }
