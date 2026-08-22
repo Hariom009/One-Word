@@ -8,6 +8,10 @@
 //
 
 import SwiftUI
+import AVFoundation
+
+// ponytail: one shared synth — a local would deallocate mid-utterance.
+@MainActor private let speaker = AVSpeechSynthesizer()
 
 struct WordDetail: View {
     let word: Word
@@ -59,6 +63,20 @@ struct WordDetail: View {
         }
         .scrollContentBackground(.hidden)
         .background(t.background)
+        // in WordDetail, not WordView, so the list's detail screen gets it too
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
+                    let utterance = AVSpeechUtterance(string: word.term)
+                    utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                    speaker.speak(utterance)
+                } label: {
+                    Label("Pronounce", systemImage: "speaker.wave.2")
+                }
+                .help("Pronounce \(word.term)")
+            }
+        }
     }
 
     private func dateLine(_ t: Theme) -> some View {

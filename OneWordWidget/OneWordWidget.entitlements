@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.hariom.swift.MacBee</string>
+		<string>group.com.hariom.swift.oneword</string>
 	</array>
 </dict>
 </plist>

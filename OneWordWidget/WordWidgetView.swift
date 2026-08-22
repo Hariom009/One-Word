@@ -2,10 +2,9 @@
 //  WordWidgetView.swift
 //  OneWordWidget
 //
-//  Word-of-the-day card, redesigned from the "Word of the Day Widget" Claude
-//  Design spec: warm paper (light) / soft-dark card, honey/ember accent, uppercase
-//  part of speech, an accent rule beside the Devanagari meaning, and — on Large —
-//  an italic example under a hairline. Content grows with the family:
+//  Word-of-the-day card, monochrome: a pure white (light) / pure black (dark)
+//  container with the system label hierarchy for everything on it — no palette,
+//  no accent. Content grows with the family:
 //    small  — headword · pos · hindi
 //    medium — + accent rule + definition (3 lines)
 //    large  — + bigger type + example under a hairline
@@ -21,70 +20,23 @@ import SwiftUI
 import WidgetKit
 import AppIntents
 
-// MARK: - Palette (from the design spec; local to the widget so the app's Theme is untouched)
-
-private struct WPalette {
-    let card: Color        // container background
-    let accent: Color      // headword + accent rule
-    let ink: Color         // hindi
-    let pos: Color         // part of speech
-    let body: Color        // definition
-    let example: Color
-    let refresh: Color      // refresh glyph tint
-    let rule: Color         // accent rule fill (accent, dimmed)
-    let hairline: Color     // large divider above the example
-
-    static let light = WPalette(
-        card:    Color(hex: 0xF7F2E7),
-        accent:  Color(hex: 0xB4771A),
-        ink:     Color(hex: 0x221E19),
-        pos:     Color(hex: 0x9A9184),
-        body:    Color(hex: 0x5F594E),
-        example: Color(hex: 0x8A8375),
-        refresh: Color(hex: 0xB8AF9E),
-        rule:    Color(hex: 0xB4771A).opacity(0.50),
-        hairline: Color(hex: 0x221E19).opacity(0.09)
-    )
-    static let dark = WPalette(
-        card:    Color(hex: 0x1A1815),
-        accent:  Color(hex: 0xE4685C),
-        ink:     Color(hex: 0xF0E9DC),
-        pos:     Color(hex: 0x7C7466),
-        body:    Color(hex: 0xA8A093),
-        example: Color(hex: 0x7C7466),
-        refresh: Color(hex: 0x5C564B),
-        rule:    Color(hex: 0xE4685C).opacity(0.55),
-        hairline: Color(hex: 0xF0E9DC).opacity(0.11)
-    )
-    static func of(_ s: ColorScheme) -> WPalette { s == .dark ? .dark : .light }
-}
-
-// MARK: - Paper unwrap
-
-/// The card content folded shut along its top edge, like a note not yet opened.
-private struct PaperFold: ViewModifier {
-    let folded: Bool
-    func body(content: Content) -> some View {
-        content
-            .rotation3DEffect(.degrees(folded ? -74 : 0), axis: (x: 1, y: 0, z: 0),
-                              anchor: .top, perspective: 0.55)
-            .scaleEffect(y: folded ? 0.88 : 1, anchor: .top)
-            .opacity(folded ? 0 : 1)
-    }
-}
-
 private extension AnyTransition {
-    /// New word unfolds from the top edge while the old one fades — paper being opened.
-    /// Runs whenever the entry's word changes: daily rollover or the refresh button.
+    /// One line of the card arriving. `rank` 0 is the headword, and each line below it
+    /// starts a little later and travels a little less, so the card uncovers downward:
+    /// headword → part of speech → meaning → definition → example.
     ///
-    /// ponytail: one fold on the whole content block. Widgets get no per-frame
-    /// animation (`TimelineView(.animation)` is unavailable), so crumple/fibre
-    /// effects are out; stagger the lines with delayed transitions only if the
-    /// single fold reads too flat.
-    static var paperUnwrap: AnyTransition {
-        .asymmetric(
-            insertion: .modifier(active: PaperFold(folded: true), identity: PaperFold(folded: false)),
-            removal: .opacity
+    /// ponytail: a stagger rather than anything fancier, and that is a platform limit.
+    /// WidgetKit renders out of process and animates only what DIFFERS between two
+    /// consecutive entry snapshots — so a covering/uncovering element, invisible in
+    /// both snapshots, is never interpolated and its transition is dropped in full.
+    /// A built-in transition on the text DOES animate, because the text genuinely
+    /// differs between snapshots — which is what this uses.
+    static func line(_ rank: Int) -> AnyTransition {
+        let lift = 15 - CGFloat(rank) * 2.2
+        return .asymmetric(
+            insertion: .offset(y: -lift).combined(with: .opacity)
+                .animation(.easeOut(duration: 0.42).delay(Double(rank) * 0.07)),
+            removal: .opacity.animation(.easeIn(duration: 0.16))
         )
     }
 }
@@ -97,108 +49,131 @@ struct WordWidgetView: View {
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
-        let p = WPalette.of(scheme)
         let w = entry.word
-        Group {
-            switch family {
-            case .systemSmall: small(w, p)
-            case .systemLarge: large(w, p)
-            default:           medium(w, p)   // .systemMedium
-            }
-        }
-        .id(w.term)                      // new word = new identity, so the transition fires
-        .transition(.paperUnwrap)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .containerBackground(p.card, for: .widget)
-    }
-
-    // MARK: Shared header — headword + part of speech, refresh top-right
-
-    @ViewBuilder
-    private func header(_ w: Word, _ p: WPalette,
-                        headword: CGFloat, hwWeight: Font.Weight, hwTracking: CGFloat,
-                        posGap: CGFloat, pos: CGFloat, posTracking: CGFloat,
-                        glyph: CGFloat, hit: CGFloat) -> some View {
-        // Refresh is a top-trailing overlay (not an HStack sibling) so the headword
-        // scales against a *definite* width. Next to a greedy Spacer it would instead
-        // be handed its full ideal width and truncate rather than shrink.
         ZStack(alignment: .topTrailing) {
-            VStack(alignment: .leading, spacing: posGap) {
-                Text(w.term)
-                    .font(.serif(headword, hwWeight))
-                    .tracking(hwTracking)
-                    .foregroundStyle(p.accent)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.4)   // long headwords (e.g. "hypercalcaemia") shrink to fit, never truncate
-                Text(w.partOfSpeech.uppercased())
-                    .font(.system(size: pos, weight: .medium))
-                    .tracking(posTracking)
-                    .foregroundStyle(p.pos)
-                    .lineLimit(1)
+            // No .id/.transition on the container: each line carries its own, so they
+            // arrive in sequence rather than the whole card swapping at once.
+            Group {
+                switch family {
+                case .systemSmall: small(w)
+                case .systemLarge: large(w)
+                default:           medium(w)   // .systemMedium
+                }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.trailing, hit + 6)   // reserve room for the refresh glyph
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
-            Button(intent: RefreshWordIntent()) {
-                Image(systemName: "arrow.clockwise")
-                    .font(.system(size: glyph, weight: .regular))
-                    .foregroundStyle(p.refresh)
-                    .frame(width: hit, height: hit)
-                    .contentShape(Rectangle())   // ponytail: tap area = glyph frame; 44pt would overlap headword
-            }
-            .buttonStyle(.plain)
+            refresh()                        // drawn last, never moves
+        }
+        .containerBackground(scheme == .dark ? .black : .white, for: .widget)
+    }
+
+    // MARK: Refresh — outside the reveal, so it never moves
+
+    /// Refresh glyph size / tap frame / card inset.
+    private var metrics: (glyph: CGFloat, hit: CGFloat, pad: CGFloat) {
+        switch family {
+        case .systemSmall: return (14, 20, 16)
+        case .systemLarge: return (17, 26, 26)
+        default:           return (15, 22, 17)
         }
     }
 
-    // MARK: Accent rule + Hindi (medium & large)
+    private func refresh() -> some View {
+        let m = metrics
+        return Button(intent: RefreshWordIntent()) {
+            Image(systemName: "arrow.clockwise")
+                .font(.system(size: m.glyph, weight: .regular))
+                .foregroundStyle(.tertiary)
+                .frame(width: m.hit, height: m.hit)
+                .contentShape(Rectangle())   // ponytail: tap area = glyph frame; 44pt would overlap headword
+        }
+        .buttonStyle(.plain)
+        .padding(.top, m.pad)
+        .padding(.trailing, m.pad)
+    }
+
+    // MARK: Shared header — headword + part of speech
 
     @ViewBuilder
-    private func ruledHindi(_ w: Word, _ p: WPalette, size: CGFloat, gap: CGFloat, lines: Int) -> some View {
+    private func header(_ w: Word,
+                        headword: CGFloat, hwWeight: Font.Weight, hwTracking: CGFloat,
+                        posGap: CGFloat, pos: CGFloat, posTracking: CGFloat) -> some View {
+        VStack(alignment: .leading, spacing: posGap) {
+            Text(w.term)
+                .font(.serif(headword, hwWeight))
+                .tracking(hwTracking)
+                .foregroundStyle(.primary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.4)   // long headwords (e.g. "hypercalcaemia") shrink to fit, never truncate
+                .id("hw-\(w.term)")
+                .transition(.line(0))
+            Text(w.partOfSpeech.uppercased())
+                .font(.system(size: pos, weight: .medium))
+                .tracking(posTracking)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .id("pos-\(w.term)")
+                .transition(.line(1))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.trailing, metrics.hit + 6)   // reserve room for the refresh glyph
+    }
+
+    // MARK: Rule + Hindi (medium & large)
+
+    @ViewBuilder
+    private func ruledHindi(_ w: Word, size: CGFloat, gap: CGFloat, lines: Int) -> some View {
         HStack(alignment: .top, spacing: gap) {
-            RoundedRectangle(cornerRadius: 1).fill(p.rule).frame(width: 2)
+            RoundedRectangle(cornerRadius: 1).fill(.tertiary).frame(width: 2)
             Text(w.hindi)
                 .font(.system(size: size))
                 .lineSpacing(2)
-                .foregroundStyle(p.ink)
+                .foregroundStyle(.primary)
                 .lineLimit(lines)
                 .minimumScaleFactor(0.55)   // Hindi is sentence-length; shrink to fill its lines rather than truncate
         }
         .fixedSize(horizontal: false, vertical: true)   // rule matches the Hindi's height
+        .id("hi-\(w.term)")
+        .transition(.line(2))
     }
 
     // MARK: Small — headword · pos · hindi (no definition/rule/example)
 
-    private func small(_ w: Word, _ p: WPalette) -> some View {
+    private func small(_ w: Word) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            header(w, p, headword: 23, hwWeight: .medium, hwTracking: -0.2,
-                   posGap: 5, pos: 9.5, posTracking: 1.1, glyph: 14, hit: 20)
+            header(w, headword: 23, hwWeight: .medium, hwTracking: -0.2,
+                   posGap: 5, pos: 9.5, posTracking: 1.1)
             Spacer(minLength: 8)
             Text(w.hindi)
                 .font(.system(size: 15))
                 .lineSpacing(2)
-                .foregroundStyle(p.ink)
+                .foregroundStyle(.primary)
                 .lineLimit(5)
                 .minimumScaleFactor(0.55)
+                .id("hi-\(w.term)")
+                .transition(.line(2))
         }
         .padding(16)
     }
 
-    // MARK: Medium — + accent rule + definition
+    // MARK: Medium — + rule + definition
 
-    private func medium(_ w: Word, _ p: WPalette) -> some View {
+    private func medium(_ w: Word) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            header(w, p, headword: 26, hwWeight: .medium, hwTracking: -0.3,
-                   posGap: 6, pos: 10, posTracking: 1.2, glyph: 15, hit: 22)
+            header(w, headword: 26, hwWeight: .medium, hwTracking: -0.3,
+                   posGap: 6, pos: 10, posTracking: 1.2)
             Spacer(minLength: 6)
             VStack(alignment: .leading, spacing: 8) {
-                ruledHindi(w, p, size: 15, gap: 12, lines: 2)
+                ruledHindi(w, size: 15, gap: 12, lines: 2)
                 if !w.definition.isEmpty {
                     Text(w.definition)
                         .font(.system(size: 12))
                         .lineSpacing(2)
-                        .foregroundStyle(p.body)
+                        .foregroundStyle(.secondary)
                         .lineLimit(3)
                         .minimumScaleFactor(0.7)
+                        .id("def-\(w.term)")
+                        .transition(.line(3))
                 }
             }
         }
@@ -207,31 +182,35 @@ struct WordWidgetView: View {
 
     // MARK: Large — + bigger type + example under a hairline
 
-    private func large(_ w: Word, _ p: WPalette) -> some View {
+    private func large(_ w: Word) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 18) {
-                header(w, p, headword: 40, hwWeight: .regular, hwTracking: -0.6,
-                       posGap: 9, pos: 10.5, posTracking: 1.4, glyph: 17, hit: 26)
-                ruledHindi(w, p, size: 20, gap: 16, lines: 4)
+                header(w, headword: 40, hwWeight: .regular, hwTracking: -0.6,
+                       posGap: 9, pos: 10.5, posTracking: 1.4)
+                ruledHindi(w, size: 20, gap: 16, lines: 4)
                 if !w.definition.isEmpty {
                     Text(w.definition)
                         .font(.system(size: 14))
                         .lineSpacing(3)
-                        .foregroundStyle(p.body)
+                        .foregroundStyle(.secondary)
                         .lineLimit(5)
                         .minimumScaleFactor(0.7)
+                        .id("def-\(w.term)")
+                        .transition(.line(3))
                 }
             }
             Spacer(minLength: 12)
             if !w.example.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
-                    Rectangle().fill(p.hairline).frame(height: 1)
+                    Rectangle().fill(.quaternary).frame(height: 1)
                     Text("“\(w.example)”")
                         .font(.serif(14).italic())
                         .lineSpacing(2)
-                        .foregroundStyle(p.example)
+                        .foregroundStyle(.secondary)
                         .lineLimit(2)
                         .minimumScaleFactor(0.8)
+                        .id("ex-\(w.term)")
+                        .transition(.line(4))
                 }
             }
         }

@@ -20,7 +20,7 @@ final class WordViewModel {
         let provider = WordProvider(resource: wordbook.id)
         self.wordbook = wordbook
         self.provider = provider
-        self.word = provider.word(for: Date(), offset: WordStore.offset)
+        self.word = provider.word(for: Date(), offset: WordStore.offset, pinned: SavedWords.pinned)
     }
 
     /// Switch dictionaries and show that dictionary's own word of the day (offset reset).
@@ -29,17 +29,17 @@ final class WordViewModel {
         self.wordbook = wordbook
         self.provider = WordProvider(resource: wordbook.id)
         WordStore.reset()
-        word = provider.word(for: date, offset: WordStore.offset)
+        word = provider.word(for: date, offset: WordStore.offset, pinned: SavedWords.pinned)
     }
 
     /// Re-pick for the given day (app became active) — reflects the shared offset.
     func refresh(for date: Date = Date()) {
-        word = provider.word(for: date, offset: WordStore.offset)
+        word = provider.word(for: date, offset: WordStore.offset, pinned: SavedWords.pinned)
     }
 
     /// Advance to the next word — shared with the widget, sequential not random.
     func shuffle(for date: Date = Date()) {
         WordStore.advance()
-        word = provider.word(for: date, offset: WordStore.offset)
+        word = provider.word(for: date, offset: WordStore.offset, pinned: SavedWords.pinned)
     }
 }

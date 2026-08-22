@@ -71,8 +71,9 @@ struct SettingsView: View {
     }
 }
 
-/// A rectangular book cover: color board, a spine stripe down the left, the
-/// dictionary's symbol and title. Lifts and gains an accent ring when selected.
+/// A rectangular book cover: gray board, a spine stripe down the left, the
+/// dictionary's symbol and title. Lifts and gains a white ring when selected —
+/// white, not the accent, because every cover is a dark gray.
 private struct BookCover: View {
     let book: Wordbook
     let selected: Bool
@@ -101,13 +102,13 @@ private struct BookCover: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .strokeBorder(selected ? Color.accentColor : .clear, lineWidth: 3)
+                .strokeBorder(selected ? Color.white : .clear, lineWidth: 3)
         )
         .overlay(alignment: .topTrailing) {
             if selected {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 20))
-                    .foregroundStyle(.white, Color.accentColor)
+                    .foregroundStyle(.black, .white)
                     .padding(8)
             }
         }
