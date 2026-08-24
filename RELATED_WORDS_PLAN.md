@@ -68,8 +68,10 @@ and reverts together.
 `WordDetail`), all nine dictionaries including runtime-captured "My Words", the index +
 ranking, one check script.
 
-**Out of scope:** the widget (memory ceiling — see brainstorm §5); cross-dictionary results;
-any disk cache.
+**Out of scope:** the widget (memory ceiling — see brainstorm §5); cross-dictionary results
+(operator-confirmed 2026-08-24: curated books stay pure; if the boxless 20-entry books ever
+feel bad, the upgrade is a size-gated fallback that borrows from Everyday for those three
+books only); any disk cache.
 
 ## 3. Architecture fit
 
@@ -337,8 +339,9 @@ step 3 exists to stop someone "simplifying" it away later.
 1. ~~List detail screen too?~~ **Resolved: full chain.** The box renders on every `WordDetail`
    at any depth. This is what moved the index into the environment, and it removed the
    `WordViewModel` changes r1 needed.
-2. **Three results, or five?** Planned at three. Five makes the box a real detour; the code
-   difference is one constant.
+2. ~~Three results, or five?~~ **Resolved: three, floor-trimmed.** A hard 1–2 was considered
+   and rejected — the 0.55 floor already shrinks the box adaptively, and fewer slots make a
+   single off result louder, not quieter.
 3. **Same part of speech only?** Not planned. It would tighten `warm` toward adjectives, but
    thins the pool badly in the 20-entry books. Cheap to add later — one predicate.
 4. **Index build UX:** background fade-in, per your call, with the ceiling recorded in a

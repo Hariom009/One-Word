@@ -14,12 +14,12 @@
 		454D75AFB332E44669580C25 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44AE8128AEAEF5A8205EEF86 /* Cocoa.framework */; };
 		4D6488A088DDD6EF3A0E5785 /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = 55C811B3A327A36356E4F0A2 /* words.json */; };
 		51D1930D2882FFBC14111DE0 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9090519E3AF740D8B3721FE /* Word.swift */; };
+		5A17D0C3E4B8419DA07C1E22 /* startup.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B9E1F52D8408BB6A45D01 /* startup.json */; };
 		92E2AB170B5A8261678553DE /* WordProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FFB551199DA0B818E57D55 /* WordProvider.swift */; };
 		A546D10CC8A6C1B69CEC2FEF /* philosophy.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B567267BBFDED8FB15FC6DF /* philosophy.json */; };
 		A687D06EAAA2104944770B53 /* WordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF289F3457ECA946401C67 /* WordStore.swift */; };
 		A7B255858D4DE82417020018 /* WordEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA7CFBB6598FD5C51F519F /* WordEntry.swift */; };
 		B56FD0A5D31F445CAE847B9D /* curiosities.json in Resources */ = {isa = PBXBuildFile; fileRef = B399C15A3AE14EEE9A87B856 /* curiosities.json */; };
-		5A17D0C3E4B8419DA07C1E22 /* startup.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B9E1F52D8408BB6A45D01 /* startup.json */; };
 		B60F263C0E653908221F11BF /* OneWordWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 976D178E0321C571C1805FED /* OneWordWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B8E2AAC8E1D188DBCA2275F8 /* medical.json in Resources */ = {isa = PBXBuildFile; fileRef = D9A0BA709520018717D6301B /* medical.json */; };
 		C5AB0CCFF565F10B96E1CA8F /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F21027AD3F1A04808DD5036 /* AppGroup.swift */; };
@@ -66,13 +66,13 @@
 		6E911C1375108796596E7A0B /* WordWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordWidget.swift; path = OneWordWidget/WordWidget.swift; sourceTree = "<group>"; };
 		6F21027AD3F1A04808DD5036 /* AppGroup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppGroup.swift; path = OneWord/Shared/AppGroup.swift; sourceTree = "<group>"; };
 		6FFA7CFBB6598FD5C51F519F /* WordEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordEntry.swift; path = OneWordWidget/WordEntry.swift; sourceTree = "<group>"; };
+		7C3B9E1F52D8408BB6A45D01 /* startup.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = startup.json; path = OneWord/Shared/startup.json; sourceTree = "<group>"; };
 		976D178E0321C571C1805FED /* OneWordWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneWordWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		983BD001F6B3181E50330BCB /* RefreshWordIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RefreshWordIntent.swift; path = OneWordWidget/RefreshWordIntent.swift; sourceTree = "<group>"; };
 		A09D9551D935D59C10E8C312 /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = OneWord/Shared/Theme.swift; sourceTree = "<group>"; };
 		B2139C626E6D2A9B6EC0D8A2 /* SavedWords.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SavedWords.swift; path = OneWord/Shared/SavedWords.swift; sourceTree = "<group>"; };
 		B23BBFBDE3CE4671C3E12906 /* WordTimelineProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordTimelineProvider.swift; path = OneWordWidget/WordTimelineProvider.swift; sourceTree = "<group>"; };
 		B399C15A3AE14EEE9A87B856 /* curiosities.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = curiosities.json; path = OneWord/Shared/curiosities.json; sourceTree = "<group>"; };
-		7C3B9E1F52D8408BB6A45D01 /* startup.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = startup.json; path = OneWord/Shared/startup.json; sourceTree = "<group>"; };
 		BFCC5B563011545500C0FE1F /* One Word.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One Word.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CF289F3457ECA946401C67 /* WordStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordStore.swift; path = OneWord/Shared/WordStore.swift; sourceTree = "<group>"; };
 		D9090519E3AF740D8B3721FE /* Word.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Word.swift; path = OneWord/Shared/Word.swift; sourceTree = "<group>"; };

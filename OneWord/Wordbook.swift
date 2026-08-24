@@ -5,6 +5,8 @@
 //  A selectable dictionary (word set). One today; more later — add an entry here
 //  plus its bundled `<id>.json` and it shows up in the picker. Named `Wordbook`
 //  to avoid clashing with Swift's `Dictionary`.
+//  ponytail: covers are the only colored surface — the reading UI stays monochrome.
+//  Keep every cover dark (L* low) so the white title/symbol stays legible.
 //
 
 import SwiftUI
@@ -12,19 +14,19 @@ import SwiftUI
 struct Wordbook: Identifiable, Hashable {
     let id: String       // also the bundled JSON resource name (`<id>.json`)
     let name: String     // shown on the book cover
-    let cover: UInt      // book cover gray (hex) — a ramp, so covers stay tellable apart
+    let cover: UInt      // book cover (hex) — a muted hue each, so covers stay tellable apart
     let symbol: String   // SF Symbol stamped on the cover
 
-    static let everydayEnglish = Wordbook(id: "words", name: "Dictionary of Everyday English", cover: 0x141414, symbol: "textformat.abc")
-    static let emotions = Wordbook(id: "emotions", name: "Dictionary of Emotions", cover: 0x262626, symbol: "heart.fill")
-    static let philosophy = Wordbook(id: "philosophy", name: "Dictionary of Philosophy", cover: 0x383838, symbol: "brain.head.profile")
-    static let medical = Wordbook(id: "medical", name: "Dictionary of Medicine", cover: 0x4A4A4A, symbol: "cross.case.fill")
-    static let character = Wordbook(id: "character", name: "Dictionary of Character", cover: 0x5C5C5C, symbol: "person.fill.questionmark")
-    static let eloquence = Wordbook(id: "eloquence", name: "Dictionary of Eloquence", cover: 0x6E6E6E, symbol: "book.closed.fill")
-    static let curiosities = Wordbook(id: "curiosities", name: "Dictionary of Curiosities", cover: 0x808080, symbol: "sparkles")
-    static let startup = Wordbook(id: "startup", name: "Dictionary of Corporate Slang", cover: 0xA4A4A4, symbol: "briefcase.fill")
+    static let everydayEnglish = Wordbook(id: "words", name: "Dictionary of Everyday English", cover: 0x1E232B, symbol: "textformat.abc")
+    static let emotions = Wordbook(id: "emotions", name: "Dictionary of Emotions", cover: 0x5B2A33, symbol: "heart.fill")
+    static let philosophy = Wordbook(id: "philosophy", name: "Dictionary of Philosophy", cover: 0x343A63, symbol: "brain.head.profile")
+    static let medical = Wordbook(id: "medical", name: "Dictionary of Medicine", cover: 0x1F4A47, symbol: "cross.case.fill")
+    static let character = Wordbook(id: "character", name: "Dictionary of Character", cover: 0x4B3A2A, symbol: "person.fill.questionmark")
+    static let eloquence = Wordbook(id: "eloquence", name: "Dictionary of Eloquence", cover: 0x46305A, symbol: "book.closed.fill")
+    static let curiosities = Wordbook(id: "curiosities", name: "Dictionary of Curiosities", cover: 0x5C4413, symbol: "sparkles")
+    static let startup = Wordbook(id: "startup", name: "Dictionary of Corporate Slang", cover: 0x2C4257, symbol: "briefcase.fill")
     /// Not a bundled json — WordProvider resolves this id from the words you captured.
-    static let saved = Wordbook(id: SavedWords.resource, name: "My Words", cover: 0x929292, symbol: "bookmark.fill")
+    static let saved = Wordbook(id: SavedWords.resource, name: "My Words", cover: 0x2A4634, symbol: "bookmark.fill")
 
     var coverColor: Color { Color(hex: cover) }
 

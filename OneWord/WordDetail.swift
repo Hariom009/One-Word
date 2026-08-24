@@ -23,7 +23,7 @@ struct WordDetail: View {
         let t = Theme.of(scheme)
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                if showDate { dateLine(t) }
+                //if showDate { dateLine(t) }
 
                 HStack(alignment: .lastTextBaseline, spacing: 16) {
                     Text(word.term)
@@ -79,19 +79,18 @@ struct WordDetail: View {
         }
     }
 
-    private func dateLine(_ t: Theme) -> some View {
-        let date = Date.now.formatted(.dateTime.month(.wide).day())
-        let text = dictionaryName.map { "\($0) · Word for \(date)" } ?? "Word for \(date)"
-        return HStack(spacing: 12) {
-            Text(text)
-                .font(.system(size: 11, weight: .semibold))
-                .textCase(.uppercase)
-                .tracking(2)
-                .foregroundStyle(t.accent)
-            Rectangle().fill(t.rule).frame(width: 46, height: 1)
-        }
-        .padding(.bottom, 14)
-    }
+//    private func dateLine(_ t: Theme) -> some View {
+//        let date = Date.now.formatted(.dateTime.month(.wide).day())
+//        let text = dictionaryName.map { "\($0) · Word for \(date)" } ?? "Word for \(date)"
+//        return HStack(spacing: 12) {
+//            Text(text)
+//                .font(.system(size: 11, weight: .semibold))
+//                .textCase(.uppercase)
+//                .tracking(2)
+//                .foregroundStyle(t.accent)
+//        }
+//        .padding(.bottom, 14)
+//    }
 
     @ViewBuilder
     private func footer(_ t: Theme) -> some View {

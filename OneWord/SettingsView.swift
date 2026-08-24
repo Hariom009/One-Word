@@ -73,7 +73,7 @@ struct SettingsView: View {
 
 /// A rectangular book cover: gray board, a spine stripe down the left, the
 /// dictionary's symbol and title. Lifts and gains a white ring when selected —
-/// white, not the accent, because every cover is a dark gray.
+/// white, not the accent, because every cover is a dark hue.
 private struct BookCover: View {
     let book: Wordbook
     let selected: Bool
