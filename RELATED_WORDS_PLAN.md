@@ -11,6 +11,17 @@ open dictionary). This descends to the file level.
 > [second audit](RELATED_WORDS_PLAN_AUDIT_R2.md): cooperative cancellation (N1) and corrected
 > citations (N2, N3).
 >
+> **Revision 4 (2026-08-24).** Applies the validated external review
+> ([RELATED_WORDS_REVIEW_VALIDATION.md](RELATED_WORDS_REVIEW_VALIDATION.md)) — six confirmed
+> findings: the small-book floor claim was measured **false** (60/60 words clear 0.55), so the
+> three 20-entry books now **show** their within-book results (operator ruling); My Words
+> invalidates on capture (V2); the JSON decode moves off the main actor (V4); builds are
+> serialized so two `NLEmbedding` instances are never live (V5); one canonical case-folded
+> term identity for the filters (V6); the example row renders only when non-empty + fuller
+> VoiceOver label (V3); the box animates in (V7). r4's revised store snippet is the one
+> exception to the next paragraph — it was **not** re-type-checked; the checklist's build
+> gates carry its verification.
+>
 > Every code shape below was type-checked under the project's real build flags in both Swift 5
 > and Swift 6 language modes, and the environment-propagation assumption was verified by
 > running it (§5).
@@ -126,19 +137,28 @@ nonisolated struct RelatedWordsIndex {
   looking the word up in the index.** This is load-bearing, not a style preference:
   `SavedWords.pinned` takes the day *whatever dictionary is selected* (`WordProvider.swift:44`),
   so today's word may be absent from the index being searched. Return `[]` when no centroid
-  can be built — which is also the correct, quiet behavior for a captured word stored with an
-  empty definition (`SavedWords.swift:75`, when `lookUp` finds nothing) and for
-  `SavedWords.placeholder`, whose em-dash term has no vector (both verified).
+  can be built — the correct, quiet behavior for a captured word stored with an empty
+  definition (`SavedWords.swift:75`, when `lookUp` finds nothing). `SavedWords.placeholder`
+  needs an **explicit guard** (r4, found by the check script): its em-dash term has no vector
+  but its instructional *definition* vectorises, so without the guard the teaching card finds
+  "related" words for a sentence about the Services menu.
 - Ranking is a dot product (the vectors are normalised, so that *is* cosine similarity), with
   four filters that the measurements showed are each necessary:
-  1. skip the query itself;
-  2. skip candidates sharing the query's first 4 characters — kills `warm` → `warmed`,
-     `warmer`, `warmth`;
-  3. dedupe survivors against **each other** by the same 4-char stem — kills `wistful` and
-     `wistfulness` both taking a slot;
-  4. drop anything below a similarity floor, so the 20-entry books return nothing rather than
-     strangers. Measured good matches scored 0.73–0.87; start the floor at **0.55** and treat
-     it as a tuning knob, not a truth — it wants a `ponytail:` comment naming that.
+  All three term comparisons use one canonical identity —
+  `folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil)` — because
+  captures are stored lowercased (`SavedWords.swift:91`) while `startup` carries 175
+  mixed-case terms: raw equality would let indexed `KPI` surface as "related" to a captured
+  `kpi` (validated V6).
+  1. skip the query itself (canonical equality);
+  2. skip candidates sharing the query's first 4 canonical characters — kills `warm` →
+     `warmed`, `warmer`, `warmth`;
+  3. dedupe survivors against **each other** by the same 4-char canonical stem — kills
+     `wistful` and `wistfulness` both taking a slot;
+  4. drop anything below the similarity floor **0.55** — a *quality* gate, not an emptiness
+     mechanism: good matches measure 0.73–0.87, and the 20-entry books measurably clear the
+     floor too (60/60 words have a neighbour above it; `affable → amiable` 0.841 — validated
+     V1), so the small books **show their own results by design** (operator ruling,
+     2026-08-24). Keep the floor a tuning knob with a `ponytail:` comment naming that.
 - **The build loop must check `Task.isCancelled` — cancelling the task alone does nothing.**
   Swift cancellation is cooperative, so a synchronous build loop with no check runs to
   completion even after `cancel()`; the store's `guard` then throws the result away. Measured:
@@ -166,11 +186,17 @@ Prove the algorithm before building any UI on it. Mirrors `tools/check_words.sh`
 
 - index coverage ≥99% for each of the eight bundled books (the regression that matters — a
   reworded definition can silently drop entries);
-- known pairs still rank in the top three (`emotions`/`melancholy` → `wistful`;
-  `startup`/`10x engineer` → one of `zero to one` / `network effect` — that one is the proof
-  multi-word terms work at all, since they have no word vector);
-- no two results share a 4-char stem (filter 3 above);
-- the 20-entry books return `[]` under the threshold rather than strangers;
+- known pairs still rank in the top three (`emotions`/`melancholy` → `wistful` as the
+  semantic pin; `startup`/`10x engineer` → a non-empty result containing a multi-word term —
+  the proof multi-word terms work at all, since they have no word vector. Measured under the
+  final canonical tokenizer: `tech lead`, `lifestyle business`, `maker time` — the brainstorm's
+  `zero to one` pick ranked differently once folding landed, so the assertion pins the
+  *purpose*, not that exact pair);
+- no two results share a 4-char canonical stem (filter 3 above);
+- the 20-entry books return real results (`character`/`affable` → top three contains
+  `amiable`, measured 0.841) and no result anywhere scores below the floor;
+- case identity: a lowercased query never receives its own uppercase twin as a result
+  (`kpi` against `startup`'s `KPI` — filter 1/2's canonical folding at work);
 - a `Word` with an empty definition and an unknown term yields `[]`, not a crash (the
   captured-word path).
 
@@ -191,11 +217,30 @@ final class RelatedWordsStore {
     private var builtFor: String?
     private var task: Task<Void, Never>?
 
+    init() {
+        // My Words invalidation (validated V2): capture posts didChange
+        // (SavedWords.swift:81) from the Services thread; queue: .main hops back.
+        // Without this, a word captured while My Words is open never becomes a
+        // CANDIDATE in other words' boxes until relaunch or book-switch.
+        NotificationCenter.default.addObserver(forName: SavedWords.didChange, object: nil,
+                                               queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self, self.builtFor == SavedWords.resource else { return }
+                self.builtFor = nil
+                self.load(.saved)
+            }
+        }
+    }
+
     /// @concurrent, NOT a bare `nonisolated async`: under this project's
     /// SWIFT_APPROACHABLE_CONCURRENCY a nonisolated async func inherits the CALLER's
     /// actor, which would build the index on the main thread. Measured — see plan §5.
-    @concurrent private nonisolated func build(_ words: [Word]) async -> RelatedWordsIndex? {
-        RelatedWordsIndex(words: words)
+    /// The book is decoded HERE, off the main actor (validated V4: the decode costs a
+    /// measured ~21ms and WordViewModel already pays it once on main per switch) —
+    /// legal because WordProvider is a nonisolated struct and UserDefaults reads
+    /// (the "saved" path) are thread-safe.
+    @concurrent private nonisolated func build(_ resource: String) async -> RelatedWordsIndex? {
+        RelatedWordsIndex(words: WordProvider(resource: resource).allWords)
     }
 
     /// Idempotent — repeat calls for the same dictionary are free. Required, because
@@ -204,10 +249,12 @@ final class RelatedWordsStore {
         guard builtFor != book.id else { return }
         builtFor = book.id
         index = nil
-        task?.cancel()
-        let words = WordProvider(resource: book.id).allWords   // read ON the main actor
+        let previous = task
+        previous?.cancel()
         task = Task { [weak self] in
-            let idx = await self?.build(words)
+            await previous?.value      // serialize: never two NLEmbedding builds alive (V5)
+            guard !Task.isCancelled else { return }
+            let idx = await self?.build(book.id)
             guard !Task.isCancelled else { return }
             self?.index = idx
         }
@@ -217,16 +264,22 @@ final class RelatedWordsStore {
 }
 ```
 
-Three details that are each a fixed defect, not a preference:
+Four details that are each a fixed defect, not a preference:
 
-- `let words = provider.allWords` is read **on the main actor** before the task starts.
-  Reading it inside the background work is a main-actor isolation violation (a warning in
-  Swift 5, an error in Swift 6).
+- **The decode lives inside `build`, off the main actor** (r4, validated V4). r3 read
+  `allWords` on the main actor before the task — correct isolation-wise, but it added a
+  measured ~21ms synchronous decode to a switch that `WordViewModel.select`
+  (`WordViewModel.swift:30`) already pays for on main. `WordProvider` is a `nonisolated`
+  struct, so constructing it inside `@concurrent build` is not an isolation violation.
+- **`await previous?.value` serializes builds** (r4, validated V5). Cancellation still makes
+  the old build exit at its next `%512` check; the await only enforces ordering, so two
+  `NLEmbedding` instances are never live concurrently and the thread-safety question is moot.
 - The outer `Task {}` deliberately **stays on the main actor** so touching `self` is safe;
-  it is `await self?.build(words)` that hops off. Doing it the other way — background task
+  it is `await self?.build(book.id)` that hops off. Doing it the other way — background task
   hopping back in via `MainActor.run { self.… }` — trips `#SendableClosureCaptures`.
 - `guard builtFor != book.id` is what stops a full rebuild every time the user navigates back
-  out of a related word.
+  out of a related word — and the `didChange` observer clears it for My Words only, so a
+  capture triggers exactly one rebuild of exactly one book (V2).
 
 **Verify:** builds clean; the box populates after launch.
 
@@ -250,8 +303,9 @@ Three details that are each a fixed defect, not a preference:
   ```
   `.task(id:)` re-runs on dictionary change and is safe to re-fire on pop because `load` is
   idempotent. Because `related(to:)` reads the store's `index` during `body`, SwiftUI
-  observation re-renders the box in when the build finishes — that *is* the fade-in, with no
-  extra state.
+  observation re-renders the box in when the build finishes. Give the box one
+  `.animation(.default, value: related.map(\.term))` so that redraw *fades* — without the
+  modifier it pops (validated V7). That one modifier is the whole fade-in; no extra state.
   > `ponytail:` re-ranks once per body evaluation (~5ms at 12k words). Memoize by term if a
   > bigger dictionary ever lands.
 - **Styling mirrors the existing footer** (`WordDetail.swift:105–120`) so it reads as the same
@@ -265,8 +319,11 @@ Three details that are each a fixed defect, not a preference:
   `WordListView.swift:27`. Term in `.serif(20)` / `t.ink`, part of speech in
   `.system(size: 11).italic()` / `t.muted`, definition in `.system(size: 13)` /
   `t.definition`, example in `.serif(14).italic()` / `t.example` — the example being the
-  "usecase" the feature exists to show. The pushed `WordDetail` reads the same environment
-  store, so **it renders its own box**; that is the chain.
+  "usecase" the feature exists to show, **rendered only when non-empty** (validated V3:
+  6,406 of Everyday's 12,000 and 94% of Medical's entries have no example; an unconditional
+  row ships blank quote lines — mirror the footer's own guard, `WordDetail.swift:97`). The
+  pushed `WordDetail` reads the same environment store, so **it renders its own box**; that
+  is the chain.
 - **Switching dictionaries while deep in a chain is intentionally left simple:** the stacked
   screens keep their own words but re-rank against the newly-loaded index, because there is one
   store and one index. Accepted rather than overlooked — the user did just change dictionary,
@@ -309,6 +366,9 @@ step 3 exists to stop someone "simplifying" it away later.
 - **`RelatedWordsStore`: `@MainActor`** by default isolation. Only `build` is `@concurrent`.
 - **`NLEmbedding` is created and used entirely inside `build`** and never crosses a boundary,
   which sidesteps whether it is thread-safe — `[Unverified]`, and worth keeping that way.
+  r4 closes the residual hole the review found (V5): `load` awaits the previous task before
+  building, so two embedding instances are never *live* at once — the cancelled build still
+  exits at its next `%512` check; the await only enforces ordering.
 - **Cancellation has two halves, and both are required.** The store's `task?.cancel()` only
   discards a *result*; the index's own `Task.isCancelled` check (Step 1) is what actually stops
   the work. Without the second half, rapid dictionary switching runs several full builds
@@ -326,8 +386,9 @@ step 3 exists to stop someone "simplifying" it away later.
 - **`NaturalLanguage`** is a system framework, auto-linked by `import`. No `Frameworks` build
   phase edit, no entitlement, no Info.plist usage string — the embedding is on-device and
   touches no protected resource.
-- **Accessibility:** each row needs an `.accessibilityLabel` combining term + definition;
-  without one VoiceOver reads four disconnected text runs per row.
+- **Accessibility:** each row needs one `.accessibilityLabel` combining every field the row
+  displays — term, part of speech, definition, and the example when shown (validated V3);
+  without it VoiceOver reads four disconnected text runs per row.
 - **Dynamic Type:** this project uses fixed `.system(size:)` / `.serif(n)` sizes throughout
   (`Theme.swift:60`), so match that and do **not** introduce a lone scaling row. A pre-existing
   gap, not this change's to fix.
@@ -354,7 +415,7 @@ step 3 exists to stop someone "simplifying" it away later.
 |---|---|---|---|---|
 | Someone replaces `@concurrent` with `nonisolated async` — main thread blocked, no warning | **High** | High (measured) | ~2.4s beachball on first launch of the big book | Restore `@concurrent`; the comment in step 3 is the guard. No automated check can catch this |
 | Unbounded navigation depth via the chain | Low | Medium | Memory growth after many hops | Each `WordDetail` is a small struct sharing one index; NavigationStack already handles the stack |
-| Similarity floor mistuned — box empty on good words, or junk on the small books | Medium | Medium | Empty box on `words`, or strangers on `character` | Tune the one constant; the check script asserts both ends |
+| Similarity floor mistuned — box empty on good words, or near-floor strangers | Medium | Medium | Empty box on `words`, or a pair like `defenestration → sonder` (measured 0.618) in `curiosities` | Tune the one constant; the check script asserts both ends |
 | Preview crash from the missing environment injection | Low | High | Previews trap immediately | Add `.environment(RelatedWordsStore())` — listed in step 4 |
 | Relatedness ≠ synonymy (`warm` → `dank`) | Low | High (measured, inherent) | Your own reaction reading it | The honest label absorbs most of it; a hand-authored override field for a few dozen high-traffic words is the escape hatch, not a rewrite |
 
@@ -372,8 +433,11 @@ lives and is the one to review closely. Step 4 is pure view code.
 **End to end:** run `tools/check_related.sh` (expect coverage ≥99% and the known pairs
 passing), then build and launch. On the home screen: the box appears below "Used as" with
 three rows; clicking one navigates to that word **and that screen has its own box**; going
-back is instant with no rebuild; Dictionary of Medicine repopulates with medical neighbours;
-the three 20-entry books show no box at all; New Word re-ranks with no perceptible pause.
+back is instant with no rebuild; Dictionary of Medicine repopulates with medical neighbours
+**with no blank example lines** (94% of Medical has no example); the three 20-entry books
+show **their own within-book neighbours** (`affable → amiable`); a word captured while My
+Words is open becomes a candidate without relaunch; New Word re-ranks with no perceptible
+pause.
 
 ## 10. Open questions & assumptions
 
@@ -381,9 +445,13 @@ the three 20-entry books show no box at all; New Word re-ranks with no perceptib
   snippets under the project's flags, not by compiling the app target.
 - `[Unverified]` `NLEmbedding` thread-safety. Sidestepped by construction — the model is
   created and consumed inside one `@concurrent` function. Resolved by keeping it that way.
-- `[Assumption]` The 0.55 similarity floor. Derived from measured scores (0.73–0.87 for good
-  matches), not from a swept threshold. The check script's two-ended assertion is what turns
-  this into a verified number.
+- **Resolved (was `[Assumption]`): the 0.55 floor is now measured on both ends** — good
+  matches 0.73–0.87, and the small books clear it too (60/60 words, top scores 0.581–0.848;
+  [validation](RELATED_WORDS_REVIEW_VALIDATION.md) V1). It stays a taste knob; `curiosities`
+  sits closest to the line.
+- `[Unverified]` r4's revised store snippet (§4 step 3) was **not** re-type-checked under the
+  project's flags the way r3's snippets were; the checklist's build items are its
+  verification.
 - `[Assumption]` `-enable-upcoming-feature NonisolatedNonsendingByDefault` is the effect of
   `SWIFT_APPROACHABLE_CONCURRENCY = YES`. The measured ON/OFF contrast in §5 is the evidence;
   Xcode's build-setting expansion was not read directly.

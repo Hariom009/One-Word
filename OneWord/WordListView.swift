@@ -115,4 +115,5 @@ struct WordListView: View {
 
 #Preview {
     NavigationStack { WordListView() }
+        .environment(RelatedWordsStore())
 }

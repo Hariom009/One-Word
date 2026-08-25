@@ -96,4 +96,5 @@ struct WordView: View {
 
 #Preview {
     WordView()
+        .environment(RelatedWordsStore())
 }
