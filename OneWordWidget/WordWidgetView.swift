@@ -123,18 +123,20 @@ struct WordWidgetView: View {
 
     @ViewBuilder
     private func ruledHindi(_ w: Word, size: CGFloat, gap: CGFloat, lines: Int) -> some View {
-        HStack(alignment: .top, spacing: gap) {
-            RoundedRectangle(cornerRadius: 1).fill(.tertiary).frame(width: 2)
-            Text(w.hindi)
-                .font(.system(size: size))
-                .lineSpacing(2)
-                .foregroundStyle(.primary)
-                .lineLimit(lines)
-                .minimumScaleFactor(0.55)   // Hindi is sentence-length; shrink to fill its lines rather than truncate
+        if AppGroup.showHindi {
+            HStack(alignment: .top, spacing: gap) {
+                RoundedRectangle(cornerRadius: 1).fill(.tertiary).frame(width: 2)
+                Text(w.hindi)
+                    .font(.system(size: size))
+                    .lineSpacing(2)
+                    .foregroundStyle(.primary)
+                    .lineLimit(lines)
+                    .minimumScaleFactor(0.55)   // Hindi is sentence-length; shrink to fill its lines rather than truncate
+            }
+            .fixedSize(horizontal: false, vertical: true)   // rule matches the Hindi's height
+            .id("hi-\(w.term)")
+            .transition(.line(2))
         }
-        .fixedSize(horizontal: false, vertical: true)   // rule matches the Hindi's height
-        .id("hi-\(w.term)")
-        .transition(.line(2))
     }
 
     // MARK: Small — headword · pos · hindi (no definition/rule/example)
@@ -144,14 +146,16 @@ struct WordWidgetView: View {
             header(w, headword: 23, hwWeight: .medium, hwTracking: -0.2,
                    posGap: 5, pos: 9.5, posTracking: 1.1)
             Spacer(minLength: 8)
-            Text(w.hindi)
-                .font(.system(size: 15))
-                .lineSpacing(2)
-                .foregroundStyle(.primary)
-                .lineLimit(5)
-                .minimumScaleFactor(0.55)
-                .id("hi-\(w.term)")
-                .transition(.line(2))
+            if AppGroup.showHindi {
+                Text(w.hindi)
+                    .font(.system(size: 15))
+                    .lineSpacing(2)
+                    .foregroundStyle(.primary)
+                    .lineLimit(5)
+                    .minimumScaleFactor(0.55)
+                    .id("hi-\(w.term)")
+                    .transition(.line(2))
+            }
         }
         .padding(16)
     }
@@ -200,7 +204,7 @@ struct WordWidgetView: View {
                 }
             }
             Spacer(minLength: 12)
-            if !w.example.isEmpty {
+            if AppGroup.showExample, !w.example.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
                     Rectangle().fill(.quaternary).frame(height: 1)
                     Text("“\(w.example)”")

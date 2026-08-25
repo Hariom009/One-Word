@@ -12,6 +12,7 @@ import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY ne
 struct WordView: View {
     @State private var model = WordViewModel()
     @State private var showingSettings = false
+    @State private var showingDictionary = false
     @State private var showingDatePicker = false
     @State private var selectedDate = Date()
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
@@ -33,7 +34,7 @@ struct WordView: View {
                             datePicker
                         }
                         Button {
-                            showingSettings = true
+                            showingDictionary = true
                         } label: {
                             Text(model.wordbook.name)
                                 .font(.caption2.weight(.semibold))
@@ -68,6 +69,9 @@ struct WordView: View {
             }
             .sheet(isPresented: $showingSettings) {
                 SettingsView()
+            }
+            .sheet(isPresented: $showingDictionary) {
+                DictionaryPicker()
             }
             .onAppear { model.select(Wordbook.named(dictionaryID), for: selectedDate) }
             .onChange(of: dictionaryID) { _, id in

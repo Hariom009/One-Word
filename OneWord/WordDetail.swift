@@ -20,6 +20,9 @@ struct WordDetail: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
+    @State private var showRelated = false
+    @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
+    @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
 
     var body: some View {
         let t = Theme.of(scheme)
@@ -35,14 +38,14 @@ struct WordDetail: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.4)
                     Text(word.partOfSpeech)
-                        .font(.serif(22).italic())
+                        .font(.serif(16).italic())
                         .foregroundStyle(t.muted)
                 }
 
-                if !word.hindi.isEmpty {
+                if showHindi, !word.hindi.isEmpty {
                     Text(word.hindi)
                         .font(.system(size: 25))
-                        .foregroundStyle(t.ink)
+                        .foregroundStyle(t.ink.opacity(0.5))
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.leading, 18)
                         .overlay(alignment: .leading) {
@@ -57,7 +60,7 @@ struct WordDetail: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 26)
 
-                footer(t)
+                if showExample { footer(t) }
 
                 relatedBox(related, t)
             }
@@ -67,6 +70,7 @@ struct WordDetail: View {
             .padding(.vertical, 44)
             // The box fades in when the background build lands — without this it pops.
             .animation(.default, value: related.map(\.term))
+            .onChange(of: word.term) { showRelated = false }
         }
         .scrollContentBackground(.hidden)
         .background(t.background)
@@ -101,28 +105,39 @@ struct WordDetail: View {
 //        .padding(.bottom, 14)
 //    }
 
-    /// "In the same vein" — not "Similar words": the ranking returns relatedness,
-    /// not synonymy, and the copy must not promise what the data can't keep.
+    /// "In the same vein · Synonyms": the ranking returns relatedness, so the
+    /// vein half leads and "Synonyms" rides along as the plainer word for it.
+    /// Collapsed by default: the page is one word, the box is a detour the reader
+    /// opts into. ponytail: DisclosureGroup, not a hand-rolled toggle + chevron.
     @ViewBuilder
     private func relatedBox(_ words: [Word], _ t: Theme) -> some View {
         if !words.isEmpty {
-            VStack(alignment: .leading, spacing: 18) {
-                Text("In the same vein")
+            DisclosureGroup(isExpanded: $showRelated) {
+                VStack(alignment: .leading, spacing: 18) {
+                    ForEach(words) { w in
+                        NavigationLink {
+                            // The pushed screen reads the same environment store,
+                            // so it renders its own box — that is the chain.
+                            WordDetail(word: w)
+                        } label: {
+                            relatedRow(w, t)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(accessibilitySummary(of: w))
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 18)
+            } label: {
+                Text("In the same vein \u{00B7} Synonyms")
                     .font(.system(size: 10, weight: .bold))
                     .textCase(.uppercase).tracking(1.6)
                     .foregroundStyle(t.muted)
-                ForEach(words) { w in
-                    NavigationLink {
-                        // The pushed screen reads the same environment store,
-                        // so it renders its own box — that is the chain.
-                        WordDetail(word: w)
-                    } label: {
-                        relatedRow(w, t)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel(accessibilitySummary(of: w))
-                }
+                    // The chevron toggles itself; the label is inert until asked.
+                    .contentShape(Rectangle())
+                    .onTapGesture { withAnimation { showRelated.toggle() } }
             }
+            .tint(t.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 24)
             .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
@@ -146,14 +161,6 @@ struct WordDetail: View {
                 .font(.system(size: 13))
                 .foregroundStyle(t.definition)
                 .fixedSize(horizontal: false, vertical: true)
-            // Over half of Everyday and 94% of Medical have no example — an
-            // unconditional row would ship blank quote lines.
-            if !w.example.isEmpty {
-                Text("\u{201C}\(w.example)\u{201D}")
-                    .font(.serif(14).italic())
-                    .foregroundStyle(t.example)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
         }
         .contentShape(Rectangle())
     }
@@ -163,7 +170,6 @@ struct WordDetail: View {
         var parts = [w.term]
         if !w.partOfSpeech.isEmpty { parts.append(w.partOfSpeech) }
         parts.append(w.definition)
-        if !w.example.isEmpty { parts.append("Used as \(w.example)") }
         return parts.joined(separator: ". ")
     }
 
