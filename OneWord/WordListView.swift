@@ -10,6 +10,7 @@ import SwiftUI
 
 struct WordListView: View {
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
+    @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @State private var model = WordListViewModel()
     @State private var query = ""
     @Environment(\.colorScheme) private var scheme
@@ -48,7 +49,7 @@ struct WordListView: View {
                 .font(.system(size: 11).italic())
                 .foregroundStyle(t.muted)
             Spacer(minLength: 12)
-            if !word.hindi.isEmpty {
+            if showHindi, !word.hindi.isEmpty {
                 Text(word.hindi)
                     .font(.system(size: 15))
                     .foregroundStyle(t.muted)
@@ -115,4 +116,5 @@ struct WordListView: View {
 
 #Preview {
     NavigationStack { WordListView() }
+        .environment(RelatedWordsStore())
 }

@@ -2,6 +2,9 @@
 //  WordProviderCheck.swift — standalone self-check for the day→word mapping.
 //  Not a target member; compiles the real source. Run: tools/check_words.sh
 //
+//  precondition, not assert — check_words.sh compiles with -O, which strips
+//  assert() outright (verified: a deliberately broken assert still exited 0).
+//
 
 import Foundation
 
@@ -33,7 +36,7 @@ enum Check {
         for (id, p) in providers {
             let n = p.allWords.count
             let cycle = Set((0..<n).map { p.word(for: today, offset: $0).term })
-            assert(cycle.count == n, "\(id): cycle covers \(cycle.count)/\(n), not the whole book")
+            precondition(cycle.count == n, "\(id): cycle covers \(cycle.count)/\(n), not the whole book")
         }
 
         // 2. The reported bug: every 20-word book opened on the same file index,
@@ -41,20 +44,20 @@ enum Check {
         let sameSize = Dictionary(grouping: providers, by: { $0.1.allWords.count })
         for (n, group) in sameSize where group.count > 1 {
             let orders = group.map { run($0.1, days: n) }
-            assert(Set(orders).count == group.count,
+            precondition(Set(orders).count == group.count,
                    "\(group.map(\.0)) share a reading order at n=\(n)")
         }
 
         // 3. Consecutive days don't walk the file top-to-bottom.
         for (id, p) in providers where p.allWords.count > 6 {
             let r = run(p, days: 6)
-            assert(!zip(r, r.dropFirst()).allSatisfy { $1 == $0 + 1 }, "\(id): still sequential \(r)")
+            precondition(!zip(r, r.dropFirst()).allSatisfy { $1 == $0 + 1 }, "\(id): still sequential \(r)")
         }
 
         // 4. Same day + same seed = same word, always — the app and the widget
         //    build separate providers and must never disagree.
         for (id, p) in providers {
-            assert(load(id).word(for: today).term == p.word(for: today).term, "\(id): not deterministic")
+            precondition(load(id).word(for: today).term == p.word(for: today).term, "\(id): not deterministic")
         }
 
         for (id, p) in providers {

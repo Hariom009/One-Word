@@ -27,4 +27,9 @@ nonisolated enum AppGroup {
     static var dictionaryID: String {
         defaults.string(forKey: dictionaryKey) ?? "words"
     }
+
+    /// Entry fields the reader can switch off in Settings. Absent key = shown,
+    /// so `bool(forKey:)`'s false-when-missing would hide them on a fresh install.
+    static var showHindi: Bool { defaults.object(forKey: "showHindi") as? Bool ?? true }
+    static var showExample: Bool { defaults.object(forKey: "showExample") as? Bool ?? true }
 }
