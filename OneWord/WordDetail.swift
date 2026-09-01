@@ -26,7 +26,7 @@ struct WordDetail: View {
 
     var body: some View {
         let t = Theme.of(scheme)
-        let related = store.related(to: word)
+        let related = store.related(to: word, in: Wordbook.named(dictionaryID).id)
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 //if showDate { dateLine(t) }
@@ -69,7 +69,7 @@ struct WordDetail: View {
             .padding(.horizontal, 56)
             .padding(.vertical, 44)
             // The box fades in when the background build lands — without this it pops.
-            .animation(.default, value: related.map(\.term))
+            .animation(.default, value: related)
             .onChange(of: word.term) { showRelated = false }
         }
         .scrollContentBackground(.hidden)
@@ -151,16 +151,25 @@ struct WordDetail: View {
                 Text(w.term)
                     .font(.serif(20))
                     .foregroundStyle(t.ink)
+                    // 46% of Corporate Slang terms are phrases (up to 30 chars);
+                    // without this they wrap and strand the part of speech.
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
                 if !w.partOfSpeech.isEmpty {
                     Text(w.partOfSpeech)
                         .font(.system(size: 11).italic())
                         .foregroundStyle(t.muted)
                 }
             }
-            Text(w.definition)
-                .font(.system(size: 13))
-                .foregroundStyle(t.definition)
-                .fixedSize(horizontal: false, vertical: true)
+            // A capture that resolved in no dictionary is stored with an empty
+            // definition (SavedWords.swift:74) and still gets indexed, so My Words
+            // can surface one — an unguarded Text renders a blank line for it.
+            if !w.definition.isEmpty {
+                Text(w.definition)
+                    .font(.system(size: 13))
+                    .foregroundStyle(t.definition)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .contentShape(Rectangle())
     }

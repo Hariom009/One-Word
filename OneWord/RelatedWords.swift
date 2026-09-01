@@ -14,10 +14,13 @@ import Observation
 
 /// The whole algorithm, as a pure value type. Built off the main actor, then
 /// handed over and read on it — sequential use, never concurrent (the store
-/// serializes builds), which is what lets us not care whether NLEmbedding is
-/// thread-safe.
+/// serializes builds). NOTE: the embedding is RETAINED and used again by
+/// `nearestScored` on the main actor (the query centroid is built on demand), so
+/// it is not confined to the build the way the plan originally claimed. Stress
+/// test: 400 concurrent queries against 6 concurrent builds produced no wrong
+/// results and no crash, but that is evidence, not a thread-safety guarantee.
 nonisolated struct RelatedWordsIndex {
-    private let entries: [(word: Word, vector: [Float])]
+    private let entries: [(word: Word, vector: [Float], canon: String)]
     private let embedding: NLEmbedding
 
     /// Words that made it into the index (for the check script's coverage assert).
@@ -42,8 +45,16 @@ nonisolated struct RelatedWordsIndex {
         s.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil)
     }
 
-    /// 4-char canonical prefix — the dedupe key that kills `warm` → `warmed`.
-    private static func stem(_ s: String) -> String { String(canon(s).prefix(4)) }
+    /// Same word, or a trivial inflection of it — the test that kills
+    /// `warm` → `warmed`. Takes ALREADY-canonical strings (entries store theirs).
+    ///
+    /// The prefix test is what a bare 4-character stem misses: `joy` never
+    /// reaches a 4-char stem, so `joy`/`joyf` never matched and `joyfulness`
+    /// sailed through as a "related" word. Measured on emotions.json before
+    /// this fix: joy → joyfulness, joyousness.
+    private static func sameRoot(_ a: String, _ b: String) -> Bool {
+        a.hasPrefix(b) || b.hasPrefix(a) || a.prefix(4) == b.prefix(4)
+    }
 
     /// Normalised centroid of the word vectors of `text`'s tokens, or nil when
     /// nothing vectorises (an em-dash placeholder, an empty captured definition).
@@ -75,13 +86,13 @@ nonisolated struct RelatedWordsIndex {
     /// does nothing unless this loop checks.
     init?(words: [Word]) {
         guard let embedding = NLEmbedding.wordEmbedding(for: .english) else { return nil }
-        var entries: [(word: Word, vector: [Float])] = []
+        var entries: [(word: Word, vector: [Float], canon: String)] = []
         entries.reserveCapacity(words.count)
         for (i, word) in words.enumerated() {
             if i % 512 == 0 && Task.isCancelled { return nil }
             guard let vector = Self.centroid(of: word.term + " " + word.definition, embedding)
             else { continue }
-            entries.append((word, vector))
+            entries.append((word, vector, Self.canon(word.term)))
         }
         self.entries = entries
         self.embedding = embedding
@@ -91,6 +102,13 @@ nonisolated struct RelatedWordsIndex {
     /// index lookup: today's word can be a pinned capture that is absent from the
     /// book being searched. [] is the quiet answer for anything unvectorisable.
     func nearest(to word: Word, limit: Int = 3) -> [Word] {
+        nearestScored(to: word, limit: limit).map(\.word)
+    }
+
+    /// `nearest` with the similarity scores kept. Exposed so the check script can
+    /// assert the floor actually EXCLUDES — with inclusion-only assertions,
+    /// deleting the floor entirely still passed every check (verified).
+    func nearestScored(to word: Word, limit: Int = 3) -> [(word: Word, score: Float)] {
         // The em-dash teaching card is not a word — but its instructional
         // definition vectorises, so without this guard it would find "related"
         // words for a sentence about the Services menu.
@@ -98,25 +116,30 @@ nonisolated struct RelatedWordsIndex {
         guard let query = Self.centroid(of: word.term + " " + word.definition, embedding)
         else { return [] }
         let queryCanon = Self.canon(word.term)
-        let queryStem = Self.stem(word.term)
-        var scored: [(word: Word, score: Float)] = []
+        var scored: [(entry: (word: Word, vector: [Float], canon: String), score: Float)] = []
+        scored.reserveCapacity(64)
         for entry in entries {
-            if Self.canon(entry.word.term) == queryCanon { continue }
-            if Self.stem(entry.word.term) == queryStem { continue }
+            // Covers self-exclusion too: sameRoot is true when the canons match.
+            if Self.sameRoot(entry.canon, queryCanon) { continue }
             let score = Self.dot(query, entry.vector)
-            if score >= Self.floor { scored.append((entry.word, score)) }
+            if score >= Self.floor { scored.append((entry, score)) }
         }
         scored.sort { $0.score > $1.score }
-        var results: [Word] = []
-        var seenStems = Set<String>()
+        var results: [(word: Word, score: Float)] = []
+        var accepted: [String] = []
         for candidate in scored {
-            let stem = Self.stem(candidate.word.term)
-            guard seenStems.insert(stem).inserted else { continue }
-            results.append(candidate.word)
+            // Same root test as above, so `wistful` and `wistfulness` can't both
+            // take a slot — and short terms are covered here as well.
+            if accepted.contains(where: { Self.sameRoot($0, candidate.entry.canon) }) { continue }
+            results.append((candidate.entry.word, candidate.score))
+            accepted.append(candidate.entry.canon)
             if results.count == limit { break }
         }
         return results
     }
+
+    /// The similarity floor, for the check script's exclusion assertion.
+    static var similarityFloor: Float { floor }
 }
 
 /// Owns the index for the open dictionary. One instance, injected through the
@@ -177,7 +200,17 @@ final class RelatedWordsStore {
         }
     }
 
-    // ponytail: re-ranks once per body evaluation (~5ms at 12k words). Memoize
-    // by term if a bigger dictionary ever lands.
-    func related(to word: Word) -> [Word] { index?.nearest(to: word) ?? [] }
+    // ponytail: re-ranks once per body evaluation — measured 3.6ms at 12k words
+    // after precomputing the canonical terms. Memoize by term if a bigger
+    // dictionary ever lands.
+    /// `bookID` is required, not decorative: without it the store happily serves
+    /// whichever index is loaded. Switching dictionaries from the browse list
+    /// mounts a WordDetail whose `body` runs BEFORE its `.task` — so the first
+    /// render asked the previous book's index and got another dictionary's words
+    /// back, with live navigation links. Mismatch now answers [] until the right
+    /// index lands.
+    func related(to word: Word, in bookID: String) -> [Word] {
+        guard builtFor == bookID else { return [] }
+        return index?.nearest(to: word) ?? []
+    }
 }

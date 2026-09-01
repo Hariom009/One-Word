@@ -60,10 +60,39 @@ enum Check {
         for id in ["character", "eloquence", "curiosities"] {
             let (words, index) = indexes[id]!
             let served = words.filter { !index.nearest(to: $0).isEmpty }.count
-            precondition(served > 0, "\(id): no word has any related result")
+            // Measured 20/20 per book — `served > 0` would pass on 1/20 and hide
+            // a floor mistune or a broken tokenizer.
+            precondition(served == words.count, "\(id): only \(served)/\(words.count) served")
         }
 
-        // 4. No two results share a 4-char canonical stem (sampled across the big book).
+        // 4. The floor EXCLUDES. Every other assertion here tests inclusion, and
+        //    removing a filter only adds candidates — verified: with the floor
+        //    deleted outright, this whole script still exited 0.
+        for (id, (words, index)) in indexes {
+            for word in words.prefix(400) {
+                for hit in index.nearestScored(to: word) {
+                    precondition(hit.score >= RelatedWordsIndex.similarityFloor,
+                                 "\(id): \(word.term) -> \(hit.word.term) scored \(hit.score), below the floor")
+                }
+            }
+        }
+
+        // 5. A short query term must not receive its own inflections. Before the
+        //    sameRoot fix, `joy` returned joyfulness and joyousness: a <=3 char
+        //    term can never share a 4-char stem with its own suffixed form.
+        for id in indexes.keys {
+            let (words, index) = indexes[id]!
+            for word in words where word.term.count <= 4 {
+                let canon = word.term.lowercased()
+                for hit in index.nearest(to: word) {
+                    let other = hit.term.lowercased()
+                    precondition(!other.hasPrefix(canon) && !canon.hasPrefix(other),
+                                 "\(id): \(word.term) -> \(hit.term) is its own inflection")
+                }
+            }
+        }
+
+        // 6. No two results share a root (sampled across the big book).
         let (everyday, everydayIndex) = indexes["words"]!
         for i in stride(from: 0, to: everyday.count, by: 250) {
             let stems = everydayIndex.nearest(to: everyday[i])
@@ -72,14 +101,14 @@ enum Check {
                          "stem dupes for \(everyday[i].term): \(stems)")
         }
 
-        // 5. The captured-word path: empty definition + unknown term → [], not a crash.
+        // 7. The captured-word path: empty definition + unknown term → [], not a crash.
         let ghost = Word(term: "zzgibberishzz", partOfSpeech: "", hindi: "",
                          definition: "", example: "")
         precondition(everydayIndex.nearest(to: ghost).isEmpty, "ghost word got results")
         precondition(everydayIndex.nearest(to: SavedWords.placeholder).isEmpty,
                      "placeholder got results")
 
-        // 6. Case identity: a lowercased capture never gets its uppercase twin back
+        // 8. Case identity: a lowercased capture never gets its uppercase twin back
         //    as "related" (captures are lowercased; startup has 175 mixed-case terms).
         let (startupWords, startupIndex) = indexes["startup"]!
         let mixed = startupWords.first { $0.term != $0.term.lowercased() }!
