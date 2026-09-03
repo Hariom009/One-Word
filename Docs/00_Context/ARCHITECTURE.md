@@ -35,9 +35,10 @@ view-model surface. See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for what/why.
   the app and the widget compute the *same* word for a given day with no shared mutable state.
 
 **ViewModel**
-- `WordViewModel` — `@Observable` (or `ObservableObject`). Holds `today: Word` and any
-  list/browse state, calls `WordProvider`. No SwiftUI imports beyond `Observation`; no
-  view types. This is the unit-testable seam.
+- `@Observable`, `Observation` only — no SwiftUI imports, no view types. This is the
+  unit-testable seam. `WordViewModel` (today's word + peek), `WordListViewModel`
+  (browse/search a book), `ProfileViewModel` (per-shelf progress; owns the expensive
+  all-books decode so no view does it).
 - The widget does **not** reuse `WordViewModel`. Its "view model" is the WidgetKit
   `TimelineProvider`, which asks `WordProvider` for entries. Same model, different driver —
   because widgets are timeline-driven, not user-event-driven.
@@ -60,7 +61,7 @@ at midnight for the next word.
 - Code: put `Word`, `WordProvider`, and `words.json` in a **shared target / framework** (or
   add them to both targets' membership) so both compile against one source of truth.
 - Runtime state (if any is ever needed — e.g. "favorited" words): an **App Group**
-  (`group.com.hariom.swift.MacBee`) via `UserDefaults(suiteName:)`. For pure word-of-the-day,
+  (`LAP54KU2SV.group.com.hariom.swift.oneword` — the TEAM ID prefix matters, see AppGroup.swift) via `UserDefaults(suiteName:)`. For pure word-of-the-day,
   no shared runtime state is needed because selection is date-derived.
 
 ## Refresh
@@ -87,7 +88,7 @@ OneWord/                        app target
     RootView, WordView, WordDetail, WordListView, LearnedListView,
     ProfileView, SettingsView, DictionaryPicker, MonthCalendar
   ViewModels/                   @Observable. No view types. The unit-testable seam.
-    WordViewModel, WordListViewModel
+    WordViewModel, WordListViewModel, ProfileViewModel
   Models/                       App-only model + state. No SwiftUI.
     Wordbook, Appearance, LearnedWords, RelatedWords
   Shared/                       MEMBER OF BOTH TARGETS — app + widget
@@ -98,6 +99,7 @@ OneWordWidget/                  widget target
   WordWidget, WordTimelineProvider, WordWidgetView, WordEntry, RefreshWordIntent
 
 tools/                          check_*.sh gates + generators
+Docs/                           see Docs/README.md
 ```
 
 Two files sit at the app-target root on purpose: `OneWordApp.swift` is the entry point and

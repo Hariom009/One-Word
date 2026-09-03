@@ -1,10 +1,10 @@
 # Related Words — Build Checklist
 
-Derived from [RELATED_WORDS_PLAN.md](RELATED_WORDS_PLAN.md) (revision 4). The plan is
+Derived from [RELATED_WORDS_PLAN.md](../02_Plan/RELATED_WORDS_PLAN.md) (revision 4). The plan is
 **audited, resolved, and review-validated**: both audit rounds applied
-([first](RELATED_WORDS_PLAN_AUDIT.md), [second](RELATED_WORDS_PLAN_AUDIT_R2.md)), all forks
+([first](../02_Plan/Audit/RELATED_WORDS_PLAN_AUDIT.md), [second](../02_Plan/Audit/RELATED_WORDS_PLAN_AUDIT_R2.md)), all forks
 closed, and the six confirmed external-review findings folded in as r4
-([validation](RELATED_WORDS_REVIEW_VALIDATION.md)). This checklist is a faithful
+([validation](../04_PR/Review/RELATED_WORDS_REVIEW_VALIDATION.md)). This checklist is a faithful
 transformation of that plan — it adds no scope and re-verifies none of its claims.
 
 **Stack** (per plan §1): macOS 14+, SwiftUI, `@Observable` MVVM, Swift 5 language mode with

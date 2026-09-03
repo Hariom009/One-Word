@@ -1,8 +1,8 @@
 # Related Words — External Review Validation
 
 **Source validated:** a feature-readiness review pasted into chat (2026-08-24), 8 findings
-(assigned V1–V8; source carried no IDs), targeting [RELATED_WORDS_PLAN.md](RELATED_WORDS_PLAN.md)
-r3 and [RELATED_WORDS_CHECKLIST.md](RELATED_WORDS_CHECKLIST.md).
+(assigned V1–V8; source carried no IDs), targeting [RELATED_WORDS_PLAN.md](../../02_Plan/RELATED_WORDS_PLAN.md)
+r3 and [RELATED_WORDS_CHECKLIST.md](../../03_Checklist/RELATED_WORDS_CHECKLIST.md).
 **Tree state:** `975ed05` + untracked planning docs; source files clean. No diff context —
 findings are about the *plan/design*, validated against the plan text, the real data files,
 and the existing sources.

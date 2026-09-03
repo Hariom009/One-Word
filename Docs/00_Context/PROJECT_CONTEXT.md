@@ -23,11 +23,11 @@ just sits on the Mac's display and rotates daily.
 - App retargeted to **macOS** (`SDKROOT = macosx`, `MACOSX_DEPLOYMENT_TARGET = 14.0`).
 - Shared model layer done: `Word` (adds `hindi`), `WordProvider`, `words.json` (`OneWord/Shared/`).
 - **`words.json` is a generated ~12k-word set** (WordNet + offline Argos Hindi), not hand-written —
-  see [tools/gen_words](tools/gen_words/README.md) to regenerate/expand. `Word.hindi` is the
+  see [tools/gen_words](../../tools/gen_words/README.md) to regenerate/expand. `Word.hindi` is the
   Hindi rendering of the *definition* (context makes offline NMT reliable).
 - App UI done: `OneWordApp` → `WordView` → `WordViewModel` (today's word + Hindi, MVVM).
 - Browse/search: `WordListView` lists a whole dictionary alphabetically with a toolbar search
-  field; a search button on the today screen opens it. `Wordbook` (`OneWord/Wordbook.swift`) is
+  field; a search button on the today screen opens it. `Wordbook` (`OneWord/Models/Wordbook.swift`) is
   the dictionary registry — four so far: **Everyday English** (`words.json`, 12k),
   **Emotions** (`emotions.json`, ~990), **Philosophy** (`philosophy.json`, ~140) and
   **Medical** (`medical.json`, ~1.7k) — the themed ones are dominant-sense filtered (no

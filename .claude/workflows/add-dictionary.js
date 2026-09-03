@@ -29,7 +29,7 @@ const KNOWN = `
   Missing that = the widget fatalErrors at runtime ("check target membership"). This is THE gotcha.
 - tools/WordProviderCheck.swift and tools/RelatedWordsCheck.swift each hardcode a 'books' array of dictionary ids — a new id goes in both.
 - Covers must stay dark (low L*) — white title/symbol sits on them. Symbol is an SF Symbol that must exist on macOS 14.
-- Precedent: STARTUP_DICTIONARY_BRAINSTORM.md is the house brainstorm format; startup.json / curiosities.json are the house entry quality bar.
+- Precedent: Docs/01_Brainstorm/STARTUP_DICTIONARY_BRAINSTORM.md is the house brainstorm format; startup.json / curiosities.json are the house entry quality bar.
 `
 
 const RECON = {
@@ -179,7 +179,7 @@ const LENSES = [
     ask: `EDITORIAL IDENTITY. What is this book actually FOR, and who opens it? Name candidates (house pattern: "Dictionary of X").
 Its editorial compass: what does the definition field promise, what does the example field do, what tone. The word dimensions
 (6-10 categories with 8-15 seed terms each) that together make one coherent book. What to deliberately leave out.
-Read STARTUP_DICTIONARY_BRAINSTORM.md first — match that document's rigor and format.`,
+Read Docs/01_Brainstorm/STARTUP_DICTIONARY_BRAINSTORM.md first — match that document's rigor and format.`,
   },
   {
     key: 'sourcing',

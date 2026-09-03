@@ -1,8 +1,8 @@
 # Related Words — Checklist Audit
 
-**Audited:** [RELATED_WORDS_CHECKLIST.md](RELATED_WORDS_CHECKLIST.md) (step granularity, 15 items + 7 gates + 9 DoD items)
-**Fidelity reference:** [RELATED_WORDS_PLAN.md](RELATED_WORDS_PLAN.md) r3 — itself **audited + resolved**
-([audit 1](RELATED_WORDS_PLAN_AUDIT.md), [audit 2](RELATED_WORDS_PLAN_AUDIT_R2.md), all forks closed),
+**Audited:** [RELATED_WORDS_CHECKLIST.md](../RELATED_WORDS_CHECKLIST.md) (step granularity, 15 items + 7 gates + 9 DoD items)
+**Fidelity reference:** [RELATED_WORDS_PLAN.md](../../02_Plan/RELATED_WORDS_PLAN.md) r3 — itself **audited + resolved**
+([audit 1](../../02_Plan/Audit/RELATED_WORDS_PLAN_AUDIT.md), [audit 2](../../02_Plan/Audit/RELATED_WORDS_PLAN_AUDIT_R2.md), all forks closed),
 so the checklist inherits a clean provenance chain.
 **Contract applied:** `~/.claude/agents/checklist-writer.md`.
 **Opened for grounding:** the checklist and plan in full; bounded spot-checks (5 tool calls):

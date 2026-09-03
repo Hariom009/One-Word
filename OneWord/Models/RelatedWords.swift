@@ -5,7 +5,7 @@
 //
 //  "In the same vein": for each word, its nearest neighbours inside the open
 //  dictionary, ranked by cosine similarity of a bag-of-embeddings centroid over
-//  term + definition. Design: RELATED_WORDS_PLAN.md (r4).
+//  term + definition. Design: Docs/02_Plan/RELATED_WORDS_PLAN.md (r4).
 //
 
 import Foundation
@@ -174,7 +174,7 @@ final class RelatedWordsStore {
     /// @concurrent, NOT a bare `nonisolated async`: under this project's
     /// SWIFT_APPROACHABLE_CONCURRENCY a nonisolated async func inherits the
     /// CALLER's actor and would run the ~2.4s build on the main thread with no
-    /// warning. Measured — see RELATED_WORDS_PLAN.md §5. The book is decoded in
+    /// warning. Measured — see Docs/02_Plan/RELATED_WORDS_PLAN.md §5. The book is decoded in
     /// here too, off the main actor: WordProvider is a nonisolated struct and
     /// the decode costs ~21ms that WordViewModel already pays once on main.
     @concurrent private nonisolated func build(_ resource: String) async -> RelatedWordsIndex? {

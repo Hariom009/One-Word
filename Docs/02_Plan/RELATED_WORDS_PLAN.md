@@ -1,18 +1,18 @@
 # Related Words — Implementation Plan
 
-Companion to [RELATED_WORDS_BRAINSTORM.md](RELATED_WORDS_BRAINSTORM.md), which decided the
+Companion to [RELATED_WORDS_BRAINSTORM.md](../01_Brainstorm/RELATED_WORDS_BRAINSTORM.md), which decided the
 approach (option 4: bag-of-embeddings centroid over term + definition, ranked inside the
 open dictionary). This descends to the file level.
 
 > **Revision 3.** r2 fixed the two blocking concurrency defects from the
-> [first audit](RELATED_WORDS_PLAN_AUDIT.md) and resolved fork 9.1 toward the **full browsable
+> [first audit](Audit/RELATED_WORDS_PLAN_AUDIT.md) and resolved fork 9.1 toward the **full browsable
 > chain** — which made the change *smaller*, not bigger: the index moved out of `WordViewModel`
 > into an environment store, so `WordViewModel` is no longer touched at all. r3 then applies the
-> [second audit](RELATED_WORDS_PLAN_AUDIT_R2.md): cooperative cancellation (N1) and corrected
+> [second audit](Audit/RELATED_WORDS_PLAN_AUDIT_R2.md): cooperative cancellation (N1) and corrected
 > citations (N2, N3).
 >
 > **Revision 4 (2026-08-24).** Applies the validated external review
-> ([RELATED_WORDS_REVIEW_VALIDATION.md](RELATED_WORDS_REVIEW_VALIDATION.md)) — six confirmed
+> ([RELATED_WORDS_REVIEW_VALIDATION.md](../04_PR/Review/RELATED_WORDS_REVIEW_VALIDATION.md)) — six confirmed
 > findings: the small-book floor claim was measured **false** (60/60 words clear 0.55), so the
 > three 20-entry books now **show** their within-book results (operator ruling); My Words
 > invalidates on capture (V2); the JSON decode moves off the main actor (V4); builds are
@@ -447,7 +447,7 @@ pause.
   created and consumed inside one `@concurrent` function. Resolved by keeping it that way.
 - **Resolved (was `[Assumption]`): the 0.55 floor is now measured on both ends** — good
   matches 0.73–0.87, and the small books clear it too (60/60 words, top scores 0.581–0.848;
-  [validation](RELATED_WORDS_REVIEW_VALIDATION.md) V1). It stays a taste knob; `curiosities`
+  [validation](../04_PR/Review/RELATED_WORDS_REVIEW_VALIDATION.md) V1). It stays a taste knob; `curiosities`
   sits closest to the line.
 - `[Unverified]` r4's revised store snippet (§4 step 3) was **not** re-type-checked under the
   project's flags the way r3's snippets were; the checklist's build items are its

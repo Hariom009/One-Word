@@ -33,9 +33,10 @@ Theme requested: **$ARGUMENTS**
      whether the build gates went green (`build`), and any confirmed blockers and their repair (`review`).
      State failures plainly; don't smooth over a red gate.
 
-4. Offer to save the strategy and plan docs from `docs` as `<ID>_DICTIONARY_BRAINSTORM.md` /
-   `<ID>_DICTIONARY_PLAN.md` at the repo root, matching the existing planning docs there. Ask first — don't
-   assume the user wants four more markdown files.
+4. Offer to save the strategy and plan docs from `docs` as
+   `Docs/01_Brainstorm/<ID>_DICTIONARY_BRAINSTORM.md` / `Docs/02_Plan/<ID>_DICTIONARY_PLAN.md`, matching the
+   existing docs there — Docs/README.md has the routing table. Ask first — don't assume the
+   user wants four more markdown files.
 
 5. **Then hand it to the user to test.** Print the `testBrief` items as a checklist and ask them to run through it.
    Do not commit anything and do not declare the dictionary done until they report back — the widget check in
