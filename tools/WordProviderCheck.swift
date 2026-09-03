@@ -8,7 +8,7 @@
 
 import Foundation
 
-let books = ["words", "emotions", "medical", "philosophy", "character", "eloquence", "curiosities", "startup"]
+let books = ["words", "emotions", "medical", "philosophy", "character", "eloquence", "curiosities", "startup", "idioms"]
 let dir = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
     .deletingLastPathComponent().appendingPathComponent("OneWord/Shared")
 let cal = Calendar(identifier: .gregorian)

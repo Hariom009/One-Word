@@ -2,17 +2,18 @@
 //  DictionaryPicker.swift
 //  OneWord
 //
-//  The shelf of dictionary covers, on its own. One view, two doors: the
-//  toolbar's dictionary chip and the Change button in Settings.
+//  The shelf of dictionary covers — the Dictionaries pane. `onPick` lets the
+//  shell move on once you've chosen (the sidebar sends you back to Home).
 //
 
 import SwiftUI
 import WidgetKit
 
 struct DictionaryPicker: View {
+    var onPick: () -> Void = {}
+
     @AppStorage("dictionaryID", store: AppGroup.defaults)
     private var dictionaryID = Wordbook.everydayEnglish.id
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var scheme
 
     // Book covers on a shelf: ~2:3 portrait, laid out in flexible columns.
@@ -20,35 +21,23 @@ struct DictionaryPicker: View {
 
     var body: some View {
         let t = Theme.of(scheme)
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                Text("Dictionary").font(.title2.weight(.semibold))
-                Spacer()
-                Button("Done") { dismiss() }
-                    .keyboardShortcut(.defaultAction)
-            }
-            .padding()
-
-            Divider()
-
-            ScrollView {
-                LazyVGrid(columns: columns, alignment: .leading, spacing: 24) {
-                    ForEach(Wordbook.all) { book in
-                        BookCover(book: book, selected: book.id == dictionaryID)
-                            .onTapGesture { select(book) }
-                    }
+        ScrollView {
+            LazyVGrid(columns: columns, alignment: .leading, spacing: 24) {
+                ForEach(Wordbook.all) { book in
+                    BookCover(book: book, selected: book.id == dictionaryID)
+                        .onTapGesture { select(book) }
                 }
-                .padding(24)
             }
+            .padding(24)
         }
         .background(t.background)
-        .frame(minWidth: 520, idealWidth: 640, minHeight: 480, idealHeight: 620)
+        .navigationTitle("Dictionaries")
     }
 
     private func select(_ book: Wordbook) {
         dictionaryID = book.id
         WidgetCenter.shared.reloadAllTimelines()
-        dismiss()   // picking one is the only reason this sheet is open
+        onPick()   // picking one is the only reason you're on this pane
     }
 }
 

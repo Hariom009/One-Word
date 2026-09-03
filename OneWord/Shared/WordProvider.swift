@@ -69,17 +69,31 @@ nonisolated extension WordProvider {
                       seed: Self.seed(for: resource), calendar: calendar)
             return
         }
+        // Panes, dictionary switches and the profile's shelf scan all rebuild
+        // providers; words.json alone is 3.7MB, so decode each list once.
+        if bundle === Bundle.main, let cached = Self.cache.object(forKey: resource as NSString) {
+            self.init(words: cached.words, seed: Self.seed(for: resource), calendar: calendar)
+            return
+        }
         guard let url = bundle.url(forResource: resource, withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
             fatalError("\(resource).json is missing from the bundle — check target membership")
         }
         do {
             let words = try JSONDecoder().decode([Word].self, from: data)
+            if bundle === Bundle.main {
+                Self.cache.setObject(WordList(words), forKey: resource as NSString)
+            }
             self.init(words: words, seed: Self.seed(for: resource), calendar: calendar)
         } catch {
             fatalError("words.json failed to decode: \(error)")
         }
     }
+
+    /// Decoded bundle lists, kept for the process. NSCache: thread-safe (the
+    /// widget builds providers off the main actor) and evicts under pressure.
+    /// "saved" never lands here — it's read fresh above, since it changes.
+    private static let cache = NSCache<NSString, WordList>()
 
     /// FNV-1a over the dictionary id. Deliberately NOT `hashValue` — Swift seeds
     /// `Hasher` randomly per process, so the app and the widget would each shuffle
@@ -89,6 +103,12 @@ nonisolated extension WordProvider {
         for byte in resource.utf8 { hash = (hash ^ UInt64(byte)) &* 0x100_0000_01b3 }
         return hash
     }
+}
+
+/// NSCache stores objects, so the decoded list needs a box.
+nonisolated private final class WordList: Sendable {
+    let words: [Word]
+    init(_ words: [Word]) { self.words = words }
 }
 
 /// Deterministic RNG for the shuffle — same seed, same order, in every process.

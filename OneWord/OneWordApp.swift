@@ -18,11 +18,10 @@ struct OneWordApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                WordView()
-            }
-            .environment(relatedWords)
-            .preferredColorScheme((Appearance(rawValue: appearance) ?? .system).colorScheme)
+            RootView()
+                .environment(relatedWords)
+                .preferredColorScheme((Appearance(rawValue: appearance) ?? .system).colorScheme)
         }
+        .defaultSize(width: 1000, height: 680)
     }
 }

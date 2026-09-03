@@ -25,16 +25,28 @@ struct Wordbook: Identifiable, Hashable {
     static let eloquence = Wordbook(id: "eloquence", name: "Dictionary of Eloquence", cover: 0x46305A, symbol: "book.closed.fill")
     static let curiosities = Wordbook(id: "curiosities", name: "Dictionary of Curiosities", cover: 0x5C4413, symbol: "sparkles")
     static let startup = Wordbook(id: "startup", name: "Dictionary of Corporate Slang", cover: 0x2C4257, symbol: "briefcase.fill")
-    /// Not a bundled json — WordProvider resolves this id from the words you captured.
-    static let saved = Wordbook(id: SavedWords.resource, name: "My Words", cover: 0x2A4634, symbol: "bookmark.fill")
+    static let idioms = Wordbook(id: "idioms", name: "Dictionary of Idioms", cover: 0x5A2B4E, symbol: "quote.bubble.fill")
+    /// Not a bundled json — WordProvider resolves this id from the words you bookmarked.
+    static let saved = Wordbook(id: SavedWords.resource, name: "Bookmarks", cover: 0x2A4634, symbol: "bookmark.fill")
 
     var coverColor: Color { Color(hex: cover) }
 
+    /// "Dictionary of Emotions" -> "Emotions". The full name belongs on a cover;
+    /// in a list row or a picker it's 14 characters of noise on every line.
+    var shortName: String {
+        name.hasPrefix("Dictionary of ") ? String(name.dropFirst(14)) : name
+    }
+
     /// Every dictionary the app offers. Grow this as new word sets are added.
-    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, medical, character, eloquence, curiosities, startup, saved]
+    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, medical, character, eloquence, curiosities, startup, idioms, saved]
 
     /// Resolve a stored id back to a Wordbook (falls back to the default).
     static func named(_ id: String) -> Wordbook {
         all.first { $0.id == id } ?? everydayEnglish
     }
+
+    /// The currently selected dictionary, read straight from the App Group. View
+    /// models default to this so a freshly built one already holds the right book
+    /// — `select()` then no-ops instead of resetting the shared word offset.
+    static var selected: Wordbook { named(AppGroup.defaults.string(forKey: "dictionaryID") ?? everydayEnglish.id) }
 }

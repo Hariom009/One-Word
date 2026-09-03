@@ -2,8 +2,9 @@
 //  SavedWords.swift
 //  OneWord — Shared (app + widget)
 //
-//  Words you caught yourself, via the Services shortcut in any app. Lives in the
-//  App Group so the widget can show them too. Same shape as WordStore: Codable
+//  Words you chose to keep: bookmarked from the toolbar, or caught via the
+//  Services shortcut in any app (which also pins one as today's word). The
+//  Bookmarks pane. Lives in the App Group so the widget can show them too. Same shape as WordStore: Codable
 //  through AppGroup.defaults, nonisolated because the widget's timeline provider
 //  reads it off the main actor.
 //
@@ -46,13 +47,13 @@ enum SavedWords {
         }
     }
 
-    /// Shown when nothing has been captured yet — keeps the list non-empty (so
+    /// Shown when nothing has been bookmarked yet — keeps the list non-empty (so
     /// WordProvider's precondition holds) and teaches the feature in the process.
     nonisolated static let placeholder = Word(
         term: "\u{2014}",
         partOfSpeech: "",
         hindi: "",
-        definition: "Select a word in any app and choose Services \u{25B8} Save to One Word. Words you catch land here.",
+        definition: "Bookmark a word you like, or select one in any app and choose Services \u{25B8} Save to One Word. Either way it lands here.",
         example: ""
     )
 
@@ -80,6 +81,28 @@ enum SavedWords {
         WordStore.pinnedTerm = word.term
         NotificationCenter.default.post(name: didChange, object: nil)
         return word
+    }
+
+    nonisolated static func contains(_ word: Word) -> Bool {
+        all.contains { $0.word.term == word.term }
+    }
+
+    /// Bookmark / un-bookmark from inside the app. Unlike `capture`, this does NOT
+    /// pin the word as today's — you liked it, you didn't ask to read it right now.
+    /// Returns the new state, so the button can say what it did.
+    @discardableResult
+    nonisolated static func toggle(_ word: Word) -> Bool {
+        guard word.term != placeholder.term else { return false }
+        var words = all
+        let wasSaved = words.contains { $0.word.term == word.term }
+        words.removeAll { $0.word.term == word.term }
+        if !wasSaved { words.append(SavedWord(word: word, savedAt: Date())) }
+        // Un-bookmarking the pinned word would leave `pinned` resolving to nothing;
+        // clear it so today's word falls back to the dictionary's instead.
+        if wasSaved, WordStore.pinnedTerm == word.term { WordStore.pinnedTerm = nil }
+        all = words
+        NotificationCenter.default.post(name: didChange, object: nil)
+        return !wasSaved
     }
 
     /// Trim whitespace and surrounding punctuation, lowercase to match the JSON's

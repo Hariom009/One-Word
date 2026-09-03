@@ -9,6 +9,7 @@
 
 import SwiftUI
 import AVFoundation
+import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
 
 // ponytail: one shared synth — a local would deallocate mid-utterance.
 @MainActor private let speaker = AVSpeechSynthesizer()
@@ -17,10 +18,16 @@ struct WordDetail: View {
     let word: Word
     var showDate: Bool = false
     var dictionaryName: String? = nil
+    /// The shelf this word came from, when the caller knows it. Without it a word
+    /// re-opened from a list gets logged against whatever dictionary happens to be
+    /// selected, which reads as a second sighting that never happened.
+    var shelf: String? = nil
     @Environment(\.colorScheme) private var scheme
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @State private var showRelated = false
+    @State private var bookmarked = false
+    @State private var stretch: CGFloat = 1
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
 
@@ -76,8 +83,45 @@ struct WordDetail: View {
         .background(t.background)
         // Re-fires on dictionary change and on every pop back; load is idempotent.
         .task(id: dictionaryID) { store.load(Wordbook.named(dictionaryID).id) }
+        // Every full-view route ends at THIS view — today's word, a peek, a search
+        // result, a related word — so one call here marks them all learned rather
+        // than each caller having to remember. `initial: true` catches the first
+        // render; the term catches WordView swapping the word underneath us.
+        .onChange(of: word.term, initial: true) {
+            LearnedWords.record(word, in: learnedIn)
+            bookmarked = SavedWords.contains(word)
+        }
+        // The Bookmarks pane can un-bookmark the word under us, and a Services
+        // catch bookmarks one — either way the star has to agree with the store.
+        .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
+            bookmarked = SavedWords.contains(word)
+        }
         // in WordDetail, not WordView, so the list's detail screen gets it too
         .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                // Learned is everything you've read; this is the shelf you curate.
+                Button {
+                    bookmarked = SavedWords.toggle(word)
+                    // A ribbon being pulled: it lengthens downward, then settles.
+                    withAnimation(.easeOut(duration: 0.25)) { stretch = 1.22 }
+                    withAnimation(.easeInOut(duration: 0.35).delay(0.25)) { stretch = 1 }
+                } label: {
+                    Label(bookmarked ? "Remove Bookmark" : "Bookmark",
+                          systemImage: bookmarked ? "bookmark.fill" : "bookmark")
+                        .contentTransition(.symbolEffect(.replace))
+                        // Green stays for as long as it's bookmarked — the colour is
+                        // the state, so it lands only once the stretch has settled.
+                        .foregroundStyle(bookmarked ? Color.green : Color.primary)
+                        .animation(.easeInOut(duration: 0.3).delay(0.55), value: bookmarked)
+                        // anchor: .top — the top edge is pinned, all the growth is
+                        // downward. Applied outside the .animation above so it runs
+                        // on the button's own transaction, not the delayed one.
+                        .scaleEffect(y: stretch, anchor: .top)
+                }
+                .disabled(word.term == SavedWords.placeholder.term)
+                .help(bookmarked ? "Remove \(word.term) from Bookmarks"
+                                 : "Bookmark \(word.term)")
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
@@ -172,6 +216,14 @@ struct WordDetail: View {
             }
         }
         .contentShape(Rectangle())
+    }
+
+    /// The shelf this word counts towards: the one the caller came from, or the
+    /// selected one when it didn't say. A just-captured word belongs to Bookmarks
+    /// wherever you happen to be reading it.
+    private var learnedIn: String {
+        if SavedWords.pinned?.term == word.term { return SavedWords.resource }
+        return shelf ?? dictionaryID
     }
 
     /// One VoiceOver utterance per row, covering every field the row displays.

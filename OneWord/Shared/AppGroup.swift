@@ -15,11 +15,46 @@ nonisolated enum AppGroup {
     // Must match BOTH targets' .entitlements exactly — a mismatch isn't an error,
     // UserDefaults(suiteName:) just falls back to .standard and the app and widget
     // silently stop sharing. Renamed with the app (was ...swift.MacBee).
-    static let id = "group.com.hariom.swift.oneword"
+    //
+    // The TEAM ID prefix is required on macOS. Without it the group can't be
+    // provisioned, so the signed entitlement isn't profile-backed, the sandbox
+    // never grants the container, and EVERY open falls through to TCC's app-data
+    // check — that's the "would like to access data from other apps" prompt.
+    static let id = "LAP54KU2SV.group.com.hariom.swift.oneword"
 
+    /// Where everything lived before the prefix. Read once, then never again.
+    private static let legacyID = "group.com.hariom.swift.oneword"
+
+    /// `let`, not `var`: UserDefaults(suiteName:) builds a NEW instance — and a
+    /// fresh container open — on every call, and @AppStorage re-runs its
+    /// initialiser on every view init. As a computed property this was dozens of
+    /// opens per interaction; as a `let` it's one for the life of the process.
+    ///
     /// Falls back to standard defaults if the App Group isn't provisioned yet
     /// (then the app + widget won't share — build once in Xcode to provision it).
-    static var defaults: UserDefaults { UserDefaults(suiteName: id) ?? .standard }
+    static let defaults: UserDefaults = {
+        let defaults = UserDefaults(suiteName: id) ?? .standard
+        migrateFromLegacyGroup(into: defaults)
+        return defaults
+    }()
+
+    private static let migratedKey = "migratedFromLegacyGroup"
+
+    /// Carry bookmarks, the learned log, the selected shelf and the field toggles
+    /// out of the un-prefixed group. Best effort and exactly once: the app is no
+    /// longer entitled to the old container, so this read may come back empty (or
+    /// cost one last prompt) — the flag goes down either way rather than making
+    /// every launch knock again.
+    private static func migrateFromLegacyGroup(into defaults: UserDefaults) {
+        guard !defaults.bool(forKey: migratedKey) else { return }
+        defaults.set(true, forKey: migratedKey)
+        guard let old = UserDefaults.standard.persistentDomain(forName: legacyID)
+        else { return }
+        // Never clobber: a key already written under the new group wins.
+        for (key, value) in old where defaults.object(forKey: key) == nil {
+            defaults.set(value, forKey: key)
+        }
+    }
 
     static let dictionaryKey = "dictionaryID"
 

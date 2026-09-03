@@ -14,7 +14,7 @@ final class WordListViewModel {
     private(set) var wordbook: Wordbook
     private(set) var allWords: [Word]
 
-    init(wordbook: Wordbook = .everydayEnglish) {
+    init(wordbook: Wordbook = .selected) {
         self.wordbook = wordbook
         self.allWords = Self.load(wordbook)
     }
@@ -23,8 +23,11 @@ final class WordListViewModel {
     func select(_ wordbook: Wordbook) {
         guard wordbook != self.wordbook else { return }
         self.wordbook = wordbook
-        self.allWords = Self.load(wordbook)
+        reload()
     }
+
+    /// Re-read the current wordbook. Bookmarks isn't a file — it changes under us.
+    func reload() { allWords = Self.load(wordbook) }
 
     var count: Int { allWords.count }
 
@@ -36,8 +39,11 @@ final class WordListViewModel {
     }
 
     private static func load(_ wordbook: Wordbook) -> [Word] {
-        WordProvider(resource: wordbook.id).allWords.sorted {
-            $0.term.localizedCaseInsensitiveCompare($1.term) == .orderedAscending
-        }
+        // WordProvider hands an empty Bookmarks list a placeholder so its
+        // non-empty precondition holds (the widget shows it). A list wants the
+        // empty state instead of a row reading "\u{2014}", so drop it here.
+        WordProvider(resource: wordbook.id).allWords
+            .filter { $0.term != SavedWords.placeholder.term }
+            .sorted { $0.term.localizedCaseInsensitiveCompare($1.term) == .orderedAscending }
     }
 }
