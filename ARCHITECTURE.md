@@ -77,10 +77,44 @@ policy: .after(midnight))`). No timers, no background fetch.
 `WordProvider.word(for:)` and `WordViewModel` are pure over an injected word list — unit-test
 date→word mapping (boundaries: day rollover, list wrap-around) without WidgetKit or SwiftUI.
 
-## Suggested layout
+## Layout
+
 ```
-OneWord/
-  App/            OneWordApp.swift, WordView.swift, WordListView.swift, WordViewModel.swift
-  Shared/         Word.swift, WordProvider.swift, words.json      (member of both targets)
-  Widget/         WordWidget.swift, WordTimelineProvider.swift, WordWidgetView.swift
+OneWord/                        app target
+  OneWordApp.swift              @main — window, scene, app-active refresh
+  WordCapture.swift             AppKit glue: NSServices "Save to One Word" + HUD
+  Views/                        SwiftUI only. No data loading, no persistence.
+    RootView, WordView, WordDetail, WordListView, LearnedListView,
+    ProfileView, SettingsView, DictionaryPicker, MonthCalendar
+  ViewModels/                   @Observable. No view types. The unit-testable seam.
+    WordViewModel, WordListViewModel
+  Models/                       App-only model + state. No SwiftUI.
+    Wordbook, Appearance, LearnedWords, RelatedWords
+  Shared/                       MEMBER OF BOTH TARGETS — app + widget
+    Word, WordProvider, WordStore, SavedWords, Theme, AppGroup, *.json
+  Assets.xcassets/
+
+OneWordWidget/                  widget target
+  WordWidget, WordTimelineProvider, WordWidgetView, WordEntry, RefreshWordIntent
+
+tools/                          check_*.sh gates + generators
 ```
+
+Two files sit at the app-target root on purpose: `OneWordApp.swift` is the entry point and
+`WordCapture.swift` is AppKit/NSServices glue — neither is a model, a view, or a view model.
+
+### Where a new file goes
+
+| It… | Folder |
+|---|---|
+| is a `View` | `Views/` |
+| is `@Observable` and drives a view | `ViewModels/` |
+| is data/state the app owns alone | `Models/` |
+| must be readable by the **widget** too | `Shared/` |
+
+`Shared/` files are referenced by explicit path in `project.pbxproj` for the widget target —
+moving one breaks the widget build. Everything else lives under an Xcode 16
+file-system-synchronized group, so new folders and files are picked up with no project edit.
+
+The `tools/check_*.sh` gates also compile sources by explicit path; moving a file means
+updating the script that names it.

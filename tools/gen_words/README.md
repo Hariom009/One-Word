@@ -56,7 +56,7 @@ Honest ceiling: with the dominant-sense purity gate, WordNet yields ~990 genuine
 words. There is no set of 5,000 real emotion words — reaching that needs an emotion-*association*
 lexicon (e.g. NRC EmoLex, non-open license) and includes words that merely carry emotional
 connotation. To add a themed dictionary: write an extractor like this, then register a
-`Wordbook(id: "<name>", name: "…")` in `OneWord/Wordbook.swift` (the `id` is the JSON name).
+`Wordbook(id: "<name>", name: "…")` in `OneWord/Models/Wordbook.swift` (the `id` is the JSON name).
 
 ## Knobs (in `extract.py`)
 - `LO, HI` — the wordfreq zipf band (currently `3.0–5.6`): raise `LO` for rarer/harder words,

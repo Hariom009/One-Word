@@ -22,7 +22,7 @@ if (!theme) throw new Error('add-dictionary needs a theme, e.g. Workflow({name:"
 // this is here so a stale fact shows up as a contradiction, not as a silent gap.
 const KNOWN = `
 - Entry shape (OneWord/Shared/Word.swift): exactly term, partOfSpeech, hindi, definition, example — all String, all required.
-- A dictionary is: OneWord/Shared/<id>.json + a Wordbook static in OneWord/Wordbook.swift + the id in Wordbook.all.
+- A dictionary is: OneWord/Shared/<id>.json + a Wordbook static in OneWord/Models/Wordbook.swift + the id in Wordbook.all.
 - The app target is a fileSystemSynchronizedGroup over OneWord/, so a new json under OneWord/Shared/ joins the APP automatically.
   The WIDGET target is NOT synchronized: OneWord.xcodeproj/project.pbxproj needs a PBXFileReference, a PBXBuildFile,
   an entry in the SharedRefs group, and an entry in the widget's PBXResourcesBuildPhase (the one that already lists words.json).
@@ -136,8 +136,8 @@ phase('Recon')
 const recon = await agent(
   `You are mapping the One Word macOS repo so later agents don't guess.
 
-Read: OneWord/Wordbook.swift, OneWord/Shared/Word.swift, OneWord/Shared/WordProvider.swift,
-OneWord/DictionaryPicker.swift, tools/WordProviderCheck.swift, tools/RelatedWordsCheck.swift,
+Read: OneWord/Models/Wordbook.swift, OneWord/Shared/Word.swift, OneWord/Shared/WordProvider.swift,
+OneWord/Views/DictionaryPicker.swift, tools/WordProviderCheck.swift, tools/RelatedWordsCheck.swift,
 tools/check_words.sh, tools/check_related.sh, and OneWord.xcodeproj/project.pbxproj
 (the PBXResourcesBuildPhase that lists the .json files, the SharedRefs group, and
 fileSystemSynchronizedGroups).
@@ -194,7 +194,7 @@ never a transliteration), and where offline/naive translation would go wrong her
     key: 'fit',
     ask: `PRODUCT FIT AND FAILURE MODES. Does this book overlap an existing one enough to be redundant? Read a sample of the
 existing jsons in OneWord/Shared/ to judge. How does it behave in the actual surfaces: a desktop widget showing ONE word a day,
-the alphabetical browse list, and the related-words box (OneWord/RelatedWords.swift — it needs >=99% embedding coverage per book
+the alphabetical browse list, and the related-words box (OneWord/Models/RelatedWords.swift — it needs >=99% embedding coverage per book
 and multi-word/acronym terms are the weak spot; read tools/RelatedWordsCheck.swift for what is asserted). Which cover hex and
 SF Symbol fit, given what's taken. What would make this book feel cheap or padded, and what the failure modes are.`,
   },

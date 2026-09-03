@@ -191,8 +191,8 @@ SWIFT
 swiftc -O -default-isolation MainActor -o "$OUT/check" \
     "$ROOT/OneWord/Shared/Word.swift" "$ROOT/OneWord/Shared/WordProvider.swift" \
     "$ROOT/OneWord/Shared/SavedWords.swift" "$ROOT/OneWord/Shared/WordStore.swift" \
-    "$ROOT/OneWord/Shared/Theme.swift" "$ROOT/OneWord/Wordbook.swift" \
-    "$ROOT/OneWord/LearnedWords.swift" "$ROOT/OneWord/WordViewModel.swift" \
+    "$ROOT/OneWord/Shared/Theme.swift" "$ROOT/OneWord/Models/Wordbook.swift" \
+    "$ROOT/OneWord/Models/LearnedWords.swift" "$ROOT/OneWord/ViewModels/WordViewModel.swift" \
     "$OUT/Shim.swift" "$OUT/LearnedCheck.swift"
 
 "$OUT/check"
