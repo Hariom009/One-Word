@@ -1,5 +1,5 @@
 //
-//  WordView.swift
+//  HomeView.swift
 //  OneWord
 //
 //  Today's word — the Home pane. Dumb view: binds to WordViewModel, does no data
@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
 
-struct WordView: View {
+struct HomeView: View {
     /// So the dictionary chip can send you to the Dictionaries pane rather than
     /// opening a second, sheet-shaped way to pick one.
     @Binding var pane: Pane
@@ -68,6 +68,6 @@ struct WordView: View {
 }
 
 #Preview {
-    NavigationStack { WordView(pane: .constant(.home)) }
+    NavigationStack { HomeView(pane: .constant(.home)) }
         .environment(RelatedWordsStore())
 }

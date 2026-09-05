@@ -10,7 +10,7 @@ view-model surface. See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for what/why.
         │      Main App        │        │   Widget Extension   │
         │  (SwiftUI window)    │        │      (WidgetKit)     │
         ├─────────────────────┤        ├──────────────────────┤
-  View  │  WordView            │        │  WordWidgetView      │
+  View  │  HomeView            │        │  WordWidgetView      │
         │  WordListView        │        │  (entry -> SwiftUI)  │
         ├─────────────────────┤        ├──────────────────────┤
  VM /   │  WordViewModel       │        │  TimelineProvider    │
@@ -44,7 +44,8 @@ view-model surface. See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for what/why.
   because widgets are timeline-driven, not user-event-driven.
 
 **View**
-- App: `WordView` (today), `WordListView` (history) — dumb, bind to the view model.
+- App: `HomeView` (today), `HistoryView` (a past day), `WordListView` (browse/search) — dumb,
+  bind to the view model.
 - Widget: `WordWidgetView` renders a single `TimelineEntry`.
 
 ## Data flow
@@ -85,14 +86,14 @@ OneWord/                        app target
   OneWordApp.swift              @main — window, scene, app-active refresh
   WordCapture.swift             AppKit glue: NSServices "Save to One Word" + HUD
   Views/                        SwiftUI only. No data loading, no persistence.
-    RootView, WordView, WordDetail, WordListView, LearnedListView,
-    ProfileView, SettingsView, DictionaryPicker, MonthCalendar
+    RootView, HomeView, HistoryView, WordDetail, WordListView,
+    LearnedListView, ProfileView, SettingsView, DictionaryPicker, MonthCalendar
   ViewModels/                   @Observable. No view types. The unit-testable seam.
     WordViewModel, WordListViewModel, ProfileViewModel
   Models/                       App-only model + state. No SwiftUI.
     Wordbook, Appearance, LearnedWords, RelatedWords
   Shared/                       MEMBER OF BOTH TARGETS — app + widget
-    Word, WordProvider, WordStore, SavedWords, Theme, AppGroup, *.json
+    Word, WordProvider, WordSelectionStore, SavedWords, Theme, AppGroup, *.json
   Assets.xcassets/
 
 OneWordWidget/                  widget target

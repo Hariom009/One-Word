@@ -16,7 +16,7 @@ import AppIntents
 /// the dictionary picked in the app's Settings (shared via the App Group); the rest
 /// pin the widget to a specific dictionary regardless of the app.
 enum WidgetDictionary: String, AppEnum {
-    case followApp, words, emotions, philosophy, medical, character, eloquence, curiosities, startup, idioms
+    case followApp, words, emotions, philosophy, medical, character, eloquence, curiosities, startup, idioms, classical, urdu
 
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Dictionary"
     static var caseDisplayRepresentations: [WidgetDictionary: DisplayRepresentation] = [
@@ -30,6 +30,8 @@ enum WidgetDictionary: String, AppEnum {
         .curiosities: "Curiosities",
         .startup:     "Corporate Slang",
         .idioms:      "Idioms",
+        .classical:   "Classical English",
+        .urdu:        "Urdu",
     ]
 
     /// Bundled JSON resource name (`<resource>.json`). `.followApp` resolves at read

@@ -13,7 +13,7 @@ struct RefreshWordIntent: AppIntent {
     static var title: LocalizedStringResource = "Refresh Word"
 
     func perform() async throws -> some IntentResult {
-        WordStore.advance()
+        WordSelectionStore.advance()
         WidgetCenter.shared.reloadTimelines(ofKind: "WordWidget")
         return .result()
     }

@@ -80,17 +80,17 @@ let today = SavedWord(word: word("trade"), savedAt: Date())
 let yesterday = SavedWord(word: word("global"), savedAt: Date().addingTimeInterval(-86_400))
 
 SavedWords.all = [today]
-WordStore.pinnedTerm = "trade"
+WordSelectionStore.pinnedTerm = "trade"
 check(SavedWords.pinned?.term == "trade", "a word pinned today holds the day")
 
-WordStore.advance()
+WordSelectionStore.advance()
 check(SavedWords.pinned == nil, "New Word clears the pin (so it isn't a no-op)")
 
 SavedWords.all = [yesterday]
-WordStore.pinnedTerm = "global"
+WordSelectionStore.pinnedTerm = "global"
 check(SavedWords.pinned == nil, "a pin from yesterday has expired")
 
-WordStore.pinnedTerm = "never-saved"
+WordSelectionStore.pinnedTerm = "never-saved"
 SavedWords.all = [today]
 check(SavedWords.pinned == nil, "a pin with no matching saved word resolves to nil")
 
@@ -113,7 +113,7 @@ print("\nall checks passed")
 SWIFT
 
 swiftc -O -o "$OUT/check" \
-    "$SRC/Word.swift" "$SRC/WordProvider.swift" "$SRC/WordStore.swift" \
+    "$SRC/Word.swift" "$SRC/WordProvider.swift" "$SRC/WordSelectionStore.swift" \
     "$SRC/SavedWords.swift" "$OUT/Shim.swift" "$OUT/main.swift"
 
 "$OUT/check"

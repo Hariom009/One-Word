@@ -25,7 +25,7 @@ just sits on the Mac's display and rotates daily.
 - **`words.json` is a generated ~12k-word set** (WordNet + offline Argos Hindi), not hand-written —
   see [tools/gen_words](../../tools/gen_words/README.md) to regenerate/expand. `Word.hindi` is the
   Hindi rendering of the *definition* (context makes offline NMT reliable).
-- App UI done: `OneWordApp` → `WordView` → `WordViewModel` (today's word + Hindi, MVVM).
+- App UI done: `OneWordApp` → `HomeView` → `WordViewModel` (today's word + Hindi, MVVM).
 - Browse/search: `WordListView` lists a whole dictionary alphabetically with a toolbar search
   field; a search button on the today screen opens it. `Wordbook` (`OneWord/Models/Wordbook.swift`) is
   the dictionary registry — four so far: **Everyday English** (`words.json`, 12k),

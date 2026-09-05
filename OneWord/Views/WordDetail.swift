@@ -4,7 +4,7 @@
 //
 //  One word, editorial layout: optional date line, serif headword + italic part
 //  of speech, a Devanagari meaning with an accent rule, the definition, and a
-//  "Used as" example footer. Shared by WordView (today, showDate) and the list detail.
+//  "Used as" example footer. Shared by HomeView (today, showDate) and the list detail.
 //
 
 import SwiftUI
@@ -86,7 +86,7 @@ struct WordDetail: View {
         // Every full-view route ends at THIS view — today's word, a peek, a search
         // result, a related word — so one call here marks them all learned rather
         // than each caller having to remember. `initial: true` catches the first
-        // render; the term catches WordView swapping the word underneath us.
+        // render; the term catches HomeView swapping the word underneath us.
         .onChange(of: word.term, initial: true) {
             LearnedWords.record(word, in: learnedIn)
             bookmarked = SavedWords.contains(word)
@@ -96,7 +96,7 @@ struct WordDetail: View {
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             bookmarked = SavedWords.contains(word)
         }
-        // in WordDetail, not WordView, so the list's detail screen gets it too
+        // in WordDetail, not HomeView, so the list's detail screen gets it too
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 // Learned is everything you've read; this is the shelf you curate.
@@ -126,7 +126,10 @@ struct WordDetail: View {
                 Button {
                     speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
                     let utterance = AVSpeechUtterance(string: word.term)
-                    utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                    // Urdu headwords are Devanagari — an en-US voice reads them as silence.
+                    // Derived from the term, not the book, so any future script lands too.
+                    let devanagari = word.term.unicodeScalars.contains { (0x900...0x97F).contains($0.value) }
+                    utterance.voice = AVSpeechSynthesisVoice(language: devanagari ? "hi-IN" : "en-US")
                     speaker.speak(utterance)
                 } label: {
                     Label("Pronounce", systemImage: "speaker.wave.2")

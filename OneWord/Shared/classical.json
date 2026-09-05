@@ -1,0 +1,1157 @@
+[
+  {
+    "term": "a fortiori",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "और भी अधिक बल से — पहले मानी बात से और मजबूत आधार पर",
+    "definition": "with even stronger reason, given what has already been granted",
+    "example": "If she cannot afford the rent, then a fortiori she cannot afford a mortgage."
+  },
+  {
+    "term": "a priori",
+    "partOfSpeech": "adjective",
+    "hindi": "पूर्वसिद्ध — अनुभव से पहले, केवल तर्क से जाना हुआ",
+    "definition": "known by reasoning alone, before any evidence is gathered",
+    "example": "You cannot decide a priori which headline wins; run the test."
+  },
+  {
+    "term": "Achilles heel",
+    "partOfSpeech": "noun",
+    "hindi": "एकमात्र घातक कमज़ोरी — मज़बूती के बीच दुर्बल बिंदु",
+    "definition": "a single fatal weakness in something otherwise strong",
+    "example": "The engine is superb; the gearbox is its Achilles heel."
+  },
+  {
+    "term": "ad hoc",
+    "partOfSpeech": "adjective",
+    "hindi": "तदर्थ — केवल उसी एक काम के लिए, बिना स्थायी योजना",
+    "definition": "made for one particular purpose, without any general plan",
+    "example": "An ad hoc committee formed at noon and dissolved before tea."
+  },
+  {
+    "term": "ad hominem",
+    "partOfSpeech": "adjective",
+    "hindi": "व्यक्तिगत आक्षेप वाला — तर्क छोड़कर व्यक्ति पर हमला करने वाला",
+    "definition": "attacking the person making an argument instead of the argument itself",
+    "example": "The debate turned ad hominem the moment his numbers were questioned."
+  },
+  {
+    "term": "ad infinitum",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "अनंत तक — बिना अंत के, लगातार",
+    "definition": "continuing endlessly, with no stopping point in sight",
+    "example": "The thread forked ad infinitum until nobody remembered the question."
+  },
+  {
+    "term": "ad nauseam",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "उकताने की हद तक — इतनी बार कि जी भर जाए",
+    "definition": "repeated so often that it becomes tiresome",
+    "example": "We discussed the logo ad nauseam and shipped the first version anyway."
+  },
+  {
+    "term": "adduce",
+    "partOfSpeech": "verb",
+    "hindi": "प्रमाण रूप में प्रस्तुत करना — दावे के समर्थन में देना",
+    "definition": "to put something forward as evidence for a claim",
+    "example": "He adduced three studies, two of which said the opposite of what he claimed."
+  },
+  {
+    "term": "aegis",
+    "partOfSpeech": "noun",
+    "hindi": "संरक्षण — किसी शक्ति की छत्रछाया",
+    "definition": "protection or sponsorship extended by a larger power",
+    "example": "The trial runs under the aegis of the health ministry, which also pays for the coffee."
+  },
+  {
+    "term": "alter ego",
+    "partOfSpeech": "noun",
+    "hindi": "दूसरा स्वरूप — व्यक्ति का छिपा दूसरा रूप, या उसका अभिन्न विश्वासपात्र",
+    "definition": "a second self, either another side of a person or a trusted intimate",
+    "example": "By night the accountant became his alter ego, a fairly bad stand-up comic."
+  },
+  {
+    "term": "anathema",
+    "partOfSpeech": "noun",
+    "hindi": "घोर वर्जित — जिससे सख़्त नफ़रत हो",
+    "definition": "something detested and flatly rejected",
+    "example": "Untested migrations are anathema to anyone who has been paged at three in the morning."
+  },
+  {
+    "term": "ancillary",
+    "partOfSpeech": "adjective",
+    "hindi": "सहायक — मुख्य वस्तु का पूरक, गौण",
+    "definition": "supporting the main thing without being part of it",
+    "example": "The ancillary costs of travel, printing and coffee quietly doubled the budget."
+  },
+  {
+    "term": "apotheosis",
+    "partOfSpeech": "noun",
+    "hindi": "चरम उत्कर्ष — देवत्व जैसी सर्वोच्च अवस्था",
+    "definition": "the highest, near-divine form a thing can reach",
+    "example": "That sandwich is the apotheosis of everything a lunch break can be."
+  },
+  {
+    "term": "arena",
+    "partOfSpeech": "noun",
+    "hindi": "अखाड़ा — मुकाबले का घिरा हुआ मैदान",
+    "definition": "an enclosed space where contests are staged and watched",
+    "example": "Politics is an arena, and the sand underfoot still soaks up whatever gets spilled."
+  },
+  {
+    "term": "asperity",
+    "partOfSpeech": "noun",
+    "hindi": "रूखापन — बोली और स्वभाव की कठोरता",
+    "definition": "harshness of tone or temper",
+    "example": "She corrected the intern with an asperity the whole floor could hear."
+  },
+  {
+    "term": "Augean",
+    "partOfSpeech": "adjective",
+    "hindi": "महा-मलिन — जड़ से सफ़ाई माँगने वाला",
+    "definition": "filthy or corrupt on a scale that demands a total clean-out",
+    "example": "The new commissioner inherited an Augean department and a very small broom."
+  },
+  {
+    "term": "augur",
+    "partOfSpeech": "verb",
+    "hindi": "शकुन देना — आगामी परिणाम का संकेत होना",
+    "definition": "to be a sign of how something is likely to turn out",
+    "example": "A quiet first week augurs well for a term everyone expected to be loud."
+  },
+  {
+    "term": "auspices",
+    "partOfSpeech": "noun",
+    "hindi": "संरक्षण — जिसके आश्रय और समर्थन में कोई काम हो",
+    "definition": "the protection and sponsorship under which something is carried out",
+    "example": "The talks resume under the auspices of the UN, and no birds were consulted."
+  },
+  {
+    "term": "avarice",
+    "partOfSpeech": "noun",
+    "hindi": "लोभ — धन की अति और कंजूस लालसा",
+    "definition": "an excessive, grasping desire for wealth",
+    "example": "The estate was carved up in a single afternoon of open avarice."
+  },
+  {
+    "term": "axiomatic",
+    "partOfSpeech": "adjective",
+    "hindi": "स्वयंसिद्ध — जो बिना प्रमाण के सत्य माना जाए",
+    "definition": "so obviously true that it is taken as a starting point, not proved",
+    "example": "In this office it is axiomatic that the deadline will move at least once."
+  },
+  {
+    "term": "bona fide",
+    "partOfSpeech": "adjective",
+    "hindi": "खरा — सच्चा और असली, धोखे की नीयत के बिना",
+    "definition": "genuine, and undertaken without any intention to deceive",
+    "example": "She turned out to be a bona fide expert, not a man with a slide deck."
+  },
+  {
+    "term": "Byzantine",
+    "partOfSpeech": "adjective",
+    "hindi": "अत्यंत जटिल और गूढ़ — उलझी, चालबाज़ व्यवस्था",
+    "definition": "so intricate and devious that an outsider cannot follow it",
+    "example": "The refund policy is Byzantine by design; nobody reaches the end of it."
+  },
+  {
+    "term": "candidate",
+    "partOfSpeech": "noun",
+    "hindi": "उम्मीदवार — पद, नौकरी या चुनाव का प्रत्याशी",
+    "definition": "someone formally seeking an office, a job, or a place",
+    "example": "Every candidate turned up in the same bright white shirt, a habit older than they know."
+  },
+  {
+    "term": "carpe diem",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "आज का दिन जी लो — वर्तमान क्षण को हाथ से न जाने दो",
+    "definition": "seize the present moment instead of saving it for later",
+    "example": "He quit on Friday, bought a boat on Saturday, and called it carpe diem."
+  },
+  {
+    "term": "Cassandra",
+    "partOfSpeech": "noun",
+    "hindi": "अनसुना चेतावनीकर्ता — सच कहने पर भी अविश्वसनीय",
+    "definition": "one whose true warnings are never believed",
+    "example": "He was the Cassandra of the flood report, and the city filed it away."
+  },
+  {
+    "term": "casus belli",
+    "partOfSpeech": "noun",
+    "hindi": "युद्ध का बहाना — जिस घटना को आधार बनाकर युद्ध छेड़ा जाए",
+    "definition": "an act or event held up as the justification for going to war",
+    "example": "The border skirmish was less a cause than a convenient casus belli."
+  },
+  {
+    "term": "catharsis",
+    "partOfSpeech": "noun",
+    "hindi": "रेचन — भावनाओं के बह जाने से मिली राहत",
+    "definition": "emotional release that leaves a person lighter afterwards",
+    "example": "Deleting the old codebase was less a cleanup than a catharsis."
+  },
+  {
+    "term": "caveat",
+    "partOfSpeech": "noun",
+    "hindi": "चेतावनी — दावे की सीमा बताने वाली शर्त",
+    "definition": "a warning that limits how far a claim should be trusted",
+    "example": "The study is promising, with the caveat that it followed only forty people."
+  },
+  {
+    "term": "caveat emptor",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "खरीदार सावधान — जाँच का जोखिम खरीदने वाले का",
+    "definition": "the buyer carries the risk of checking what is being sold",
+    "example": "The listing said 'as is', which is caveat emptor in two words."
+  },
+  {
+    "term": "censor",
+    "partOfSpeech": "verb",
+    "hindi": "काट-छाँट कर दबाना — प्रकाशन से पहले अंश रोकना",
+    "definition": "to cut or suppress parts of something before the public can see it",
+    "example": "The studio censored four minutes of the film and called it a creative decision."
+  },
+  {
+    "term": "chimera",
+    "partOfSpeech": "noun",
+    "hindi": "मृगतृष्णा — असंभव कल्पना",
+    "definition": "a hoped-for thing that proves impossible",
+    "example": "A permanently clean inbox is a chimera he keeps chasing anyway."
+  },
+  {
+    "term": "chimerical",
+    "partOfSpeech": "adjective",
+    "hindi": "कपोल-कल्पित — केवल कल्पना में संभव",
+    "definition": "existing only in imagination; wildly improbable",
+    "example": "The plan to power the whole city on tides by spring was frankly chimerical."
+  },
+  {
+    "term": "clemency",
+    "partOfSpeech": "noun",
+    "hindi": "क्षमादान — दंड देने की शक्ति रखते हुए दिखाई गई दया",
+    "definition": "mercy shown by someone holding the power to punish",
+    "example": "The governor granted clemency eleven hours before the sentence was due."
+  },
+  {
+    "term": "concomitant",
+    "partOfSpeech": "adjective",
+    "hindi": "सहवर्ती — साथ-साथ घटित होने वाला",
+    "definition": "happening alongside something else and bound up with it",
+    "example": "Growth came with the concomitant problem of nobody knowing anyone's name."
+  },
+  {
+    "term": "corollary",
+    "partOfSpeech": "noun",
+    "hindi": "उपसिद्धांत — सिद्ध बात से स्वतः निकलने वाला परिणाम",
+    "definition": "something that follows automatically from what has already been established",
+    "example": "The corollary of trusting your team is having to live with their decisions."
+  },
+  {
+    "term": "cosmos",
+    "partOfSpeech": "noun",
+    "hindi": "ब्रह्मांड — व्यवस्थित समग्र सृष्टि",
+    "definition": "the universe understood as an ordered whole",
+    "example": "A clear night in the desert makes the cosmos feel closer than the nearest town."
+  },
+  {
+    "term": "de facto",
+    "partOfSpeech": "adjective",
+    "hindi": "व्यवहारतः — नियम से नहीं, पर असल में ऐसा ही",
+    "definition": "existing in fact, whether or not any rule or title recognises it",
+    "example": "He has no title, but he is the de facto head of the department."
+  },
+  {
+    "term": "de jure",
+    "partOfSpeech": "adjective",
+    "hindi": "विधितः — कानून की दृष्टि से, चाहे व्यवहार में न हो",
+    "definition": "existing by law, whether or not it holds in practice",
+    "example": "The office is de jure hers; the corner desk is still someone else's."
+  },
+  {
+    "term": "decimate",
+    "partOfSpeech": "verb",
+    "hindi": "भारी क्षति पहुँचाना — बड़े हिस्से का नाश करना",
+    "definition": "to destroy or remove a large part of something",
+    "example": "The layoffs decimated the team, and nobody stopped to count who was the tenth."
+  },
+  {
+    "term": "Delphic",
+    "partOfSpeech": "adjective",
+    "hindi": "द्व्यर्थी और रहस्यमय — जान-बूझकर अस्पष्ट",
+    "definition": "deliberately obscure, and open to more than one reading",
+    "example": "The chairman's Delphic memo let both factions claim he agreed with them."
+  },
+  {
+    "term": "deus ex machina",
+    "partOfSpeech": "noun",
+    "hindi": "आकस्मिक उद्धारक — कहानी को बाहर से आकर सुलझाने वाला असंभव संयोग",
+    "definition": "an improbable rescue that resolves a story from outside its own logic",
+    "example": "The finale's deus ex machina arrived as a long-lost uncle with a cheque."
+  },
+  {
+    "term": "draconian",
+    "partOfSpeech": "adjective",
+    "hindi": "अत्यंत कठोर — अपराध से कहीं बड़ा दंड",
+    "definition": "harsh and severe out of all proportion to the offence",
+    "example": "The attendance rules are draconian: one late train and you lose a day's pay."
+  },
+  {
+    "term": "duplicity",
+    "partOfSpeech": "noun",
+    "hindi": "दोहरापन — मुँह पर कुछ और मन में कुछ रखना",
+    "definition": "double-dealing; saying one thing while intending another",
+    "example": "The emails revealed a duplicity that no apology was going to cover."
+  },
+  {
+    "term": "Elysian",
+    "partOfSpeech": "adjective",
+    "hindi": "परमानंददायी — स्वर्गिक शांति और सौंदर्य वाला",
+    "definition": "blissfully peaceful and beautiful",
+    "example": "Three days on that quiet coast were Elysian, and then the phone found me."
+  },
+  {
+    "term": "emeritus",
+    "partOfSpeech": "adjective",
+    "hindi": "अवकाशप्राप्त सम्मानित — पद छोड़कर भी उपाधि धारण किए हुए",
+    "definition": "retired from a post but keeping its title as a mark of honour",
+    "example": "Professor emeritus: no teaching, no committees, and the parking space survives."
+  },
+  {
+    "term": "enigma",
+    "partOfSpeech": "noun",
+    "hindi": "पहेली — जो समझ में न आए",
+    "definition": "someone or something that resists explanation",
+    "example": "The bug is an enigma: it fails only on Tuesdays, and only in Berlin."
+  },
+  {
+    "term": "epitome",
+    "partOfSpeech": "noun",
+    "hindi": "मूर्त रूप — किसी गुण का सर्वोत्तम उदाहरण",
+    "definition": "the purest example of a quality",
+    "example": "Her reply, three words and no greeting, was the epitome of a busy inbox."
+  },
+  {
+    "term": "equanimity",
+    "partOfSpeech": "noun",
+    "hindi": "समता — विचलित हुए बिना संतुलित बना रहने वाला मन",
+    "definition": "calmness and evenness of mind, especially under strain",
+    "example": "He took the news of the layoffs with an equanimity nobody else in the room shared."
+  },
+  {
+    "term": "ergo",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "अतः — इसलिए, निष्कर्ष रूप में",
+    "definition": "and so, used to mark the conclusion an argument has earned",
+    "example": "He was in Delhi that night, ergo he cannot have signed the register in Pune."
+  },
+  {
+    "term": "ethos",
+    "partOfSpeech": "noun",
+    "hindi": "मूल स्वभाव — समूह के मार्गदर्शक मूल्य",
+    "definition": "the guiding character and values of a group",
+    "example": "The company ethos survives exactly as long as someone keeps saying it out loud."
+  },
+  {
+    "term": "ex post facto",
+    "partOfSpeech": "adjective",
+    "hindi": "भूतलक्षी — बीत चुकी बात पर बाद में लागू किया गया",
+    "definition": "applied to things already done, after the fact",
+    "example": "An ex post facto rule cannot punish what was perfectly legal last year."
+  },
+  {
+    "term": "fiscal",
+    "partOfSpeech": "adjective",
+    "hindi": "राजकोषीय — सरकारी धन, कर और व्यय से संबंधित",
+    "definition": "relating to public money and how a government raises and spends it",
+    "example": "Fiscal discipline lasts exactly until the first opinion poll of an election year."
+  },
+  {
+    "term": "fortitude",
+    "partOfSpeech": "noun",
+    "hindi": "धैर्य-साहस — कष्ट और कठिनाई में डटे रहने का बल",
+    "definition": "courage and steadiness in the face of pain or long difficulty",
+    "example": "Six months of chemotherapy borne with a fortitude the whole ward noticed."
+  },
+  {
+    "term": "forum",
+    "partOfSpeech": "noun",
+    "hindi": "मंच — खुली सार्वजनिक चर्चा का स्थान",
+    "definition": "a public place or occasion for open discussion of shared business",
+    "example": "The town holds its angriest debates in an online forum, having sold off the square."
+  },
+  {
+    "term": "Gordian",
+    "partOfSpeech": "adjective",
+    "hindi": "दुर्भेद्य उलझन वाला — धीरज से न सुलझने वाला",
+    "definition": "so tangled that no patient method will undo it",
+    "example": "She cut the Gordian knot: fire the vendor, rebuild it in-house."
+  },
+  {
+    "term": "gravitas",
+    "partOfSpeech": "noun",
+    "hindi": "गांभीर्य — व्यक्तित्व में गंभीरता और वज़न",
+    "definition": "a weight of seriousness and dignity in bearing",
+    "example": "The role needed gravitas, and she brought it the moment she sat down."
+  },
+  {
+    "term": "habeas corpus",
+    "partOfSpeech": "noun",
+    "hindi": "बंदी प्रत्यक्षीकरण — बंदी को अदालत के सामने पेश कराने का अधिकार",
+    "definition": "the right to have a detained person brought before a court",
+    "example": "The family filed for habeas corpus when the police stopped answering."
+  },
+  {
+    "term": "hector",
+    "partOfSpeech": "verb",
+    "hindi": "धमकाना — ऊँची आवाज़ में डाँट-डपट करना",
+    "definition": "to bully with loud, blustering talk",
+    "example": "Stop hectoring the intern; she has the numbers and you have the volume."
+  },
+  {
+    "term": "hegemony",
+    "partOfSpeech": "noun",
+    "hindi": "वर्चस्व — एक शक्ति का दूसरों पर दबदबा",
+    "definition": "the dominance one power holds over others",
+    "example": "English hegemony online decides which jokes travel and which stay home."
+  },
+  {
+    "term": "Herculean",
+    "partOfSpeech": "adjective",
+    "hindi": "अतिदुष्कर — विराट बल या श्रम माँगने वाला",
+    "definition": "demanding enormous strength or effort",
+    "example": "Rewriting the payroll system in six weeks was a Herculean ask."
+  },
+  {
+    "term": "hubris",
+    "partOfSpeech": "noun",
+    "hindi": "अहंकार — पतन को न्योता देता दंभ",
+    "definition": "overreaching pride that invites its own downfall",
+    "example": "Shipping on Friday with no rollback plan is hubris, and Monday collects the bill."
+  },
+  {
+    "term": "in absentia",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "अनुपस्थिति में — संबंधित व्यक्ति के बिना उपस्थित हुए",
+    "definition": "while the person concerned is not present",
+    "example": "He was sentenced in absentia and is believed to be somewhere in Dubai."
+  },
+  {
+    "term": "in loco parentis",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "अभिभावक के स्थान पर — माता-पिता की जगह उनकी ज़िम्मेदारी निभाते हुए",
+    "definition": "standing in a parent's place, with a parent's responsibilities",
+    "example": "Boarding schools act in loco parentis, which is a heavy thing to promise."
+  },
+  {
+    "term": "in medias res",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "कथा के मध्य से — घटना बीच में पहुँच चुकी हो वहाँ से शुरू",
+    "definition": "beginning in the middle of the action rather than at the start",
+    "example": "The novel opens in medias res, with the getaway car already on fire."
+  },
+  {
+    "term": "in situ",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "यथास्थान — अपनी मूल जगह पर ही",
+    "definition": "in the original place, without being moved",
+    "example": "The mosaic was cleaned in situ, an inch at a time, over two summers."
+  },
+  {
+    "term": "indolence",
+    "partOfSpeech": "noun",
+    "hindi": "आलस्य — परिश्रम से बचने की जमी हुई प्रवृत्ति",
+    "definition": "settled laziness; a disinclination to exert oneself",
+    "example": "Two summers of pure indolence, and he still calls it a sabbatical."
+  },
+  {
+    "term": "inexorable",
+    "partOfSpeech": "adjective",
+    "hindi": "अटल — जिसे रोका या मनाया न जा सके",
+    "definition": "impossible to stop, slow down, or talk out of its course",
+    "example": "The math was inexorable: at that burn rate the company had eleven months left."
+  },
+  {
+    "term": "inter alia",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "अन्य बातों के साथ — और भी कई बातों के बीच",
+    "definition": "among other things, when only a few of them are being named",
+    "example": "The report criticises, inter alia, the catering budget."
+  },
+  {
+    "term": "ipso facto",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "स्वतः ही — उसी तथ्य से अपने आप",
+    "definition": "by that fact alone, with nothing further needing to be shown",
+    "example": "Missing three meetings does not ipso facto mean he has quit."
+  },
+  {
+    "term": "kudos",
+    "partOfSpeech": "noun",
+    "hindi": "श्रेय और प्रशंसा — काम की सराहना",
+    "definition": "credit and praise earned for something achieved",
+    "example": "Kudos to whoever fixed the printer without telling anyone."
+  },
+  {
+    "term": "laurels",
+    "partOfSpeech": "noun",
+    "hindi": "कीर्ति — पूर्व उपलब्धियों से अर्जित सम्मान",
+    "definition": "honours earned by past achievement and enjoyed ever since",
+    "example": "Two hits in a decade, and he has been resting on his laurels for nine years of it."
+  },
+  {
+    "term": "magnanimity",
+    "partOfSpeech": "noun",
+    "hindi": "उदारमनस्कता — विरोधी के प्रति भी दिखाया गया बड़प्पन",
+    "definition": "generosity of spirit, especially toward a rival or a beaten foe",
+    "example": "His magnanimity in defeat won him more supporters than the campaign ever had."
+  },
+  {
+    "term": "magnum opus",
+    "partOfSpeech": "noun",
+    "hindi": "कृति-शिरोमणि — जीवन भर का सबसे बड़ा और श्रेष्ठ काम",
+    "definition": "the greatest work of an artist's or writer's life",
+    "example": "Forty years of notes finally became a magnum opus nobody could lift."
+  },
+  {
+    "term": "mania",
+    "partOfSpeech": "noun",
+    "hindi": "उन्माद — जुनूनी सनक या उत्तेजना",
+    "definition": "an obsessive enthusiasm that takes hold of a person or a crowd",
+    "example": "The office caught a brief mania for standing desks, then quietly sat back down."
+  },
+  {
+    "term": "marathon",
+    "partOfSpeech": "noun",
+    "hindi": "लंबी थकाऊ दौड़ — सहनशक्ति की परीक्षा",
+    "definition": "an endurance test of exhausting length",
+    "example": "The budget session became a marathon: nineteen hours and one working microphone."
+  },
+  {
+    "term": "martial",
+    "partOfSpeech": "adjective",
+    "hindi": "रणसंबंधी — युद्ध या सैनिक से जुड़ा",
+    "definition": "having to do with war, or befitting a soldier",
+    "example": "The parade ended with martial drums and a very civilian queue for tea."
+  },
+  {
+    "term": "mausoleum",
+    "partOfSpeech": "noun",
+    "hindi": "मक़बरा — भव्य समाधि-भवन",
+    "definition": "a grand building raised to house a tomb",
+    "example": "The empty mall has the hush of a mausoleum with escalators."
+  },
+  {
+    "term": "mea culpa",
+    "partOfSpeech": "noun",
+    "hindi": "मेरी भूल — अपनी गलती की खुली स्वीकारोक्ति",
+    "definition": "an open admission that the fault was your own",
+    "example": "The apology began as a mea culpa and ended up blaming the vendor."
+  },
+  {
+    "term": "memento mori",
+    "partOfSpeech": "noun",
+    "hindi": "मृत्यु-स्मारक — मरणशीलता की याद दिलाने वाली वस्तु",
+    "definition": "a reminder that you will die, kept deliberately in view",
+    "example": "The cracked phone screen served as a small daily memento mori."
+  },
+  {
+    "term": "mendacity",
+    "partOfSpeech": "noun",
+    "hindi": "मिथ्यावादिता — झूठ बोलने की पक्की आदत",
+    "definition": "the habit of lying; untruthfulness as a settled trait",
+    "example": "The inquiry exposed a mendacity running through every quarterly report."
+  },
+  {
+    "term": "mercurial",
+    "partOfSpeech": "adjective",
+    "hindi": "चंचल स्वभाव — पल-पल बदलता मिज़ाज",
+    "definition": "quick to change in mood or manner, and hard to predict",
+    "example": "A mercurial editor: lavish praise on Monday, silence for the rest of the week."
+  },
+  {
+    "term": "Midas touch",
+    "partOfSpeech": "noun",
+    "hindi": "सोना बना देने वाला हाथ — हर काम मुनाफ़े में बदलने की क्षमता",
+    "definition": "a knack for turning everything one handles into profit",
+    "example": "Three hits in a row and the press decided she had the Midas touch."
+  },
+  {
+    "term": "modus operandi",
+    "partOfSpeech": "noun",
+    "hindi": "कार्यप्रणाली — काम करने का चिर-परिचित तरीका",
+    "definition": "a person's characteristic way of doing something",
+    "example": "Charm first, invoice later, vanish by spring: that was his modus operandi."
+  },
+  {
+    "term": "munificence",
+    "partOfSpeech": "noun",
+    "hindi": "उदारता — दान देने में असाधारण दरियादिली",
+    "definition": "great generosity in giving",
+    "example": "The new library exists entirely because of one alumna's munificence."
+  },
+  {
+    "term": "mutatis mutandis",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "यथावश्यक परिवर्तन सहित — ज़रूरी बदलाव करके, बाकी ज्यों का त्यों",
+    "definition": "with the necessary changes made and everything else left as it was",
+    "example": "The same clause applies to the Delhi office, mutatis mutandis."
+  },
+  {
+    "term": "narcissism",
+    "partOfSpeech": "noun",
+    "hindi": "आत्ममोह — स्वयं पर अत्यधिक मुग्धता",
+    "definition": "excessive absorption in oneself and one's own image",
+    "example": "The memoir's narcissism is total: even the earthquake is about him."
+  },
+  {
+    "term": "nemesis",
+    "partOfSpeech": "noun",
+    "hindi": "अपरिहार्य प्रतिद्वंद्वी — जिससे बचा न जा सके",
+    "definition": "an opponent or downfall that cannot be escaped",
+    "example": "Spreadsheets were his nemesis long before the audit made it official."
+  },
+  {
+    "term": "non sequitur",
+    "partOfSpeech": "noun",
+    "hindi": "असंगत कथन — पिछली बात से न जुड़ने वाली टिप्पणी",
+    "definition": "a statement that does not follow from what came before",
+    "example": "He answered a question about rent with a non sequitur about his childhood dog."
+  },
+  {
+    "term": "obduracy",
+    "partOfSpeech": "noun",
+    "hindi": "हठधर्मिता — टस से मस न होने वाली जिद",
+    "definition": "stubborn refusal to be moved, softened, or persuaded",
+    "example": "The negotiations died on the obduracy of a single shareholder."
+  },
+  {
+    "term": "obviate",
+    "partOfSpeech": "verb",
+    "hindi": "टाल देना — आवश्यकता ही समाप्त कर देना",
+    "definition": "to remove the need for something before it can arise",
+    "example": "A single sentence in the contract would have obviated the entire lawsuit."
+  },
+  {
+    "term": "odyssey",
+    "partOfSpeech": "noun",
+    "hindi": "लंबी घटनापूर्ण यात्रा — कठिनाइयों से भरी",
+    "definition": "a long, eventful journey full of trials",
+    "example": "Getting the visa turned into a nine-month odyssey through four consulates."
+  },
+  {
+    "term": "Olympian",
+    "partOfSpeech": "adjective",
+    "hindi": "उच्चासीन और निर्लिप्त — सामान्य चिंताओं से ऊपर",
+    "definition": "lofty and detached, as though above ordinary concerns",
+    "example": "He dismissed the complaint with Olympian calm and never read the second page."
+  },
+  {
+    "term": "ostensible",
+    "partOfSpeech": "adjective",
+    "hindi": "दिखावटी — जो कारण कहा गया हो, पर असली न हो",
+    "definition": "stated as the reason, though probably not the real one",
+    "example": "The ostensible purpose of the meeting was planning; the real one was blame."
+  },
+  {
+    "term": "ovation",
+    "partOfSpeech": "noun",
+    "hindi": "करतल ध्वनि — खड़े होकर की गई तालियों की लंबी गूँज",
+    "definition": "a sustained burst of applause from a crowd on its feet",
+    "example": "She got a standing ovation, which is the lesser honour and still the louder one."
+  },
+  {
+    "term": "panacea",
+    "partOfSpeech": "noun",
+    "hindi": "रामबाण — हर मर्ज़ का एक ही इलाज",
+    "definition": "a single cure imagined to fix every ailment",
+    "example": "Standups are not a panacea; a broken plan stays broken at nine in the morning."
+  },
+  {
+    "term": "panoply",
+    "partOfSpeech": "noun",
+    "hindi": "समूची श्रृंखला — प्रभावशाली पूरा साज़-सामान",
+    "definition": "a full and impressive array of things",
+    "example": "She boarded with a panoply of chargers for a two-hour flight."
+  },
+  {
+    "term": "pantheon",
+    "partOfSpeech": "noun",
+    "hindi": "देवमंडल — किसी क्षेत्र के सर्वोच्च नाम",
+    "definition": "the set of figures a field honours above all others",
+    "example": "Her second album put her in the pantheon of artists we argue about at weddings."
+  },
+  {
+    "term": "paradigm",
+    "partOfSpeech": "noun",
+    "hindi": "प्रतिमान — सोच और कार्य का ढाँचा",
+    "definition": "the pattern of assumptions a field works inside",
+    "example": "Remote work broke the old paradigm and nobody has finished writing the new one."
+  },
+  {
+    "term": "parsimony",
+    "partOfSpeech": "noun",
+    "hindi": "कृपणता — खर्च करने में अति कंजूसी",
+    "definition": "extreme unwillingness to spend money",
+    "example": "The department's parsimony extended to rationing the printer paper."
+  },
+  {
+    "term": "pathos",
+    "partOfSpeech": "noun",
+    "hindi": "करुण भाव — दया और दुःख जगाने वाला गुण",
+    "definition": "the quality in something that stirs pity or sorrow",
+    "example": "The ad reaches for pathos with a dog, a suitcase, and one piano chord."
+  },
+  {
+    "term": "patrician",
+    "partOfSpeech": "adjective",
+    "hindi": "कुलीन — पुराने अभिजात वर्ग के ढंग और संस्कार वाला",
+    "definition": "having the manner or breeding of a long-established upper class",
+    "example": "His patrician drawl has survived four decades in a party that claims to hate it."
+  },
+  {
+    "term": "per se",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "स्वयं में — अपने आप में, अन्य संदर्भ हटाकर",
+    "definition": "in itself, considered apart from anything connected to it",
+    "example": "The app isn't slow per se; the network it trusts is."
+  },
+  {
+    "term": "perfidy",
+    "partOfSpeech": "noun",
+    "hindi": "विश्वासघात — भरोसे या वचन को जानबूझकर तोड़ना",
+    "definition": "deliberate betrayal of trust or of a promise given",
+    "example": "Selling the client list to a rival was perfidy, not ambition."
+  },
+  {
+    "term": "persona non grata",
+    "partOfSpeech": "noun",
+    "hindi": "अवांछित व्यक्ति — जिसका आना अब स्वीकार्य नहीं",
+    "definition": "someone no longer welcome in a place or group",
+    "example": "One leaked memo made her persona non grata at head office."
+  },
+  {
+    "term": "phobia",
+    "partOfSpeech": "noun",
+    "hindi": "भीति — कारण से कहीं बड़ा डर",
+    "definition": "a fear far out of proportion to the thing feared",
+    "example": "His phobia of public speaking survives every workshop the company pays for."
+  },
+  {
+    "term": "phoenix",
+    "partOfSpeech": "noun",
+    "hindi": "पुनर्जीवित — राख से फिर उठ खड़ा होने वाला",
+    "definition": "something that rises restored from its own destruction",
+    "example": "The mill closed in 1998 and reopened as a phoenix of glass and coffee shops."
+  },
+  {
+    "term": "plebeian",
+    "partOfSpeech": "adjective",
+    "hindi": "जनसाधारण का — आम लोगों जैसा, अपरिष्कृत",
+    "definition": "belonging to or suited to ordinary people; lacking refinement",
+    "example": "He apologised for his plebeian taste in films, then defended it for a full hour."
+  },
+  {
+    "term": "plethora",
+    "partOfSpeech": "noun",
+    "hindi": "बहुतायत — ज़रूरत से कहीं ज़्यादा भरमार",
+    "definition": "an amount so large it becomes a problem of its own",
+    "example": "There is a plethora of dashboards and not one answer to the actual question."
+  },
+  {
+    "term": "praetorian",
+    "partOfSpeech": "adjective",
+    "hindi": "अंगरक्षक-वर्गीय — नेता की रक्षा और नियंत्रण करने वाले विशिष्ट दल का",
+    "definition": "belonging to an elite guard that protects a leader and often controls him",
+    "example": "A praetorian ring of aides decides who ever reaches the chief executive."
+  },
+  {
+    "term": "precarious",
+    "partOfSpeech": "adjective",
+    "hindi": "अनिश्चित और अस्थिर — किसी भी क्षण ढह जाने योग्य",
+    "definition": "unsteady and liable to collapse or fail at any moment",
+    "example": "The coalition is precarious: three spare votes, two large egos, one bad news cycle."
+  },
+  {
+    "term": "prima facie",
+    "partOfSpeech": "adjective",
+    "hindi": "प्रथम दृष्टया — पहली नज़र में सही जान पड़ने वाला",
+    "definition": "true or sufficient on first impression, unless later disproved",
+    "example": "The court found a prima facie case and let the trial go ahead."
+  },
+  {
+    "term": "pro bono",
+    "partOfSpeech": "adjective",
+    "hindi": "नि:शुल्क — जनहित में, बिना फीस लिए किया गया",
+    "definition": "done professionally without charge, usually for the public good",
+    "example": "She takes two pro bono cases a year and loses sleep over both."
+  },
+  {
+    "term": "probity",
+    "partOfSpeech": "noun",
+    "hindi": "सत्यनिष्ठा — पूरी ईमानदारी, विशेषकर पैसे और पद के मामलों में",
+    "definition": "complete honesty and uprightness, especially where money or power is involved",
+    "example": "Thirty years on the bench and not one question about his probity."
+  },
+  {
+    "term": "procrustean",
+    "partOfSpeech": "adjective",
+    "hindi": "जबरन ढाँचे में कसने वाला — नुक़सान की परवाह किए बिना",
+    "definition": "forcing things to fit a fixed scheme, whatever the damage",
+    "example": "Grading on a strict curve is procrustean: someone must fail so the shape holds."
+  },
+  {
+    "term": "profligacy",
+    "partOfSpeech": "noun",
+    "hindi": "अपव्यय-उच्छृंखलता — बेतहाशा फिजूलखर्ची या निर्लज्ज दुराचार",
+    "definition": "reckless extravagance with money",
+    "example": "A decade of profligacy left the club with trophies and no money."
+  },
+  {
+    "term": "Promethean",
+    "partOfSpeech": "adjective",
+    "hindi": "साहसी सर्जक — निषेध तोड़कर नया देने वाला",
+    "definition": "boldly original, and willing to defy authority to bring something new",
+    "example": "The lab's Promethean streak gave the world a cure and a decade of lawsuits."
+  },
+  {
+    "term": "protean",
+    "partOfSpeech": "adjective",
+    "hindi": "बहुरूपी — अनेक रूप धारण करने वाला",
+    "definition": "endlessly changeable; able to take many forms or roles",
+    "example": "A protean actor who plays the villain, the priest, and the dog in one season."
+  },
+  {
+    "term": "proviso",
+    "partOfSpeech": "noun",
+    "hindi": "शर्त — किसी सहमति के साथ जुड़ी अनिवार्य बात",
+    "definition": "a condition attached to an agreement",
+    "example": "She agreed, with the proviso that she would never be asked to travel on weekends."
+  },
+  {
+    "term": "putative",
+    "partOfSpeech": "adjective",
+    "hindi": "कथित — जो माना जाता हो पर सिद्ध न हो",
+    "definition": "generally supposed to be so, without having been proved",
+    "example": "The putative author of the leak turned out to be on leave that entire week."
+  },
+  {
+    "term": "Pyrrhic",
+    "partOfSpeech": "adjective",
+    "hindi": "आत्मघाती विजय-सा — हार जैसी महँगी जीत",
+    "definition": "won at a cost so ruinous the victory is hardly worth having",
+    "example": "They won the case and lost the company: a Pyrrhic victory in three volumes."
+  },
+  {
+    "term": "quid pro quo",
+    "partOfSpeech": "noun",
+    "hindi": "लेन-देन — बदले में कुछ मिलने की शर्त पर किया गया उपकार",
+    "definition": "a favour given on the understanding that something comes back",
+    "example": "The email made the quid pro quo explicit, which is why it became evidence."
+  },
+  {
+    "term": "rapacity",
+    "partOfSpeech": "noun",
+    "hindi": "लुटेरी लालसा — निर्ममता से हड़प लेने की वृत्ति",
+    "definition": "predatory greed that takes without scruple",
+    "example": "The rapacity of the asset strippers left nothing behind but the brand name."
+  },
+  {
+    "term": "rectitude",
+    "partOfSpeech": "noun",
+    "hindi": "नैतिक सत्यता — आचरण की सीधाई, सही राह पर अडिग रहना",
+    "definition": "strict adherence to what is right in judgment and conduct",
+    "example": "She ran the charity with a rectitude that made the auditors almost redundant."
+  },
+  {
+    "term": "refute",
+    "partOfSpeech": "verb",
+    "hindi": "खंडन करना — प्रमाण से गलत सिद्ध करना",
+    "definition": "to prove a claim wrong by evidence or argument",
+    "example": "One clean counterexample refuted a theory that had stood for a decade."
+  },
+  {
+    "term": "rigor mortis",
+    "partOfSpeech": "noun",
+    "hindi": "मृत्यु-कठोरता — मरने के कुछ घंटों बाद देह का अकड़ जाना",
+    "definition": "the stiffening of the body some hours after death",
+    "example": "Rigor mortis gave the pathologist a rough window for the time of death."
+  },
+  {
+    "term": "rostrum",
+    "partOfSpeech": "noun",
+    "hindi": "व्याख्यान-मंच — वक्ता या संचालक का ऊँचा चबूतरा",
+    "definition": "a raised platform for a speaker or a conductor",
+    "example": "She stepped up to the rostrum, once a stage decked with the beaks of captured ships."
+  },
+  {
+    "term": "Rubicon",
+    "partOfSpeech": "noun",
+    "hindi": "निर्णायक सीमा — जिसे पार करने पर लौटना असंभव",
+    "definition": "a boundary that, once crossed, allows no going back",
+    "example": "Sending that resignation email was his Rubicon, and the server sent it twice."
+  },
+  {
+    "term": "sagacity",
+    "partOfSpeech": "noun",
+    "hindi": "प्रज्ञा — व्यावहारिक बुद्धि और गहरी सूझबूझ",
+    "definition": "keen practical wisdom and sound judgment",
+    "example": "Her sagacity in a crisis was worth more than the whole strategy deck."
+  },
+  {
+    "term": "salary",
+    "partOfSpeech": "noun",
+    "hindi": "वेतन — नियमित काम के बदले तयशुदा नियत आय",
+    "definition": "fixed pay for regular work, quoted by the year and drawn by the month",
+    "example": "The salary looked generous until he divided it by the hours actually worked."
+  },
+  {
+    "term": "salient",
+    "partOfSpeech": "adjective",
+    "hindi": "प्रमुख — जो सबसे उभरकर ध्यान खींचे",
+    "definition": "standing out as the most noticeable or important part",
+    "example": "Skip the history and give me the salient points before the client calls."
+  },
+  {
+    "term": "saturnine",
+    "partOfSpeech": "adjective",
+    "hindi": "उदास और गंभीर — रूखा, मंद स्वभाव",
+    "definition": "gloomy and grave in temper, slow to warm",
+    "example": "He had a saturnine face that made even his compliments sound like warnings."
+  },
+  {
+    "term": "sine die",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "अनिश्चित काल के लिए — बिना अगली तारीख तय किए",
+    "definition": "with no future date fixed for resuming",
+    "example": "The House was adjourned sine die after ninety minutes of shouting."
+  },
+  {
+    "term": "sine qua non",
+    "partOfSpeech": "noun",
+    "hindi": "अनिवार्य शर्त — जिसके बिना काम असंभव हो",
+    "definition": "something absolutely essential, without which the thing cannot exist",
+    "example": "Trust is the sine qua non of a partnership that survives its first bad quarter."
+  },
+  {
+    "term": "sinister",
+    "partOfSpeech": "adjective",
+    "hindi": "अनिष्टसूचक — जिसमें छिपा हुआ अहित जान पड़े",
+    "definition": "giving the impression that something harmful is quietly at work",
+    "example": "Nothing about the offer looked sinister until the second page, on the left."
+  },
+  {
+    "term": "siren",
+    "partOfSpeech": "noun",
+    "hindi": "मोहक विनाशिका — लुभाकर संकट में डालने वाली",
+    "definition": "something alluring that draws you toward ruin",
+    "example": "Cheap credit was the siren that sank three of his shops."
+  },
+  {
+    "term": "Sisyphean",
+    "partOfSpeech": "adjective",
+    "hindi": "निष्फल परिश्रम-भरा — जो कभी पूरा ही न हो",
+    "definition": "endlessly laborious and doomed to yield nothing",
+    "example": "Clearing that inbox is Sisyphean; by lunch it has filled again."
+  },
+  {
+    "term": "spartan",
+    "partOfSpeech": "adjective",
+    "hindi": "सादा और कठोर — सुख-सुविधा से रहित",
+    "definition": "plain, bare, and stripped of all comfort",
+    "example": "His flat was spartan: a bed, a lamp, and forty books stacked on the floor."
+  },
+  {
+    "term": "specious",
+    "partOfSpeech": "adjective",
+    "hindi": "भ्रामक — ऊपर से ठीक दिखने वाला पर वस्तुतः गलत",
+    "definition": "looking sound at first glance but false underneath",
+    "example": "It is a specious argument: every step is clean except the one that matters."
+  },
+  {
+    "term": "spurious",
+    "partOfSpeech": "adjective",
+    "hindi": "मिथ्या — नकली, या झूठे संबंध वाला",
+    "definition": "not genuine, or not really connected to what it claims",
+    "example": "The correlation is spurious; both lines are just following the weather."
+  },
+  {
+    "term": "status quo",
+    "partOfSpeech": "noun",
+    "hindi": "यथास्थिति — जो व्यवस्था इस समय चली आ रही है",
+    "definition": "the existing state of affairs, especially when someone wants it kept",
+    "example": "Every committee says it wants change and then votes for the status quo."
+  },
+  {
+    "term": "stentorian",
+    "partOfSpeech": "adjective",
+    "hindi": "गरजदार — अत्यंत ऊँची और भारी आवाज़ वाला",
+    "definition": "extremely loud and powerful in voice",
+    "example": "A stentorian 'order!' from the chair ended the shouting instantly."
+  },
+  {
+    "term": "stigma",
+    "partOfSpeech": "noun",
+    "hindi": "कलंक — किसी बात से चिपकी बदनामी",
+    "definition": "a mark of disgrace attached to a condition or a choice",
+    "example": "The stigma around therapy fades a little each time someone admits they go."
+  },
+  {
+    "term": "Stygian",
+    "partOfSpeech": "adjective",
+    "hindi": "घोर अंधकारमय — भयावह काला",
+    "definition": "utterly dark, and gloomy with it",
+    "example": "The tunnel lights failed and left us in Stygian dark for twenty minutes."
+  },
+  {
+    "term": "sub judice",
+    "partOfSpeech": "adjective",
+    "hindi": "विचाराधीन — अदालत में लंबित, इसलिए सार्वजनिक चर्चा वर्जित",
+    "definition": "still before a court, and so not to be discussed publicly",
+    "example": "The anchor kept saying the matter was sub judice, and kept discussing it."
+  },
+  {
+    "term": "sub rosa",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "गुप्त रूप से — चुपचाप, बिना किसी को बताए",
+    "definition": "in secret, and understood by everyone present to stay that way",
+    "example": "The merger talks ran sub rosa for four months before anyone leaked them."
+  },
+  {
+    "term": "subsume",
+    "partOfSpeech": "verb",
+    "hindi": "अंतर्भूत करना — बड़े वर्ग के भीतर समेट लेना",
+    "definition": "to include something within a larger category or principle",
+    "example": "The smaller complaints were subsumed under one heading and quietly forgotten."
+  },
+  {
+    "term": "sui generis",
+    "partOfSpeech": "adjective",
+    "hindi": "अपने ढंग का अकेला — जिसकी कोई श्रेणी ही न बने",
+    "definition": "in a class of its own, resembling nothing else",
+    "example": "The building is sui generis, and the neighbours have opinions about it."
+  },
+  {
+    "term": "symposium",
+    "partOfSpeech": "noun",
+    "hindi": "संगोष्ठी — विशेषज्ञों की चर्चा-सभा",
+    "definition": "a meeting where specialists present and discuss their work",
+    "example": "The symposium ran late because two professors disagreed politely for an hour."
+  },
+  {
+    "term": "tabula rasa",
+    "partOfSpeech": "noun",
+    "hindi": "कोरी स्लेट — जिस पर अभी कुछ लिखा न गया हो",
+    "definition": "a blank state carrying nothing written on it yet",
+    "example": "A new team is never a tabula rasa; everyone arrives with an old grudge."
+  },
+  {
+    "term": "tacit",
+    "partOfSpeech": "adjective",
+    "hindi": "मौन — बिना कहे समझा और स्वीकार किया गया",
+    "definition": "understood and accepted without ever being said aloud",
+    "example": "There was a tacit agreement that nobody would mention the failed launch."
+  },
+  {
+    "term": "tantalize",
+    "partOfSpeech": "verb",
+    "hindi": "ललचाना — पास दिखाकर पहुँच से दूर रखना",
+    "definition": "to tease by keeping something wanted just out of reach",
+    "example": "The menu tantalized us for an hour before the kitchen admitted it had closed."
+  },
+  {
+    "term": "temerity",
+    "partOfSpeech": "noun",
+    "hindi": "दुस्साहस — जोखिम और मर्यादा की परवाह किए बिना की गई ढिठाई",
+    "definition": "reckless boldness; nerve that ignores the risk or the offence",
+    "example": "He had the temerity to ask for a raise the week after the outage."
+  },
+  {
+    "term": "temperance",
+    "partOfSpeech": "noun",
+    "hindi": "संयम — भोग और इच्छाओं में आत्म-नियंत्रण",
+    "definition": "moderation and self-restraint, especially in appetite",
+    "example": "His idea of temperance was one dessert instead of three."
+  },
+  {
+    "term": "tenable",
+    "partOfSpeech": "adjective",
+    "hindi": "समर्थनीय — जिसका बचाव किया जा सके",
+    "definition": "able to be defended against objection",
+    "example": "After the third contradiction, his position was no longer tenable."
+  },
+  {
+    "term": "terra firma",
+    "partOfSpeech": "noun",
+    "hindi": "ठोस भूमि — पैरों तले की पक्की ज़मीन",
+    "definition": "solid ground, felt as a relief after sea or air",
+    "example": "After nine hours of turbulence, terra firma felt like a personal favour."
+  },
+  {
+    "term": "titanic",
+    "partOfSpeech": "adjective",
+    "hindi": "विराट — आकार, शक्ति या महत्वाकांक्षा में विशाल",
+    "definition": "enormous in size, force, or ambition",
+    "example": "It took a titanic effort to get the bridge open before the monsoon."
+  },
+  {
+    "term": "triumph",
+    "partOfSpeech": "noun",
+    "hindi": "विजयोत्सव — बड़ी जीत और उसका उल्लास",
+    "definition": "a great victory, or the public elation that follows one",
+    "example": "He called the merger a triumph and paraded it through three press conferences."
+  },
+  {
+    "term": "Trojan horse",
+    "partOfSpeech": "noun",
+    "hindi": "छद्म उपहार — भीतर छिपे आक्रमण वाला",
+    "definition": "a gift or disguise that carries a hidden attack inside",
+    "example": "The free plugin was a Trojan horse and shipped a keylogger with it."
+  },
+  {
+    "term": "turpitude",
+    "partOfSpeech": "noun",
+    "hindi": "नैतिक पतन — घोर अनैतिक और नीच आचरण",
+    "definition": "depravity; conduct that is basely immoral",
+    "example": "The visa was refused on grounds of moral turpitude."
+  },
+  {
+    "term": "ultra vires",
+    "partOfSpeech": "adjective",
+    "hindi": "अधिकार-क्षेत्र से बाहर — कानूनी शक्ति की सीमा लाँघकर किया गया",
+    "definition": "beyond the legal power of the person or body acting",
+    "example": "The court struck the order down as ultra vires the parent statute."
+  },
+  {
+    "term": "venality",
+    "partOfSpeech": "noun",
+    "hindi": "घूसखोरी — रिश्वत के लिए बिक जाने की प्रवृत्ति",
+    "definition": "willingness to be bribed; being for sale where one should not be",
+    "example": "The venality of the licensing office was an open secret and a fixed price."
+  },
+  {
+    "term": "veracity",
+    "partOfSpeech": "noun",
+    "hindi": "सत्यवादिता — सच बोलने की आदत, कथन की सच्चाई",
+    "definition": "habitual truthfulness, or the accuracy of a statement",
+    "example": "Nobody doubted his sincerity; the veracity of his numbers was another matter."
+  },
+  {
+    "term": "vice versa",
+    "partOfSpeech": "Latin phrase",
+    "hindi": "और इसके उलट भी — दोनों पक्ष बदल कर भी वही बात",
+    "definition": "with the two things just mentioned swapped around",
+    "example": "Designers should sit with support for a week, and vice versa."
+  },
+  {
+    "term": "villain",
+    "partOfSpeech": "noun",
+    "hindi": "खलनायक — कहानी या घटना का दुष्ट पात्र",
+    "definition": "the character or person whose wrongdoing drives the trouble",
+    "example": "Every founder's story needs a villain, and it is never the man telling the story."
+  },
+  {
+    "term": "vox populi",
+    "partOfSpeech": "noun",
+    "hindi": "जनमत — आम लोगों की सामूहिक आवाज़",
+    "definition": "the opinion of ordinary people taken as a whole",
+    "example": "Polling is an attempt to hear the vox populi without leaving the office."
+  }
+]

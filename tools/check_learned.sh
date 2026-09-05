@@ -84,7 +84,7 @@ enum Check {
         let first = model.word.term
         model.shuffle(for: day)
         check(model.word.term != first, "peeking again moves on again")
-        check(WordStore.offset == 0, "a peek never touches the shared offset the widget reads")
+        check(WordSelectionStore.offset == 0, "a peek never touches the shared offset the widget reads")
 
         try? await Task.sleep(for: WordViewModel.peekDuration + .seconds(1))
         check(model.word.term == today, "the day's word comes back on its own")
@@ -112,7 +112,7 @@ enum Check {
         check(SavedWords.toggle(a), "bookmarking reports the new state")
         check(SavedWords.contains(a), "and the word is in")
         check(SavedWords.all.count == 1, "exactly once")
-        check(WordStore.pinnedTerm == nil, "bookmarking does NOT hijack today's word")
+        check(WordSelectionStore.pinnedTerm == nil, "bookmarking does NOT hijack today's word")
 
         check(!SavedWords.toggle(a), "toggling again reports off")
         check(!SavedWords.contains(a), "and takes the word back out")
@@ -124,9 +124,9 @@ enum Check {
         // The bug this guards: un-bookmarking a captured word used to leave
         // pinnedTerm pointing at a word no longer in the list.
         SavedWords.capture(b.term)
-        check(WordStore.pinnedTerm == b.term, "a capture pins its word")
+        check(WordSelectionStore.pinnedTerm == b.term, "a capture pins its word")
         SavedWords.toggle(b)
-        check(WordStore.pinnedTerm == nil, "un-bookmarking the pinned word clears the pin")
+        check(WordSelectionStore.pinnedTerm == nil, "un-bookmarking the pinned word clears the pin")
         check(SavedWords.pinned == nil, "so today's word falls back to the dictionary's")
 
         print("\ntimestamps")
@@ -190,7 +190,7 @@ SWIFT
 # back to the actor the app actually runs it on.
 swiftc -O -default-isolation MainActor -o "$OUT/check" \
     "$ROOT/OneWord/Shared/Word.swift" "$ROOT/OneWord/Shared/WordProvider.swift" \
-    "$ROOT/OneWord/Shared/SavedWords.swift" "$ROOT/OneWord/Shared/WordStore.swift" \
+    "$ROOT/OneWord/Shared/SavedWords.swift" "$ROOT/OneWord/Shared/WordSelectionStore.swift" \
     "$ROOT/OneWord/Shared/Theme.swift" "$ROOT/OneWord/Models/Wordbook.swift" \
     "$ROOT/OneWord/Models/LearnedWords.swift" "$ROOT/OneWord/ViewModels/WordViewModel.swift" \
     "$OUT/Shim.swift" "$OUT/LearnedCheck.swift"

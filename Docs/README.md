@@ -87,3 +87,7 @@ Which skill lands where:
   *(the plan was revised in place to r4 — predates `Resolved/`)*
 - **Startup dictionary** — shipped.
   [brainstorm](01_Brainstorm/STARTUP_DICTIONARY_BRAINSTORM.md)
+- **Sentence practice** — planned, not built.
+  [resolved plan](02_Plan/Resolved/SENTENCE_PRACTICE_PLAN_RESOLVED.md)
+  *(plan and audit were worked through in session and never filed — the resolved plan
+  carries the audit findings in §1 and stands alone)*

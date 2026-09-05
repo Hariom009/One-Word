@@ -26,6 +26,8 @@ struct Wordbook: Identifiable, Hashable {
     static let curiosities = Wordbook(id: "curiosities", name: "Dictionary of Curiosities", cover: 0x5C4413, symbol: "sparkles")
     static let startup = Wordbook(id: "startup", name: "Dictionary of Corporate Slang", cover: 0x2C4257, symbol: "briefcase.fill")
     static let idioms = Wordbook(id: "idioms", name: "Dictionary of Idioms", cover: 0x5A2B4E, symbol: "quote.bubble.fill")
+    static let classical = Wordbook(id: "classical", name: "Dictionary of Classical English", cover: 0x353D1E, symbol: "building.columns.fill")
+    static let urdu = Wordbook(id: "urdu", name: "Dictionary of Urdu", cover: 0x6B2E20, symbol: "scroll.fill")
     /// Not a bundled json — WordProvider resolves this id from the words you bookmarked.
     static let saved = Wordbook(id: SavedWords.resource, name: "Bookmarks", cover: 0x2A4634, symbol: "bookmark.fill")
 
@@ -38,7 +40,7 @@ struct Wordbook: Identifiable, Hashable {
     }
 
     /// Every dictionary the app offers. Grow this as new word sets are added.
-    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, medical, character, eloquence, curiosities, startup, idioms, saved]
+    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, medical, character, eloquence, curiosities, startup, idioms, classical, urdu, saved]
 
     /// Resolve a stored id back to a Wordbook (falls back to the default).
     static func named(_ id: String) -> Wordbook {

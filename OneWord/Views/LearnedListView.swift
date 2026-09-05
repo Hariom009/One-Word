@@ -11,9 +11,12 @@ import SwiftUI
 import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
 
 struct LearnedListView: View {
-    /// Width of the trailing "when · where" column. Fixed so it reads as a column
-    /// instead of a ragged edge that moves with every shelf name's length.
-    private static let metaWidth: CGFloat = 168
+    // Fixed columns, packed against the leading edge. A Spacer between the word
+    // and its "when · where" looked fine in a small window and fell apart in a
+    // wide one — the two halves of a row drift a thousand points apart.
+    private static let termWidth: CGFloat = 240
+    private static let posWidth: CGFloat = 96
+    private static let gutter: CGFloat = 64
 
     @State private var log: [LearnedWord] = []
     @State private var query = ""
@@ -25,24 +28,23 @@ struct LearnedListView: View {
             if days.isEmpty {
                 emptyState(t)
             } else {
-                List {
-                    ForEach(days, id: \.day) { group in
-                        Section {
-                            ForEach(group.words) { entry in
-                                NavigationLink {
-                                    // The shelf travels with the entry, so re-opening
-                                    // a word from the log doesn't log it again under
-                                    // whatever dictionary happens to be selected.
-                                    WordDetail(word: entry.word, shelf: entry.shelf)
-                                } label: {
-                                    row(entry, t)
-                                }
-                                .listRowBackground(t.background)
-                                .listRowSeparatorTint(t.hairline)
-                            }
-                        } header: {
-                            header(group.day, t)
+                List(lines) { line in
+                    switch line {
+                    case .day(let day):
+                        header(day, t)
+                            .listRowBackground(t.background)
+                            .listRowSeparator(.hidden)
+                    case .word(let entry):
+                        NavigationLink {
+                            // The shelf travels with the entry, so re-opening a word
+                            // from the log doesn't log it again under whatever
+                            // dictionary happens to be selected.
+                            WordDetail(word: entry.word, shelf: entry.shelf)
+                        } label: {
+                            row(entry, t)
                         }
+                        .listRowBackground(t.background)
+                        .listRowSeparatorTint(t.hairline)
                     }
                 }
                 .listStyle(.plain)
@@ -68,6 +70,26 @@ struct LearnedListView: View {
         return log.filter { $0.word.term.localizedCaseInsensitiveContains(q) }
     }
 
+    /// One line of the list. A `Section` header pins itself to the top of a plain
+    /// List, which leaves a half-clipped row wedged underneath it — so the days
+    /// ride as ordinary rows and scroll away like everything else.
+    private enum Line: Identifiable {
+        case day(Date)
+        case word(LearnedWord)
+
+        var id: String {
+            switch self {
+            case .day(let day): "\u{0}day\(day.timeIntervalSinceReferenceDate)"
+            case .word(let entry): entry.id
+            }
+        }
+    }
+
+    /// The log flattened to rows: each day's label, then that day's sightings.
+    private var lines: [Line] {
+        days.flatMap { [Line.day($0.day)] + $0.words.map(Line.word) }
+    }
+
     /// Sightings bucketed by the day they happened, newest day first. `log` is
     /// already sorted, and `Dictionary(grouping:)` preserves that within a bucket.
     private var days: [(day: Date, words: [LearnedWord])] {
@@ -76,26 +98,27 @@ struct LearnedListView: View {
             .sorted { $0.day > $1.day }
     }
 
-    /// Two-part day header: a short label on the left, the date on the right over
-    /// the meta column. The date used to ride inside the label, which made every
-    /// section a full line of tracked capitals.
+    /// Two-part day header on the same columns as the rows: the short label over
+    /// the words, the date over the part of speech. The date used to ride inside
+    /// the label, which made every section a full line of tracked capitals.
     private func header(_ day: Date, _ t: Theme) -> some View {
-        HStack(alignment: .firstTextBaseline) {
+        HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
             Text(label(for: day))
-                .font(.system(size: 10, weight: .bold))
+                .font(.system(size: 11, weight: .bold))
                 .textCase(.uppercase).tracking(1.6)
-                .foregroundStyle(t.muted)
-            Spacer(minLength: 12)
+                .foregroundStyle(t.ink.opacity(0.8))
+                .frame(width: Self.termWidth, alignment: .leading)
             if day >= LearnedWord.epoch {
                 Text(day.formatted(.dateTime.day().month(.wide).year()))
-                    .font(.system(size: 10))
-                    .foregroundStyle(t.muted.opacity(0.75))
+                    .font(.system(size: 11))
+                    .foregroundStyle(t.muted)
                     .lineLimit(1)
-                    .frame(width: Self.metaWidth, alignment: .leading)
             }
+            Spacer(minLength: 0)
         }
-        .padding(.top, 10)
-        .padding(.bottom, 2)
+        .padding(.top, 22)
+        .padding(.bottom, 6)
+        .padding(.horizontal, 12)
     }
 
     /// What the day is called. "Today"/"Yesterday" when they apply, otherwise the
@@ -109,25 +132,27 @@ struct LearnedListView: View {
     }
 
     private func row(_ entry: LearnedWord, _ t: Theme) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
+        HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
             Text(entry.word.term)
                 .font(.serif(20))
                 .foregroundStyle(t.ink)
                 .lineLimit(1)
+                .frame(width: Self.termWidth, alignment: .leading)
             Text(entry.word.partOfSpeech)
                 .font(.system(size: 11).italic())
                 .foregroundStyle(t.muted)
                 .lineLimit(1)
-            Spacer(minLength: 12)
+                .frame(width: Self.posWidth, alignment: .leading)
             // One line, always — a two-line stack here gave timestamped and
             // migrated rows different heights, which is what made the log look ragged.
             Text(meta(of: entry))
                 .font(.system(size: 11).monospacedDigit())
                 .foregroundStyle(t.muted)
                 .lineLimit(1)
-                .frame(width: Self.metaWidth, alignment: .leading)
+            Spacer(minLength: 0)
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, 7)
+        .padding(.horizontal, 12)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(summary(of: entry))
     }
