@@ -20,14 +20,11 @@ struct Wordbook: Identifiable, Hashable {
     static let everydayEnglish = Wordbook(id: "words", name: "Dictionary of Everyday English", cover: 0x1E232B, symbol: "textformat.abc")
     static let emotions = Wordbook(id: "emotions", name: "Dictionary of Emotions", cover: 0x5B2A33, symbol: "heart.fill")
     static let philosophy = Wordbook(id: "philosophy", name: "Dictionary of Philosophy", cover: 0x343A63, symbol: "brain.head.profile")
-    static let medical = Wordbook(id: "medical", name: "Dictionary of Medicine", cover: 0x1F4A47, symbol: "cross.case.fill")
-    static let character = Wordbook(id: "character", name: "Dictionary of Character", cover: 0x4B3A2A, symbol: "person.fill.questionmark")
-    static let eloquence = Wordbook(id: "eloquence", name: "Dictionary of Eloquence", cover: 0x46305A, symbol: "book.closed.fill")
-    static let curiosities = Wordbook(id: "curiosities", name: "Dictionary of Curiosities", cover: 0x5C4413, symbol: "sparkles")
     static let startup = Wordbook(id: "startup", name: "Dictionary of Corporate Slang", cover: 0x2C4257, symbol: "briefcase.fill")
     static let idioms = Wordbook(id: "idioms", name: "Dictionary of Idioms", cover: 0x5A2B4E, symbol: "quote.bubble.fill")
     static let classical = Wordbook(id: "classical", name: "Dictionary of Classical English", cover: 0x353D1E, symbol: "building.columns.fill")
     static let urdu = Wordbook(id: "urdu", name: "Dictionary of Urdu", cover: 0x6B2E20, symbol: "scroll.fill")
+    static let german = Wordbook(id: "german", name: "Dictionary of German", cover: 0x274620, symbol: "puzzlepiece.fill")
     /// Not a bundled json — WordProvider resolves this id from the words you bookmarked.
     static let saved = Wordbook(id: SavedWords.resource, name: "Bookmarks", cover: 0x2A4634, symbol: "bookmark.fill")
 
@@ -40,7 +37,7 @@ struct Wordbook: Identifiable, Hashable {
     }
 
     /// Every dictionary the app offers. Grow this as new word sets are added.
-    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, medical, character, eloquence, curiosities, startup, idioms, classical, urdu, saved]
+    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, startup, idioms, classical, urdu, german, saved]
 
     /// Resolve a stored id back to a Wordbook (falls back to the default).
     static func named(_ id: String) -> Wordbook {

@@ -1,0 +1,1274 @@
+[
+ {
+  "term": "accessibility",
+  "partOfSpeech": "noun",
+  "hindi": "सुगम्यता — दिव्यांग समेत सभी के लिए उपयोग-योग्य बनाना",
+  "definition": "designing products that people with disabilities can actually use",
+  "example": "Accessibility isn't a feature request; it's the price of shipping.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "agenda",
+  "partOfSpeech": "noun",
+  "hindi": "कार्यसूची — बैठक के विषयों की क्रमबद्ध सूची",
+  "definition": "the ordered list of topics a meeting will cover",
+  "example": "No agenda, no attenda, as the poster says.",
+  "_reason": "basic"
+ },
+ {
+  "term": "allocate",
+  "partOfSpeech": "verb",
+  "hindi": "आबंटित करना — धन, लोग या समय तय काम को देना",
+  "definition": "to assign money, people, or time to a purpose",
+  "example": "Allocate the budget before the loudest team does it for you.",
+  "_reason": "basic"
+ },
+ {
+  "term": "announcement",
+  "partOfSpeech": "noun",
+  "hindi": "सार्वजनिक घोषणा — सबके लिए आधिकारिक सूचना",
+  "definition": "an official message meant for everyone, read by some",
+  "example": "Post the holiday list as an announcement, not a reply.",
+  "_reason": "basic"
+ },
+ {
+  "term": "approve",
+  "partOfSpeech": "verb",
+  "hindi": "स्वीकृति देना — औपचारिक हाँ कहना",
+  "definition": "to formally say yes to something",
+  "example": "Approved, pending the seven other approvals.",
+  "_reason": "basic"
+ },
+ {
+  "term": "archive",
+  "partOfSpeech": "verb",
+  "hindi": "संदेश संभालकर हटाना — मिटाए बिना इनबॉक्स से बाहर",
+  "definition": "to file a message out of the inbox without deleting it",
+  "example": "Archive the thread once the ticket closes.",
+  "_reason": "basic"
+ },
+ {
+  "term": "attachment",
+  "partOfSpeech": "noun",
+  "hindi": "संलग्न फ़ाइल — ईमेल के साथ जुड़ी फ़ाइल",
+  "definition": "the file included with an email, famously easy to forget",
+  "example": "Resending with the attachment actually attached this time.",
+  "_reason": "basic"
+ },
+ {
+  "term": "audit",
+  "partOfSpeech": "noun",
+  "hindi": "लेखा-परीक्षा — रिकॉर्ड और प्रक्रियाओं की औपचारिक जाँच",
+  "definition": "a formal inspection of records, finances, or processes",
+  "example": "The audit found the process we swore we had.",
+  "_reason": "basic"
+ },
+ {
+  "term": "availability",
+  "partOfSpeech": "noun",
+  "hindi": "उपलब्धता — मिलने लायक ख़ाली समय",
+  "definition": "the open times someone can meet",
+  "example": "Send your availability and I'll do the calendar Tetris.",
+  "_reason": "basic"
+ },
+ {
+  "term": "away",
+  "partOfSpeech": "adjective",
+  "hindi": "दूर — सीट पर नहीं वाली स्थिति",
+  "definition": "the presence status meaning not at the desk right now",
+  "example": "Set yourself to away if you're stepping out for lunch.",
+  "_reason": "basic"
+ },
+ {
+  "term": "benefits",
+  "partOfSpeech": "noun",
+  "hindi": "सुविधाएँ — वेतन के अलावा मिलने वाले लाभ, जैसे बीमा",
+  "definition": "non-salary compensation like insurance, leave, and perks",
+  "example": "The benefits page says 'competitive'; the dentist bill says otherwise.",
+  "_reason": "basic"
+ },
+ {
+  "term": "brainstorm",
+  "partOfSpeech": "verb",
+  "hindi": "विचार-मंथन करना — बिना रोक-टोक ढेर सारे विचार निकालना",
+  "definition": "to generate many ideas quickly without judging them yet",
+  "example": "We brainstormed forty names and shipped with the placeholder.",
+  "_reason": "basic"
+ },
+ {
+  "term": "budget",
+  "partOfSpeech": "noun",
+  "hindi": "बजट — किसी काम या अवधि के लिए तय ख़र्च सीमा",
+  "definition": "the amount of money allocated for a team, project, or period",
+  "example": "The budget covers the tool or the contractor, not both.",
+  "_reason": "basic"
+ },
+ {
+  "term": "calendar invite",
+  "partOfSpeech": "noun",
+  "hindi": "कैलेंडर आमंत्रण — बैठक जोड़ने का निमंत्रण",
+  "definition": "the scheduling request that puts a meeting on people's calendars",
+  "example": "If there's no calendar invite, the decision didn't happen.",
+  "_reason": "basic"
+ },
+ {
+  "term": "camera off",
+  "partOfSpeech": "phrase",
+  "hindi": "कैमरा बंद — बिना वीडियो कॉल में शामिल",
+  "definition": "attending a video call without video enabled",
+  "example": "I'm camera off today; the haircut needs another day.",
+  "_reason": "basic"
+ },
+ {
+  "term": "centralize",
+  "partOfSpeech": "verb",
+  "hindi": "केंद्रीकृत करना — नियंत्रण या काम एक जगह समेटना",
+  "definition": "to gather control or functions into one place",
+  "example": "They centralized purchasing, and now pencils take a quarter.",
+  "_reason": "basic"
+ },
+ {
+  "term": "check-in",
+  "partOfSpeech": "noun",
+  "hindi": "हालचाल बैठक — प्रगति जानने की छोटी मुलाक़ात",
+  "definition": "a brief meeting or message to see how things are going",
+  "example": "Just a quick check-in: any blockers on the migration?",
+  "_reason": "basic"
+ },
+ {
+  "term": "commit",
+  "partOfSpeech": "verb",
+  "hindi": "वचनबद्ध होना — तयशुदा काम देने का ज़िम्मा लेना",
+  "definition": "to formally promise to deliver something",
+  "example": "We committed to the date before scoping the work. Classic.",
+  "_reason": "basic"
+ },
+ {
+  "term": "commute",
+  "partOfSpeech": "noun",
+  "hindi": "आना-जाना — घर से दफ़्तर की यात्रा",
+  "definition": "the trip between home and the office",
+  "example": "My commute is thirty steps; the office pays in trains.",
+  "_reason": "basic"
+ },
+ {
+  "term": "consolidate",
+  "partOfSpeech": "verb",
+  "hindi": "एकीकृत करना — बिखरी चीज़ों को मिलाकर एक करना",
+  "definition": "to merge scattered things into one",
+  "example": "We consolidated nine dashboards into one nobody opens.",
+  "_reason": "basic"
+ },
+ {
+  "term": "constraint",
+  "partOfSpeech": "noun",
+  "hindi": "बंधन — डिज़ाइन को दिशा देने वाली उपयोगी सीमा",
+  "definition": "a limitation that shapes, and often improves, the design",
+  "example": "The best feature of the deadline is that it's a constraint.",
+  "_reason": "basic"
+ },
+ {
+  "term": "consultant",
+  "partOfSpeech": "noun",
+  "hindi": "सलाहकार — फ़ीस लेकर विशेषज्ञ राय देने वाला बाहरी व्यक्ति",
+  "definition": "an external expert hired to advise, famously at high rates",
+  "example": "The consultant's deck recommended everything we said last year.",
+  "_reason": "basic"
+ },
+ {
+  "term": "contract",
+  "partOfSpeech": "noun",
+  "hindi": "अनुबंध — क़ानूनी रूप से बाध्यकारी लिखित समझौता",
+  "definition": "a legally binding agreement between parties",
+  "example": "It's in the contract, which nobody read until it mattered.",
+  "_reason": "basic"
+ },
+ {
+  "term": "contractor",
+  "partOfSpeech": "noun",
+  "hindi": "अनुबंधित कर्मी — वेतनभोगी नहीं, अनुबंध पर काम करने वाला",
+  "definition": "a non-employee hired on contract for specific work",
+  "example": "The contractor ships faster than half the full-time team.",
+  "_reason": "basic"
+ },
+ {
+  "term": "coordinate",
+  "partOfSpeech": "verb",
+  "hindi": "तालमेल बिठाना — लोगों और कामों को एक सुर में लाना",
+  "definition": "to organize people and moving parts toward one outcome",
+  "example": "Someone must coordinate the launch across four teams and two continents.",
+  "_reason": "basic"
+ },
+ {
+  "term": "CTA",
+  "partOfSpeech": "acronym",
+  "hindi": "क्रिया-आह्वान का संक्षिप्त रूप — क्लिक कराने वाला मुख्य बटन",
+  "definition": "short for call to action, the click you want most",
+  "example": "The feedback is always 'make the CTA bigger', every single time.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "dark mode",
+  "partOfSpeech": "noun",
+  "hindi": "गहरे रंग की थीम — काली पृष्ठभूमि वाला रूप",
+  "definition": "a dark color scheme, easier on eyes and batteries",
+  "example": "Users demanded dark mode for two years; it shipped and broke every illustration.",
+  "_reason": "basic"
+ },
+ {
+  "term": "deadline",
+  "partOfSpeech": "noun",
+  "hindi": "अंतिम तिथि — काम पूरा होने की नियत तारीख़",
+  "definition": "the date work is due, and the reason it eventually happens",
+  "example": "The deadline moved twice, so now we call it a window.",
+  "_reason": "basic"
+ },
+ {
+  "term": "decentralize",
+  "partOfSpeech": "verb",
+  "hindi": "विकेंद्रीकृत करना — निर्णय-अधिकार टीमों में बाँटना",
+  "definition": "to push decisions and control out to individual teams",
+  "example": "We decentralized decisions, then centralized them at the first mistake.",
+  "_reason": "basic"
+ },
+ {
+  "term": "decline",
+  "partOfSpeech": "verb",
+  "hindi": "आमंत्रण अस्वीकारना — मीटिंग का न्योता ठुकराना",
+  "definition": "to reject a meeting invitation, ideally with a reason",
+  "example": "Feel free to decline if the agenda doesn't need you.",
+  "_reason": "basic"
+ },
+ {
+  "term": "defer",
+  "partOfSpeech": "verb",
+  "hindi": "स्थगित करना — निर्णय या काम बाद के लिए टालना",
+  "definition": "to postpone a decision or task to later",
+  "example": "Let's defer that to next quarter, the land of infinite capacity.",
+  "_reason": "basic"
+ },
+ {
+  "term": "delegate",
+  "partOfSpeech": "verb",
+  "hindi": "काम सौंपना — ज़िम्मेदारी किसी और को देना",
+  "definition": "to hand a task and its responsibility to someone else",
+  "example": "She delegates so well her calendar is a rumor.",
+  "_reason": "basic"
+ },
+ {
+  "term": "deliver",
+  "partOfSpeech": "verb",
+  "hindi": "नतीजा देना — वादा किया काम पूरा कर दिखाना",
+  "definition": "to produce the promised result",
+  "example": "Miss the party, attend the meeting, deliver the feature.",
+  "_reason": "basic"
+ },
+ {
+  "term": "dip",
+  "partOfSpeech": "noun",
+  "hindi": "गिरावट — आँकड़े में थोड़े समय की कमी",
+  "definition": "a brief decline in a metric",
+  "example": "It is a dip, we said, four consecutive months.",
+  "_reason": "basic"
+ },
+ {
+  "term": "dogfood",
+  "partOfSpeech": "verb",
+  "hindi": "ख़ुद इस्तेमाल करना — अपना उत्पाद ख़ुद बरतकर परखना",
+  "definition": "to use your own product internally to find its flaws",
+  "example": "We dogfood the app daily, which explains the bug reports.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "draft",
+  "partOfSpeech": "verb",
+  "hindi": "मसौदा बनाना — पहला कच्चा संस्करण लिखना",
+  "definition": "to write a first rough version",
+  "example": "Draft the announcement now; we'll argue about adjectives later.",
+  "_reason": "basic"
+ },
+ {
+  "term": "drop off",
+  "partOfSpeech": "phrase",
+  "hindi": "बीच में निकलना — कॉल ख़त्म होने से पहले छोड़ना",
+  "definition": "to leave a call before it ends",
+  "example": "I'll drop off at half past for my hard stop.",
+  "_reason": "basic"
+ },
+ {
+  "term": "elephant in the room",
+  "partOfSpeech": "idiom",
+  "hindi": "कमरे में हाथी — सबको दिखती पर अनकही समस्या",
+  "definition": "the obvious problem everyone avoids mentioning",
+  "example": "The elephant in the room is that nobody uses the app.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "estimate",
+  "partOfSpeech": "noun",
+  "hindi": "आकलन — काम में लगने वाले समय का अनुमान",
+  "definition": "a guess about effort, delivered with more precision than confidence",
+  "example": "My estimate is two weeks, which is an estimate of an estimate.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "expansion revenue",
+  "partOfSpeech": "noun",
+  "hindi": "विस्तार राजस्व — मौजूदा ग्राहकों के अपग्रेड से बढ़ी कमाई",
+  "definition": "additional revenue from existing customers upgrading or buying more",
+  "example": "Expansion revenue saved the quarter, thanks to one customer's hiring spree.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "expense report",
+  "partOfSpeech": "noun",
+  "hindi": "ख़र्च विवरण — भुगतान-वापसी के लिए ख़र्चों की सूची",
+  "definition": "an itemized list of work expenses submitted for reimbursement",
+  "example": "His expense report listed 'team morale' under a bar receipt.",
+  "_reason": "basic"
+ },
+ {
+  "term": "external",
+  "partOfSpeech": "adjective",
+  "hindi": "कंपनी से बाहर का — सोच-समझकर लिखें",
+  "definition": "outside the company; a flag to watch what you write",
+  "example": "Careful, there are external folks on this thread.",
+  "_reason": "basic"
+ },
+ {
+  "term": "facilitate",
+  "partOfSpeech": "verb",
+  "hindi": "संचालन करना — चर्चा या प्रक्रिया को सुचारू चलाना",
+  "definition": "to guide a meeting or process so it actually goes somewhere",
+  "example": "She facilitated the workshop so well we finished early. Unheard of.",
+  "_reason": "basic"
+ },
+ {
+  "term": "finalize",
+  "partOfSpeech": "verb",
+  "hindi": "अंतिम रूप देना — आख़िरी बदलाव कर पक्का करना",
+  "definition": "to settle the last details and make something official",
+  "example": "We finalized the deck; the 'final_v7' filename disagrees.",
+  "_reason": "basic"
+ },
+ {
+  "term": "follow through",
+  "partOfSpeech": "verb",
+  "hindi": "अंजाम तक पहुँचाना — कहा हुआ काम पूरा करना",
+  "definition": "to actually finish what was promised",
+  "example": "Ideas are free; following through costs a quarter.",
+  "_reason": "basic"
+ },
+ {
+  "term": "follow-up",
+  "partOfSpeech": "noun",
+  "hindi": "अनुवर्ती कार्रवाई — चर्चा के बाद की अगली कड़ी",
+  "definition": "a task, message, or meeting that continues something already discussed",
+  "example": "I owe you a follow-up with the numbers by Friday.",
+  "_reason": "basic"
+ },
+ {
+  "term": "forward",
+  "partOfSpeech": "verb",
+  "hindi": "आगे भेजना — मिला संदेश दूसरों तक पहुँचाना",
+  "definition": "to send a received message on to someone else",
+  "example": "Forwarding the client's note; read the third paragraph sitting down.",
+  "_reason": "basic"
+ },
+ {
+  "term": "growth rate",
+  "partOfSpeech": "noun",
+  "hindi": "वृद्धि दर — किसी आँकड़े के बढ़ने की रफ्तार",
+  "definition": "the pace at which a metric increases over time",
+  "example": "The growth rate is impressive; the base is four users.",
+  "_reason": "basic"
+ },
+ {
+  "term": "happy hour",
+  "partOfSpeech": "noun",
+  "hindi": "कार्यालय-उपरांत मेलजोल — काम के बाद अनौपचारिक जमावड़ा",
+  "definition": "informal after-work team drinks or socializing",
+  "example": "Sprint's done; happy hour is at five, attendance suspiciously encouraged.",
+  "_reason": "basic"
+ },
+ {
+  "term": "herding cats",
+  "partOfSpeech": "idiom",
+  "hindi": "बिल्लियाँ हाँकना — बेक़ाबू लोगों में तालमेल बिठाने की मशक़्क़त",
+  "definition": "trying to coordinate people who refuse to be coordinated",
+  "example": "Scheduling eight directors for one call is herding cats.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "home office",
+  "partOfSpeech": "noun",
+  "hindi": "गृह-कार्यालय — घर में काम की तयशुदा जगह",
+  "definition": "a dedicated workspace at home",
+  "example": "The home office doubles as a guest room and triples as storage.",
+  "_reason": "basic"
+ },
+ {
+  "term": "huddle",
+  "partOfSpeech": "noun",
+  "hindi": "झटपट मंडली — तुरंत हल के लिए छोटी जुटान",
+  "definition": "a quick informal gathering to solve something on the spot",
+  "example": "Two-minute huddle by the whiteboard before the demo?",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "hypothesis",
+  "partOfSpeech": "noun",
+  "hindi": "परिकल्पना — परखने लायक अनुमान, जिसे प्रयोग जांचता है",
+  "definition": "a testable guess about what a change will do",
+  "example": "The hypothesis was written after the results, which helped it a lot.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "ideation",
+  "partOfSpeech": "noun",
+  "hindi": "विचार-सृजन — जानबूझकर ढेर सारे संभावित समाधान सोचना",
+  "definition": "the deliberate generation of many possible solutions",
+  "example": "Ideation rules: no bad ideas until Tuesday, when we cut ninety percent.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "implement",
+  "partOfSpeech": "verb",
+  "hindi": "लागू करना — योजना या समाधान को व्यवहार में उतारना",
+  "definition": "to put a plan, tool, or process into effect",
+  "example": "We implemented the new process alongside the old one, forever.",
+  "_reason": "basic"
+ },
+ {
+  "term": "in-house",
+  "partOfSpeech": "adjective",
+  "hindi": "आंतरिक — बाहर से कराने के बजाय कंपनी के भीतर किया गया",
+  "definition": "done by the company's own staff rather than outsourced",
+  "example": "We brought design in-house after the third agency invoice.",
+  "_reason": "basic"
+ },
+ {
+  "term": "insurance",
+  "partOfSpeech": "noun",
+  "hindi": "बीमा — नुक़सान की भरपाई का अनुबंधित सुरक्षा-कवच",
+  "definition": "paid protection against specified losses or damages",
+  "example": "Cyber insurance now costs more than the breach it covers.",
+  "_reason": "basic"
+ },
+ {
+  "term": "intern",
+  "partOfSpeech": "noun",
+  "hindi": "प्रशिक्षु — सीमित अवधि का प्रशिक्षण-कर्मचारी, अक्सर छात्र",
+  "definition": "a temporary trainee, usually a student, doing real work for a summer",
+  "example": "The intern's demo worked, which is more than the roadmap could say.",
+  "_reason": "basic"
+ },
+ {
+  "term": "invoice",
+  "partOfSpeech": "noun",
+  "hindi": "बीजक/बिल — किए गए काम के भुगतान की माँग का दस्तावेज़",
+  "definition": "a document requesting payment for goods or services delivered",
+  "example": "The agency's invoice arrived before their first deliverable did.",
+  "_reason": "basic"
+ },
+ {
+  "term": "invoice cycle",
+  "partOfSpeech": "noun",
+  "hindi": "बिलिंग चक्र — बिल भेजने और भुगतान पाने की नियमित अवधि",
+  "definition": "the recurring rhythm of sending invoices and collecting payment",
+  "example": "Our invoice cycle is monthly; their payment cycle is theoretical.",
+  "_reason": "basic"
+ },
+ {
+  "term": "JTBD",
+  "partOfSpeech": "acronym",
+  "hindi": "कार्य-केंद्रित सोच का संक्षिप्त रूप — उत्पाद किस काम के लिए चुना जाता है",
+  "definition": "short for jobs to be done",
+  "example": "The JTBD interview revealed users hire our app mostly out of habit.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "launch",
+  "partOfSpeech": "verb",
+  "hindi": "उत्पाद को पहली बार बाज़ार में उतारना",
+  "definition": "to release a product to the public for the first time",
+  "example": "We launch Tuesday, assuming nothing breaks Monday night, which it will.",
+  "_reason": "basic"
+ },
+ {
+  "term": "launch day",
+  "partOfSpeech": "noun",
+  "hindi": "विमोचन दिवस — उत्पाद के सार्वजनिक होने का दिन",
+  "definition": "the day the product finally goes public",
+  "example": "Launch day plan: press release at nine, hotfix by noon.",
+  "_reason": "basic"
+ },
+ {
+  "term": "liability",
+  "partOfSpeech": "noun",
+  "hindi": "देयता/जोखिम — क़ानूनी या वित्तीय ज़िम्मेदारी",
+  "definition": "legal or financial responsibility for something that could go wrong",
+  "example": "Legal calls the old admin panel a liability; we call it Tuesday.",
+  "_reason": "basic"
+ },
+ {
+  "term": "licensing",
+  "partOfSpeech": "noun",
+  "hindi": "लाइसेंसिंग — शुल्क लेकर उपयोग की अनुमति देना",
+  "definition": "granting permission to use software or IP, usually for a fee",
+  "example": "Our licensing model has four tiers and zero clarity.",
+  "_reason": "basic"
+ },
+ {
+  "term": "line item",
+  "partOfSpeech": "noun",
+  "hindi": "मद — बजट या बिल की एक अलग प्रविष्टि",
+  "definition": "a single entry in a budget or invoice",
+  "example": "Snacks are now a line item, so eat responsibly.",
+  "_reason": "basic"
+ },
+ {
+  "term": "manager",
+  "partOfSpeech": "noun",
+  "hindi": "प्रबंधक — टीम के लोगों और नतीजों का ज़िम्मेदार व्यक्ति",
+  "definition": "the person accountable for a team's output, growth, and bad news delivery",
+  "example": "A good manager blocks the chaos; a bad one forwards it.",
+  "_reason": "basic"
+ },
+ {
+  "term": "mandate",
+  "partOfSpeech": "verb",
+  "hindi": "अनिवार्य करना — ऊपर से आदेश के रूप में लागू करना",
+  "definition": "to require something by order from above",
+  "example": "They mandated the tool; adoption remains a suggestion.",
+  "_reason": "basic"
+ },
+ {
+  "term": "meeting fatigue",
+  "partOfSpeech": "noun",
+  "hindi": "बैठक-थकान — अत्यधिक मीटिंगों से क्लांति",
+  "definition": "exhaustion from too many meetings in a day or week",
+  "example": "By Thursday the meeting fatigue is visible on every face.",
+  "_reason": "basic"
+ },
+ {
+  "term": "meeting-heavy",
+  "partOfSpeech": "adjective",
+  "hindi": "बैठक-बोझिल — मीटिंगों से लदा कार्यक्रम",
+  "definition": "having a schedule dominated by meetings",
+  "example": "Product is a meeting-heavy job; bring snacks and opinions.",
+  "_reason": "basic"
+ },
+ {
+  "term": "memo",
+  "partOfSpeech": "noun",
+  "hindi": "आंतरिक सूचना-पत्र — निर्णय की लिखित सूचना",
+  "definition": "a short internal document announcing or explaining a decision",
+  "example": "The reorg memo raised more questions than it answered.",
+  "_reason": "basic"
+ },
+ {
+  "term": "mentor",
+  "partOfSpeech": "noun",
+  "hindi": "मार्गदर्शक — अनुभव से सलाह देने वाला सहयोगी",
+  "definition": "an experienced colleague who gives guidance, distinct from one who wields influence",
+  "example": "Her mentor's best advice was to go find a sponsor.",
+  "_reason": "basic"
+ },
+ {
+  "term": "minutes",
+  "partOfSpeech": "noun",
+  "hindi": "कार्यवृत्त — बैठक की लिखित कार्यवाही",
+  "definition": "the written record of what a meeting discussed and decided",
+  "example": "The minutes say we agreed; my memory disagrees.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "mute",
+  "partOfSpeech": "verb",
+  "hindi": "सूचनाएँ बंद करना — बिना छोड़े चुप कराना",
+  "definition": "to silence a channel or thread's notifications while staying in it",
+  "example": "I muted the celebrations channel during quarter close.",
+  "_reason": "basic"
+ },
+ {
+  "term": "negotiate",
+  "partOfSpeech": "verb",
+  "hindi": "मोल-भाव करना — शर्तों पर सौदेबाज़ी करना",
+  "definition": "to bargain over terms until both sides can live with them",
+  "example": "Never negotiate the renewal in December; they smell the deadline.",
+  "_reason": "basic"
+ },
+ {
+  "term": "negotiation",
+  "partOfSpeech": "noun",
+  "hindi": "वेतन और शर्तों पर मोल-भाव",
+  "definition": "the back-and-forth over salary, equity, and terms before accepting an offer",
+  "example": "One email of negotiation was worth more than last year's entire raise.",
+  "_reason": "basic"
+ },
+ {
+  "term": "next steps",
+  "partOfSpeech": "phrase",
+  "hindi": "अगले क़दम — आगे क्या करना है, उसकी सूची",
+  "definition": "the agreed actions that follow a meeting",
+  "example": "Let's end with next steps so this hour counted for something.",
+  "_reason": "basic"
+ },
+ {
+  "term": "off-hours",
+  "partOfSpeech": "noun",
+  "hindi": "कार्येतर समय — दफ़्तरी घंटों से बाहर",
+  "definition": "time outside the normal working day",
+  "example": "Deploy freezes exist so off-hours stay off.",
+  "_reason": "basic"
+ },
+ {
+  "term": "offer",
+  "partOfSpeech": "noun",
+  "hindi": "नौकरी का औपचारिक प्रस्ताव — वेतन और शर्तों सहित",
+  "definition": "a formal proposal of employment with compensation and terms",
+  "example": "The offer arrived Friday at 5 p.m., expiring Monday at 9.",
+  "_reason": "basic"
+ },
+ {
+  "term": "optional",
+  "partOfSpeech": "adjective",
+  "hindi": "वैकल्पिक उपस्थिति — आना अनिवार्य नहीं",
+  "definition": "invited but not required to attend",
+  "example": "I was optional, so I optionally did my actual job.",
+  "_reason": "basic"
+ },
+ {
+  "term": "outsourcing",
+  "partOfSpeech": "noun",
+  "hindi": "बाहर से काम कराना — काम बाहरी फर्म को सौंपना",
+  "definition": "contracting work out to an external company",
+  "example": "Outsourcing the support queue outsourced the customer goodwill too.",
+  "_reason": "basic"
+ },
+ {
+  "term": "overdeliver",
+  "partOfSpeech": "verb",
+  "hindi": "वादे से ज़्यादा देना — अपेक्षा से बेहतर नतीजा देना",
+  "definition": "to exceed what was promised",
+  "example": "Underpromise, overdeliver, and never reveal the formula.",
+  "_reason": "basic"
+ },
+ {
+  "term": "overhead",
+  "partOfSpeech": "noun",
+  "hindi": "उपरिव्यय — किराया, प्रशासन जैसे अप्रत्यक्ष स्थायी ख़र्च",
+  "definition": "ongoing indirect costs like rent and admin that keep the lights on",
+  "example": "The office is overhead; the espresso machine is morale.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "overtime",
+  "partOfSpeech": "noun",
+  "hindi": "अतिरिक्त समय — तय घंटों से ज़्यादा काम",
+  "definition": "work beyond scheduled hours, paid or quietly expected",
+  "example": "The launch didn't require overtime, just evenings and a Sunday.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "parental leave",
+  "partOfSpeech": "noun",
+  "hindi": "संतान के जन्म या गोद लेने पर मिलने वाला अवकाश",
+  "definition": "paid leave for a new child, by birth or adoption",
+  "example": "He returned from parental leave to three reorgs and a new logo.",
+  "_reason": "basic"
+ },
+ {
+  "term": "patent",
+  "partOfSpeech": "noun",
+  "hindi": "पेटेंट — आविष्कार पर सीमित अवधि का एकाधिकार",
+  "definition": "a legal monopoly on an invention for a limited time",
+  "example": "We patented the algorithm; a troll patented the idea of algorithms.",
+  "_reason": "basic"
+ },
+ {
+  "term": "payroll",
+  "partOfSpeech": "noun",
+  "hindi": "वेतन-व्यवस्था — कर्मचारियों को वेतन देने की प्रणाली",
+  "definition": "the system and money for paying employees",
+  "example": "Miss payroll once and the culture deck stops working.",
+  "_reason": "basic"
+ },
+ {
+  "term": "pin",
+  "partOfSpeech": "verb",
+  "hindi": "संदेश ऊपर टाँकना — सबकी नज़र में रखना",
+  "definition": "to fasten an important message to the top of a channel",
+  "example": "Pinned the wifi password so people stop asking weekly.",
+  "_reason": "basic"
+ },
+ {
+  "term": "PMF",
+  "partOfSpeech": "acronym",
+  "hindi": "प्रोडक्ट-मार्केट फ़िट का संक्षिप्त रूप — बाज़ार में उत्पाद की पक्की माँग",
+  "definition": "short for product-market fit, the milestone every early startup chases",
+  "example": "The board asked for PMF evidence; we showed a graph and prayed.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "policy",
+  "partOfSpeech": "noun",
+  "hindi": "नीति — कंपनी का लिखित नियम",
+  "definition": "an official company rule about how things must be done",
+  "example": "There's a policy for laptops and somehow also for plants.",
+  "_reason": "basic"
+ },
+ {
+  "term": "prioritize",
+  "partOfSpeech": "verb",
+  "hindi": "प्राथमिकता देना — सबसे ज़रूरी काम पहले रखना",
+  "definition": "to rank work so the most important happens first",
+  "example": "We prioritized everything, which is how nothing shipped.",
+  "_reason": "basic"
+ },
+ {
+  "term": "priority",
+  "partOfSpeech": "noun",
+  "hindi": "प्राथमिकता — काम का सापेक्ष महत्व-क्रम",
+  "definition": "an item's rank in the queue; meaningless when everything shares it",
+  "example": "Everything is priority one, so nothing is.",
+  "_reason": "basic"
+ },
+ {
+  "term": "proactive",
+  "partOfSpeech": "adjective",
+  "hindi": "पहलक़दम — समस्या आने से पहले क़दम उठाने वाला",
+  "definition": "acting before being asked or before problems appear",
+  "example": "Be proactive: file the ticket before the outage.",
+  "_reason": "basic"
+ },
+ {
+  "term": "probation",
+  "partOfSpeech": "noun",
+  "hindi": "परिवीक्षा अवधि — शुरुआती दौर जिसमें नौकरी आसानी से समाप्त हो सकती है",
+  "definition": "an initial period during which a new hire can be dismissed easily",
+  "example": "He shipped nothing risky until probation ended.",
+  "_reason": "basic"
+ },
+ {
+  "term": "purchase order",
+  "partOfSpeech": "noun",
+  "hindi": "क्रय आदेश — ख़रीद की औपचारिक अनुमति का दस्तावेज़",
+  "definition": "an official document authorizing a purchase from a vendor",
+  "example": "No purchase order, no license keys; finance is unmoved.",
+  "_reason": "basic"
+ },
+ {
+  "term": "quarter",
+  "partOfSpeech": "noun",
+  "hindi": "तिमाही — वित्त वर्ष का तीन महीने का हिस्सा (Q1–Q4)",
+  "definition": "a three-month business period; companies plan and report by Q1 through Q4",
+  "example": "The feature slipped a quarter, which is corporate for three months.",
+  "_reason": "basic"
+ },
+ {
+  "term": "quarterly",
+  "partOfSpeech": "adjective",
+  "hindi": "त्रैमासिक — हर तिमाही होने वाला",
+  "definition": "happening once every quarter",
+  "example": "The quarterly review is where roadmaps go to be rewritten.",
+  "_reason": "basic"
+ },
+ {
+  "term": "quick call",
+  "partOfSpeech": "noun",
+  "hindi": "छोटी कॉल — झटपट, प्रायः बिन तयशुदा बातचीत",
+  "definition": "a short, often unscheduled voice or video conversation",
+  "example": "A quick call is rarely quick and never just a call.",
+  "_reason": "basic"
+ },
+ {
+  "term": "radio silence",
+  "partOfSpeech": "noun",
+  "hindi": "पूर्ण चुप्पी — कोई जवाब नहीं",
+  "definition": "a total absence of replies from someone expected to respond",
+  "example": "Two weeks of radio silence since we sent the proposal.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "recording",
+  "partOfSpeech": "noun",
+  "hindi": "बैठक की रिकॉर्डिंग — अनुपस्थितों के लिए सहेजा वीडियो",
+  "definition": "the saved video of a meeting for those who missed it",
+  "example": "I'll watch the recording, we say, and never do.",
+  "_reason": "basic"
+ },
+ {
+  "term": "recruiter",
+  "partOfSpeech": "noun",
+  "hindi": "भर्तीकर्ता — उम्मीदवार खोजने और प्रक्रिया चलाने वाला",
+  "definition": "the person who finds candidates and shepherds them through the hiring process",
+  "example": "The recruiter said the team was like a family, which explained a lot.",
+  "_reason": "basic"
+ },
+ {
+  "term": "recurring",
+  "partOfSpeech": "adjective",
+  "hindi": "आवर्ती — कैलेंडर पर तय अंतराल से दोहराने वाला",
+  "definition": "repeating automatically on the calendar at a set interval",
+  "example": "The invite was recurring, so nobody remembers why it exists.",
+  "_reason": "basic"
+ },
+ {
+  "term": "red flag",
+  "partOfSpeech": "idiom",
+  "hindi": "ख़तरे का संकेत — चेतावनी देने वाला लक्षण",
+  "definition": "a warning sign that something is wrong",
+  "example": "A vendor with no references is a red flag.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "reimbursement",
+  "partOfSpeech": "noun",
+  "hindi": "ख़र्च-वापसी — अपनी जेब से किया ख़र्च कंपनी से वापस मिलना",
+  "definition": "money paid back for expenses you covered out of pocket",
+  "example": "The reimbursement arrived two laptops after the conference.",
+  "_reason": "basic"
+ },
+ {
+  "term": "reject",
+  "partOfSpeech": "verb",
+  "hindi": "अस्वीकार करना — प्रस्ताव औपचारिक रूप से ठुकराना",
+  "definition": "to formally turn something down",
+  "example": "Finance rejected the expense titled 'vibes'.",
+  "_reason": "basic"
+ },
+ {
+  "term": "requirements",
+  "partOfSpeech": "noun",
+  "hindi": "आवश्यकताएँ — उत्पाद को अनिवार्य रूप से क्या करना है",
+  "definition": "the agreed list of what the product must do",
+  "example": "The requirements changed twice during this sentence.",
+  "_reason": "basic"
+ },
+ {
+  "term": "reschedule",
+  "partOfSpeech": "verb",
+  "hindi": "समय बदलना — बैठक नई तारीख़ पर खिसकाना",
+  "definition": "to move a meeting to a different time",
+  "example": "Can we reschedule Thursday's sync? My calendar imploded.",
+  "_reason": "basic"
+ },
+ {
+  "term": "retainer",
+  "partOfSpeech": "noun",
+  "hindi": "अग्रिम बंधी फ़ीस — सेवाएँ उपलब्ध रखने के लिए नियमित भुगतान",
+  "definition": "a recurring fee paid to keep a firm's services on call",
+  "example": "The law firm is on retainer, so go ahead and ask them.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "revenue",
+  "partOfSpeech": "noun",
+  "hindi": "राजस्व — बिक्री से आई कुल रक़म",
+  "definition": "money a company earns from selling its products or services",
+  "example": "Revenue is up; whether profit exists is a separate meeting.",
+  "_reason": "basic"
+ },
+ {
+  "term": "review",
+  "partOfSpeech": "verb",
+  "hindi": "समीक्षा करना — जाँचकर राय या मंज़ूरी देना",
+  "definition": "to examine work and give feedback or approval",
+  "example": "Please review the doc, not just the title.",
+  "_reason": "basic"
+ },
+ {
+  "term": "right-size",
+  "partOfSpeech": "verb",
+  "hindi": "उचित आकार देना — घटाने का सौम्य शब्द, प्रायः छँटनी के लिए",
+  "definition": "to adjust to the 'correct' size; usually a euphemism for cuts",
+  "example": "The org was right-sized; the work, curiously, was not.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "risk assessment",
+  "partOfSpeech": "noun",
+  "hindi": "जोखिम मूल्यांकन — संभावित ख़तरों की पहचान और आकलन",
+  "definition": "identifying and weighing potential problems before proceeding",
+  "example": "The risk assessment rated 'intern with prod access' as medium.",
+  "_reason": "basic"
+ },
+ {
+  "term": "sabbatical",
+  "partOfSpeech": "noun",
+  "hindi": "लंबी सेवा के बाद विस्तारित अवकाश",
+  "definition": "an extended leave, often after years of tenure, to rest or wander",
+  "example": "Her sabbatical plan was six weeks of not opening the laptop.",
+  "_reason": "basic"
+ },
+ {
+  "term": "sandbag",
+  "partOfSpeech": "verb",
+  "hindi": "जानबूझकर कम वादा करना — बाद में बढ़कर दिखाने हेतु",
+  "definition": "to pad an estimate or commit low so you can overdeliver later",
+  "example": "He sandbags every sprint, then finishes early and looks heroic.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "scheduling link",
+  "partOfSpeech": "noun",
+  "hindi": "बुकिंग कड़ी — दूसरों के लिए स्लॉट चुनने का लिंक",
+  "definition": "a personal booking page others use to pick a meeting slot",
+  "example": "Sending a scheduling link to a peer reads a little royal.",
+  "_reason": "basic"
+ },
+ {
+  "term": "screen share",
+  "partOfSpeech": "noun",
+  "hindi": "स्क्रीन साझा — अपनी स्क्रीन सबको दिखाना",
+  "definition": "showing your screen to everyone on a call",
+  "example": "Close your tabs before the screen share, learned everyone, eventually.",
+  "_reason": "basic"
+ },
+ {
+  "term": "show of hands",
+  "partOfSpeech": "phrase",
+  "hindi": "हाथ उठाकर मत — झटपट गिनती",
+  "definition": "a quick vote taken by raising hands",
+  "example": "Show of hands: who has actually read the spec?",
+  "_reason": "basic"
+ },
+ {
+  "term": "sick day",
+  "partOfSpeech": "noun",
+  "hindi": "बीमारी की छुट्टी",
+  "definition": "a day off for illness, taken instead of coughing through standup",
+  "example": "He took a sick day and still shipped a hotfix, which defeats the point.",
+  "_reason": "basic"
+ },
+ {
+  "term": "sign-off",
+  "partOfSpeech": "noun",
+  "hindi": "अनुमोदन — आगे बढ़ने की औपचारिक स्वीकृति",
+  "definition": "formal approval that lets work proceed or ship",
+  "example": "We have sign-off from everyone except the person who matters.",
+  "_reason": "basic"
+ },
+ {
+  "term": "snooze",
+  "partOfSpeech": "verb",
+  "hindi": "संदेश कुछ देर टालना — बाद में फिर दिखे",
+  "definition": "to hide a message until a time when you'll ignore it again",
+  "example": "I snoozed the invoice reminder to Friday. Twice.",
+  "_reason": "basic"
+ },
+ {
+  "term": "source of truth",
+  "partOfSpeech": "noun",
+  "hindi": "सत्य-स्रोत — जिस एक जगह के आँकड़े आधिकारिक माने जाएँ",
+  "definition": "the one system whose numbers are treated as authoritative",
+  "example": "We have three sources of truth, so technically none.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "spec",
+  "partOfSpeech": "noun",
+  "hindi": "विनिर्देश — क्या बनना है उसका लिखित ब्योरा",
+  "definition": "the written description of exactly what to build",
+  "example": "The spec says 'intuitive'; the engineers have questions.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "spend",
+  "partOfSpeech": "noun",
+  "hindi": "ख़र्च — किसी मद पर जा रही कुल रक़म",
+  "definition": "the total amount being spent on something, as finance says it",
+  "example": "Our cloud spend has its own gravity now.",
+  "_reason": "basic"
+ },
+ {
+  "term": "standardize",
+  "partOfSpeech": "verb",
+  "hindi": "मानकीकृत करना — सबके लिए एक तय तरीक़ा लागू करना",
+  "definition": "to make everyone use one agreed way of doing things",
+  "example": "We standardized on one framework, plus the four legacy ones.",
+  "_reason": "basic"
+ },
+ {
+  "term": "standing meeting",
+  "partOfSpeech": "noun",
+  "hindi": "स्थायी बैठक — कैलेंडर पर हमेशा दोहराती मीटिंग",
+  "definition": "a meeting that recurs on the calendar indefinitely",
+  "example": "This standing meeting outlived the project it was created for.",
+  "_reason": "basic"
+ },
+ {
+  "term": "stat sig",
+  "partOfSpeech": "adjective",
+  "hindi": "सांख्यिकीय सार्थकता की बोलचाल — नतीजा असली माने जाने की कसौटी",
+  "definition": "shorthand for statistically significant",
+  "example": "Is it stat sig, asked everyone, before the chart finished loading.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "stipend",
+  "partOfSpeech": "noun",
+  "hindi": "वृत्तिका — किसी ख़ास मद के लिए तय छोटी रक़म",
+  "definition": "a fixed sum paid for a specific purpose, like learning or wellness",
+  "example": "The wellness stipend quietly became everyone's unused-gym fund.",
+  "_reason": "cross-dupe"
+ },
+ {
+  "term": "stress-test",
+  "partOfSpeech": "verb",
+  "hindi": "तनाव-परीक्षण करना — चरम हालात में टिकाव जाँचना",
+  "definition": "to check how something holds up under extreme conditions",
+  "example": "We stress-tested the budget against 'what if nobody renews'.",
+  "_reason": "basic"
+ },
+ {
+  "term": "sunset",
+  "partOfSpeech": "verb",
+  "hindi": "बंद करना — पुरानी सुविधा को आदरपूर्वक विदा करना",
+  "definition": "to retire a product or feature gracefully",
+  "example": "We're sunsetting the old dashboard; mourners welcome.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "table-stakes feature",
+  "partOfSpeech": "noun",
+  "hindi": "न्यूनतम अनिवार्य सुविधा — बाज़ार में टिके रहने भर की शर्त",
+  "definition": "a feature users expect by default; its absence disqualifies you",
+  "example": "Dark mode went from delighter to table-stakes feature in about two years.",
+  "_reason": "internal-dupe"
+ },
+ {
+  "term": "take over",
+  "partOfSpeech": "verb",
+  "hindi": "कार्यभार सँभालना — किसी और का काम या ज़िम्मेदारी लेना",
+  "definition": "to assume control of work someone else was doing",
+  "example": "She took over the migration and found the real timeline.",
+  "_reason": "basic"
+ },
+ {
+  "term": "tangent",
+  "partOfSpeech": "noun",
+  "hindi": "विषयांतर — मुद्दे से भटकी चर्चा",
+  "definition": "a side discussion that drifts from the agenda",
+  "example": "Fascinating tangent; parking lot it and back to the launch.",
+  "_reason": "basic"
+ },
+ {
+  "term": "team building",
+  "partOfSpeech": "noun",
+  "hindi": "टीम-भावना निर्माण — भरोसा बढ़ाने की गतिविधियाँ",
+  "definition": "activities meant to strengthen trust and rapport within a team",
+  "example": "Nothing bonds a team like team building nobody asked for.",
+  "_reason": "basic"
+ },
+ {
+  "term": "tentative",
+  "partOfSpeech": "adjective",
+  "hindi": "अनिश्चित स्वीकृति — शायद आऊँगा वाला जवाब",
+  "definition": "marked as maybe attending on a calendar invite",
+  "example": "Twelve invitees, nine tentative: so, a meeting with vibes.",
+  "_reason": "basic"
+ },
+ {
+  "term": "tenure",
+  "partOfSpeech": "noun",
+  "hindi": "किसी कंपनी में बिताई गई कुल अवधि",
+  "definition": "how long someone has been at a company",
+  "example": "Four years of tenure here counts as elder statesman.",
+  "_reason": "basic"
+ },
+ {
+  "term": "third-party",
+  "partOfSpeech": "adjective",
+  "hindi": "तृतीय-पक्ष — बाहरी कंपनी द्वारा प्रदत्त",
+  "definition": "provided by an external company rather than built or done internally",
+  "example": "The outage was a third-party issue, which soothes no customer.",
+  "_reason": "basic"
+ },
+ {
+  "term": "thumbs-up",
+  "partOfSpeech": "noun",
+  "hindi": "अँगूठा निशान — सहमति की मुहर",
+  "definition": "the minimum unit of agreement, one emoji long",
+  "example": "A thumbs-up from her counts as formal sign-off.",
+  "_reason": "basic"
+ },
+ {
+  "term": "timekeeper",
+  "partOfSpeech": "noun",
+  "hindi": "समय-प्रहरी — बैठक में घड़ी पर नज़र रखने वाला",
+  "definition": "the person assigned to watch the clock during a meeting",
+  "example": "As timekeeper, I'm obligated to say we're ten minutes over.",
+  "_reason": "basic"
+ },
+ {
+  "term": "timeline",
+  "partOfSpeech": "noun",
+  "hindi": "समयरेखा — कब क्या होगा, उसकी रूपरेखा",
+  "definition": "when things will supposedly happen, in order",
+  "example": "The timeline is aggressive, the word we use instead of fictional.",
+  "_reason": "basic"
+ },
+ {
+  "term": "tradeoff",
+  "partOfSpeech": "noun",
+  "hindi": "समझौता-विनिमय — एक लाभ पाने के लिए दूसरे की कीमत चुकाना",
+  "definition": "giving up one good thing to get another",
+  "example": "Every design decision is a tradeoff; today speed beat elegance, again.",
+  "_reason": "basic"
+ },
+ {
+  "term": "trend line",
+  "partOfSpeech": "noun",
+  "hindi": "रुझान रेखा — डेटा की दिशा दिखाने वाली रेखा",
+  "definition": "a line drawn through data points to show direction",
+  "example": "The trend line points up if you delete March.",
+  "_reason": "basic"
+ },
+ {
+  "term": "unsubscribe",
+  "partOfSpeech": "verb",
+  "hindi": "सदस्यता छोड़ना — मेल सूची से नाम हटाना",
+  "definition": "to remove yourself from a mailing list, hopefully forever",
+  "example": "I unsubscribed from the newsletter and it came back anyway.",
+  "_reason": "basic"
+ },
+ {
+  "term": "urgent",
+  "partOfSpeech": "adjective",
+  "hindi": "अत्यावश्यक — तुरंत ध्यान माँगता",
+  "definition": "needing immediate attention, a label that dulls with every use",
+  "example": "Everything he sends is marked urgent, so nothing is.",
+  "_reason": "basic"
+ },
+ {
+  "term": "user feedback",
+  "partOfSpeech": "noun",
+  "hindi": "उपयोगकर्ता प्रतिक्रिया — असली इस्तेमालकर्ताओं की राय और शिकायतें",
+  "definition": "what actual users say about the product",
+  "example": "User feedback is unanimous: nobody can find the button we're proudest of.",
+  "_reason": "basic"
+ },
+ {
+  "term": "vendor",
+  "partOfSpeech": "noun",
+  "hindi": "विक्रेता — कंपनी को सामान या सेवा बेचने वाली बाहरी फर्म",
+  "definition": "an external company that sells you goods or services",
+  "example": "The vendor promised 24/7 support; their inbox disagrees.",
+  "_reason": "basic"
+ },
+ {
+  "term": "vet",
+  "partOfSpeech": "verb",
+  "hindi": "जाँच-परख करना — भरोसे से पहले पृष्ठभूमि की पड़ताल",
+  "definition": "to check someone or something carefully before trusting it",
+  "example": "We vet vendors thoroughly now, one breach too late.",
+  "_reason": "basic"
+ },
+ {
+  "term": "veto",
+  "partOfSpeech": "verb",
+  "hindi": "निषेध करना — अधिकार से प्रस्ताव ख़ारिज करना",
+  "definition": "to block a decision using your authority",
+  "example": "The CTO vetoed the rewrite; morale and relief in equal parts.",
+  "_reason": "basic"
+ },
+ {
+  "term": "video-call fatigue",
+  "partOfSpeech": "noun",
+  "hindi": "वीडियो-कॉल थकान — लंबी ऑनलाइन बैठकों की क्लांति",
+  "definition": "tiredness caused by long hours on video calls",
+  "example": "Camera off for this one, folks; video-call fatigue is real.",
+  "_reason": "basic"
+ },
+ {
+  "term": "virtual background",
+  "partOfSpeech": "noun",
+  "hindi": "आभासी पृष्ठभूमि — असल कमरे को ढकने वाला डिजिटल दृश्य",
+  "definition": "a digital backdrop hiding your real surroundings on video",
+  "example": "His virtual background flickered, revealing the laundry mountain.",
+  "_reason": "basic"
+ },
+ {
+  "term": "waiting room",
+  "partOfSpeech": "noun",
+  "hindi": "प्रतीक्षा-कक्ष — मेज़बान की अनुमति तक ठहराव",
+  "definition": "the holding area before a host admits you to a call",
+  "example": "Spent five minutes in the waiting room of my own meeting.",
+  "_reason": "basic"
+ },
+ {
+  "term": "walking meeting",
+  "partOfSpeech": "noun",
+  "hindi": "चलते-चलते बैठक — टहलते हुए बातचीत",
+  "definition": "a meeting held while walking, usually one-on-one",
+  "example": "He books walking meetings so nobody can share a screen.",
+  "_reason": "basic"
+ },
+ {
+  "term": "weekly",
+  "partOfSpeech": "noun",
+  "hindi": "साप्ताहिक बैठक — हफ़्ते की नियमित मीटिंग",
+  "definition": "a team's regular once-a-week meeting",
+  "example": "Add it to the weekly's agenda so we actually decide.",
+  "_reason": "basic"
+ },
+ {
+  "term": "weigh in",
+  "partOfSpeech": "verb",
+  "hindi": "राय देना — चर्चा में अपना मत रखना",
+  "definition": "to offer an opinion on a discussion",
+  "example": "Legal wants to weigh in before the blog post goes live.",
+  "_reason": "basic"
+ },
+ {
+  "term": "win-win",
+  "partOfSpeech": "noun",
+  "hindi": "दोनों का फ़ायदा — ऐसा नतीजा जिसमें दोनों पक्ष जीतें",
+  "definition": "an outcome that benefits both sides",
+  "example": "Remote Fridays were a rare, genuine win-win.",
+  "_reason": "basic"
+ },
+ {
+  "term": "wind down",
+  "partOfSpeech": "verb",
+  "hindi": "समेटना — काम धीरे-धीरे बंद करना",
+  "definition": "to gradually shut something down",
+  "example": "We're winding down the beta, gently, like a bomb squad.",
+  "_reason": "basic"
+ },
+ {
+  "term": "word of mouth",
+  "partOfSpeech": "noun",
+  "hindi": "मुँह-ज़ुबानी प्रचार — ग्राहकों की आपसी सिफ़ारिश",
+  "definition": "customers recommending the product to each other, unprompted and unbilled",
+  "example": "Our best channel is word of mouth, which the dashboard can't take credit for.",
+  "_reason": "basic"
+ },
+ {
+  "term": "working session",
+  "partOfSpeech": "noun",
+  "hindi": "कार्य-सत्र — चर्चा नहीं, साथ बैठकर काम",
+  "definition": "a meeting for doing the work together rather than discussing it",
+  "example": "Book a working session; we'll never finish this over comments.",
+  "_reason": "basic"
+ },
+ {
+  "term": "workshop",
+  "partOfSpeech": "verb",
+  "hindi": "मिलकर तराशना — समूह-सत्र में विचार सुधारना",
+  "definition": "to refine an idea together in a group session",
+  "example": "Let's workshop the name until it means nothing to everyone.",
+  "_reason": "basic"
+ },
+ {
+  "term": "wrap up",
+  "partOfSpeech": "phrase",
+  "hindi": "समेटना — बैठक का समापन और सार",
+  "definition": "to bring a meeting to a close and summarize outcomes",
+  "example": "Let's wrap up: three decisions, two action items, one grudge.",
+  "_reason": "basic"
+ }
+]
