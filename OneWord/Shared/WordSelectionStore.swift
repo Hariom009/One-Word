@@ -1,5 +1,5 @@
 //
-//  WordStore.swift
+//  WordSelectionStore.swift
 //  OneWord — Shared (app + widget)
 //
 //  The manual "New Word / refresh" offset, added on top of the day's word. Lives
@@ -10,7 +10,7 @@
 
 import Foundation
 
-enum WordStore {
+enum WordSelectionStore {
     // ponytail: bumped from "refreshOffset" to abandon stale test values (starts at 0 = today's word).
     nonisolated private static let key = "wordOffset"
 

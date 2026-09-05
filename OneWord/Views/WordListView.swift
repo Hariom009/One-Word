@@ -11,9 +11,12 @@ import SwiftUI
 import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
 
 struct WordListView: View {
-    /// Width of the trailing Hindi column. Fixed so the meanings line up instead
-    /// of each starting wherever its own length happens to put it.
-    private static let hindiWidth: CGFloat = 200
+    // Fixed columns, packed against the leading edge — same grid as the Learned
+    // pane. A Spacer between term and meaning drifts them to opposite ends of a
+    // wide window, where they stop reading as one line.
+    private static let termWidth: CGFloat = 240
+    private static let posWidth: CGFloat = 96
+    private static let hindiWidth: CGFloat = 420
 
     /// nil = follow the selected dictionary. Set to pin the list to one book.
     var wordbook: Wordbook? = nil
@@ -76,25 +79,28 @@ struct WordListView: View {
     }
 
     private func row(_ word: Word, _ t: Theme) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
+        HStack(alignment: .firstTextBaseline, spacing: 64) {
             Text(word.term)
                 .font(.serif(20))
                 .foregroundStyle(t.ink)
                 .lineLimit(1)
+                .frame(width: Self.termWidth, alignment: .leading)
             Text(word.partOfSpeech)
                 .font(.system(size: 11).italic())
                 .foregroundStyle(t.muted)
                 .lineLimit(1)
-            Spacer(minLength: 12)
+                .frame(width: Self.posWidth, alignment: .leading)
             if showHindi {
                 Text(word.hindi)
                     .font(.system(size: 14))
                     .foregroundStyle(t.muted)
                     .lineLimit(1)
-                    .frame(width: Self.hindiWidth, alignment: .leading)
+                    .frame(maxWidth: Self.hindiWidth, alignment: .leading)
             }
+            Spacer(minLength: 0)
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, 7)
+        .padding(.horizontal,12)
     }
 
     private func emptyState(_ t: Theme) -> some View {

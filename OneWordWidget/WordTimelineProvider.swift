@@ -5,7 +5,7 @@
 //  The widget's "view model": WidgetKit asks it what to show and when to refresh.
 //  The dictionary comes from the widget's own configuration (SelectDictionaryIntent,
 //  editable per widget) — no App Group needed. The manual refresh offset is the
-//  widget-local WordStore.
+//  widget-local WordSelectionStore.
 //
 
 import WidgetKit
@@ -22,18 +22,18 @@ struct WordTimelineProvider: AppIntentTimelineProvider {
 
     func placeholder(in context: Context) -> WordEntry {
         let words = WordProvider(resource: WidgetDictionary.words.resource)
-        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordStore.offset, pinned: SavedWords.pinned))
+        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordSelectionStore.offset, pinned: SavedWords.pinned))
     }
 
     func snapshot(for configuration: SelectDictionaryIntent, in context: Context) async -> WordEntry {
         let words = provider(for: configuration)
-        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordStore.offset, pinned: SavedWords.pinned))
+        return WordEntry(date: Date(), word: words.word(for: Date(), offset: WordSelectionStore.offset, pinned: SavedWords.pinned))
     }
 
     func timeline(for configuration: SelectDictionaryIntent, in context: Context) async -> Timeline<WordEntry> {
         let words = provider(for: configuration)
         let today = calendar.startOfDay(for: Date())
-        let shift = WordStore.offset
+        let shift = WordSelectionStore.offset
         let entries = (0..<7).compactMap { dayOffset -> WordEntry? in
             guard let day = calendar.date(byAdding: .day, value: dayOffset, to: today) else { return nil }
             // The pin is today's only — the rest of the week is the normal sequence.

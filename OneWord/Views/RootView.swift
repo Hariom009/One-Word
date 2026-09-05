@@ -12,7 +12,7 @@ import SwiftUI
 /// The window's sections. Search and Settings sit outside the list (pinned to the
 /// top and bottom of the sidebar); the rest are list rows.
 enum Pane: Hashable, Identifiable {
-    case home, history, learned, bookmarks, profile, search, dictionaries, settings
+    case home, history, practice, bookmarks, profile, search, dictionaries, settings
 
     var id: Self { self }
 
@@ -20,7 +20,7 @@ enum Pane: Hashable, Identifiable {
         switch self {
         case .home: "Home"
         case .history: "History"
-        case .learned: "Learned"
+        case .practice: "Practice"
         case .bookmarks: "Bookmarks"
         case .profile: "Profile"
         case .search: "Search"
@@ -33,7 +33,7 @@ enum Pane: Hashable, Identifiable {
         switch self {
         case .home: "house"
         case .history: "clock"
-        case .learned: "checkmark.seal"
+        case .practice: "text.bubble"
         case .bookmarks: "bookmark"
         case .profile: "person.crop.circle"
         case .search: "magnifyingglass"
@@ -45,6 +45,8 @@ enum Pane: Hashable, Identifiable {
 
 struct RootView: View {
     @State private var pane: Pane = .home
+    /// Settings can hide the Practice row; the pane itself is unreachable then.
+    @AppStorage("practiceEnabled") private var practiceEnabled = true
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
@@ -59,9 +61,9 @@ struct RootView: View {
 
     @ViewBuilder private var detail: some View {
         switch pane {
-        case .home:         WordView(pane: $pane)
-        case .history:      HistoryView()
-        case .learned:      LearnedListView()
+        case .home:         HomeView(pane: $pane)
+        case .history:      HistoryView(pane: $pane)
+        case .practice:     SentenceView()
         case .bookmarks:    WordListView(wordbook: .saved)
         case .profile:      ProfileView()
         case .search:       WordListView()
@@ -72,7 +74,8 @@ struct RootView: View {
 
     private var sidebar: some View {
         List(selection: $pane) {
-            ForEach([Pane.home, .history, .learned, .bookmarks, .profile]) { item in
+            ForEach([Pane.home, .history, .practice, .bookmarks, .profile]
+                        .filter { $0 != .practice || practiceEnabled }) { item in
                 Label(item.title, systemImage: item.symbol).tag(item)
             }
             Section("Dictionaries") {
@@ -128,38 +131,6 @@ struct RootView: View {
         .buttonStyle(.plain)
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
-    }
-}
-
-/// Any past day's word, with the month grid beside it. This is where date
-/// browsing lives now — Home is only ever today.
-struct HistoryView: View {
-    @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
-    @State private var model = WordViewModel()
-    @State private var date = Date()
-    @Environment(\.colorScheme) private var scheme
-
-    var body: some View {
-        let t = Theme.of(scheme)
-        HStack(alignment: .top, spacing: 0) {
-            MonthCalendar(selection: $date) { picked in
-                date = picked
-                model.refresh(for: picked)
-            }
-            .padding(.vertical, 16)
-            .frame(width: 262)
-            Divider().overlay(t.hairline)
-            WordDetail(word: model.word, dictionaryName: model.wordbook.name)
-        }
-        .background(t.background)
-        .navigationTitle(date.formatted(.dateTime.month(.wide).day().year()))
-        .onAppear { load() }
-        .onChange(of: dictionaryID) { _, _ in load() }
-    }
-
-    private func load() {
-        model.select(Wordbook.named(dictionaryID), for: date)
-        model.refresh(for: date)   // select() no-ops when the book is unchanged
     }
 }
 

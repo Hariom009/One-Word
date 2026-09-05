@@ -4,7 +4,7 @@
 //
 //  Words you chose to keep: bookmarked from the toolbar, or caught via the
 //  Services shortcut in any app (which also pins one as today's word). The
-//  Bookmarks pane. Lives in the App Group so the widget can show them too. Same shape as WordStore: Codable
+//  Bookmarks pane. Lives in the App Group so the widget can show them too. Same shape as WordSelectionStore: Codable
 //  through AppGroup.defaults, nonisolated because the widget's timeline provider
 //  reads it off the main actor.
 //
@@ -60,7 +60,7 @@ enum SavedWords {
     /// The just-captured word, if it still holds the day: pinned by `capture`,
     /// cleared the moment you press New Word, and expired at midnight regardless.
     nonisolated static var pinned: Word? {
-        guard let term = WordStore.pinnedTerm,
+        guard let term = WordSelectionStore.pinnedTerm,
               let entry = all.last(where: { $0.word.term == term }),
               Calendar.current.isDateInToday(entry.savedAt) else { return nil }
         return entry.word
@@ -78,7 +78,7 @@ enum SavedWords {
         var words = all.filter { $0.word.term != word.term }
         words.append(SavedWord(word: word, savedAt: Date()))
         all = words
-        WordStore.pinnedTerm = word.term
+        WordSelectionStore.pinnedTerm = word.term
         NotificationCenter.default.post(name: didChange, object: nil)
         return word
     }
@@ -99,7 +99,7 @@ enum SavedWords {
         if !wasSaved { words.append(SavedWord(word: word, savedAt: Date())) }
         // Un-bookmarking the pinned word would leave `pinned` resolving to nothing;
         // clear it so today's word falls back to the dictionary's instead.
-        if wasSaved, WordStore.pinnedTerm == word.term { WordStore.pinnedTerm = nil }
+        if wasSaved, WordSelectionStore.pinnedTerm == word.term { WordSelectionStore.pinnedTerm = nil }
         all = words
         NotificationCenter.default.post(name: didChange, object: nil)
         return !wasSaved

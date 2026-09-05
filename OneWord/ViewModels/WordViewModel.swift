@@ -5,7 +5,7 @@
 //  The app's testable seam: holds the day's word for the SELECTED dictionary.
 //  "New Word" is a PEEK — it shows another word for a few seconds and then the
 //  day's word comes back, so the day still has one word. The peek is deliberately
-//  local: the shared WordStore offset (which the widget reads) is left alone.
+//  local: the shared WordSelectionStore offset (which the widget reads) is left alone.
 //  MainActor-isolated by default isolation.
 //
 
@@ -31,7 +31,7 @@ final class WordViewModel {
         let provider = WordProvider(resource: wordbook.id)
         self.wordbook = wordbook
         self.provider = provider
-        self.word = provider.word(for: Date(), offset: WordStore.offset, pinned: SavedWords.pinned)
+        self.word = provider.word(for: Date(), offset: WordSelectionStore.offset, pinned: SavedWords.pinned)
     }
 
     /// Switch dictionaries and show that dictionary's own word of the day (offset reset).
@@ -39,7 +39,7 @@ final class WordViewModel {
         guard wordbook != self.wordbook else { return }
         self.wordbook = wordbook
         self.provider = WordProvider(resource: wordbook.id)
-        WordStore.reset()
+        WordSelectionStore.reset()
         refresh(for: date)
     }
 
@@ -52,7 +52,7 @@ final class WordViewModel {
         revert = nil
         peek = 0
         isPeeking = false
-        word = provider.word(for: date, offset: WordStore.offset, pinned: SavedWords.pinned)
+        word = provider.word(for: date, offset: WordSelectionStore.offset, pinned: SavedWords.pinned)
     }
 
     /// Peek at another word from this dictionary. Not persisted and not shared:
@@ -64,7 +64,7 @@ final class WordViewModel {
         revert?.cancel()
         peek += 1
         isPeeking = true
-        word = provider.word(for: date, offset: WordStore.offset + peek)
+        word = provider.word(for: date, offset: WordSelectionStore.offset + peek)
         revert = Task { [weak self] in
             try? await Task.sleep(for: Self.peekDuration)
             guard !Task.isCancelled else { return }

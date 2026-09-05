@@ -15,6 +15,10 @@ struct SettingsView: View {
     // App Group, like the dictionary: one switch drives the app and the widget.
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
+    // App-only: the widget shows a word, never a sentence — so these stay in the
+    // standard defaults, same as `appearance`.
+    @AppStorage("practiceEnabled") private var practiceEnabled = true
+    @AppStorage("practiceLanguage") private var practiceLanguage = "de"
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
@@ -43,6 +47,20 @@ struct SettingsView: View {
                 .tint(t.accent)
                 .onChange(of: showHindi) { WidgetCenter.shared.reloadAllTimelines() }
                 .onChange(of: showExample) { WidgetCenter.shared.reloadAllTimelines() }
+
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Practice")
+                        .font(.headline).foregroundStyle(t.muted)
+                    Toggle("Practice mode", isOn: $practiceEnabled)
+                        .toggleStyle(.switch)
+                        .tint(t.accent)
+                    // German is the only corpus that ships, so it is the only row.
+                    Picker("Language", selection: $practiceLanguage) {
+                        Text("German").tag("de")
+                    }
+                    .frame(maxWidth: 240, alignment: .leading)
+                    .disabled(!practiceEnabled)
+                }
             }
             .frame(maxWidth: 520, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)

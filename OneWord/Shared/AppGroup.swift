@@ -10,7 +10,7 @@ import Foundation
 
 // nonisolated: the target defaults to MainActor isolation, but the widget's timeline
 // provider reads this off the main actor. Marking the type is one place; the
-// alternative is a `nonisolated` on every caller in WordStore and SavedWords.
+// alternative is a `nonisolated` on every caller in WordSelectionStore and SavedWords.
 nonisolated enum AppGroup {
     // Must match BOTH targets' .entitlements exactly — a mismatch isn't an error,
     // UserDefaults(suiteName:) just falls back to .standard and the app and widget
