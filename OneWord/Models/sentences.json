@@ -1250,5 +1250,4785 @@
   {
     "en": "Next year I want to travel more.",
     "de": "Nächstes Jahr möchte ich mehr reisen."
+  },
+  {
+    "en": "My phone battery is almost empty.",
+    "de": "Mein Handy-Akku ist fast leer."
+  },
+  {
+    "en": "Could you send me the link?",
+    "de": "Könntest du mir den Link schicken?"
+  },
+  {
+    "en": "The internet is very slow today.",
+    "de": "Das Internet ist heute sehr langsam."
+  },
+  {
+    "en": "I forgot my password.",
+    "de": "Ich habe mein Passwort vergessen."
+  },
+  {
+    "en": "What's the wifi password?",
+    "de": "Wie lautet das WLAN-Passwort?"
+  },
+  {
+    "en": "My computer keeps crashing.",
+    "de": "Mein Computer stürzt ständig ab."
+  },
+  {
+    "en": "I'll send you a message later.",
+    "de": "Ich schicke dir später eine Nachricht."
+  },
+  {
+    "en": "Can you hear me now?",
+    "de": "Kannst du mich jetzt hören?"
+  },
+  {
+    "en": "The connection is bad.",
+    "de": "Die Verbindung ist schlecht."
+  },
+  {
+    "en": "I need to charge my phone.",
+    "de": "Ich muss mein Handy aufladen."
+  },
+  {
+    "en": "Did you get my email?",
+    "de": "Hast du meine E-Mail bekommen?"
+  },
+  {
+    "en": "He never answers the phone.",
+    "de": "Er geht nie ans Telefon."
+  },
+  {
+    "en": "Please turn off your phone.",
+    "de": "Bitte schalte dein Handy aus."
+  },
+  {
+    "en": "I spend too much time online.",
+    "de": "Ich verbringe zu viel Zeit online."
+  },
+  {
+    "en": "The app doesn't work on my phone.",
+    "de": "Die App funktioniert auf meinem Handy nicht."
+  },
+  {
+    "en": "I saved the file on my computer.",
+    "de": "Ich habe die Datei auf meinem Computer gespeichert."
+  },
+  {
+    "en": "Can you share your screen?",
+    "de": "Kannst du deinen Bildschirm teilen?"
+  },
+  {
+    "en": "I'll text you when I arrive.",
+    "de": "Ich schreibe dir, wenn ich ankomme."
+  },
+  {
+    "en": "The car won't start.",
+    "de": "Das Auto springt nicht an."
+  },
+  {
+    "en": "I need to fill up the tank.",
+    "de": "Ich muss tanken."
+  },
+  {
+    "en": "We got stuck in a traffic jam.",
+    "de": "Wir standen im Stau."
+  },
+  {
+    "en": "Do you have a driving licence?",
+    "de": "Hast du einen Führerschein?"
+  },
+  {
+    "en": "Parking is not allowed here.",
+    "de": "Hier ist das Parken nicht erlaubt."
+  },
+  {
+    "en": "The bike has a flat tyre.",
+    "de": "Das Fahrrad hat einen platten Reifen."
+  },
+  {
+    "en": "I take the underground to work.",
+    "de": "Ich fahre mit der U-Bahn zur Arbeit."
+  },
+  {
+    "en": "Drive carefully, the road is wet.",
+    "de": "Fahr vorsichtig, die Straße ist nass."
+  },
+  {
+    "en": "We had to change trains twice.",
+    "de": "Wir mussten zweimal umsteigen."
+  },
+  {
+    "en": "The next stop is mine.",
+    "de": "Die nächste Haltestelle ist meine."
+  },
+  {
+    "en": "He drives too fast.",
+    "de": "Er fährt zu schnell."
+  },
+  {
+    "en": "My train leaves in five minutes.",
+    "de": "Mein Zug fährt in fünf Minuten."
+  },
+  {
+    "en": "I play tennis every Saturday.",
+    "de": "Ich spiele jeden Samstag Tennis."
+  },
+  {
+    "en": "She has been learning guitar for a year.",
+    "de": "Sie lernt seit einem Jahr Gitarre."
+  },
+  {
+    "en": "Do you like swimming?",
+    "de": "Schwimmst du gern?"
+  },
+  {
+    "en": "We're going hiking on Sunday.",
+    "de": "Wir gehen am Sonntag wandern."
+  },
+  {
+    "en": "I'd rather read than watch television.",
+    "de": "Ich lese lieber, als fernzusehen."
+  },
+  {
+    "en": "He collects old records.",
+    "de": "Er sammelt alte Schallplatten."
+  },
+  {
+    "en": "Our team lost again.",
+    "de": "Unsere Mannschaft hat wieder verloren."
+  },
+  {
+    "en": "I go skiing every winter.",
+    "de": "Ich fahre jeden Winter Ski."
+  },
+  {
+    "en": "She paints in her free time.",
+    "de": "Sie malt in ihrer Freizeit."
+  },
+  {
+    "en": "What do you do in your free time?",
+    "de": "Was machst du in deiner Freizeit?"
+  },
+  {
+    "en": "I'm training for a marathon.",
+    "de": "Ich trainiere für einen Marathon."
+  },
+  {
+    "en": "The match starts at eight.",
+    "de": "Das Spiel beginnt um acht."
+  },
+  {
+    "en": "He plays in a band.",
+    "de": "Er spielt in einer Band."
+  },
+  {
+    "en": "I haven't danced in years.",
+    "de": "Ich habe seit Jahren nicht getanzt."
+  },
+  {
+    "en": "Have you read this book?",
+    "de": "Hast du dieses Buch gelesen?"
+  },
+  {
+    "en": "The film was too long.",
+    "de": "Der Film war zu lang."
+  },
+  {
+    "en": "I don't watch much television.",
+    "de": "Ich sehe nicht viel fern."
+  },
+  {
+    "en": "This song reminds me of my childhood.",
+    "de": "Dieses Lied erinnert mich an meine Kindheit."
+  },
+  {
+    "en": "I listen to a podcast every morning.",
+    "de": "Ich höre jeden Morgen einen Podcast."
+  },
+  {
+    "en": "The book is better than the film.",
+    "de": "Das Buch ist besser als der Film."
+  },
+  {
+    "en": "What kind of music do you like?",
+    "de": "Welche Musik magst du?"
+  },
+  {
+    "en": "I read the newspaper every day.",
+    "de": "Ich lese jeden Tag die Zeitung."
+  },
+  {
+    "en": "The ending surprised me.",
+    "de": "Das Ende hat mich überrascht."
+  },
+  {
+    "en": "We watched the whole series in a week.",
+    "de": "Wir haben die ganze Serie in einer Woche gesehen."
+  },
+  {
+    "en": "I have to register at the town hall.",
+    "de": "Ich muss mich beim Rathaus anmelden."
+  },
+  {
+    "en": "Where can I find a post office?",
+    "de": "Wo finde ich ein Postamt?"
+  },
+  {
+    "en": "I'd like to send this parcel.",
+    "de": "Ich möchte dieses Paket verschicken."
+  },
+  {
+    "en": "The form is in German only.",
+    "de": "Das Formular ist nur auf Deutsch."
+  },
+  {
+    "en": "Please fill in this form.",
+    "de": "Bitte füllen Sie dieses Formular aus."
+  },
+  {
+    "en": "Do I need an appointment?",
+    "de": "Brauche ich einen Termin?"
+  },
+  {
+    "en": "My residence permit expires in June.",
+    "de": "Meine Aufenthaltserlaubnis läuft im Juni ab."
+  },
+  {
+    "en": "Could you sign here, please?",
+    "de": "Könnten Sie bitte hier unterschreiben?"
+  },
+  {
+    "en": "I need a copy of my passport.",
+    "de": "Ich brauche eine Kopie meines Reisepasses."
+  },
+  {
+    "en": "The office is closed at lunchtime.",
+    "de": "Das Büro ist mittags geschlossen."
+  },
+  {
+    "en": "I'm waiting for a letter from the bank.",
+    "de": "Ich warte auf einen Brief von der Bank."
+  },
+  {
+    "en": "The library is open until seven.",
+    "de": "Die Bibliothek ist bis sieben geöffnet."
+  },
+  {
+    "en": "That costs almost twice as much.",
+    "de": "Das kostet fast doppelt so viel."
+  },
+  {
+    "en": "There are too many people here.",
+    "de": "Hier sind zu viele Leute."
+  },
+  {
+    "en": "I only need a little sugar.",
+    "de": "Ich brauche nur ein bisschen Zucker."
+  },
+  {
+    "en": "Half of the class was ill.",
+    "de": "Die Hälfte der Klasse war krank."
+  },
+  {
+    "en": "It weighs about two kilos.",
+    "de": "Es wiegt ungefähr zwei Kilo."
+  },
+  {
+    "en": "The room is three metres wide.",
+    "de": "Das Zimmer ist drei Meter breit."
+  },
+  {
+    "en": "Most of my friends live abroad.",
+    "de": "Die meisten meiner Freunde leben im Ausland."
+  },
+  {
+    "en": "There's nothing left in the fridge.",
+    "de": "Im Kühlschrank ist nichts mehr."
+  },
+  {
+    "en": "I've had enough for today.",
+    "de": "Ich habe genug für heute."
+  },
+  {
+    "en": "Both answers were wrong.",
+    "de": "Beide Antworten waren falsch."
+  },
+  {
+    "en": "This jacket is too tight.",
+    "de": "Diese Jacke ist zu eng."
+  },
+  {
+    "en": "She's wearing a red dress.",
+    "de": "Sie trägt ein rotes Kleid."
+  },
+  {
+    "en": "I need new shoes.",
+    "de": "Ich brauche neue Schuhe."
+  },
+  {
+    "en": "He looks a lot like his father.",
+    "de": "Er sieht seinem Vater sehr ähnlich."
+  },
+  {
+    "en": "She has cut her hair short.",
+    "de": "Sie hat sich die Haare kurz geschnitten."
+  },
+  {
+    "en": "Take your coat, it's cold outside.",
+    "de": "Nimm deinen Mantel mit, draußen ist es kalt."
+  },
+  {
+    "en": "That colour suits you.",
+    "de": "Diese Farbe steht dir."
+  },
+  {
+    "en": "I have nothing to wear.",
+    "de": "Ich habe nichts zum Anziehen."
+  },
+  {
+    "en": "May I use your bathroom?",
+    "de": "Darf ich Ihre Toilette benutzen?"
+  },
+  {
+    "en": "Could you speak a bit louder?",
+    "de": "Könnten Sie etwas lauter sprechen?"
+  },
+  {
+    "en": "Would you mind opening the window?",
+    "de": "Würde es Ihnen etwas ausmachen, das Fenster zu öffnen?"
+  },
+  {
+    "en": "Can I ask you a favour?",
+    "de": "Kann ich dich um einen Gefallen bitten?"
+  },
+  {
+    "en": "Let me know if you need anything.",
+    "de": "Sag mir Bescheid, wenn du etwas brauchst."
+  },
+  {
+    "en": "I'm afraid that's not possible.",
+    "de": "Ich fürchte, das ist nicht möglich."
+  },
+  {
+    "en": "Just a moment, please.",
+    "de": "Einen Moment, bitte."
+  },
+  {
+    "en": "Feel free to ask me anything.",
+    "de": "Frag mich ruhig alles."
+  },
+  {
+    "en": "Would you like some help?",
+    "de": "Möchten Sie Hilfe?"
+  },
+  {
+    "en": "Please don't wait for me.",
+    "de": "Bitte warte nicht auf mich."
+  },
+  {
+    "en": "I make a lot of mistakes when I speak.",
+    "de": "Ich mache viele Fehler, wenn ich spreche."
+  },
+  {
+    "en": "German grammar is difficult for me.",
+    "de": "Die deutsche Grammatik fällt mir schwer."
+  },
+  {
+    "en": "I understand more than I can say.",
+    "de": "Ich verstehe mehr, als ich sagen kann."
+  },
+  {
+    "en": "Could you correct me if I'm wrong?",
+    "de": "Könnten Sie mich korrigieren, wenn ich falsch liege?"
+  },
+  {
+    "en": "I'm taking a language course in the evening.",
+    "de": "Ich mache abends einen Sprachkurs."
+  },
+  {
+    "en": "What does this word mean?",
+    "de": "Was bedeutet dieses Wort?"
+  },
+  {
+    "en": "How do you say that in German?",
+    "de": "Wie sagt man das auf Deutsch?"
+  },
+  {
+    "en": "I have to study for the test.",
+    "de": "Ich muss für den Test lernen."
+  },
+  {
+    "en": "The teacher speaks very clearly.",
+    "de": "Der Lehrer spricht sehr deutlich."
+  },
+  {
+    "en": "I forgot how to spell it.",
+    "de": "Ich habe vergessen, wie man es schreibt."
+  },
+  {
+    "en": "She helps me with my homework.",
+    "de": "Sie hilft mir bei den Hausaufgaben."
+  },
+  {
+    "en": "Practice makes perfect.",
+    "de": "Übung macht den Meister."
+  },
+  {
+    "en": "The baby slept through the night.",
+    "de": "Das Baby hat durchgeschlafen."
+  },
+  {
+    "en": "My son starts school in September.",
+    "de": "Mein Sohn kommt im September in die Schule."
+  },
+  {
+    "en": "The children are already asleep.",
+    "de": "Die Kinder schlafen schon."
+  },
+  {
+    "en": "He looks after his grandmother.",
+    "de": "Er kümmert sich um seine Großmutter."
+  },
+  {
+    "en": "We visit my parents every month.",
+    "de": "Wir besuchen meine Eltern jeden Monat."
+  },
+  {
+    "en": "My daughter is learning to ride a bike.",
+    "de": "Meine Tochter lernt Fahrrad fahren."
+  },
+  {
+    "en": "They have been married for thirty years.",
+    "de": "Sie sind seit dreißig Jahren verheiratet."
+  },
+  {
+    "en": "My grandfather grew up on a farm.",
+    "de": "Mein Großvater ist auf einem Bauernhof aufgewachsen."
+  },
+  {
+    "en": "We have a cat and two rabbits.",
+    "de": "Wir haben eine Katze und zwei Kaninchen."
+  },
+  {
+    "en": "The dog is afraid of thunderstorms.",
+    "de": "Der Hund hat Angst vor Gewitter."
+  },
+  {
+    "en": "There are deer in the forest.",
+    "de": "Im Wald gibt es Rehe."
+  },
+  {
+    "en": "The lake is warm enough for swimming.",
+    "de": "Der See ist warm genug zum Schwimmen."
+  },
+  {
+    "en": "The flowers need more sun.",
+    "de": "Die Blumen brauchen mehr Sonne."
+  },
+  {
+    "en": "We watched the sunrise from the mountain.",
+    "de": "Wir haben den Sonnenaufgang vom Berg aus gesehen."
+  },
+  {
+    "en": "The leaves are turning yellow.",
+    "de": "Die Blätter werden gelb."
+  },
+  {
+    "en": "Birds wake me up every morning.",
+    "de": "Vögel wecken mich jeden Morgen."
+  },
+  {
+    "en": "We celebrate Christmas with the whole family.",
+    "de": "Wir feiern Weihnachten mit der ganzen Familie."
+  },
+  {
+    "en": "What are you doing for New Year?",
+    "de": "Was machst du an Silvester?"
+  },
+  {
+    "en": "I still need to buy a present.",
+    "de": "Ich muss noch ein Geschenk kaufen."
+  },
+  {
+    "en": "The party goes on until late.",
+    "de": "Die Party geht bis spät."
+  },
+  {
+    "en": "Thank you all for coming.",
+    "de": "Danke, dass ihr alle gekommen seid."
+  },
+  {
+    "en": "We booked a holiday in Italy.",
+    "de": "Wir haben einen Urlaub in Italien gebucht."
+  },
+  {
+    "en": "The whole street was decorated.",
+    "de": "Die ganze Straße war geschmückt."
+  },
+  {
+    "en": "Something smells burnt.",
+    "de": "Es riecht verbrannt."
+  },
+  {
+    "en": "The tap is dripping.",
+    "de": "Der Wasserhahn tropft."
+  },
+  {
+    "en": "Can you fix it yourself?",
+    "de": "Kannst du es selbst reparieren?"
+  },
+  {
+    "en": "I have to call a plumber.",
+    "de": "Ich muss einen Klempner rufen."
+  },
+  {
+    "en": "The lift is out of order.",
+    "de": "Der Aufzug ist außer Betrieb."
+  },
+  {
+    "en": "There's no hot water.",
+    "de": "Es gibt kein warmes Wasser."
+  },
+  {
+    "en": "I spilled coffee on the table.",
+    "de": "Ich habe Kaffee auf den Tisch verschüttet."
+  },
+  {
+    "en": "The battery is dead.",
+    "de": "Die Batterie ist leer."
+  },
+  {
+    "en": "It broke after two weeks.",
+    "de": "Es ist nach zwei Wochen kaputtgegangen."
+  },
+  {
+    "en": "Could you have a look at it?",
+    "de": "Könntest du es dir mal ansehen?"
+  },
+  {
+    "en": "Dinner will be ready in ten minutes.",
+    "de": "Das Abendessen ist in zehn Minuten fertig."
+  },
+  {
+    "en": "Could you pass me the salt?",
+    "de": "Könntest du mir das Salz reichen?"
+  },
+  {
+    "en": "I forgot to buy milk.",
+    "de": "Ich habe vergessen, Milch zu kaufen."
+  },
+  {
+    "en": "The recipe is very simple.",
+    "de": "Das Rezept ist sehr einfach."
+  },
+  {
+    "en": "Let it cook for twenty minutes.",
+    "de": "Lass es zwanzig Minuten kochen."
+  },
+  {
+    "en": "I don't know how to cook that.",
+    "de": "Ich weiß nicht, wie man das kocht."
+  },
+  {
+    "en": "The milk has gone off.",
+    "de": "Die Milch ist schlecht geworden."
+  },
+  {
+    "en": "Help yourself.",
+    "de": "Greif zu."
+  },
+  {
+    "en": "Would you like another piece?",
+    "de": "Möchtest du noch ein Stück?"
+  },
+  {
+    "en": "It's more complicated than it looks.",
+    "de": "Es ist komplizierter, als es aussieht."
+  },
+  {
+    "en": "That's exactly what I meant.",
+    "de": "Das ist genau das, was ich gemeint habe."
+  },
+  {
+    "en": "I completely forgot about it.",
+    "de": "Ich habe es völlig vergessen."
+  },
+  {
+    "en": "Let's do it another way.",
+    "de": "Machen wir es anders."
+  },
+  {
+    "en": "In my opinion that's wrong.",
+    "de": "Meiner Meinung nach ist das falsch."
+  },
+  {
+    "en": "It could have been worse.",
+    "de": "Es hätte schlimmer sein können."
+  },
+  {
+    "en": "That doesn't make any sense.",
+    "de": "Das ergibt keinen Sinn."
+  },
+  {
+    "en": "I'd say we should wait.",
+    "de": "Ich würde sagen, wir sollten warten."
+  },
+  {
+    "en": "It's not as bad as you think.",
+    "de": "Es ist nicht so schlimm, wie du denkst."
+  },
+  {
+    "en": "Sooner or later we'll find out.",
+    "de": "Früher oder später werden wir es herausfinden."
+  },
+  {
+    "en": "There must be another reason.",
+    "de": "Es muss einen anderen Grund geben."
+  },
+  {
+    "en": "I can't decide.",
+    "de": "Ich kann mich nicht entscheiden."
+  },
+  {
+    "en": "Let's not argue about it.",
+    "de": "Lass uns nicht darüber streiten."
+  },
+  {
+    "en": "That's easier said than done.",
+    "de": "Das ist leichter gesagt als getan."
+  },
+  {
+    "en": "It was worth the wait.",
+    "de": "Es hat sich gelohnt zu warten."
+  },
+  {
+    "en": "I'll think about it.",
+    "de": "Ich werde darüber nachdenken."
+  },
+  {
+    "en": "If I had time, I would come along.",
+    "de": "Wenn ich Zeit hätte, würde ich mitkommen."
+  },
+  {
+    "en": "I would have called you sooner.",
+    "de": "Ich hätte dich früher angerufen."
+  },
+  {
+    "en": "If it rains, we'll stay at home.",
+    "de": "Wenn es regnet, bleiben wir zu Hause."
+  },
+  {
+    "en": "You should have told me.",
+    "de": "Du hättest es mir sagen sollen."
+  },
+  {
+    "en": "I wish I could speak better German.",
+    "de": "Ich wünschte, ich könnte besser Deutsch sprechen."
+  },
+  {
+    "en": "If I were you, I'd wait.",
+    "de": "An deiner Stelle würde ich warten."
+  },
+  {
+    "en": "We could go tomorrow instead.",
+    "de": "Wir könnten stattdessen morgen gehen."
+  },
+  {
+    "en": "He would like to come, but he has to work.",
+    "de": "Er würde gern kommen, aber er muss arbeiten."
+  },
+  {
+    "en": "I sent the invoice yesterday.",
+    "de": "Ich habe die Rechnung gestern geschickt."
+  },
+  {
+    "en": "My colleague is on sick leave.",
+    "de": "Mein Kollege ist krankgeschrieben."
+  },
+  {
+    "en": "The boss wants to see you.",
+    "de": "Der Chef möchte dich sprechen."
+  },
+  {
+    "en": "I have an interview on Monday.",
+    "de": "Ich habe am Montag ein Vorstellungsgespräch."
+  },
+  {
+    "en": "We're looking for a new colleague.",
+    "de": "Wir suchen einen neuen Kollegen."
+  },
+  {
+    "en": "The contract runs for two years.",
+    "de": "Der Vertrag läuft zwei Jahre."
+  },
+  {
+    "en": "I get paid at the end of the month.",
+    "de": "Ich werde am Ende des Monats bezahlt."
+  },
+  {
+    "en": "Can we discuss this after lunch?",
+    "de": "Können wir das nach dem Mittagessen besprechen?"
+  },
+  {
+    "en": "He works part-time.",
+    "de": "Er arbeitet Teilzeit."
+  },
+  {
+    "en": "I'm taking Friday off.",
+    "de": "Ich nehme mir am Freitag frei."
+  },
+  {
+    "en": "Have a good trip.",
+    "de": "Gute Reise."
+  },
+  {
+    "en": "I always travel with hand luggage only.",
+    "de": "Ich reise immer nur mit Handgepäck."
+  },
+  {
+    "en": "The hotel room was very clean.",
+    "de": "Das Hotelzimmer war sehr sauber."
+  },
+  {
+    "en": "Breakfast is included.",
+    "de": "Das Frühstück ist inklusive."
+  },
+  {
+    "en": "Could I have the key, please?",
+    "de": "Könnte ich bitte den Schlüssel haben?"
+  },
+  {
+    "en": "We rented a car for a week.",
+    "de": "Wir haben für eine Woche ein Auto gemietet."
+  },
+  {
+    "en": "The beach was almost empty.",
+    "de": "Der Strand war fast leer."
+  },
+  {
+    "en": "I'd like to check out.",
+    "de": "Ich möchte auschecken."
+  },
+  {
+    "en": "Is there a lift in the building?",
+    "de": "Gibt es einen Aufzug im Gebäude?"
+  },
+  {
+    "en": "The museum is free on Sundays.",
+    "de": "Das Museum ist sonntags kostenlos."
+  },
+  {
+    "en": "I need to make a list.",
+    "de": "Ich muss eine Liste machen."
+  },
+  {
+    "en": "Don't forget to lock the door.",
+    "de": "Vergiss nicht, die Tür abzuschließen."
+  },
+  {
+    "en": "I'll be back in an hour.",
+    "de": "Ich bin in einer Stunde zurück."
+  },
+  {
+    "en": "Let's take a short break.",
+    "de": "Machen wir eine kurze Pause."
+  },
+  {
+    "en": "Turn off the light, please.",
+    "de": "Mach bitte das Licht aus."
+  },
+  {
+    "en": "I couldn't sleep last night.",
+    "de": "Ich konnte letzte Nacht nicht schlafen."
+  },
+  {
+    "en": "Wake me up at six.",
+    "de": "Weck mich um sechs."
+  },
+  {
+    "en": "It's my turn.",
+    "de": "Ich bin dran."
+  },
+  {
+    "en": "I open the window every morning.",
+    "de": "Ich mache jeden Morgen das Fenster auf."
+  },
+  {
+    "en": "Please close the door behind you.",
+    "de": "Bitte mach die Tür hinter dir zu."
+  },
+  {
+    "en": "He gets up very early.",
+    "de": "Er steht sehr früh auf."
+  },
+  {
+    "en": "We're leaving at seven tomorrow.",
+    "de": "Wir fahren morgen um sieben los."
+  },
+  {
+    "en": "She came back yesterday.",
+    "de": "Sie ist gestern zurückgekommen."
+  },
+  {
+    "en": "I have to call him back.",
+    "de": "Ich muss ihn zurückrufen."
+  },
+  {
+    "en": "Write it down before you forget.",
+    "de": "Schreib es auf, bevor du es vergisst."
+  },
+  {
+    "en": "He threw the old newspapers away.",
+    "de": "Er hat die alten Zeitungen weggeworfen."
+  },
+  {
+    "en": "I invited them for Saturday.",
+    "de": "Ich habe sie für Samstag eingeladen."
+  },
+  {
+    "en": "We arrived at half past nine.",
+    "de": "Wir sind um halb zehn angekommen."
+  },
+  {
+    "en": "Please switch on the light.",
+    "de": "Mach bitte das Licht an."
+  },
+  {
+    "en": "She hung up without saying goodbye.",
+    "de": "Sie hat aufgelegt, ohne sich zu verabschieden."
+  },
+  {
+    "en": "He took the book with him.",
+    "de": "Er hat das Buch mitgenommen."
+  },
+  {
+    "en": "I have to hand in the form today.",
+    "de": "Ich muss das Formular heute abgeben."
+  },
+  {
+    "en": "The plane takes off at noon.",
+    "de": "Das Flugzeug startet um zwölf."
+  },
+  {
+    "en": "Don't give up so quickly.",
+    "de": "Gib nicht so schnell auf."
+  },
+  {
+    "en": "We agreed on a time.",
+    "de": "Wir haben uns auf eine Uhrzeit geeinigt."
+  },
+  {
+    "en": "I picked the children up from school.",
+    "de": "Ich habe die Kinder von der Schule abgeholt."
+  },
+  {
+    "en": "He put his coat on and left.",
+    "de": "Er hat seinen Mantel angezogen und ist gegangen."
+  },
+  {
+    "en": "Take your shoes off, please.",
+    "de": "Zieh bitte deine Schuhe aus."
+  },
+  {
+    "en": "I can't come today.",
+    "de": "Ich kann heute nicht kommen."
+  },
+  {
+    "en": "You must not park here.",
+    "de": "Du darfst hier nicht parken."
+  },
+  {
+    "en": "We should ask him first.",
+    "de": "Wir sollten ihn zuerst fragen."
+  },
+  {
+    "en": "She wants to move abroad.",
+    "de": "Sie will ins Ausland ziehen."
+  },
+  {
+    "en": "I may leave earlier today.",
+    "de": "Ich darf heute früher gehen."
+  },
+  {
+    "en": "He can't swim at all.",
+    "de": "Er kann überhaupt nicht schwimmen."
+  },
+  {
+    "en": "You don't have to come with me.",
+    "de": "Du musst nicht mitkommen."
+  },
+  {
+    "en": "I'd like to try something new.",
+    "de": "Ich möchte etwas Neues probieren."
+  },
+  {
+    "en": "We can meet in front of the church.",
+    "de": "Wir können uns vor der Kirche treffen."
+  },
+  {
+    "en": "She had to work late again.",
+    "de": "Sie musste wieder lange arbeiten."
+  },
+  {
+    "en": "I wasn't allowed to go out.",
+    "de": "Ich durfte nicht ausgehen."
+  },
+  {
+    "en": "He could already read at four.",
+    "de": "Er konnte schon mit vier lesen."
+  },
+  {
+    "en": "You should see a doctor.",
+    "de": "Du solltest zum Arzt gehen."
+  },
+  {
+    "en": "May I sit here?",
+    "de": "Darf ich mich hierher setzen?"
+  },
+  {
+    "en": "We wanted to call you.",
+    "de": "Wir wollten dich anrufen."
+  },
+  {
+    "en": "I can do that for you.",
+    "de": "Das kann ich für dich machen."
+  },
+  {
+    "en": "Nobody had to wait long.",
+    "de": "Niemand musste lange warten."
+  },
+  {
+    "en": "Can you come a bit earlier?",
+    "de": "Kannst du etwas früher kommen?"
+  },
+  {
+    "en": "Wait for me at the entrance.",
+    "de": "Warte am Eingang auf mich."
+  },
+  {
+    "en": "Come in and sit down.",
+    "de": "Komm rein und setz dich."
+  },
+  {
+    "en": "Give me a call when you're ready.",
+    "de": "Ruf mich an, wenn du fertig bist."
+  },
+  {
+    "en": "Don't worry about it.",
+    "de": "Mach dir keine Sorgen darüber."
+  },
+  {
+    "en": "Let's go, we're late.",
+    "de": "Los, wir sind spät dran."
+  },
+  {
+    "en": "Be careful on the stairs.",
+    "de": "Sei vorsichtig auf der Treppe."
+  },
+  {
+    "en": "Try it again tomorrow.",
+    "de": "Versuch es morgen noch einmal."
+  },
+  {
+    "en": "Show me the photo.",
+    "de": "Zeig mir das Foto."
+  },
+  {
+    "en": "Ask her yourself.",
+    "de": "Frag sie selbst."
+  },
+  {
+    "en": "Bring an umbrella with you.",
+    "de": "Nimm einen Regenschirm mit."
+  },
+  {
+    "en": "Stay where you are.",
+    "de": "Bleib, wo du bist."
+  },
+  {
+    "en": "Listen carefully now.",
+    "de": "Hör jetzt gut zu."
+  },
+  {
+    "en": "Don't say anything to him.",
+    "de": "Sag ihm nichts."
+  },
+  {
+    "en": "Put it on the table.",
+    "de": "Leg es auf den Tisch."
+  },
+  {
+    "en": "Let me try.",
+    "de": "Lass mich versuchen."
+  },
+  {
+    "en": "Have a seat.",
+    "de": "Nehmen Sie Platz."
+  },
+  {
+    "en": "Hurry up, the bus is coming.",
+    "de": "Beeil dich, der Bus kommt."
+  },
+  {
+    "en": "I made the bed this morning.",
+    "de": "Ich habe heute Morgen das Bett gemacht."
+  },
+  {
+    "en": "The floor needs cleaning.",
+    "de": "Der Boden muss geputzt werden."
+  },
+  {
+    "en": "Could you hang up the washing?",
+    "de": "Könntest du die Wäsche aufhängen?"
+  },
+  {
+    "en": "I have to iron my shirt.",
+    "de": "Ich muss mein Hemd bügeln."
+  },
+  {
+    "en": "We ran out of washing powder.",
+    "de": "Uns ist das Waschmittel ausgegangen."
+  },
+  {
+    "en": "The bin is full again.",
+    "de": "Der Mülleimer ist wieder voll."
+  },
+  {
+    "en": "He vacuums the whole flat on Saturdays.",
+    "de": "Er saugt samstags die ganze Wohnung."
+  },
+  {
+    "en": "I cleaned the windows yesterday.",
+    "de": "Ich habe gestern die Fenster geputzt."
+  },
+  {
+    "en": "The bathroom needs a good clean.",
+    "de": "Das Bad muss mal gründlich geputzt werden."
+  },
+  {
+    "en": "Who is doing the dishes tonight?",
+    "de": "Wer spült heute Abend?"
+  },
+  {
+    "en": "Please water the plants while I'm away.",
+    "de": "Bitte gieß die Blumen, während ich weg bin."
+  },
+  {
+    "en": "I sorted out my old clothes.",
+    "de": "Ich habe meine alten Kleider aussortiert."
+  },
+  {
+    "en": "The fridge needs defrosting.",
+    "de": "Der Kühlschrank muss abgetaut werden."
+  },
+  {
+    "en": "He never puts anything back.",
+    "de": "Er räumt nie etwas zurück."
+  },
+  {
+    "en": "Everything is tidy again.",
+    "de": "Alles ist wieder aufgeräumt."
+  },
+  {
+    "en": "I need a sharp knife.",
+    "de": "Ich brauche ein scharfes Messer."
+  },
+  {
+    "en": "The pan is still hot.",
+    "de": "Die Pfanne ist noch heiß."
+  },
+  {
+    "en": "Put the milk in the fridge.",
+    "de": "Stell die Milch in den Kühlschrank."
+  },
+  {
+    "en": "The oven takes ten minutes to heat up.",
+    "de": "Der Ofen braucht zehn Minuten zum Aufheizen."
+  },
+  {
+    "en": "Cut the onions very small.",
+    "de": "Schneide die Zwiebeln ganz klein."
+  },
+  {
+    "en": "Add a little salt at the end.",
+    "de": "Gib am Ende etwas Salz dazu."
+  },
+  {
+    "en": "The water is boiling.",
+    "de": "Das Wasser kocht."
+  },
+  {
+    "en": "I burnt the rice.",
+    "de": "Ich habe den Reis verbrannt."
+  },
+  {
+    "en": "There's still soup left over.",
+    "de": "Es ist noch Suppe übrig."
+  },
+  {
+    "en": "Do you want it warm or cold?",
+    "de": "Möchtest du es warm oder kalt?"
+  },
+  {
+    "en": "My feet hurt from walking.",
+    "de": "Meine Füße tun vom Laufen weh."
+  },
+  {
+    "en": "He cut his finger.",
+    "de": "Er hat sich in den Finger geschnitten."
+  },
+  {
+    "en": "My eyes are tired from the screen.",
+    "de": "Meine Augen sind vom Bildschirm müde."
+  },
+  {
+    "en": "She has a fever.",
+    "de": "Sie hat Fieber."
+  },
+  {
+    "en": "I feel dizzy when I stand up.",
+    "de": "Mir wird schwindelig, wenn ich aufstehe."
+  },
+  {
+    "en": "Take a deep breath.",
+    "de": "Atme tief ein."
+  },
+  {
+    "en": "My shoulder has been hurting for weeks.",
+    "de": "Meine Schulter tut seit Wochen weh."
+  },
+  {
+    "en": "He is allergic to cats.",
+    "de": "Er ist gegen Katzen allergisch."
+  },
+  {
+    "en": "I need to lie down for a moment.",
+    "de": "Ich muss mich kurz hinlegen."
+  },
+  {
+    "en": "The wound is healing well.",
+    "de": "Die Wunde heilt gut."
+  },
+  {
+    "en": "Did you sleep well?",
+    "de": "Hast du gut geschlafen?"
+  },
+  {
+    "en": "I woke up at three and couldn't sleep again.",
+    "de": "Ich bin um drei aufgewacht und konnte nicht mehr einschlafen."
+  },
+  {
+    "en": "She stayed up all night.",
+    "de": "Sie ist die ganze Nacht wach geblieben."
+  },
+  {
+    "en": "I dream almost every night.",
+    "de": "Ich träume fast jede Nacht."
+  },
+  {
+    "en": "Turn the alarm off, please.",
+    "de": "Stell bitte den Wecker aus."
+  },
+  {
+    "en": "I overslept this morning.",
+    "de": "Ich habe heute Morgen verschlafen."
+  },
+  {
+    "en": "He fell asleep on the sofa.",
+    "de": "Er ist auf dem Sofa eingeschlafen."
+  },
+  {
+    "en": "I need eight hours of sleep.",
+    "de": "Ich brauche acht Stunden Schlaf."
+  },
+  {
+    "en": "The room is too bright to sleep.",
+    "de": "Das Zimmer ist zu hell zum Schlafen."
+  },
+  {
+    "en": "Good night, sleep well.",
+    "de": "Gute Nacht, schlaf gut."
+  },
+  {
+    "en": "I've been thinking about it all day.",
+    "de": "Ich habe den ganzen Tag darüber nachgedacht."
+  },
+  {
+    "en": "She always keeps her promises.",
+    "de": "Sie hält immer ihre Versprechen."
+  },
+  {
+    "en": "He forgot to tell me.",
+    "de": "Er hat vergessen, es mir zu sagen."
+  },
+  {
+    "en": "We decided to stay one more day.",
+    "de": "Wir haben beschlossen, noch einen Tag zu bleiben."
+  },
+  {
+    "en": "I promised to help her.",
+    "de": "Ich habe versprochen, ihr zu helfen."
+  },
+  {
+    "en": "They refused to pay.",
+    "de": "Sie haben sich geweigert zu zahlen."
+  },
+  {
+    "en": "He admitted his mistake.",
+    "de": "Er hat seinen Fehler zugegeben."
+  },
+  {
+    "en": "She explained everything twice.",
+    "de": "Sie hat alles zweimal erklärt."
+  },
+  {
+    "en": "I doubt that it works.",
+    "de": "Ich bezweifle, dass das funktioniert."
+  },
+  {
+    "en": "We agree on that.",
+    "de": "Da sind wir uns einig."
+  },
+  {
+    "en": "He denied everything.",
+    "de": "Er hat alles abgestritten."
+  },
+  {
+    "en": "I noticed it straight away.",
+    "de": "Ich habe es sofort bemerkt."
+  },
+  {
+    "en": "She reminded me of the appointment.",
+    "de": "Sie hat mich an den Termin erinnert."
+  },
+  {
+    "en": "I completely misunderstood him.",
+    "de": "Ich habe ihn völlig falsch verstanden."
+  },
+  {
+    "en": "We'll manage somehow.",
+    "de": "Wir schaffen das irgendwie."
+  },
+  {
+    "en": "This bag is heavier than it looks.",
+    "de": "Diese Tasche ist schwerer, als sie aussieht."
+  },
+  {
+    "en": "The blue one is nicer.",
+    "de": "Der blaue ist schöner."
+  },
+  {
+    "en": "It's the cheapest hotel in town.",
+    "de": "Es ist das billigste Hotel der Stadt."
+  },
+  {
+    "en": "He runs faster than me.",
+    "de": "Er läuft schneller als ich."
+  },
+  {
+    "en": "This is the best coffee I've had.",
+    "de": "Das ist der beste Kaffee, den ich getrunken habe."
+  },
+  {
+    "en": "The second floor is quieter.",
+    "de": "Der zweite Stock ist ruhiger."
+  },
+  {
+    "en": "Winter here is longer than at home.",
+    "de": "Der Winter ist hier länger als zu Hause."
+  },
+  {
+    "en": "That's the smallest room in the house.",
+    "de": "Das ist das kleinste Zimmer im Haus."
+  },
+  {
+    "en": "My old phone was better.",
+    "de": "Mein altes Handy war besser."
+  },
+  {
+    "en": "Nothing is more important than health.",
+    "de": "Nichts ist wichtiger als die Gesundheit."
+  },
+  {
+    "en": "The box is empty.",
+    "de": "Die Kiste ist leer."
+  },
+  {
+    "en": "The soup is still warm.",
+    "de": "Die Suppe ist noch warm."
+  },
+  {
+    "en": "His hands were dirty.",
+    "de": "Seine Hände waren schmutzig."
+  },
+  {
+    "en": "The street was completely quiet.",
+    "de": "Die Straße war völlig still."
+  },
+  {
+    "en": "It's a very narrow road.",
+    "de": "Es ist eine sehr schmale Straße."
+  },
+  {
+    "en": "The bag was surprisingly light.",
+    "de": "Die Tasche war überraschend leicht."
+  },
+  {
+    "en": "That knife is not sharp enough.",
+    "de": "Das Messer ist nicht scharf genug."
+  },
+  {
+    "en": "The chair is broken.",
+    "de": "Der Stuhl ist kaputt."
+  },
+  {
+    "en": "Her voice was very soft.",
+    "de": "Ihre Stimme war sehr leise."
+  },
+  {
+    "en": "The tea is far too strong.",
+    "de": "Der Tee ist viel zu stark."
+  },
+  {
+    "en": "Where are my glasses?",
+    "de": "Wo ist meine Brille?"
+  },
+  {
+    "en": "I put it somewhere here.",
+    "de": "Ich habe es irgendwo hier hingelegt."
+  },
+  {
+    "en": "It's under the newspaper.",
+    "de": "Es liegt unter der Zeitung."
+  },
+  {
+    "en": "The keys are on the shelf.",
+    "de": "Die Schlüssel liegen im Regal."
+  },
+  {
+    "en": "He stood behind the door.",
+    "de": "Er stand hinter der Tür."
+  },
+  {
+    "en": "The cat is sitting on the roof.",
+    "de": "Die Katze sitzt auf dem Dach."
+  },
+  {
+    "en": "We live opposite the school.",
+    "de": "Wir wohnen gegenüber der Schule."
+  },
+  {
+    "en": "The bank is between the bakery and the pharmacy.",
+    "de": "Die Bank ist zwischen der Bäckerei und der Apotheke."
+  },
+  {
+    "en": "Put the box in the corner.",
+    "de": "Stell die Kiste in die Ecke."
+  },
+  {
+    "en": "I'm waiting in front of the entrance.",
+    "de": "Ich warte vor dem Eingang."
+  },
+  {
+    "en": "The dog is lying under the table.",
+    "de": "Der Hund liegt unter dem Tisch."
+  },
+  {
+    "en": "She hung the picture above the sofa.",
+    "de": "Sie hat das Bild über das Sofa gehängt."
+  },
+  {
+    "en": "There's a park near our flat.",
+    "de": "In der Nähe unserer Wohnung gibt es einen Park."
+  },
+  {
+    "en": "The pharmacy is around the corner.",
+    "de": "Die Apotheke ist um die Ecke."
+  },
+  {
+    "en": "I met her on the way home.",
+    "de": "Ich habe sie auf dem Heimweg getroffen."
+  },
+  {
+    "en": "Someone is at the door.",
+    "de": "Jemand ist an der Tür."
+  },
+  {
+    "en": "Nobody knows the answer.",
+    "de": "Niemand weiß die Antwort."
+  },
+  {
+    "en": "Everything went well.",
+    "de": "Alles ist gut gelaufen."
+  },
+  {
+    "en": "Something is wrong here.",
+    "de": "Hier stimmt etwas nicht."
+  },
+  {
+    "en": "Anyone can learn that.",
+    "de": "Das kann jeder lernen."
+  },
+  {
+    "en": "I haven't told anybody.",
+    "de": "Ich habe es niemandem erzählt."
+  },
+  {
+    "en": "Nothing has changed.",
+    "de": "Nichts hat sich geändert."
+  },
+  {
+    "en": "Everyone was already there.",
+    "de": "Alle waren schon da."
+  },
+  {
+    "en": "Some of them were late.",
+    "de": "Einige von ihnen waren zu spät."
+  },
+  {
+    "en": "Neither of us knew that.",
+    "de": "Keiner von uns wusste das."
+  },
+  {
+    "en": "I'll do it myself.",
+    "de": "Ich mache es selbst."
+  },
+  {
+    "en": "He never talks about himself.",
+    "de": "Er spricht nie über sich selbst."
+  },
+  {
+    "en": "We enjoyed ourselves a lot.",
+    "de": "Wir haben uns sehr amüsiert."
+  },
+  {
+    "en": "She hurt herself while cooking.",
+    "de": "Sie hat sich beim Kochen verletzt."
+  },
+  {
+    "en": "They know each other from work.",
+    "de": "Sie kennen sich von der Arbeit."
+  },
+  {
+    "en": "I'm looking forward to seeing you.",
+    "de": "Ich freue mich darauf, dich zu sehen."
+  },
+  {
+    "en": "He apologised to me.",
+    "de": "Er hat sich bei mir entschuldigt."
+  },
+  {
+    "en": "We're getting used to the weather.",
+    "de": "Wir gewöhnen uns an das Wetter."
+  },
+  {
+    "en": "She washed her hands.",
+    "de": "Sie hat sich die Hände gewaschen."
+  },
+  {
+    "en": "Sit yourself down.",
+    "de": "Setz dich."
+  },
+  {
+    "en": "The letter was written by hand.",
+    "de": "Der Brief wurde mit der Hand geschrieben."
+  },
+  {
+    "en": "The bridge was built in 1890.",
+    "de": "Die Brücke wurde 1890 gebaut."
+  },
+  {
+    "en": "The shop has been sold.",
+    "de": "Das Geschäft wurde verkauft."
+  },
+  {
+    "en": "My bike was stolen.",
+    "de": "Mein Fahrrad wurde gestohlen."
+  },
+  {
+    "en": "The road is being repaired.",
+    "de": "Die Straße wird repariert."
+  },
+  {
+    "en": "Breakfast is served until ten.",
+    "de": "Frühstück wird bis zehn serviert."
+  },
+  {
+    "en": "The results will be announced tomorrow.",
+    "de": "Die Ergebnisse werden morgen bekannt gegeben."
+  },
+  {
+    "en": "The film was shot in Berlin.",
+    "de": "Der Film wurde in Berlin gedreht."
+  },
+  {
+    "en": "The window was left open.",
+    "de": "Das Fenster wurde offen gelassen."
+  },
+  {
+    "en": "Nothing was decided yesterday.",
+    "de": "Gestern wurde nichts entschieden."
+  },
+  {
+    "en": "I know that he is right.",
+    "de": "Ich weiß, dass er recht hat."
+  },
+  {
+    "en": "She said that she would come.",
+    "de": "Sie hat gesagt, dass sie kommen würde."
+  },
+  {
+    "en": "We stayed because it was raining.",
+    "de": "Wir sind geblieben, weil es geregnet hat."
+  },
+  {
+    "en": "Although it was late, we went out.",
+    "de": "Obwohl es spät war, sind wir ausgegangen."
+  },
+  {
+    "en": "Call me when you get home.",
+    "de": "Ruf mich an, wenn du zu Hause bist."
+  },
+  {
+    "en": "I'll wait until you're finished.",
+    "de": "Ich warte, bis du fertig bist."
+  },
+  {
+    "en": "He left before I could say anything.",
+    "de": "Er ist gegangen, bevor ich etwas sagen konnte."
+  },
+  {
+    "en": "After we ate, we went for a walk.",
+    "de": "Nachdem wir gegessen hatten, sind wir spazieren gegangen."
+  },
+  {
+    "en": "I don't know whether he's coming.",
+    "de": "Ich weiß nicht, ob er kommt."
+  },
+  {
+    "en": "She works so that her children can study.",
+    "de": "Sie arbeitet, damit ihre Kinder studieren können."
+  },
+  {
+    "en": "That's the man who helped me.",
+    "de": "Das ist der Mann, der mir geholfen hat."
+  },
+  {
+    "en": "The book that you lent me was great.",
+    "de": "Das Buch, das du mir geliehen hast, war toll."
+  },
+  {
+    "en": "The city where I grew up is small.",
+    "de": "Die Stadt, in der ich aufgewachsen bin, ist klein."
+  },
+  {
+    "en": "Everything I need is here.",
+    "de": "Alles, was ich brauche, ist hier."
+  },
+  {
+    "en": "The woman whose car broke down called us.",
+    "de": "Die Frau, deren Auto liegen geblieben ist, hat uns angerufen."
+  },
+  {
+    "en": "I'd like to open an account.",
+    "de": "Ich möchte ein Konto eröffnen."
+  },
+  {
+    "en": "The transfer takes two working days.",
+    "de": "Die Überweisung dauert zwei Werktage."
+  },
+  {
+    "en": "My card has been blocked.",
+    "de": "Meine Karte wurde gesperrt."
+  },
+  {
+    "en": "I pay the rent by standing order.",
+    "de": "Ich zahle die Miete per Dauerauftrag."
+  },
+  {
+    "en": "The interest rate is very low.",
+    "de": "Der Zinssatz ist sehr niedrig."
+  },
+  {
+    "en": "Do I have to pay a fee?",
+    "de": "Muss ich eine Gebühr zahlen?"
+  },
+  {
+    "en": "I forgot my PIN.",
+    "de": "Ich habe meine PIN vergessen."
+  },
+  {
+    "en": "The cash machine is out of order.",
+    "de": "Der Geldautomat ist außer Betrieb."
+  },
+  {
+    "en": "Can I get a receipt, please?",
+    "de": "Kann ich bitte eine Quittung bekommen?"
+  },
+  {
+    "en": "My salary comes in on the first.",
+    "de": "Mein Gehalt kommt am Ersten."
+  },
+  {
+    "en": "We took out a loan for the flat.",
+    "de": "Wir haben einen Kredit für die Wohnung aufgenommen."
+  },
+  {
+    "en": "Everything has got more expensive.",
+    "de": "Alles ist teurer geworden."
+  },
+  {
+    "en": "I keep track of my spending.",
+    "de": "Ich behalte meine Ausgaben im Blick."
+  },
+  {
+    "en": "The insurance covers the damage.",
+    "de": "Die Versicherung deckt den Schaden."
+  },
+  {
+    "en": "I have to renew my contract.",
+    "de": "Ich muss meinen Vertrag verlängern."
+  },
+  {
+    "en": "The bill is due at the end of the month.",
+    "de": "Die Rechnung ist Ende des Monats fällig."
+  },
+  {
+    "en": "He earns more than he spends.",
+    "de": "Er verdient mehr, als er ausgibt."
+  },
+  {
+    "en": "Taxes are due in May.",
+    "de": "Die Steuern sind im Mai fällig."
+  },
+  {
+    "en": "That was a waste of money.",
+    "de": "Das war Geldverschwendung."
+  },
+  {
+    "en": "We split the costs.",
+    "de": "Wir haben die Kosten geteilt."
+  },
+  {
+    "en": "The meeting room is booked.",
+    "de": "Der Besprechungsraum ist gebucht."
+  },
+  {
+    "en": "I'll forward you the email.",
+    "de": "Ich leite dir die E-Mail weiter."
+  },
+  {
+    "en": "Could you take over for me on Friday?",
+    "de": "Könntest du am Freitag für mich übernehmen?"
+  },
+  {
+    "en": "The printer is out of paper.",
+    "de": "Im Drucker ist kein Papier mehr."
+  },
+  {
+    "en": "He is responsible for the whole team.",
+    "de": "Er ist für das ganze Team verantwortlich."
+  },
+  {
+    "en": "We start at nine sharp.",
+    "de": "Wir fangen pünktlich um neun an."
+  },
+  {
+    "en": "The project is behind schedule.",
+    "de": "Das Projekt ist im Verzug."
+  },
+  {
+    "en": "I have a lot of emails to answer.",
+    "de": "Ich habe viele E-Mails zu beantworten."
+  },
+  {
+    "en": "Can you join the call at two?",
+    "de": "Kannst du um zwei an der Besprechung teilnehmen?"
+  },
+  {
+    "en": "She was promoted last month.",
+    "de": "Sie wurde letzten Monat befördert."
+  },
+  {
+    "en": "The company is growing quickly.",
+    "de": "Die Firma wächst schnell."
+  },
+  {
+    "en": "I work with a great team.",
+    "de": "Ich arbeite mit einem tollen Team."
+  },
+  {
+    "en": "Let's split the work between us.",
+    "de": "Teilen wir die Arbeit unter uns auf."
+  },
+  {
+    "en": "The customer is not happy.",
+    "de": "Der Kunde ist nicht zufrieden."
+  },
+  {
+    "en": "I need your signature here.",
+    "de": "Ich brauche hier Ihre Unterschrift."
+  },
+  {
+    "en": "He handed in his notice.",
+    "de": "Er hat gekündigt."
+  },
+  {
+    "en": "The training lasts three days.",
+    "de": "Die Schulung dauert drei Tage."
+  },
+  {
+    "en": "We have to cut costs.",
+    "de": "Wir müssen die Kosten senken."
+  },
+  {
+    "en": "My laptop is from the office.",
+    "de": "Mein Laptop ist von der Firma."
+  },
+  {
+    "en": "I'd like to apply for this job.",
+    "de": "Ich möchte mich auf diese Stelle bewerben."
+  },
+  {
+    "en": "The city is building a new bridge.",
+    "de": "Die Stadt baut eine neue Brücke."
+  },
+  {
+    "en": "There are roadworks on the main street.",
+    "de": "Auf der Hauptstraße sind Bauarbeiten."
+  },
+  {
+    "en": "The market is on Wednesdays and Saturdays.",
+    "de": "Der Markt ist mittwochs und samstags."
+  },
+  {
+    "en": "Our neighbourhood is very green.",
+    "de": "Unser Viertel ist sehr grün."
+  },
+  {
+    "en": "The old town is worth seeing.",
+    "de": "Die Altstadt ist sehenswert."
+  },
+  {
+    "en": "A new café opened around the corner.",
+    "de": "Um die Ecke hat ein neues Café aufgemacht."
+  },
+  {
+    "en": "The rents keep rising.",
+    "de": "Die Mieten steigen immer weiter."
+  },
+  {
+    "en": "There aren't enough playgrounds here.",
+    "de": "Hier gibt es nicht genug Spielplätze."
+  },
+  {
+    "en": "The bus service is quite good.",
+    "de": "Die Busverbindung ist ziemlich gut."
+  },
+  {
+    "en": "I know this city like the back of my hand.",
+    "de": "Ich kenne diese Stadt wie meine Westentasche."
+  },
+  {
+    "en": "Traffic is worst at eight in the morning.",
+    "de": "Der Verkehr ist um acht Uhr morgens am schlimmsten."
+  },
+  {
+    "en": "The square is full of people in summer.",
+    "de": "Im Sommer ist der Platz voller Menschen."
+  },
+  {
+    "en": "They're renovating the station.",
+    "de": "Sie renovieren den Bahnhof."
+  },
+  {
+    "en": "We separate our rubbish.",
+    "de": "Wir trennen unseren Müll."
+  },
+  {
+    "en": "I try to use less plastic.",
+    "de": "Ich versuche, weniger Plastik zu benutzen."
+  },
+  {
+    "en": "The air is cleaner in the mountains.",
+    "de": "In den Bergen ist die Luft sauberer."
+  },
+  {
+    "en": "More people are cycling to work.",
+    "de": "Immer mehr Leute fahren mit dem Rad zur Arbeit."
+  },
+  {
+    "en": "We turned the heating down.",
+    "de": "Wir haben die Heizung runtergedreht."
+  },
+  {
+    "en": "The summers are getting hotter.",
+    "de": "Die Sommer werden immer heißer."
+  },
+  {
+    "en": "I buy vegetables from the region.",
+    "de": "Ich kaufe Gemüse aus der Region."
+  },
+  {
+    "en": "Glass goes in the other bin.",
+    "de": "Glas kommt in die andere Tonne."
+  },
+  {
+    "en": "They put solar panels on the roof.",
+    "de": "Sie haben Solarzellen auf das Dach gebaut."
+  },
+  {
+    "en": "Water is getting scarce in some areas.",
+    "de": "In manchen Gegenden wird das Wasser knapp."
+  },
+  {
+    "en": "Everyone can do a little.",
+    "de": "Jeder kann ein bisschen tun."
+  },
+  {
+    "en": "Have you seen the news?",
+    "de": "Hast du die Nachrichten gesehen?"
+  },
+  {
+    "en": "It was in the paper this morning.",
+    "de": "Es stand heute Morgen in der Zeitung."
+  },
+  {
+    "en": "Nobody knows how it will end.",
+    "de": "Niemand weiß, wie es ausgeht."
+  },
+  {
+    "en": "The election is in September.",
+    "de": "Die Wahl ist im September."
+  },
+  {
+    "en": "Prices have gone up again.",
+    "de": "Die Preise sind wieder gestiegen."
+  },
+  {
+    "en": "I don't believe everything I read.",
+    "de": "Ich glaube nicht alles, was ich lese."
+  },
+  {
+    "en": "There was an accident on the motorway.",
+    "de": "Auf der Autobahn gab es einen Unfall."
+  },
+  {
+    "en": "The story was all over the internet.",
+    "de": "Die Geschichte war überall im Internet."
+  },
+  {
+    "en": "That was the main topic yesterday.",
+    "de": "Das war gestern das Hauptthema."
+  },
+  {
+    "en": "People talk about it everywhere.",
+    "de": "Überall wird darüber gesprochen."
+  },
+  {
+    "en": "Do you have this in another colour?",
+    "de": "Haben Sie das in einer anderen Farbe?"
+  },
+  {
+    "en": "Where are the changing rooms?",
+    "de": "Wo sind die Umkleidekabinen?"
+  },
+  {
+    "en": "It doesn't fit me.",
+    "de": "Es passt mir nicht."
+  },
+  {
+    "en": "I'll take both.",
+    "de": "Ich nehme beide."
+  },
+  {
+    "en": "Is there a guarantee on this?",
+    "de": "Gibt es darauf eine Garantie?"
+  },
+  {
+    "en": "The order arrived damaged.",
+    "de": "Die Bestellung ist beschädigt angekommen."
+  },
+  {
+    "en": "I'd like to exchange this.",
+    "de": "Ich möchte das umtauschen."
+  },
+  {
+    "en": "Can you order it for me?",
+    "de": "Können Sie es für mich bestellen?"
+  },
+  {
+    "en": "It's sold out everywhere.",
+    "de": "Es ist überall ausverkauft."
+  },
+  {
+    "en": "The shop assistant was very helpful.",
+    "de": "Der Verkäufer war sehr hilfsbereit."
+  },
+  {
+    "en": "I got it half price.",
+    "de": "Ich habe es zum halben Preis bekommen."
+  },
+  {
+    "en": "We need to do a big shop.",
+    "de": "Wir müssen einen Großeinkauf machen."
+  },
+  {
+    "en": "Have you got a shopping bag?",
+    "de": "Hast du eine Einkaufstasche?"
+  },
+  {
+    "en": "The queue at the checkout is long.",
+    "de": "Die Schlange an der Kasse ist lang."
+  },
+  {
+    "en": "That was money well spent.",
+    "de": "Das war gut angelegtes Geld."
+  },
+  {
+    "en": "Could we sit outside?",
+    "de": "Könnten wir draußen sitzen?"
+  },
+  {
+    "en": "Is the table by the door free?",
+    "de": "Ist der Tisch an der Tür frei?"
+  },
+  {
+    "en": "I'd like to book a table for Friday.",
+    "de": "Ich möchte einen Tisch für Freitag reservieren."
+  },
+  {
+    "en": "What's today's special?",
+    "de": "Was ist das Tagesgericht?"
+  },
+  {
+    "en": "Could I have that without onions?",
+    "de": "Könnte ich das ohne Zwiebeln haben?"
+  },
+  {
+    "en": "The service was very slow.",
+    "de": "Die Bedienung war sehr langsam."
+  },
+  {
+    "en": "Everything was excellent, thank you.",
+    "de": "Es war alles ausgezeichnet, danke."
+  },
+  {
+    "en": "Do you have anything for children?",
+    "de": "Haben Sie etwas für Kinder?"
+  },
+  {
+    "en": "I'll just have a coffee.",
+    "de": "Ich nehme nur einen Kaffee."
+  },
+  {
+    "en": "Keep the change.",
+    "de": "Stimmt so."
+  },
+  {
+    "en": "Could we get some tap water?",
+    "de": "Könnten wir Leitungswasser bekommen?"
+  },
+  {
+    "en": "The portions here are huge.",
+    "de": "Die Portionen hier sind riesig."
+  },
+  {
+    "en": "Can I take the rest with me?",
+    "de": "Kann ich den Rest mitnehmen?"
+  },
+  {
+    "en": "We waited an hour for the food.",
+    "de": "Wir haben eine Stunde auf das Essen gewartet."
+  },
+  {
+    "en": "This is my treat.",
+    "de": "Ich lade dich ein."
+  },
+  {
+    "en": "The train was completely full.",
+    "de": "Der Zug war völlig voll."
+  },
+  {
+    "en": "I always book a seat in advance.",
+    "de": "Ich reserviere immer im Voraus einen Platz."
+  },
+  {
+    "en": "The ticket is valid for one day.",
+    "de": "Die Fahrkarte gilt einen Tag."
+  },
+  {
+    "en": "Do I have to change here?",
+    "de": "Muss ich hier umsteigen?"
+  },
+  {
+    "en": "The bus comes every ten minutes.",
+    "de": "Der Bus kommt alle zehn Minuten."
+  },
+  {
+    "en": "He forgot to stamp his ticket.",
+    "de": "Er hat vergessen, seine Fahrkarte zu entwerten."
+  },
+  {
+    "en": "There's a delay of half an hour.",
+    "de": "Es gibt eine halbe Stunde Verspätung."
+  },
+  {
+    "en": "The night train was surprisingly comfortable.",
+    "de": "Der Nachtzug war überraschend bequem."
+  },
+  {
+    "en": "We travelled first class for once.",
+    "de": "Wir sind ausnahmsweise erster Klasse gefahren."
+  },
+  {
+    "en": "The station has a left luggage office.",
+    "de": "Der Bahnhof hat eine Gepäckaufbewahrung."
+  },
+  {
+    "en": "Passengers must show their tickets.",
+    "de": "Die Fahrgäste müssen ihre Fahrkarten vorzeigen."
+  },
+  {
+    "en": "The airport is far from the centre.",
+    "de": "Der Flughafen ist weit vom Zentrum entfernt."
+  },
+  {
+    "en": "My flight was cancelled.",
+    "de": "Mein Flug wurde gestrichen."
+  },
+  {
+    "en": "I have a window seat.",
+    "de": "Ich habe einen Fensterplatz."
+  },
+  {
+    "en": "We landed half an hour early.",
+    "de": "Wir sind eine halbe Stunde zu früh gelandet."
+  },
+  {
+    "en": "I studied history at university.",
+    "de": "Ich habe an der Universität Geschichte studiert."
+  },
+  {
+    "en": "The lecture starts at ten.",
+    "de": "Die Vorlesung beginnt um zehn."
+  },
+  {
+    "en": "She's writing her thesis this year.",
+    "de": "Sie schreibt dieses Jahr ihre Abschlussarbeit."
+  },
+  {
+    "en": "The library is full during exams.",
+    "de": "Während der Prüfungen ist die Bibliothek voll."
+  },
+  {
+    "en": "I failed the exam twice.",
+    "de": "Ich bin zweimal durch die Prüfung gefallen."
+  },
+  {
+    "en": "He got the best mark in the class.",
+    "de": "Er hat die beste Note in der Klasse bekommen."
+  },
+  {
+    "en": "The semester ends in July.",
+    "de": "Das Semester endet im Juli."
+  },
+  {
+    "en": "I share a room with another student.",
+    "de": "Ich teile mir ein Zimmer mit einem anderen Studenten."
+  },
+  {
+    "en": "The course was fully booked.",
+    "de": "Der Kurs war ausgebucht."
+  },
+  {
+    "en": "Registration closes on Monday.",
+    "de": "Die Anmeldung endet am Montag."
+  },
+  {
+    "en": "She teaches maths at a secondary school.",
+    "de": "Sie unterrichtet Mathe an einer weiterführenden Schule."
+  },
+  {
+    "en": "The kids have holidays for six weeks.",
+    "de": "Die Kinder haben sechs Wochen Ferien."
+  },
+  {
+    "en": "He is good at languages.",
+    "de": "Er ist gut in Sprachen."
+  },
+  {
+    "en": "I never liked physics.",
+    "de": "Physik habe ich nie gemocht."
+  },
+  {
+    "en": "The homework took me two hours.",
+    "de": "Die Hausaufgaben haben mich zwei Stunden gekostet."
+  },
+  {
+    "en": "The film starts in five minutes, hurry.",
+    "de": "Der Film fängt in fünf Minuten an, beeil dich."
+  },
+  {
+    "en": "I booked two tickets online.",
+    "de": "Ich habe zwei Karten online gebucht."
+  },
+  {
+    "en": "The concert was better than I expected.",
+    "de": "Das Konzert war besser, als ich erwartet hatte."
+  },
+  {
+    "en": "We sat in the last row.",
+    "de": "Wir saßen in der letzten Reihe."
+  },
+  {
+    "en": "The museum closes in an hour.",
+    "de": "Das Museum schließt in einer Stunde."
+  },
+  {
+    "en": "The exhibition runs until March.",
+    "de": "Die Ausstellung läuft bis März."
+  },
+  {
+    "en": "I'd rather watch it at home.",
+    "de": "Ich sehe es lieber zu Hause."
+  },
+  {
+    "en": "The tickets were sold out in minutes.",
+    "de": "Die Karten waren in Minuten ausverkauft."
+  },
+  {
+    "en": "There's a festival in the park this weekend.",
+    "de": "Dieses Wochenende ist ein Festival im Park."
+  },
+  {
+    "en": "He knows every song by heart.",
+    "de": "Er kennt jedes Lied auswendig."
+  },
+  {
+    "en": "Are you free this evening?",
+    "de": "Hast du heute Abend Zeit?"
+  },
+  {
+    "en": "Shall we get something to eat?",
+    "de": "Sollen wir etwas essen gehen?"
+  },
+  {
+    "en": "I'll meet you at the entrance.",
+    "de": "Wir treffen uns am Eingang."
+  },
+  {
+    "en": "Let's go for a walk later.",
+    "de": "Lass uns später spazieren gehen."
+  },
+  {
+    "en": "Do you fancy a coffee?",
+    "de": "Hast du Lust auf einen Kaffee?"
+  },
+  {
+    "en": "We haven't decided yet.",
+    "de": "Wir haben uns noch nicht entschieden."
+  },
+  {
+    "en": "Bring your friends along.",
+    "de": "Bring deine Freunde mit."
+  },
+  {
+    "en": "Sorry, I can't make it tonight.",
+    "de": "Tut mir leid, heute Abend schaffe ich es nicht."
+  },
+  {
+    "en": "Another time, then.",
+    "de": "Dann ein anderes Mal."
+  },
+  {
+    "en": "It was lovely to see you again.",
+    "de": "Es war schön, dich wiederzusehen."
+  },
+  {
+    "en": "I completely lost track of time.",
+    "de": "Ich habe völlig die Zeit vergessen."
+  },
+  {
+    "en": "We stayed much longer than planned.",
+    "de": "Wir sind viel länger geblieben als geplant."
+  },
+  {
+    "en": "Text me when you're on your way.",
+    "de": "Schreib mir, wenn du unterwegs bist."
+  },
+  {
+    "en": "I'm on my way already.",
+    "de": "Ich bin schon unterwegs."
+  },
+  {
+    "en": "Let's meet halfway.",
+    "de": "Treffen wir uns auf halbem Weg."
+  },
+  {
+    "en": "Who's calling, please?",
+    "de": "Wer ist am Apparat?"
+  },
+  {
+    "en": "Can I speak to Mr Weber?",
+    "de": "Kann ich Herrn Weber sprechen?"
+  },
+  {
+    "en": "He's not available at the moment.",
+    "de": "Er ist im Moment nicht erreichbar."
+  },
+  {
+    "en": "Could you call back later?",
+    "de": "Könnten Sie später zurückrufen?"
+  },
+  {
+    "en": "I'll put you through.",
+    "de": "Ich verbinde Sie."
+  },
+  {
+    "en": "Can I leave a message?",
+    "de": "Kann ich eine Nachricht hinterlassen?"
+  },
+  {
+    "en": "The line is busy.",
+    "de": "Die Leitung ist besetzt."
+  },
+  {
+    "en": "I think we got cut off.",
+    "de": "Ich glaube, wir wurden unterbrochen."
+  },
+  {
+    "en": "Sorry, wrong number.",
+    "de": "Entschuldigung, falsch verbunden."
+  },
+  {
+    "en": "Thanks for calling.",
+    "de": "Danke für den Anruf."
+  },
+  {
+    "en": "It's not my fault.",
+    "de": "Das ist nicht meine Schuld."
+  },
+  {
+    "en": "I didn't do it on purpose.",
+    "de": "Ich habe es nicht mit Absicht gemacht."
+  },
+  {
+    "en": "Let me explain.",
+    "de": "Lass es mich erklären."
+  },
+  {
+    "en": "You always say that.",
+    "de": "Das sagst du immer."
+  },
+  {
+    "en": "We see it completely differently.",
+    "de": "Wir sehen das völlig unterschiedlich."
+  },
+  {
+    "en": "I don't want to argue.",
+    "de": "Ich will nicht streiten."
+  },
+  {
+    "en": "That's really unfair.",
+    "de": "Das ist wirklich unfair."
+  },
+  {
+    "en": "Calm down, please.",
+    "de": "Beruhige dich bitte."
+  },
+  {
+    "en": "I take it back.",
+    "de": "Ich nehme es zurück."
+  },
+  {
+    "en": "Let's forget about it.",
+    "de": "Vergessen wir es."
+  },
+  {
+    "en": "I'm sorry, that was my mistake.",
+    "de": "Es tut mir leid, das war mein Fehler."
+  },
+  {
+    "en": "He hasn't spoken to me since then.",
+    "de": "Er spricht seitdem nicht mehr mit mir."
+  },
+  {
+    "en": "We made up again.",
+    "de": "Wir haben uns wieder vertragen."
+  },
+  {
+    "en": "That really hurt me.",
+    "de": "Das hat mich wirklich verletzt."
+  },
+  {
+    "en": "I need some time alone.",
+    "de": "Ich brauche etwas Zeit für mich."
+  },
+  {
+    "en": "When I was a child, we lived by the sea.",
+    "de": "Als ich ein Kind war, wohnten wir am Meer."
+  },
+  {
+    "en": "My parents were both teachers.",
+    "de": "Meine Eltern waren beide Lehrer."
+  },
+  {
+    "en": "We used to spend every summer there.",
+    "de": "Wir haben früher jeden Sommer dort verbracht."
+  },
+  {
+    "en": "I learned to swim when I was six.",
+    "de": "Ich habe mit sechs schwimmen gelernt."
+  },
+  {
+    "en": "My grandmother told wonderful stories.",
+    "de": "Meine Großmutter hat wunderbare Geschichten erzählt."
+  },
+  {
+    "en": "We played outside until it got dark.",
+    "de": "Wir haben draußen gespielt, bis es dunkel wurde."
+  },
+  {
+    "en": "I never wanted to go to bed.",
+    "de": "Ich wollte nie ins Bett gehen."
+  },
+  {
+    "en": "He was my best friend at school.",
+    "de": "Er war mein bester Freund in der Schule."
+  },
+  {
+    "en": "We moved when I was twelve.",
+    "de": "Wir sind umgezogen, als ich zwölf war."
+  },
+  {
+    "en": "Those were good times.",
+    "de": "Das waren gute Zeiten."
+  },
+  {
+    "en": "I hardly remember the flat.",
+    "de": "Ich erinnere mich kaum an die Wohnung."
+  },
+  {
+    "en": "Everything seemed bigger back then.",
+    "de": "Damals schien alles größer."
+  },
+  {
+    "en": "My father worked in a factory.",
+    "de": "Mein Vater hat in einer Fabrik gearbeitet."
+  },
+  {
+    "en": "I got my first bike for my birthday.",
+    "de": "Ich habe mein erstes Fahrrad zum Geburtstag bekommen."
+  },
+  {
+    "en": "We didn't have a television.",
+    "de": "Wir hatten keinen Fernseher."
+  },
+  {
+    "en": "Last year we drove to the coast.",
+    "de": "Letztes Jahr sind wir an die Küste gefahren."
+  },
+  {
+    "en": "The journey took eight hours.",
+    "de": "Die Fahrt hat acht Stunden gedauert."
+  },
+  {
+    "en": "We slept in a small guesthouse.",
+    "de": "Wir haben in einer kleinen Pension geschlafen."
+  },
+  {
+    "en": "It rained the entire first week.",
+    "de": "Die ganze erste Woche hat es geregnet."
+  },
+  {
+    "en": "We climbed to the top in three hours.",
+    "de": "Wir sind in drei Stunden nach oben gestiegen."
+  },
+  {
+    "en": "The view was worth the effort.",
+    "de": "Die Aussicht war die Mühe wert."
+  },
+  {
+    "en": "I took hundreds of photos.",
+    "de": "Ich habe Hunderte Fotos gemacht."
+  },
+  {
+    "en": "We got lost twice on the way.",
+    "de": "Wir haben uns unterwegs zweimal verlaufen."
+  },
+  {
+    "en": "The people there were very friendly.",
+    "de": "Die Leute dort waren sehr freundlich."
+  },
+  {
+    "en": "I'd go back tomorrow.",
+    "de": "Ich würde morgen wieder hinfahren."
+  },
+  {
+    "en": "We camped near a river.",
+    "de": "Wir haben in der Nähe eines Flusses gezeltet."
+  },
+  {
+    "en": "The food was completely different.",
+    "de": "Das Essen war völlig anders."
+  },
+  {
+    "en": "I couldn't speak a word of the language.",
+    "de": "Ich konnte kein Wort der Sprache."
+  },
+  {
+    "en": "We came home exhausted but happy.",
+    "de": "Wir sind erschöpft, aber glücklich nach Hause gekommen."
+  },
+  {
+    "en": "It was our first holiday together.",
+    "de": "Es war unser erster gemeinsamer Urlaub."
+  },
+  {
+    "en": "January is the coldest month here.",
+    "de": "Der Januar ist hier der kälteste Monat."
+  },
+  {
+    "en": "The days get longer in March.",
+    "de": "Im März werden die Tage länger."
+  },
+  {
+    "en": "I was born in April.",
+    "de": "Ich bin im April geboren."
+  },
+  {
+    "en": "In May everything is in bloom.",
+    "de": "Im Mai blüht alles."
+  },
+  {
+    "en": "We always take our holiday in August.",
+    "de": "Wir machen immer im August Urlaub."
+  },
+  {
+    "en": "September is my favourite month.",
+    "de": "Der September ist mein Lieblingsmonat."
+  },
+  {
+    "en": "The first snow usually falls in November.",
+    "de": "Der erste Schnee fällt meistens im November."
+  },
+  {
+    "en": "On Mondays I always feel tired.",
+    "de": "Montags bin ich immer müde."
+  },
+  {
+    "en": "We meet every second Tuesday.",
+    "de": "Wir treffen uns jeden zweiten Dienstag."
+  },
+  {
+    "en": "The shops are closed on Sundays.",
+    "de": "Sonntags sind die Geschäfte geschlossen."
+  },
+  {
+    "en": "He's very patient with children.",
+    "de": "Er ist sehr geduldig mit Kindern."
+  },
+  {
+    "en": "She has a great sense of humour.",
+    "de": "Sie hat einen tollen Humor."
+  },
+  {
+    "en": "He can be quite stubborn.",
+    "de": "Er kann ziemlich stur sein."
+  },
+  {
+    "en": "She is always in a good mood.",
+    "de": "Sie ist immer gut gelaunt."
+  },
+  {
+    "en": "He talks too much.",
+    "de": "Er redet zu viel."
+  },
+  {
+    "en": "She's the most reliable person I know.",
+    "de": "Sie ist der zuverlässigste Mensch, den ich kenne."
+  },
+  {
+    "en": "He gets angry very quickly.",
+    "de": "Er wird sehr schnell wütend."
+  },
+  {
+    "en": "She keeps everything to herself.",
+    "de": "Sie behält alles für sich."
+  },
+  {
+    "en": "He is honest, sometimes too honest.",
+    "de": "Er ist ehrlich, manchmal zu ehrlich."
+  },
+  {
+    "en": "She has a good heart.",
+    "de": "Sie hat ein gutes Herz."
+  },
+  {
+    "en": "He never takes anything seriously.",
+    "de": "Er nimmt nie etwas ernst."
+  },
+  {
+    "en": "She's shy at first.",
+    "de": "Sie ist am Anfang schüchtern."
+  },
+  {
+    "en": "He's generous with his time.",
+    "de": "Er ist großzügig mit seiner Zeit."
+  },
+  {
+    "en": "I like him more and more.",
+    "de": "Ich mag ihn immer mehr."
+  },
+  {
+    "en": "They are very different from each other.",
+    "de": "Sie sind sehr unterschiedlich."
+  },
+  {
+    "en": "We've been together for two years.",
+    "de": "Wir sind seit zwei Jahren zusammen."
+  },
+  {
+    "en": "They met through friends.",
+    "de": "Sie haben sich über Freunde kennengelernt."
+  },
+  {
+    "en": "He asked her out for dinner.",
+    "de": "Er hat sie zum Abendessen eingeladen."
+  },
+  {
+    "en": "She's moving in with him.",
+    "de": "Sie zieht bei ihm ein."
+  },
+  {
+    "en": "They're getting married in June.",
+    "de": "Sie heiraten im Juni."
+  },
+  {
+    "en": "He's very much in love.",
+    "de": "Er ist sehr verliebt."
+  },
+  {
+    "en": "They split up last winter.",
+    "de": "Sie haben sich letzten Winter getrennt."
+  },
+  {
+    "en": "We're just good friends.",
+    "de": "Wir sind einfach gute Freunde."
+  },
+  {
+    "en": "He was my first boyfriend.",
+    "de": "Er war mein erster Freund."
+  },
+  {
+    "en": "She's expecting a baby.",
+    "de": "Sie bekommt ein Kind."
+  },
+  {
+    "en": "Our dog is called Max.",
+    "de": "Unser Hund heißt Max."
+  },
+  {
+    "en": "The cat sleeps all day.",
+    "de": "Die Katze schläft den ganzen Tag."
+  },
+  {
+    "en": "He walks the dog twice a day.",
+    "de": "Er geht zweimal am Tag mit dem Hund raus."
+  },
+  {
+    "en": "We got the cat from a shelter.",
+    "de": "Wir haben die Katze aus dem Tierheim."
+  },
+  {
+    "en": "The dog barks at everyone.",
+    "de": "Der Hund bellt jeden an."
+  },
+  {
+    "en": "Who feeds the fish while we're away?",
+    "de": "Wer füttert die Fische, während wir weg sind?"
+  },
+  {
+    "en": "He's afraid of big dogs.",
+    "de": "Er hat Angst vor großen Hunden."
+  },
+  {
+    "en": "The vet said she's healthy.",
+    "de": "Die Tierärztin hat gesagt, sie ist gesund."
+  },
+  {
+    "en": "Our cat only eats one brand.",
+    "de": "Unsere Katze frisst nur eine Sorte."
+  },
+  {
+    "en": "Animals are not allowed in here.",
+    "de": "Tiere sind hier nicht erlaubt."
+  },
+  {
+    "en": "The screen is cracked.",
+    "de": "Der Bildschirm hat einen Riss."
+  },
+  {
+    "en": "I need to back up my photos.",
+    "de": "Ich muss meine Fotos sichern."
+  },
+  {
+    "en": "The update takes forever.",
+    "de": "Das Update dauert ewig."
+  },
+  {
+    "en": "My laptop is getting old.",
+    "de": "Mein Laptop wird langsam alt."
+  },
+  {
+    "en": "I deleted the file by mistake.",
+    "de": "Ich habe die Datei aus Versehen gelöscht."
+  },
+  {
+    "en": "Do you have a charger I could borrow?",
+    "de": "Hast du ein Ladegerät, das ich mir leihen könnte?"
+  },
+  {
+    "en": "The printer isn't connecting.",
+    "de": "Der Drucker verbindet sich nicht."
+  },
+  {
+    "en": "Please turn it off and on again.",
+    "de": "Bitte schalte es aus und wieder ein."
+  },
+  {
+    "en": "I got a strange email this morning.",
+    "de": "Ich habe heute Morgen eine seltsame E-Mail bekommen."
+  },
+  {
+    "en": "Don't click on that link.",
+    "de": "Klick nicht auf diesen Link."
+  },
+  {
+    "en": "My inbox is completely full.",
+    "de": "Mein Postfach ist völlig voll."
+  },
+  {
+    "en": "He fixed it in five minutes.",
+    "de": "Er hat es in fünf Minuten repariert."
+  },
+  {
+    "en": "The camera on this phone is good.",
+    "de": "Die Kamera von diesem Handy ist gut."
+  },
+  {
+    "en": "I use it every day.",
+    "de": "Ich benutze es jeden Tag."
+  },
+  {
+    "en": "Nothing works without the internet.",
+    "de": "Ohne Internet funktioniert nichts."
+  },
+  {
+    "en": "He scored in the last minute.",
+    "de": "Er hat in der letzten Minute getroffen."
+  },
+  {
+    "en": "The game ended in a draw.",
+    "de": "Das Spiel endete unentschieden."
+  },
+  {
+    "en": "We won three to one.",
+    "de": "Wir haben drei zu eins gewonnen."
+  },
+  {
+    "en": "I go to the pool every Tuesday.",
+    "de": "Ich gehe jeden Dienstag ins Schwimmbad."
+  },
+  {
+    "en": "He trains five times a week.",
+    "de": "Er trainiert fünfmal die Woche."
+  },
+  {
+    "en": "My legs hurt after the run.",
+    "de": "Nach dem Lauf tun mir die Beine weh."
+  },
+  {
+    "en": "She plays in the local team.",
+    "de": "Sie spielt in der Mannschaft vor Ort."
+  },
+  {
+    "en": "The stadium was completely full.",
+    "de": "Das Stadion war komplett voll."
+  },
+  {
+    "en": "I'm not very sporty.",
+    "de": "Ich bin nicht besonders sportlich."
+  },
+  {
+    "en": "He hurt his knee playing football.",
+    "de": "Er hat sich beim Fußball das Knie verletzt."
+  },
+  {
+    "en": "We watch every match together.",
+    "de": "Wir schauen jedes Spiel zusammen."
+  },
+  {
+    "en": "The season starts in August.",
+    "de": "Die Saison beginnt im August."
+  },
+  {
+    "en": "I prefer sports you can do alone.",
+    "de": "Ich mag lieber Sportarten, die man allein machen kann."
+  },
+  {
+    "en": "I need a drill for this.",
+    "de": "Dafür brauche ich einen Bohrer."
+  },
+  {
+    "en": "We built the shelf ourselves.",
+    "de": "Wir haben das Regal selbst gebaut."
+  },
+  {
+    "en": "The paint needs a second coat.",
+    "de": "Die Farbe braucht einen zweiten Anstrich."
+  },
+  {
+    "en": "He can fix almost anything.",
+    "de": "Er kann fast alles reparieren."
+  },
+  {
+    "en": "I'd rather pay someone to do it.",
+    "de": "Ich lasse es lieber jemanden machen."
+  },
+  {
+    "en": "The screws are missing.",
+    "de": "Die Schrauben fehlen."
+  },
+  {
+    "en": "It took the whole weekend.",
+    "de": "Es hat das ganze Wochenende gedauert."
+  },
+  {
+    "en": "We put up new curtains.",
+    "de": "Wir haben neue Vorhänge aufgehängt."
+  },
+  {
+    "en": "The wall is still wet.",
+    "de": "Die Wand ist noch nass."
+  },
+  {
+    "en": "It looks much better now.",
+    "de": "Jetzt sieht es viel besser aus."
+  },
+  {
+    "en": "The tomatoes are finally ripe.",
+    "de": "Die Tomaten sind endlich reif."
+  },
+  {
+    "en": "I planted herbs on the balcony.",
+    "de": "Ich habe Kräuter auf dem Balkon gepflanzt."
+  },
+  {
+    "en": "The grass needs cutting.",
+    "de": "Der Rasen muss gemäht werden."
+  },
+  {
+    "en": "Nothing grows in this corner.",
+    "de": "In dieser Ecke wächst nichts."
+  },
+  {
+    "en": "We picked apples all afternoon.",
+    "de": "Wir haben den ganzen Nachmittag Äpfel gepflückt."
+  },
+  {
+    "en": "The roses smell wonderful.",
+    "de": "Die Rosen duften wunderbar."
+  },
+  {
+    "en": "Slugs ate my salad.",
+    "de": "Schnecken haben meinen Salat gefressen."
+  },
+  {
+    "en": "I water the garden every evening.",
+    "de": "Ich gieße den Garten jeden Abend."
+  },
+  {
+    "en": "Spring is the busiest time in the garden.",
+    "de": "Der Frühling ist die arbeitsreichste Zeit im Garten."
+  },
+  {
+    "en": "We're building a small pond.",
+    "de": "Wir bauen einen kleinen Teich."
+  },
+  {
+    "en": "I've been playing piano since childhood.",
+    "de": "Ich spiele seit meiner Kindheit Klavier."
+  },
+  {
+    "en": "He sings in a choir.",
+    "de": "Er singt in einem Chor."
+  },
+  {
+    "en": "The rehearsal is on Thursday.",
+    "de": "Die Probe ist am Donnerstag."
+  },
+  {
+    "en": "I can't read music.",
+    "de": "Ich kann keine Noten lesen."
+  },
+  {
+    "en": "She has a beautiful voice.",
+    "de": "Sie hat eine schöne Stimme."
+  },
+  {
+    "en": "The guitar is out of tune.",
+    "de": "Die Gitarre ist verstimmt."
+  },
+  {
+    "en": "We practise once a week.",
+    "de": "Wir üben einmal in der Woche."
+  },
+  {
+    "en": "His new album is out.",
+    "de": "Sein neues Album ist erschienen."
+  },
+  {
+    "en": "I like old jazz best.",
+    "de": "Am liebsten mag ich alten Jazz."
+  },
+  {
+    "en": "The concert lasted three hours.",
+    "de": "Das Konzert hat drei Stunden gedauert."
+  },
+  {
+    "en": "The picture is a copy.",
+    "de": "Das Bild ist eine Kopie."
+  },
+  {
+    "en": "I don't understand modern art.",
+    "de": "Moderne Kunst verstehe ich nicht."
+  },
+  {
+    "en": "He draws every day.",
+    "de": "Er zeichnet jeden Tag."
+  },
+  {
+    "en": "The colours are very strong.",
+    "de": "Die Farben sind sehr kräftig."
+  },
+  {
+    "en": "It's hanging in the hall now.",
+    "de": "Es hängt jetzt im Flur."
+  },
+  {
+    "en": "She takes photos professionally.",
+    "de": "Sie fotografiert beruflich."
+  },
+  {
+    "en": "The exhibition was free.",
+    "de": "Die Ausstellung war kostenlos."
+  },
+  {
+    "en": "That's my favourite painting.",
+    "de": "Das ist mein Lieblingsbild."
+  },
+  {
+    "en": "I bought it at a flea market.",
+    "de": "Ich habe es auf einem Flohmarkt gekauft."
+  },
+  {
+    "en": "Art was always my worst subject.",
+    "de": "Kunst war immer mein schlechtestes Fach."
+  },
+  {
+    "en": "Please call an ambulance.",
+    "de": "Bitte rufen Sie einen Krankenwagen."
+  },
+  {
+    "en": "There has been an accident.",
+    "de": "Es ist ein Unfall passiert."
+  },
+  {
+    "en": "Nobody was seriously hurt.",
+    "de": "Niemand wurde schwer verletzt."
+  },
+  {
+    "en": "I want to report a theft.",
+    "de": "Ich möchte einen Diebstahl melden."
+  },
+  {
+    "en": "My bag was stolen on the train.",
+    "de": "Meine Tasche wurde im Zug gestohlen."
+  },
+  {
+    "en": "Where is the nearest hospital?",
+    "de": "Wo ist das nächste Krankenhaus?"
+  },
+  {
+    "en": "Call the fire brigade.",
+    "de": "Ruf die Feuerwehr."
+  },
+  {
+    "en": "He needs help immediately.",
+    "de": "Er braucht sofort Hilfe."
+  },
+  {
+    "en": "I lost my passport.",
+    "de": "Ich habe meinen Reisepass verloren."
+  },
+  {
+    "en": "The police took my statement.",
+    "de": "Die Polizei hat meine Aussage aufgenommen."
+  },
+  {
+    "en": "I left my umbrella on the bus.",
+    "de": "Ich habe meinen Regenschirm im Bus liegen lassen."
+  },
+  {
+    "en": "Has anyone handed in a black jacket?",
+    "de": "Hat jemand eine schwarze Jacke abgegeben?"
+  },
+  {
+    "en": "The lost property office is downstairs.",
+    "de": "Das Fundbüro ist unten."
+  },
+  {
+    "en": "I found this on the street.",
+    "de": "Ich habe das auf der Straße gefunden."
+  },
+  {
+    "en": "Luckily somebody found it.",
+    "de": "Zum Glück hat es jemand gefunden."
+  },
+  {
+    "en": "I'd like a haircut, please.",
+    "de": "Ich hätte gern einen Haarschnitt."
+  },
+  {
+    "en": "Not too short at the back.",
+    "de": "Hinten nicht zu kurz."
+  },
+  {
+    "en": "Do I need an appointment for that?",
+    "de": "Brauche ich dafür einen Termin?"
+  },
+  {
+    "en": "The dry cleaner's is next door.",
+    "de": "Die Reinigung ist nebenan."
+  },
+  {
+    "en": "Can you repair these shoes?",
+    "de": "Können Sie diese Schuhe reparieren?"
+  },
+  {
+    "en": "When will it be ready?",
+    "de": "Wann ist es fertig?"
+  },
+  {
+    "en": "That will take about a week.",
+    "de": "Das dauert ungefähr eine Woche."
+  },
+  {
+    "en": "How much do I owe you?",
+    "de": "Was schulde ich Ihnen?"
+  },
+  {
+    "en": "I'd like to make a complaint.",
+    "de": "Ich möchte mich beschweren."
+  },
+  {
+    "en": "Thank you for your help.",
+    "de": "Danke für Ihre Hilfe."
+  },
+  {
+    "en": "I signed up at the gym.",
+    "de": "Ich habe mich im Fitnessstudio angemeldet."
+  },
+  {
+    "en": "The membership costs thirty euros a month.",
+    "de": "Die Mitgliedschaft kostet dreißig Euro im Monat."
+  },
+  {
+    "en": "I stretch before every workout.",
+    "de": "Ich dehne mich vor jedem Training."
+  },
+  {
+    "en": "He lifts far too much weight.",
+    "de": "Er hebt viel zu viel Gewicht."
+  },
+  {
+    "en": "The class is on Wednesday evenings.",
+    "de": "Der Kurs ist mittwochabends."
+  },
+  {
+    "en": "I'm sore from yesterday.",
+    "de": "Ich habe Muskelkater von gestern."
+  },
+  {
+    "en": "Drink enough during training.",
+    "de": "Trink genug beim Training."
+  },
+  {
+    "en": "I feel better since I started.",
+    "de": "Seit ich angefangen habe, geht es mir besser."
+  },
+  {
+    "en": "Half an hour is enough for me.",
+    "de": "Eine halbe Stunde reicht mir."
+  },
+  {
+    "en": "He goes running whatever the weather.",
+    "de": "Er geht bei jedem Wetter laufen."
+  },
+  {
+    "en": "Better late than never.",
+    "de": "Besser spät als nie."
+  },
+  {
+    "en": "That's not the end of the world.",
+    "de": "Das ist nicht das Ende der Welt."
+  },
+  {
+    "en": "Time will tell.",
+    "de": "Die Zeit wird es zeigen."
+  },
+  {
+    "en": "It's all the same to me.",
+    "de": "Das ist mir alles gleich."
+  },
+  {
+    "en": "He has other things on his mind.",
+    "de": "Er hat anderes im Kopf."
+  },
+  {
+    "en": "That costs a fortune.",
+    "de": "Das kostet ein Vermögen."
+  },
+  {
+    "en": "I could eat a horse.",
+    "de": "Ich habe einen Bärenhunger."
+  },
+  {
+    "en": "We got off lightly.",
+    "de": "Wir sind glimpflich davongekommen."
+  },
+  {
+    "en": "It's raining cats and dogs.",
+    "de": "Es regnet in Strömen."
+  },
+  {
+    "en": "Keep your fingers crossed for me.",
+    "de": "Drück mir die Daumen."
+  },
+  {
+    "en": "I'm really looking forward to it.",
+    "de": "Ich freue mich wirklich darauf."
+  },
+  {
+    "en": "That was a huge relief.",
+    "de": "Das war eine große Erleichterung."
+  },
+  {
+    "en": "He was deeply disappointed.",
+    "de": "Er war tief enttäuscht."
+  },
+  {
+    "en": "I'm so glad you came.",
+    "de": "Ich bin so froh, dass du gekommen bist."
+  },
+  {
+    "en": "She burst into tears.",
+    "de": "Sie ist in Tränen ausgebrochen."
+  },
+  {
+    "en": "That made me laugh.",
+    "de": "Das hat mich zum Lachen gebracht."
+  },
+  {
+    "en": "I felt completely lost.",
+    "de": "Ich habe mich völlig verloren gefühlt."
+  },
+  {
+    "en": "He is jealous of his brother.",
+    "de": "Er ist eifersüchtig auf seinen Bruder."
+  },
+  {
+    "en": "I'm nervous about tomorrow.",
+    "de": "Ich bin wegen morgen nervös."
+  },
+  {
+    "en": "That's a weight off my mind.",
+    "de": "Da fällt mir ein Stein vom Herzen."
+  },
+  {
+    "en": "I regret nothing.",
+    "de": "Ich bereue nichts."
+  },
+  {
+    "en": "She was speechless.",
+    "de": "Sie war sprachlos."
+  },
+  {
+    "en": "He is easily offended.",
+    "de": "Er ist schnell beleidigt."
+  },
+  {
+    "en": "I feel at home here.",
+    "de": "Ich fühle mich hier zu Hause."
+  },
+  {
+    "en": "It touched me a lot.",
+    "de": "Es hat mich sehr berührt."
+  },
+  {
+    "en": "My goal is to speak fluently.",
+    "de": "Mein Ziel ist es, fließend zu sprechen."
+  },
+  {
+    "en": "I want to change something in my life.",
+    "de": "Ich will etwas in meinem Leben ändern."
+  },
+  {
+    "en": "We're planning to buy a house.",
+    "de": "Wir planen, ein Haus zu kaufen."
+  },
+  {
+    "en": "He dreams of living by the sea.",
+    "de": "Er träumt davon, am Meer zu leben."
+  },
+  {
+    "en": "I've made a plan for the year.",
+    "de": "Ich habe einen Plan für das Jahr gemacht."
+  },
+  {
+    "en": "Step by step it's getting better.",
+    "de": "Schritt für Schritt wird es besser."
+  },
+  {
+    "en": "I gave myself six months.",
+    "de": "Ich habe mir sechs Monate gegeben."
+  },
+  {
+    "en": "Nothing happens overnight.",
+    "de": "Nichts passiert über Nacht."
+  },
+  {
+    "en": "We'll see how it goes.",
+    "de": "Wir werden sehen, wie es läuft."
+  },
+  {
+    "en": "It's never too late to start.",
+    "de": "Es ist nie zu spät anzufangen."
+  },
+  {
+    "en": "We're moving at the end of the month.",
+    "de": "Wir ziehen Ende des Monats um."
+  },
+  {
+    "en": "I have to pack everything by Friday.",
+    "de": "Ich muss bis Freitag alles einpacken."
+  },
+  {
+    "en": "Do you know anyone with a van?",
+    "de": "Kennst du jemanden mit einem Transporter?"
+  },
+  {
+    "en": "The new flat has more light.",
+    "de": "Die neue Wohnung hat mehr Licht."
+  },
+  {
+    "en": "We're giving away half our furniture.",
+    "de": "Wir verschenken die Hälfte unserer Möbel."
+  },
+  {
+    "en": "The deposit is three months' rent.",
+    "de": "Die Kaution beträgt drei Monatsmieten."
+  },
+  {
+    "en": "I have to give notice by the third.",
+    "de": "Ich muss bis zum Dritten kündigen."
+  },
+  {
+    "en": "The landlord wants to see the flat.",
+    "de": "Der Vermieter will die Wohnung sehen."
+  },
+  {
+    "en": "We signed the contract yesterday.",
+    "de": "Wir haben gestern den Vertrag unterschrieben."
+  },
+  {
+    "en": "Moving is more stressful than I thought.",
+    "de": "Umziehen ist stressiger, als ich dachte."
+  },
+  {
+    "en": "I'm looking for a new job.",
+    "de": "Ich suche eine neue Stelle."
+  },
+  {
+    "en": "Could you look at my CV?",
+    "de": "Könntest du dir meinen Lebenslauf ansehen?"
+  },
+  {
+    "en": "They asked a lot of questions.",
+    "de": "Sie haben viele Fragen gestellt."
+  },
+  {
+    "en": "I didn't get the job.",
+    "de": "Ich habe die Stelle nicht bekommen."
+  },
+  {
+    "en": "They'll let me know next week.",
+    "de": "Sie melden sich nächste Woche bei mir."
+  },
+  {
+    "en": "The pay is better than before.",
+    "de": "Die Bezahlung ist besser als vorher."
+  },
+  {
+    "en": "I start on the first of March.",
+    "de": "Ich fange am ersten März an."
+  },
+  {
+    "en": "He has a lot of experience.",
+    "de": "Er hat viel Erfahrung."
+  },
+  {
+    "en": "I'm still in my probation period.",
+    "de": "Ich bin noch in der Probezeit."
+  },
+  {
+    "en": "The job is only temporary.",
+    "de": "Die Stelle ist nur befristet."
+  },
+  {
+    "en": "My son has a test on Monday.",
+    "de": "Mein Sohn schreibt am Montag einen Test."
+  },
+  {
+    "en": "She reads to the children every evening.",
+    "de": "Sie liest den Kindern jeden Abend vor."
+  },
+  {
+    "en": "He doesn't want to go to school today.",
+    "de": "Er will heute nicht in die Schule."
+  },
+  {
+    "en": "The parents' evening is on Thursday.",
+    "de": "Der Elternabend ist am Donnerstag."
+  },
+  {
+    "en": "He's the youngest in his class.",
+    "de": "Er ist der Jüngste in seiner Klasse."
+  },
+  {
+    "en": "She learns very quickly.",
+    "de": "Sie lernt sehr schnell."
+  },
+  {
+    "en": "The school bus leaves at ten past seven.",
+    "de": "Der Schulbus fährt um zehn nach sieben."
+  },
+  {
+    "en": "He forgot his lunch box again.",
+    "de": "Er hat wieder seine Brotdose vergessen."
+  },
+  {
+    "en": "The teacher wants to speak to us.",
+    "de": "Die Lehrerin möchte mit uns sprechen."
+  },
+  {
+    "en": "They have a school trip next week.",
+    "de": "Sie haben nächste Woche einen Ausflug."
+  },
+  {
+    "en": "First mix the flour and the sugar.",
+    "de": "Vermische zuerst das Mehl und den Zucker."
+  },
+  {
+    "en": "Bake it for forty minutes.",
+    "de": "Backe es vierzig Minuten."
+  },
+  {
+    "en": "Let the dough rest for an hour.",
+    "de": "Lass den Teig eine Stunde ruhen."
+  },
+  {
+    "en": "Peel the potatoes, please.",
+    "de": "Schäl bitte die Kartoffeln."
+  },
+  {
+    "en": "Fry it on both sides.",
+    "de": "Brate es von beiden Seiten an."
+  },
+  {
+    "en": "Taste it before you add salt.",
+    "de": "Probiere es, bevor du Salz dazugibst."
+  },
+  {
+    "en": "Serve it with fresh bread.",
+    "de": "Serviere es mit frischem Brot."
+  },
+  {
+    "en": "It's a recipe from my grandmother.",
+    "de": "Es ist ein Rezept von meiner Großmutter."
+  },
+  {
+    "en": "Everyone asks me for the recipe.",
+    "de": "Alle fragen mich nach dem Rezept."
+  },
+  {
+    "en": "It tastes better the next day.",
+    "de": "Am nächsten Tag schmeckt es besser."
+  },
+  {
+    "en": "A kilo of apples, please.",
+    "de": "Ein Kilo Äpfel, bitte."
+  },
+  {
+    "en": "Are the strawberries from here?",
+    "de": "Sind die Erdbeeren von hier?"
+  },
+  {
+    "en": "I'd like six rolls.",
+    "de": "Ich hätte gern sechs Brötchen."
+  },
+  {
+    "en": "Two hundred grams of cheese, please.",
+    "de": "Zweihundert Gramm Käse, bitte."
+  },
+  {
+    "en": "Is that still fresh?",
+    "de": "Ist das noch frisch?"
+  },
+  {
+    "en": "Anything else?",
+    "de": "Sonst noch etwas?"
+  },
+  {
+    "en": "That's all, thank you.",
+    "de": "Das war's, danke."
+  },
+  {
+    "en": "The market closes at two.",
+    "de": "Der Markt schließt um zwei."
+  },
+  {
+    "en": "The eggs come from the farm.",
+    "de": "Die Eier kommen vom Bauernhof."
+  },
+  {
+    "en": "Everything here is organic.",
+    "de": "Hier ist alles bio."
+  },
+  {
+    "en": "We stayed in bed until eleven.",
+    "de": "Wir sind bis elf im Bett geblieben."
+  },
+  {
+    "en": "Saturday is my favourite day.",
+    "de": "Der Samstag ist mein Lieblingstag."
+  },
+  {
+    "en": "We had a long breakfast.",
+    "de": "Wir haben lange gefrühstückt."
+  },
+  {
+    "en": "On Sunday nothing is open.",
+    "de": "Am Sonntag hat nichts auf."
+  },
+  {
+    "en": "I do nothing at the weekend on purpose.",
+    "de": "Am Wochenende mache ich absichtlich nichts."
+  },
+  {
+    "en": "We went for a bike ride.",
+    "de": "Wir haben eine Radtour gemacht."
+  },
+  {
+    "en": "The whole family came for coffee.",
+    "de": "Die ganze Familie kam zum Kaffee."
+  },
+  {
+    "en": "I finally read my book.",
+    "de": "Ich habe endlich mein Buch gelesen."
+  },
+  {
+    "en": "The weekend went by too fast.",
+    "de": "Das Wochenende ist zu schnell vergangen."
+  },
+  {
+    "en": "Monday comes far too quickly.",
+    "de": "Der Montag kommt viel zu schnell."
+  },
+  {
+    "en": "A coffee to go, please.",
+    "de": "Einen Kaffee zum Mitnehmen, bitte."
+  },
+  {
+    "en": "With milk but no sugar.",
+    "de": "Mit Milch, aber ohne Zucker."
+  },
+  {
+    "en": "Is this seat taken?",
+    "de": "Ist dieser Platz besetzt?"
+  },
+  {
+    "en": "Do you have oat milk?",
+    "de": "Haben Sie Hafermilch?"
+  },
+  {
+    "en": "The cake looks wonderful.",
+    "de": "Der Kuchen sieht wunderbar aus."
+  },
+  {
+    "en": "Can I pay here or at the counter?",
+    "de": "Kann ich hier oder an der Theke bezahlen?"
+  },
+  {
+    "en": "I come here almost every morning.",
+    "de": "Ich komme fast jeden Morgen hierher."
+  },
+  {
+    "en": "They make the best croissants.",
+    "de": "Sie machen die besten Croissants."
+  },
+  {
+    "en": "It's my third coffee today.",
+    "de": "Das ist heute mein dritter Kaffee."
+  },
+  {
+    "en": "Two teas, please.",
+    "de": "Zwei Tee, bitte."
+  },
+  {
+    "en": "It's twenty degrees today.",
+    "de": "Heute sind es zwanzig Grad."
+  },
+  {
+    "en": "It hasn't been this warm for weeks.",
+    "de": "So warm war es seit Wochen nicht."
+  },
+  {
+    "en": "The temperature drops at night.",
+    "de": "Nachts fällt die Temperatur."
+  },
+  {
+    "en": "There's a storm coming.",
+    "de": "Ein Sturm zieht auf."
+  },
+  {
+    "en": "The fog was very thick this morning.",
+    "de": "Der Nebel war heute Morgen sehr dicht."
+  },
+  {
+    "en": "It's slippery on the pavement.",
+    "de": "Auf dem Gehweg ist es glatt."
+  },
+  {
+    "en": "The sun is finally back.",
+    "de": "Die Sonne ist endlich zurück."
+  },
+  {
+    "en": "It's five degrees below zero.",
+    "de": "Es sind fünf Grad unter null."
+  },
+  {
+    "en": "The rain stopped an hour ago.",
+    "de": "Der Regen hat vor einer Stunde aufgehört."
+  },
+  {
+    "en": "The weather can't decide today.",
+    "de": "Das Wetter kann sich heute nicht entscheiden."
+  },
+  {
+    "en": "The room faces south.",
+    "de": "Das Zimmer liegt nach Süden."
+  },
+  {
+    "en": "There's a big window at the back.",
+    "de": "Hinten ist ein großes Fenster."
+  },
+  {
+    "en": "The walls are painted light grey.",
+    "de": "Die Wände sind hellgrau gestrichen."
+  },
+  {
+    "en": "We need a bigger table.",
+    "de": "Wir brauchen einen größeren Tisch."
+  },
+  {
+    "en": "The bed is under the window.",
+    "de": "Das Bett steht unter dem Fenster."
+  },
+  {
+    "en": "There's not enough storage space.",
+    "de": "Es gibt nicht genug Stauraum."
+  },
+  {
+    "en": "The floor is made of wood.",
+    "de": "Der Boden ist aus Holz."
+  },
+  {
+    "en": "I like the high ceilings.",
+    "de": "Ich mag die hohen Decken."
+  },
+  {
+    "en": "The bathroom has no window.",
+    "de": "Das Bad hat kein Fenster."
+  },
+  {
+    "en": "It feels cosy in here.",
+    "de": "Hier drin ist es gemütlich."
+  },
+  {
+    "en": "Red suits her very well.",
+    "de": "Rot steht ihr sehr gut."
+  },
+  {
+    "en": "I painted the door dark green.",
+    "de": "Ich habe die Tür dunkelgrün gestrichen."
+  },
+  {
+    "en": "The sky was bright orange.",
+    "de": "Der Himmel war leuchtend orange."
+  },
+  {
+    "en": "His car is silver.",
+    "de": "Sein Auto ist silbern."
+  },
+  {
+    "en": "I prefer light colours.",
+    "de": "Ich mag helle Farben lieber."
+  },
+  {
+    "en": "Black goes with everything.",
+    "de": "Schwarz passt zu allem."
+  },
+  {
+    "en": "The blue is a bit too dark.",
+    "de": "Das Blau ist etwas zu dunkel."
+  },
+  {
+    "en": "She always wears bright colours.",
+    "de": "Sie trägt immer bunte Farben."
+  },
+  {
+    "en": "The yellow one is on offer.",
+    "de": "Der gelbe ist im Angebot."
+  },
+  {
+    "en": "It looks brown in this light.",
+    "de": "In diesem Licht sieht es braun aus."
+  },
+  {
+    "en": "Shall we say Thursday at six?",
+    "de": "Sagen wir Donnerstag um sechs?"
+  },
+  {
+    "en": "That works for me.",
+    "de": "Das passt mir."
+  },
+  {
+    "en": "I can't do Tuesday.",
+    "de": "Am Dienstag kann ich nicht."
+  },
+  {
+    "en": "Let's fix a date.",
+    "de": "Machen wir einen Termin aus."
+  },
+  {
+    "en": "I've written it in my calendar.",
+    "de": "Ich habe es in meinen Kalender eingetragen."
+  },
+  {
+    "en": "Can we postpone it a week?",
+    "de": "Können wir es um eine Woche verschieben?"
+  },
+  {
+    "en": "I have to cancel, unfortunately.",
+    "de": "Ich muss leider absagen."
+  },
+  {
+    "en": "Does the afternoon suit you better?",
+    "de": "Passt Ihnen der Nachmittag besser?"
+  },
+  {
+    "en": "The appointment is confirmed.",
+    "de": "Der Termin ist bestätigt."
+  },
+  {
+    "en": "I'll be there ten minutes early.",
+    "de": "Ich bin zehn Minuten früher da."
+  },
+  {
+    "en": "We'd love to invite you.",
+    "de": "Wir würden euch gern einladen."
+  },
+  {
+    "en": "It starts at seven, come whenever you like.",
+    "de": "Es geht um sieben los, komm, wann du willst."
+  },
+  {
+    "en": "Bring something to drink if you want.",
+    "de": "Bring etwas zu trinken mit, wenn du willst."
+  },
+  {
+    "en": "Thanks for the lovely evening.",
+    "de": "Danke für den schönen Abend."
+  },
+  {
+    "en": "It was really kind of you.",
+    "de": "Das war wirklich nett von dir."
+  },
+  {
+    "en": "You shouldn't have.",
+    "de": "Das wäre nicht nötig gewesen."
+  },
+  {
+    "en": "I owe you one.",
+    "de": "Ich schulde dir was."
+  },
+  {
+    "en": "Thank you for everything.",
+    "de": "Danke für alles."
+  },
+  {
+    "en": "Congratulations on your new job.",
+    "de": "Herzlichen Glückwunsch zur neuen Stelle."
+  },
+  {
+    "en": "All the best for the new year.",
+    "de": "Alles Gute für das neue Jahr."
+  },
+  {
+    "en": "I'm very sorry for your loss.",
+    "de": "Mein herzliches Beileid."
+  },
+  {
+    "en": "Let me know if I can do anything.",
+    "de": "Sag Bescheid, wenn ich etwas tun kann."
+  },
+  {
+    "en": "He was a wonderful person.",
+    "de": "Er war ein wunderbarer Mensch."
+  },
+  {
+    "en": "I'm thinking of you.",
+    "de": "Ich denke an dich."
+  },
+  {
+    "en": "Take all the time you need.",
+    "de": "Nimm dir alle Zeit, die du brauchst."
+  },
+  {
+    "en": "We're here for you.",
+    "de": "Wir sind für dich da."
+  },
+  {
+    "en": "I don't know what to say.",
+    "de": "Ich weiß nicht, was ich sagen soll."
+  },
+  {
+    "en": "It must be very hard for you.",
+    "de": "Es muss sehr schwer für dich sein."
+  },
+  {
+    "en": "I'd like to book a double room.",
+    "de": "Ich möchte ein Doppelzimmer buchen."
+  },
+  {
+    "en": "Is breakfast extra?",
+    "de": "Kostet das Frühstück extra?"
+  },
+  {
+    "en": "We're arriving late in the evening.",
+    "de": "Wir kommen spät am Abend an."
+  },
+  {
+    "en": "Can I cancel free of charge?",
+    "de": "Kann ich kostenlos stornieren?"
+  },
+  {
+    "en": "Do you have a room with a bath?",
+    "de": "Haben Sie ein Zimmer mit Badewanne?"
+  },
+  {
+    "en": "Two nights, from Friday to Sunday.",
+    "de": "Zwei Nächte, von Freitag bis Sonntag."
+  },
+  {
+    "en": "Is there parking at the hotel?",
+    "de": "Gibt es Parkplätze am Hotel?"
+  },
+  {
+    "en": "We need a cot for the baby.",
+    "de": "Wir brauchen ein Kinderbett für das Baby."
+  },
+  {
+    "en": "What time do we have to check out?",
+    "de": "Wann müssen wir auschecken?"
+  },
+  {
+    "en": "Could you confirm by email?",
+    "de": "Könnten Sie es per E-Mail bestätigen?"
+  },
+  {
+    "en": "We meet once a week to practise.",
+    "de": "Wir treffen uns einmal pro Woche zum Üben."
+  },
+  {
+    "en": "Half an hour German, half an hour English.",
+    "de": "Eine halbe Stunde Deutsch, eine halbe Stunde Englisch."
+  },
+  {
+    "en": "Just tell me if I make a mistake.",
+    "de": "Sag mir einfach, wenn ich einen Fehler mache."
+  },
+  {
+    "en": "I understand you better than last month.",
+    "de": "Ich verstehe dich besser als letzten Monat."
+  },
+  {
+    "en": "Could you repeat that, please?",
+    "de": "Könnten Sie das bitte wiederholen?"
+  },
+  {
+    "en": "Speak normally, I'll ask if I don't get it.",
+    "de": "Sprich normal, ich frage, wenn ich es nicht verstehe."
+  },
+  {
+    "en": "I still mix up the articles.",
+    "de": "Ich verwechsle immer noch die Artikel."
+  },
+  {
+    "en": "Reading is easier than speaking.",
+    "de": "Lesen ist einfacher als Sprechen."
+  },
+  {
+    "en": "I learn ten words a day.",
+    "de": "Ich lerne zehn Wörter am Tag."
+  },
+  {
+    "en": "Talking to people helps most.",
+    "de": "Mit Leuten zu reden hilft am meisten."
+  },
+  {
+    "en": "Do you play chess?",
+    "de": "Spielst du Schach?"
+  },
+  {
+    "en": "It's your turn.",
+    "de": "Du bist dran."
+  },
+  {
+    "en": "We play cards every Friday.",
+    "de": "Wir spielen jeden Freitag Karten."
+  },
+  {
+    "en": "I always lose against him.",
+    "de": "Ich verliere immer gegen ihn."
+  },
+  {
+    "en": "The rules are quite simple.",
+    "de": "Die Regeln sind ziemlich einfach."
+  },
+  {
+    "en": "Let's play one more round.",
+    "de": "Spielen wir noch eine Runde."
+  },
+  {
+    "en": "He cheats sometimes.",
+    "de": "Er schummelt manchmal."
+  },
+  {
+    "en": "The game takes about an hour.",
+    "de": "Das Spiel dauert etwa eine Stunde."
+  },
+  {
+    "en": "I need a second player.",
+    "de": "Ich brauche einen zweiten Spieler."
+  },
+  {
+    "en": "That was a close game.",
+    "de": "Das war ein knappes Spiel."
+  },
+  {
+    "en": "I volunteer at the food bank.",
+    "de": "Ich arbeite ehrenamtlich bei der Tafel."
+  },
+  {
+    "en": "They're always looking for helpers.",
+    "de": "Sie suchen immer Helfer."
+  },
+  {
+    "en": "It's only two hours a week.",
+    "de": "Es sind nur zwei Stunden pro Woche."
+  },
+  {
+    "en": "He helps refugees with paperwork.",
+    "de": "Er hilft Geflüchteten beim Papierkram."
+  },
+  {
+    "en": "I get a lot back from it.",
+    "de": "Ich bekomme viel davon zurück."
+  },
+  {
+    "en": "I have my driving test next week.",
+    "de": "Ich habe nächste Woche meine Fahrprüfung."
+  },
+  {
+    "en": "He failed the first time.",
+    "de": "Er ist beim ersten Mal durchgefallen."
+  },
+  {
+    "en": "My instructor is very calm.",
+    "de": "Mein Fahrlehrer ist sehr ruhig."
+  },
+  {
+    "en": "I still find parking difficult.",
+    "de": "Das Einparken fällt mir noch schwer."
+  },
+  {
+    "en": "Check your mirror before you turn.",
+    "de": "Schau in den Spiegel, bevor du abbiegst."
+  },
+  {
+    "en": "I have toothache.",
+    "de": "Ich habe Zahnschmerzen."
+  },
+  {
+    "en": "The dentist said I need a filling.",
+    "de": "Der Zahnarzt hat gesagt, ich brauche eine Füllung."
+  },
+  {
+    "en": "I hate going to the dentist.",
+    "de": "Ich gehe ungern zum Zahnarzt."
+  },
+  {
+    "en": "My glasses are too weak.",
+    "de": "Meine Brille ist zu schwach."
+  },
+  {
+    "en": "I need new contact lenses.",
+    "de": "Ich brauche neue Kontaktlinsen."
+  },
+  {
+    "en": "Have you had your vaccination?",
+    "de": "Hast du deine Impfung bekommen?"
+  },
+  {
+    "en": "The pharmacy is on night duty.",
+    "de": "Die Apotheke hat Nachtdienst."
+  },
+  {
+    "en": "Take it after meals.",
+    "de": "Nimm es nach dem Essen."
+  },
+  {
+    "en": "The child has a temperature.",
+    "de": "Das Kind hat Fieber."
+  },
+  {
+    "en": "He should stay in bed today.",
+    "de": "Er sollte heute im Bett bleiben."
+  },
+  {
+    "en": "The snow is perfect today.",
+    "de": "Der Schnee ist heute perfekt."
+  },
+  {
+    "en": "I fell twice on the first day.",
+    "de": "Ich bin am ersten Tag zweimal hingefallen."
+  },
+  {
+    "en": "We rented skis in the village.",
+    "de": "Wir haben im Dorf Ski geliehen."
+  },
+  {
+    "en": "The lift closes at four.",
+    "de": "Der Lift schließt um vier."
+  },
+  {
+    "en": "He learned to snowboard in a week.",
+    "de": "Er hat in einer Woche Snowboard gelernt."
+  },
+  {
+    "en": "The slopes were very icy.",
+    "de": "Die Pisten waren sehr vereist."
+  },
+  {
+    "en": "We drank hot chocolate afterwards.",
+    "de": "Danach haben wir heiße Schokolade getrunken."
+  },
+  {
+    "en": "Sledging is fun for the children.",
+    "de": "Schlittenfahren macht den Kindern Spaß."
+  },
+  {
+    "en": "It's warmer than it looks.",
+    "de": "Es ist wärmer, als es aussieht."
+  },
+  {
+    "en": "The mountains were completely white.",
+    "de": "Die Berge waren ganz weiß."
+  },
+  {
+    "en": "We put the tent up in the dark.",
+    "de": "Wir haben das Zelt im Dunkeln aufgebaut."
+  },
+  {
+    "en": "The campsite is right by the lake.",
+    "de": "Der Campingplatz liegt direkt am See."
+  },
+  {
+    "en": "I forgot the sleeping bag.",
+    "de": "Ich habe den Schlafsack vergessen."
+  },
+  {
+    "en": "We cooked over a fire.",
+    "de": "Wir haben über dem Feuer gekocht."
+  },
+  {
+    "en": "The showers cost one euro.",
+    "de": "Die Duschen kosten einen Euro."
+  },
+  {
+    "en": "It was cold at night.",
+    "de": "Nachts war es kalt."
+  },
+  {
+    "en": "The mosquitoes were terrible.",
+    "de": "Die Mücken waren furchtbar."
+  },
+  {
+    "en": "We woke up with the sun.",
+    "de": "Wir sind mit der Sonne aufgewacht."
+  },
+  {
+    "en": "There was no phone signal at all.",
+    "de": "Es gab überhaupt keinen Empfang."
+  },
+  {
+    "en": "I slept better than at home.",
+    "de": "Ich habe besser geschlafen als zu Hause."
+  },
+  {
+    "en": "The water is still too cold.",
+    "de": "Das Wasser ist noch zu kalt."
+  },
+  {
+    "en": "Don't forget the sun cream.",
+    "de": "Vergiss die Sonnencreme nicht."
+  },
+  {
+    "en": "We lay on the beach all day.",
+    "de": "Wir lagen den ganzen Tag am Strand."
+  },
+  {
+    "en": "The sand is burning hot.",
+    "de": "Der Sand ist glühend heiß."
+  },
+  {
+    "en": "He got badly sunburnt.",
+    "de": "Er hat einen schlimmen Sonnenbrand bekommen."
+  },
+  {
+    "en": "The waves were quite high.",
+    "de": "Die Wellen waren ziemlich hoch."
+  },
+  {
+    "en": "We walked along the shore.",
+    "de": "Wir sind am Ufer entlanggegangen."
+  },
+  {
+    "en": "There's a nice café on the promenade.",
+    "de": "An der Promenade gibt es ein nettes Café."
+  },
+  {
+    "en": "The beach was full of families.",
+    "de": "Der Strand war voller Familien."
+  },
+  {
+    "en": "I could listen to the sea for hours.",
+    "de": "Ich könnte stundenlang dem Meer zuhören."
+  },
+  {
+    "en": "Let's take the long way round.",
+    "de": "Nehmen wir den längeren Weg."
+  },
+  {
+    "en": "The path goes through the forest.",
+    "de": "Der Weg führt durch den Wald."
+  },
+  {
+    "en": "It's about six kilometres.",
+    "de": "Es sind ungefähr sechs Kilometer."
+  },
+  {
+    "en": "My boots are worn out.",
+    "de": "Meine Stiefel sind durchgelaufen."
+  },
+  {
+    "en": "We stopped halfway for a rest.",
+    "de": "Wir haben auf halbem Weg eine Pause gemacht."
+  },
+  {
+    "en": "The dog runs ahead the whole time.",
+    "de": "Der Hund läuft die ganze Zeit voraus."
+  },
+  {
+    "en": "He needs at least an hour outside.",
+    "de": "Er braucht mindestens eine Stunde draußen."
+  },
+  {
+    "en": "Keep the dog on the lead here.",
+    "de": "Halte den Hund hier an der Leine."
+  },
+  {
+    "en": "We walk the same route every day.",
+    "de": "Wir laufen jeden Tag dieselbe Runde."
+  },
+  {
+    "en": "It's good to get some fresh air.",
+    "de": "Es tut gut, an die frische Luft zu kommen."
+  },
+  {
+    "en": "I cycle everywhere in summer.",
+    "de": "Im Sommer fahre ich überall mit dem Rad."
+  },
+  {
+    "en": "The brakes need adjusting.",
+    "de": "Die Bremsen müssen eingestellt werden."
+  },
+  {
+    "en": "I lock my bike twice.",
+    "de": "Ich schließe mein Fahrrad zweimal ab."
+  },
+  {
+    "en": "The cycle path ends here.",
+    "de": "Der Radweg endet hier."
+  },
+  {
+    "en": "He rides without a helmet.",
+    "de": "Er fährt ohne Helm."
+  },
+  {
+    "en": "My bike is at the repair shop.",
+    "de": "Mein Fahrrad ist in der Werkstatt."
+  },
+  {
+    "en": "It's faster than the car in the city.",
+    "de": "In der Stadt ist es schneller als das Auto."
+  },
+  {
+    "en": "The chain came off again.",
+    "de": "Die Kette ist wieder abgesprungen."
+  },
+  {
+    "en": "I pump up the tyres every week.",
+    "de": "Ich pumpe die Reifen jede Woche auf."
+  },
+  {
+    "en": "Cycling in the rain is no fun.",
+    "de": "Radfahren im Regen macht keinen Spaß."
+  },
+  {
+    "en": "We only have two days there.",
+    "de": "Wir haben nur zwei Tage dort."
+  },
+  {
+    "en": "The old town is easy to walk around.",
+    "de": "Die Altstadt kann man gut zu Fuß erkunden."
+  },
+  {
+    "en": "We took a guided tour.",
+    "de": "Wir haben eine Führung gemacht."
+  },
+  {
+    "en": "The cathedral is worth a visit.",
+    "de": "Der Dom ist einen Besuch wert."
+  },
+  {
+    "en": "The view from the tower is fantastic.",
+    "de": "Die Aussicht vom Turm ist fantastisch."
+  },
+  {
+    "en": "Everything was within walking distance.",
+    "de": "Alles war zu Fuß erreichbar."
+  },
+  {
+    "en": "The city is nicer than I expected.",
+    "de": "Die Stadt ist schöner, als ich erwartet hatte."
+  },
+  {
+    "en": "We'd like to come back in summer.",
+    "de": "Wir würden gern im Sommer wiederkommen."
+  },
+  {
+    "en": "The hotel was right in the centre.",
+    "de": "Das Hotel lag mitten im Zentrum."
+  },
+  {
+    "en": "Two days is not enough.",
+    "de": "Zwei Tage sind nicht genug."
+  },
+  {
+    "en": "I don't like coriander at all.",
+    "de": "Koriander mag ich überhaupt nicht."
+  },
+  {
+    "en": "He eats anything.",
+    "de": "Er isst alles."
+  },
+  {
+    "en": "I've never tried that before.",
+    "de": "Das habe ich noch nie probiert."
+  },
+  {
+    "en": "It's a bit too spicy for me.",
+    "de": "Es ist mir ein bisschen zu scharf."
+  },
+  {
+    "en": "This tastes of almonds.",
+    "de": "Das schmeckt nach Mandeln."
+  },
+  {
+    "en": "I could eat this every day.",
+    "de": "Das könnte ich jeden Tag essen."
+  },
+  {
+    "en": "She doesn't eat any dairy.",
+    "de": "Sie isst keine Milchprodukte."
+  },
+  {
+    "en": "The sauce is far too sweet.",
+    "de": "Die Soße ist viel zu süß."
+  },
+  {
+    "en": "It doesn't taste of much.",
+    "de": "Es schmeckt nach nicht viel."
+  },
+  {
+    "en": "I'm not hungry yet.",
+    "de": "Ich habe noch keinen Hunger."
+  },
+  {
+    "en": "A glass of red wine, please.",
+    "de": "Ein Glas Rotwein, bitte."
+  },
+  {
+    "en": "I don't drink alcohol.",
+    "de": "Ich trinke keinen Alkohol."
+  },
+  {
+    "en": "One beer and one apple juice.",
+    "de": "Ein Bier und einen Apfelsaft."
+  },
+  {
+    "en": "Still or sparkling water?",
+    "de": "Stilles Wasser oder mit Kohlensäure?"
+  },
+  {
+    "en": "Cheers, to your health.",
+    "de": "Prost, auf deine Gesundheit."
+  },
+  {
+    "en": "I'd better not, I'm driving.",
+    "de": "Lieber nicht, ich fahre."
+  },
+  {
+    "en": "Just a small one, please.",
+    "de": "Nur ein kleines, bitte."
+  },
+  {
+    "en": "The wine is from this region.",
+    "de": "Der Wein ist aus dieser Gegend."
+  },
+  {
+    "en": "I drink far too much coffee.",
+    "de": "Ich trinke viel zu viel Kaffee."
+  },
+  {
+    "en": "Tea helps me relax.",
+    "de": "Tee hilft mir beim Entspannen."
+  },
+  {
+    "en": "We usually have bread and cheese.",
+    "de": "Wir essen meistens Brot und Käse."
+  },
+  {
+    "en": "I only have a coffee in the morning.",
+    "de": "Ich trinke morgens nur einen Kaffee."
+  },
+  {
+    "en": "He makes porridge every day.",
+    "de": "Er macht jeden Tag Haferbrei."
+  },
+  {
+    "en": "The eggs are ready in three minutes.",
+    "de": "Die Eier sind in drei Minuten fertig."
+  },
+  {
+    "en": "Breakfast is my favourite meal.",
+    "de": "Frühstück ist meine Lieblingsmahlzeit."
+  },
+  {
+    "en": "We eat later at the weekend.",
+    "de": "Am Wochenende essen wir später."
+  },
+  {
+    "en": "Would you like a second cup?",
+    "de": "Möchtest du eine zweite Tasse?"
+  },
+  {
+    "en": "There's jam in the cupboard.",
+    "de": "Die Marmelade ist im Schrank."
+  },
+  {
+    "en": "I can't eat anything early.",
+    "de": "Ich kann früh nichts essen."
+  },
+  {
+    "en": "The bread is from yesterday.",
+    "de": "Das Brot ist von gestern."
+  },
+  {
+    "en": "Ten people are coming on Saturday.",
+    "de": "Am Samstag kommen zehn Leute."
+  },
+  {
+    "en": "I'll cook something simple.",
+    "de": "Ich koche etwas Einfaches."
+  },
+  {
+    "en": "Could you bring a salad?",
+    "de": "Könntest du einen Salat mitbringen?"
+  },
+  {
+    "en": "We need more chairs.",
+    "de": "Wir brauchen mehr Stühle."
+  },
+  {
+    "en": "Everyone stayed until midnight.",
+    "de": "Alle sind bis Mitternacht geblieben."
+  },
+  {
+    "en": "There was far too much food.",
+    "de": "Es gab viel zu viel Essen."
+  },
+  {
+    "en": "The neighbours were invited too.",
+    "de": "Die Nachbarn waren auch eingeladen."
+  },
+  {
+    "en": "We cleaned up the next morning.",
+    "de": "Wir haben am nächsten Morgen aufgeräumt."
+  },
+  {
+    "en": "It was a really nice evening.",
+    "de": "Es war ein wirklich schöner Abend."
+  },
+  {
+    "en": "Let's do this more often.",
+    "de": "Lass uns das öfter machen."
+  },
+  {
+    "en": "I use it almost every day.",
+    "de": "Ich benutze es fast jeden Tag."
+  },
+  {
+    "en": "The old one worked better.",
+    "de": "Das alte hat besser funktioniert."
+  },
+  {
+    "en": "It doesn't fit in the cupboard.",
+    "de": "Es passt nicht in den Schrank."
+  },
+  {
+    "en": "This one is easier to clean.",
+    "de": "Dieses lässt sich leichter reinigen."
+  },
+  {
+    "en": "It was a present from my sister.",
+    "de": "Es war ein Geschenk von meiner Schwester."
+  },
+  {
+    "en": "I rarely eat out.",
+    "de": "Ich gehe selten essen."
+  },
+  {
+    "en": "He is always late.",
+    "de": "Er kommt immer zu spät."
+  },
+  {
+    "en": "We hardly ever watch television.",
+    "de": "Wir sehen fast nie fern."
+  },
+  {
+    "en": "I usually walk to work.",
+    "de": "Normalerweise gehe ich zu Fuß zur Arbeit."
+  },
+  {
+    "en": "She often works at the weekend.",
+    "de": "Sie arbeitet oft am Wochenende."
+  },
+  {
+    "en": "Sometimes I take the car.",
+    "de": "Manchmal nehme ich das Auto."
+  },
+  {
+    "en": "He calls me every other day.",
+    "de": "Er ruft mich jeden zweiten Tag an."
+  },
+  {
+    "en": "I've never been there.",
+    "de": "Ich war noch nie dort."
+  },
+  {
+    "en": "We go there twice a year.",
+    "de": "Wir fahren zweimal im Jahr dorthin."
+  },
+  {
+    "en": "That happens now and then.",
+    "de": "Das kommt ab und zu vor."
+  },
+  {
+    "en": "Exactly, that's what I think.",
+    "de": "Genau, das denke ich auch."
+  },
+  {
+    "en": "I couldn't agree more.",
+    "de": "Ich stimme dir völlig zu."
+  },
+  {
+    "en": "That's one way of looking at it.",
+    "de": "So kann man das auch sehen."
+  },
+  {
+    "en": "I'm not so sure about that.",
+    "de": "Da bin ich mir nicht so sicher."
+  },
+  {
+    "en": "You may be right.",
+    "de": "Du hast vielleicht recht."
+  },
+  {
+    "en": "That's true, but still.",
+    "de": "Das stimmt, aber trotzdem."
+  },
+  {
+    "en": "I see your point.",
+    "de": "Ich verstehe, was du meinst."
+  },
+  {
+    "en": "It depends on how you look at it.",
+    "de": "Es kommt darauf an, wie man es sieht."
+  },
+  {
+    "en": "Let's agree to differ.",
+    "de": "Einigen wir uns darauf, uns nicht einig zu sein."
+  },
+  {
+    "en": "That's a fair point.",
+    "de": "Das ist ein berechtigter Einwand."
+  },
+  {
+    "en": "Oh, what a shame.",
+    "de": "Oh, wie schade."
+  },
+  {
+    "en": "That's great news.",
+    "de": "Das sind tolle Nachrichten."
+  },
+  {
+    "en": "No way, really?",
+    "de": "Nicht zu fassen, wirklich?"
+  },
+  {
+    "en": "I can imagine.",
+    "de": "Das kann ich mir vorstellen."
+  },
+  {
+    "en": "Never mind.",
+    "de": "Macht nichts."
+  },
+  {
+    "en": "If you say so.",
+    "de": "Wenn du meinst."
+  },
+  {
+    "en": "Just as I thought.",
+    "de": "Genau, wie ich dachte."
+  },
+  {
+    "en": "That happens.",
+    "de": "Das kommt vor."
+  },
+  {
+    "en": "Well done!",
+    "de": "Gut gemacht!"
+  },
+  {
+    "en": "About time too.",
+    "de": "Wurde auch Zeit."
+  },
+  {
+    "en": "Excuse me, is this the way to the museum?",
+    "de": "Entschuldigung, geht es hier zum Museum?"
+  },
+  {
+    "en": "Follow this street to the end.",
+    "de": "Folgen Sie dieser Straße bis zum Ende."
+  },
+  {
+    "en": "Take the second turning on the right.",
+    "de": "Nehmen Sie die zweite Straße rechts."
+  },
+  {
+    "en": "It's just past the bridge.",
+    "de": "Es ist gleich hinter der Brücke."
+  },
+  {
+    "en": "You've gone too far.",
+    "de": "Sie sind zu weit gegangen."
+  },
+  {
+    "en": "It's easier to take the tram.",
+    "de": "Mit der Straßenbahn ist es einfacher."
+  },
+  {
+    "en": "You can't miss it.",
+    "de": "Sie können es nicht verfehlen."
+  },
+  {
+    "en": "I'm not from here either.",
+    "de": "Ich bin auch nicht von hier."
+  },
+  {
+    "en": "Ask at the kiosk over there.",
+    "de": "Fragen Sie am Kiosk dort drüben."
+  },
+  {
+    "en": "It's a five minute walk at most.",
+    "de": "Es sind höchstens fünf Minuten zu Fuß."
+  },
+  {
+    "en": "Please queue over here.",
+    "de": "Bitte stellen Sie sich hier an."
+  },
+  {
+    "en": "Sorry, I was here first.",
+    "de": "Entschuldigung, ich war zuerst hier."
+  },
+  {
+    "en": "Could you move up a little?",
+    "de": "Könnten Sie etwas aufrücken?"
+  },
+  {
+    "en": "Please let people get off first.",
+    "de": "Bitte lassen Sie die Leute zuerst aussteigen."
+  },
+  {
+    "en": "Would you like to go ahead?",
+    "de": "Möchten Sie vorgehen?"
+  },
+  {
+    "en": "Please keep the noise down.",
+    "de": "Bitte seien Sie etwas leiser."
+  },
+  {
+    "en": "Smoking is not allowed here.",
+    "de": "Rauchen ist hier nicht erlaubt."
+  },
+  {
+    "en": "This is the quiet carriage.",
+    "de": "Das ist der Ruhebereich."
+  },
+  {
+    "en": "Could you keep an eye on my bag?",
+    "de": "Könnten Sie kurz auf meine Tasche aufpassen?"
+  },
+  {
+    "en": "Thank you for waiting.",
+    "de": "Danke fürs Warten."
+  },
+  {
+    "en": "The children are playing in the sandpit.",
+    "de": "Die Kinder spielen im Sandkasten."
+  },
+  {
+    "en": "He doesn't want to share his toys.",
+    "de": "Er will sein Spielzeug nicht teilen."
+  },
+  {
+    "en": "She fell off the swing.",
+    "de": "Sie ist von der Schaukel gefallen."
+  },
+  {
+    "en": "It's time to go home.",
+    "de": "Es ist Zeit, nach Hause zu gehen."
+  },
+  {
+    "en": "Five more minutes, then we go.",
+    "de": "Noch fünf Minuten, dann gehen wir."
+  },
+  {
+    "en": "He can already count to twenty.",
+    "de": "Er kann schon bis zwanzig zählen."
+  },
+  {
+    "en": "She lost her first tooth.",
+    "de": "Sie hat ihren ersten Zahn verloren."
+  },
+  {
+    "en": "They get on well together.",
+    "de": "Sie verstehen sich gut."
+  },
+  {
+    "en": "He is going through a difficult phase.",
+    "de": "Er ist in einer schwierigen Phase."
+  },
+  {
+    "en": "Teenagers sleep very late.",
+    "de": "Jugendliche schlafen sehr lange."
+  },
+  {
+    "en": "My grandparents live in the countryside.",
+    "de": "Meine Großeltern wohnen auf dem Land."
+  },
+  {
+    "en": "He retired two years ago.",
+    "de": "Er ist vor zwei Jahren in Rente gegangen."
+  },
+  {
+    "en": "She still drives herself.",
+    "de": "Sie fährt immer noch selbst Auto."
+  },
+  {
+    "en": "They have been living there for forty years.",
+    "de": "Sie wohnen seit vierzig Jahren dort."
+  },
+  {
+    "en": "He tells the same stories every time.",
+    "de": "Er erzählt jedes Mal dieselben Geschichten."
+  },
+  {
+    "en": "Getting older isn't easy.",
+    "de": "Älter werden ist nicht einfach."
+  },
+  {
+    "en": "She's fitter than most young people.",
+    "de": "Sie ist fitter als die meisten jungen Leute."
+  },
+  {
+    "en": "We visit them every second weekend.",
+    "de": "Wir besuchen sie jedes zweite Wochenende."
+  },
+  {
+    "en": "He needs help with shopping now.",
+    "de": "Er braucht jetzt Hilfe beim Einkaufen."
+  },
+  {
+    "en": "They celebrated their golden wedding.",
+    "de": "Sie haben goldene Hochzeit gefeiert."
+  },
+  {
+    "en": "I try to eat less sugar.",
+    "de": "Ich versuche, weniger Zucker zu essen."
+  },
+  {
+    "en": "He gave up coffee completely.",
+    "de": "Er hat ganz auf Kaffee verzichtet."
+  },
+  {
+    "en": "Sitting all day is unhealthy.",
+    "de": "Den ganzen Tag zu sitzen ist ungesund."
+  },
+  {
+    "en": "I take the stairs instead of the lift.",
+    "de": "Ich nehme die Treppe statt den Aufzug."
+  },
+  {
+    "en": "Ten thousand steps a day is my goal.",
+    "de": "Zehntausend Schritte am Tag sind mein Ziel."
+  },
+  {
+    "en": "She's been vegetarian for years.",
+    "de": "Sie ist seit Jahren Vegetarierin."
+  },
+  {
+    "en": "I drink two litres of water a day.",
+    "de": "Ich trinke zwei Liter Wasser am Tag."
+  },
+  {
+    "en": "He stopped smoking after thirty years.",
+    "de": "Er hat nach dreißig Jahren mit dem Rauchen aufgehört."
+  },
+  {
+    "en": "Sleep is more important than people think.",
+    "de": "Schlaf ist wichtiger, als die Leute denken."
+  },
+  {
+    "en": "Small changes help a lot.",
+    "de": "Kleine Veränderungen helfen viel."
+  },
+  {
+    "en": "I'm under a lot of pressure at the moment.",
+    "de": "Ich stehe im Moment sehr unter Druck."
+  },
+  {
+    "en": "I need a proper break.",
+    "de": "Ich brauche eine richtige Pause."
+  },
+  {
+    "en": "Everything at once is too much.",
+    "de": "Alles auf einmal ist zu viel."
+  },
+  {
+    "en": "I switch my phone off in the evening.",
+    "de": "Abends schalte ich mein Handy aus."
+  },
+  {
+    "en": "Take one thing at a time.",
+    "de": "Mach eins nach dem anderen."
+  },
+  {
+    "en": "Talking about it helps.",
+    "de": "Darüber zu reden hilft."
+  },
+  {
+    "en": "I sleep badly when I'm stressed.",
+    "de": "Wenn ich Stress habe, schlafe ich schlecht."
+  },
+  {
+    "en": "He never says no to anything.",
+    "de": "Er sagt nie zu etwas nein."
+  },
+  {
+    "en": "You have to look after yourself too.",
+    "de": "Du musst auch auf dich selbst achten."
+  },
+  {
+    "en": "Tomorrow is another day.",
+    "de": "Morgen ist auch noch ein Tag."
+  },
+  {
+    "en": "I work from home twice a week.",
+    "de": "Ich arbeite zweimal pro Woche von zu Hause."
+  },
+  {
+    "en": "The commute takes forty minutes.",
+    "de": "Der Arbeitsweg dauert vierzig Minuten."
+  },
+  {
+    "en": "I get more done at home.",
+    "de": "Zu Hause schaffe ich mehr."
+  },
+  {
+    "en": "The office is nearly empty on Fridays.",
+    "de": "Freitags ist das Büro fast leer."
+  },
+  {
+    "en": "I miss the small conversations.",
+    "de": "Mir fehlen die kleinen Gespräche."
+  },
+  {
+    "en": "My desk is by the window.",
+    "de": "Mein Schreibtisch steht am Fenster."
+  },
+  {
+    "en": "The train is packed at this time.",
+    "de": "Um diese Zeit ist der Zug voll."
+  },
+  {
+    "en": "I read on the way to work.",
+    "de": "Auf dem Weg zur Arbeit lese ich."
+  },
+  {
+    "en": "It's quicker by bike than by bus.",
+    "de": "Mit dem Rad ist es schneller als mit dem Bus."
+  },
+  {
+    "en": "I leave the house before seven.",
+    "de": "Ich verlasse das Haus vor sieben."
+  },
+  {
+    "en": "I've been living abroad for four years.",
+    "de": "Ich lebe seit vier Jahren im Ausland."
+  },
+  {
+    "en": "At the beginning everything was difficult.",
+    "de": "Am Anfang war alles schwierig."
+  },
+  {
+    "en": "I miss the food from home.",
+    "de": "Mir fehlt das Essen von zu Hause."
+  },
+  {
+    "en": "People do things differently here.",
+    "de": "Hier macht man die Dinge anders."
+  },
+  {
+    "en": "I had to get used to the winter.",
+    "de": "Ich musste mich an den Winter gewöhnen."
+  },
+  {
+    "en": "My family visits once a year.",
+    "de": "Meine Familie besucht mich einmal im Jahr."
+  },
+  {
+    "en": "I feel at home in two countries.",
+    "de": "Ich fühle mich in zwei Ländern zu Hause."
+  },
+  {
+    "en": "The paperwork was the hardest part.",
+    "de": "Der Papierkram war das Schwerste."
+  },
+  {
+    "en": "Now I can't imagine leaving.",
+    "de": "Jetzt kann ich mir nicht vorstellen wegzugehen."
+  },
+  {
+    "en": "You get used to almost everything.",
+    "de": "An fast alles gewöhnt man sich."
+  },
+  {
+    "en": "You're doing really well.",
+    "de": "Du machst das wirklich gut."
+  },
+  {
+    "en": "Don't be so hard on yourself.",
+    "de": "Sei nicht so streng mit dir."
+  },
+  {
+    "en": "It gets easier with time.",
+    "de": "Mit der Zeit wird es leichter."
+  },
+  {
+    "en": "Everyone starts somewhere.",
+    "de": "Jeder fängt mal an."
+  },
+  {
+    "en": "Just keep going.",
+    "de": "Mach einfach weiter."
+  },
+  {
+    "en": "That's already a big step.",
+    "de": "Das ist schon ein großer Schritt."
+  },
+  {
+    "en": "You've come a long way.",
+    "de": "Du hast schon viel geschafft."
+  },
+  {
+    "en": "Mistakes are part of learning.",
+    "de": "Fehler gehören zum Lernen."
+  },
+  {
+    "en": "I'm proud of what you've done.",
+    "de": "Ich bin stolz auf das, was du geschafft hast."
+  },
+  {
+    "en": "Tomorrow we try again.",
+    "de": "Morgen versuchen wir es wieder."
   }
 ]
