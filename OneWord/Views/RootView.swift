@@ -12,7 +12,7 @@ import SwiftUI
 /// The window's sections. Search and Settings sit outside the list (pinned to the
 /// top and bottom of the sidebar); the rest are list rows.
 enum Pane: Hashable, Identifiable {
-    case home, history, learned, practice, bookmarks, profile, search, dictionaries, settings
+    case home, history, practice, bookmarks, profile, search, dictionaries, settings
 
     var id: Self { self }
 
@@ -20,7 +20,6 @@ enum Pane: Hashable, Identifiable {
         switch self {
         case .home: "Home"
         case .history: "History"
-        case .learned: "Learned"
         case .practice: "Practice"
         case .bookmarks: "Bookmarks"
         case .profile: "Profile"
@@ -34,7 +33,6 @@ enum Pane: Hashable, Identifiable {
         switch self {
         case .home: "house"
         case .history: "clock"
-        case .learned: "checkmark.seal"
         case .practice: "text.bubble"
         case .bookmarks: "bookmark"
         case .profile: "person.crop.circle"
@@ -47,6 +45,8 @@ enum Pane: Hashable, Identifiable {
 
 struct RootView: View {
     @State private var pane: Pane = .home
+    /// Settings can hide the Practice row; the pane itself is unreachable then.
+    @AppStorage("practiceEnabled") private var practiceEnabled = true
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
@@ -62,8 +62,7 @@ struct RootView: View {
     @ViewBuilder private var detail: some View {
         switch pane {
         case .home:         HomeView(pane: $pane)
-        case .history:      HistoryView()
-        case .learned:      LearnedListView()
+        case .history:      HistoryView(pane: $pane)
         case .practice:     SentenceView()
         case .bookmarks:    WordListView(wordbook: .saved)
         case .profile:      ProfileView()
@@ -75,7 +74,8 @@ struct RootView: View {
 
     private var sidebar: some View {
         List(selection: $pane) {
-            ForEach([Pane.home, .history, .learned, .practice, .bookmarks, .profile]) { item in
+            ForEach([Pane.home, .history, .practice, .bookmarks, .profile]
+                        .filter { $0 != .practice || practiceEnabled }) { item in
                 Label(item.title, systemImage: item.symbol).tag(item)
             }
             Section("Dictionaries") {

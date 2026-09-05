@@ -109,24 +109,25 @@ struct SentenceView: View {
     /// fixed frame is what keeps it a window when a sentence runs long.
     private func reel(_ t: Theme) -> some View {
         Text(scrambled ?? shown.en)
-            .font(.serif(38))
+            .font(.serif(56))
             .foregroundStyle(t.ink)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .top)
             .frame(height: Self.reelHeight, alignment: .top)
             .clipped()
+            .opacity(revealed ? 0.6 : 1)
     }
 
     /// The answer. WordDetail's Hindi carries an accent rule down its left, but a
     /// left rule fights a centred block — colour and size carry the distinction here.
     private func german(_ t: Theme) -> some View {
         Text(shown.de)
-            .font(.serif(28))
+            .font(.serif(48))
             .foregroundStyle(t.definition)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
-            .padding(.top, 26)
+            .padding(.top, 24)
             // Always in the layout, only faded. If it were inserted on reveal the
             // whole centred block would jump every time you pressed space — the
             // reel above is fixed-height for the same reason.
@@ -138,11 +139,11 @@ struct SentenceView: View {
     /// explains neither what to do with it nor that space is the control. Parked
     /// in the corner so the sentence stays the only thing in the middle.
     private func hint(_ t: Theme) -> some View {
-        Text("Say it in German \u{00B7} space to check \u{00B7} again for the next")
+        Text("Tap space to see answer and go to next question")
             .font(.system(size: 11))
             .foregroundStyle(t.muted)
-            .opacity(rolling ? 0 : 1)
-            .animation(.easeOut(duration: 0.15), value: rolling)
+            //.opacity(rolling ? 0 : 1)
+            //.animation(.easeOut(duration: 0.15), value: rolling)
             .padding(.top, 22)
             .padding(.trailing, 28)
             // A hint is not a target: the click belongs to the pane behind it.

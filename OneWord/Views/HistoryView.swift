@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct HistoryView: View {
+    /// So the dictionary chip can send you to the Dictionaries pane, same as Home.
+    @Binding var pane: Pane
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @State private var model = WordViewModel()
     @State private var date = Date()
@@ -28,6 +30,19 @@ struct HistoryView: View {
         }
         .background(t.background)
         .navigationTitle(date.formatted(.dateTime.month(.wide).day().year()))
+        // Every dictionary has its own word of the day, so the date alone doesn't
+        // say which history you're reading.
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Button { pane = .dictionaries } label: {
+                    Text(model.wordbook.name)
+                        .font(.caption2.weight(.semibold))
+                        .lineLimit(1)
+                        .padding(.horizontal, 12)
+                }
+                .fixedSize()
+            }
+        }
         .onAppear { load() }
         .onChange(of: dictionaryID) { _, _ in load() }
     }
