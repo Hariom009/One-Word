@@ -16,6 +16,8 @@
 import SwiftUI
 import AppKit
 import WidgetKit
+import FirebaseCore
+import GoogleSignIn
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -23,6 +25,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.servicesProvider = provider
+        configureFirebase()
+    }
+
+    /// Reads GoogleService-Info.plist from the bundle, then wires GoogleSignIn by hand.
+    ///
+    /// GIDSignIn does NOT read GoogleService-Info.plist — its only self-configuration
+    /// path is a GIDClientID key in Info.plist (GIDSignIn.m:1351), and an unconfigured
+    /// interactive signIn raises NSInvalidArgumentException (:723): a crash, not an
+    /// error you can catch. Handing it the id off FirebaseApp keeps
+    /// GoogleService-Info.plist the one place the client id lives.
+    private func configureFirebase() {
+        FirebaseApp.configure()
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            assertionFailure("No CLIENT_ID in GoogleService-Info.plist — sign-in would crash.")
+            return
+        }
+        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
     }
 }
 

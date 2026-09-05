@@ -8,5 +8,18 @@
 	<array>
 		<string>LAP54KU2SV.group.com.hariom.swift.oneword</string>
 	</array>
+	<!-- Firebase Auth and the ASWebAuthenticationSession that GoogleSignIn opens both
+	     reach the network. Without this the sandbox blocks every request and sign-in
+	     hangs with no error. Outbound only — the OAuth browser runs out of process. -->
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<!-- FirebaseAuth writes its session with kSecUseDataProtectionKeychain = true
+	     (AuthKeychainServices.swift:232). On macOS the data-protection keychain refuses
+	     an app with no keychain-access-group: SecItemAdd returns -34018 and the session
+	     never survives a relaunch. This is the "Keychain Sharing" capability. -->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.hariom.swift.oneword</string>
+	</array>
 </dict>
 </plist>
