@@ -33,6 +33,9 @@ struct WordDetail: View {
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme)
         let related = store.related(to: word, in: shelfID)
@@ -46,12 +49,12 @@ struct WordDetail: View {
 
                     HStack(alignment: .lastTextBaseline, spacing: 16) {
                         Text(word.term)
-                            .font(.serif(64))
+                            .font(doodle.face(64))
                             .foregroundStyle(t.ink)
                             .lineLimit(1)
                             .minimumScaleFactor(0.4)
                         Text(word.partOfSpeech)
-                            .font(.serif(16).italic())
+                            .font(doodle.face(16).italic())
                             .foregroundStyle(t.muted)
                     }
 
@@ -68,7 +71,7 @@ struct WordDetail: View {
                     }
 
                     Text(word.definition)
-                        .font(.serif(22))
+                        .font(doodle.face(22))
                         .foregroundStyle(t.definition)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 26)
@@ -80,6 +83,9 @@ struct WordDetail: View {
                         // this it pops. On the box, not the column: up here it sprang
                         // every paragraph's frame each time the word changed.
                         .animation(.default, value: related)
+                        // …and the placeholder fades out the same way, whether the
+                        // build ends with neighbours or with none.
+                        .animation(.default, value: store.isBuilding(shelfID))
                 }
                 .frame(maxWidth: 720, alignment: .leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -201,14 +207,36 @@ struct WordDetail: View {
             .padding(.top, 24)
             .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
             .padding(.top, 34)
+        } else if store.isBuilding(shelfID) {
+            buildingBox(t)
         }
+    }
+
+    /// The box's heading with the wait beside it, held on the same rule and the
+    /// same spacing, so when the index lands the heading doesn't move — the camper
+    /// is simply replaced by the disclosure arrow. Roughly 2.4s at 12,000 words,
+    /// and it fades out to nothing when the book has no neighbours to offer.
+    private func buildingBox(_ t: Theme) -> some View {
+        HStack(spacing: 12) {
+            Text("In the same vein \u{00B7} Synonyms")
+                .font(.system(size: 10, weight: .bold))
+                .textCase(.uppercase).tracking(1.6)
+                .foregroundStyle(t.muted)
+            DoodleLoader(size: 21, road: false)
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, 24)
+        .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
+        .padding(.top, 34)
+        .accessibilityLabel("Looking for related words")
     }
 
     private func relatedRow(_ w: Word, _ t: Theme) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(alignment: .lastTextBaseline, spacing: 10) {
                 Text(w.term)
-                    .font(.serif(20))
+                    .font(doodle.face(20))
                     .foregroundStyle(t.ink)
                     // 46% of Corporate Slang terms are phrases (up to 30 chars);
                     // without this they wrap and strand the part of speech.
@@ -263,7 +291,7 @@ struct WordDetail: View {
                     .textCase(.uppercase).tracking(1.6)
                     .foregroundStyle(t.muted)
                 Text("\u{201C}\(word.example)\u{201D}")
-                    .font(.serif(20).italic())
+                    .font(doodle.face(20).italic())
                     .foregroundStyle(t.example)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -288,8 +316,22 @@ struct BookmarkRibbon: View {
     /// Height, not a box. A ribbon is taller than it is wide (the asset's viewBox is
     /// cropped to the artwork, so it fills what it's given); the width follows.
     var size: CGFloat = 17
+    @Environment(\.doodle) private var doodle
 
     var body: some View {
+        if doodle.icons {
+            // The drawn ribbon, and the same drawing greyed out for "not kept" —
+            // the set has no hollow bookmark, and swapping in the SF outline here
+            // would make the two states look like two different apps.
+            Doodle("bookmark_doodle", size: size * 1.3)
+                .grayscale(filled ? 0 : 1)
+                .opacity(filled ? 1 : 0.4)
+        } else {
+            classic
+        }
+    }
+
+    private var classic: some View {
         Group {
             if filled {
                 // The asset is a ribbon centred in a square canvas with a wide

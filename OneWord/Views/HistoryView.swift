@@ -28,6 +28,9 @@ struct HistoryView: View {
     /// True once History is deliberately reading somewhere else than the app is.
     private var strayed: Bool { localID != nil && localID != dictionaryID }
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme)
         HStack(alignment: .top, spacing: 0) {
@@ -86,11 +89,11 @@ struct HistoryView: View {
                 .foregroundStyle(t.muted)
             HStack(alignment: .firstTextBaseline, spacing: 9) {
                 Text(date.formatted(.dateTime.day()))
-                    .font(.serif(42))
+                    .font(doodle.face(42))
                     .foregroundStyle(t.ink)
                     .contentTransition(.numericText())
                 Text(date.formatted(.dateTime.month(.wide).year()))
-                    .font(.serif(15))
+                    .font(doodle.face(15))
                     .foregroundStyle(t.muted)
                     .lineLimit(1)
             }
@@ -160,7 +163,7 @@ struct HistoryView: View {
             HStack(alignment: .top, spacing: 12) {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Read History In")
-                        .font(.serif(19))
+                        .font(doodle.face(19))
                         .foregroundStyle(t.ink)
                     Text("Stays in History \u{2014} Home and the widget keep \(Wordbook.named(dictionaryID).shortName). Search spans every dictionary.")
                         .font(.system(size: 11))

@@ -91,7 +91,12 @@ enum CaptureHUD {
         hud.hasShadow = true
         hud.ignoresMouseEvents = true
         hud.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        hud.contentView = NSHostingView(rootView: CaptureHUDView(title: title, subtitle: subtitle))
+        // The HUD is its own NSPanel, so it is outside the window's environment and
+        // has to read the doodle switches itself. A one-shot read is right here:
+        // the panel lives 1.85s and never outlasts a flip of the switch.
+        hud.contentView = NSHostingView(
+            rootView: CaptureHUDView(title: title, subtitle: subtitle)
+                .environment(\.doodle, DoodleTheme.current))
         hud.setContentSize(hud.contentView?.fittingSize ?? NSSize(width: 260, height: 90))
 
         if let screen = NSScreen.main {
@@ -120,14 +125,16 @@ private struct CaptureHUDView: View {
     let title: String
     let subtitle: String?
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
         HStack(spacing: 14) {
-            Image(systemName: "bookmark.fill")
-                .font(.system(size: 22))
+            GlyphIcon(.bookmarked, size: 22)
                 .foregroundStyle(.primary)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .font(.serif(24))
+                    .font(doodle.face(24))
                     .lineLimit(1)
                 if let subtitle {
                     Text(subtitle)

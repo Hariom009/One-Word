@@ -93,8 +93,10 @@ struct BookCover: View {
         )
         .overlay(alignment: .topTrailing) {
             if selected {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 20))
+                // plated: every cover is a dark hue, in both themes — without the
+                // chip the drawing's black tick would sit inside its green ring
+                // against near-black and read as an empty ring.
+                GlyphIcon(.selected, size: 20, plated: true)
                     .foregroundStyle(.black, .white)
                     .padding(8)
             }

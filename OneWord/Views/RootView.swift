@@ -6,6 +6,10 @@
 //  sets its own navigationTitle and toolbar, so the unified title bar adapts to
 //  whatever is showing instead of carrying every button all the time.
 //
+//  It is also the gate. Signed out, the whole shell is replaced by SignInView —
+//  no pane, no search, no dictionary is reachable without a session. The widget
+//  is outside this: it reads the same bundled JSON and cannot run an OAuth flow.
+//
 
 import SwiftUI
 
@@ -29,16 +33,18 @@ enum Pane: Hashable, Identifiable {
         }
     }
 
-    var symbol: String {
+    /// What the pane's icon MEANS. The theme picks the drawing — an SF Symbol or
+    /// a doodle — so this table names neither.
+    var glyph: Glyph {
         switch self {
-        case .home: "house"
-        case .history: "clock"
-        case .practice: "text.bubble"
-        case .bookmarks: "bookmark"
-        case .profile: "person.crop.circle"
-        case .search: "magnifyingglass"
-        case .dictionaries: "book"
-        case .settings: "gearshape"
+        case .home: .home
+        case .history: .history
+        case .practice: .practice
+        case .bookmarks: .bookmarks
+        case .profile: .profile
+        case .search: .search
+        case .dictionaries: .dictionaries
+        case .settings: .settings
         }
     }
 }
@@ -47,10 +53,32 @@ struct RootView: View {
     @State private var pane: Pane = .home
     /// Settings can hide the Practice row; the pane itself is unreachable then.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
+    /// Set in Profile. Empty means "keep following the Google account".
+    /// The picture is `AccountAvatar`'s own business, so only the name is read here.
+    @AppStorage("profileName") private var profileName = ""
     @Environment(\.colorScheme) private var scheme
     @Environment(AuthViewModel.self) private var auth
 
     var body: some View {
+        Group {
+            if !auth.restored {
+                // At most one frame: restore() is a keychain read, not a round trip.
+                // Painting the window's own background rather than a spinner means a
+                // returning user sees no flicker between launch and the shell.
+                Theme.of(scheme).background.ignoresSafeArea()
+            } else if auth.isSignedIn {
+                shell
+            } else {
+                SignInView()
+            }
+        }
+        // Here rather than in ProfileView: the gate needs the answer before anything
+        // renders, and the sidebar shows who you are whether or not Profile is opened.
+        .task { auth.restore() }
+    }
+
+    /// Everything behind the gate.
+    private var shell: some View {
         NavigationSplitView {
             sidebar
         } detail: {
@@ -58,9 +86,6 @@ struct RootView: View {
             // pane switch drops whatever was pushed on top of the old one.
             NavigationStack { detail }
         }
-        // Here rather than in ProfileView: the sidebar shows who you are on launch,
-        // whether or not that pane is ever opened.
-        .task { auth.restore() }
     }
 
     @ViewBuilder private var detail: some View {
@@ -69,7 +94,7 @@ struct RootView: View {
         case .history:      HistoryView()
         case .practice:     SentenceView()
         case .bookmarks:    WordListView(wordbook: .saved)
-        case .profile:      ProfileView()
+        case .profile:      ProfileView(pane: $pane)
         case .search:       WordListView()
         case .dictionaries: DictionaryPicker { pane = .home }
         case .settings:     SettingsView()
@@ -78,22 +103,27 @@ struct RootView: View {
 
     private var sidebar: some View {
         List(selection: $pane) {
-            ForEach([Pane.home, .history, .practice, .bookmarks, .profile]
+            ForEach([Pane.home, .history, .practice, .bookmarks]
                         .filter { $0 != .practice || practiceEnabled }) { item in
-                Label(item.title, systemImage: item.symbol).tag(item)
+                row(item).tag(item)
             }
             Section("Dictionaries") {
-                Label(Pane.dictionaries.title, systemImage: Pane.dictionaries.symbol)
-                    .tag(Pane.dictionaries)
+                row(.dictionaries).tag(Pane.dictionaries)
             }
         }
         .safeAreaInset(edge: .top, spacing: 0) { searchField }
         .safeAreaInset(edge: .bottom, spacing: 0) {
-            // Signed in, the corner is who you are and Settings moves into its menu.
-            // Signed out there is no identity to show, so the row stays a plain one.
-            if auth.isSignedIn { accountChip } else { pinnedRow(.settings) }
+            // The sidebar only exists behind the gate, so there is always a user to
+            // show here — the corner is who you are, and the way in to Profile.
+            accountChip
         }
         .navigationSplitViewColumnWidth(min: 190, ideal: 215, max: 300)
+    }
+
+    /// A sidebar row. `Label`'s systemImage form can only take an SF Symbol, so
+    /// the icon is built by hand and the theme decides what goes in it.
+    private func row(_ item: Pane) -> some View {
+        Label { Text(item.title) } icon: { GlyphIcon(item.glyph) }
     }
 
     /// A launcher, not a field — the real search box lives in the Search pane, so
@@ -102,7 +132,7 @@ struct RootView: View {
         let t = Theme.of(scheme)
         return Button { pane = .search } label: {
             HStack(spacing: 7) {
-                Image(systemName: "magnifyingglass")
+                GlyphIcon(.search)
                 Text("Search")
                 Spacer(minLength: 6)
                 Text("\u{2318}K")
@@ -125,46 +155,25 @@ struct RootView: View {
         .padding(.bottom, 6)
     }
 
-    /// Name, face, chevron. The chevron is decoration — the whole chip opens the menu,
-    /// which is a bigger target than a 9pt glyph and behaves the same.
+    /// Name and face, and that's the whole target: tapping the corner goes to
+    /// Profile. Settings moved into Profile, so there's nothing left to unfold here.
     private var accountChip: some View {
         let t = Theme.of(scheme)
-        return Menu {
-            Button(Pane.settings.title) { pane = .settings }
-        } label: {
+        return Button { pane = .profile } label: {
             HStack(spacing: 8) {
                 AccountAvatar(url: auth.photoURL, size: 20, muted: t.muted)
-                Text(auth.displayName ?? "Signed in")
+                Text(profileName.isEmpty ? (auth.displayName ?? "Signed in") : profileName)
                     .font(.system(size: 13))
                     .foregroundStyle(t.ink)
                     .lineLimit(1)
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(t.muted)
                 Spacer(minLength: 0)
             }
             .contentShape(Rectangle())
         }
-        .menuStyle(.borderlessButton)
-        .menuIndicator(.hidden)     // the chevron above is ours; don't draw a second one
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
-    }
-
-    /// Sidebar row for a pane the List doesn't hold — same look, drawn by hand.
-    private func pinnedRow(_ item: Pane) -> some View {
-        Button { pane = item } label: {
-            Label(item.title, systemImage: item.symbol)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 5)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(pane == item ? AnyShapeStyle(.selection) : AnyShapeStyle(.clear),
-                            in: RoundedRectangle(cornerRadius: 6))
-                .contentShape(Rectangle())
-        }
         .buttonStyle(.plain)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
+        .help("Show your profile")
+        .padding(.horizontal, 12)
+        .padding(.vertical, 13)
     }
 }
 

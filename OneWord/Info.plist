@@ -2,9 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Only what GENERATE_INFOPLIST_FILE can't express. Both keys below are arrays
+	<!-- Only what GENERATE_INFOPLIST_FILE can't express. The two below are arrays
 	     of dicts, so neither has an INFOPLIST_KEY_* equivalent — same reason the widget
-	     target carries its own plist for NSExtension. -->
+	     target carries its own plist for NSExtension. ATSApplicationFontsPath has no
+	     INFOPLIST_KEY_ either. -->
+	<!-- Pulpen Snowman, the doodle theme's face. "." is the Resources root: the
+	     synchronized group copies OneWord/Fonts/*.otf in flat, not into a Fonts/
+	     subfolder. AppKit registers everything it finds there at launch, so nothing
+	     in Swift has to call CTFontManagerRegisterFontsForURL. -->
+	<key>ATSApplicationFontsPath</key>
+	<string>.</string>
 	<key>NSServices</key>
 	<array>
 		<dict>

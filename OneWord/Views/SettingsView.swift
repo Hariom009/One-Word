@@ -15,6 +15,10 @@ import WidgetKit
 
 struct SettingsView: View {
     @AppStorage("appearance") private var appearance = Appearance.system.rawValue
+    // Two switches, not one: the drawings and the handwriting are separate tastes.
+    // App-only — the widget's bundle carries neither the art nor the face.
+    @AppStorage(DoodleTheme.iconsKey) private var doodleIcons = false
+    @AppStorage(DoodleTheme.handwritingKey) private var doodleFont = false
     // App Group, like the dictionary: one switch drives the app and the widget.
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
@@ -22,6 +26,9 @@ struct SettingsView: View {
     // standard defaults, same as `appearance`.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
     @AppStorage("practiceLanguage") private var practiceLanguage = "de"
+    @AppStorage("practiceAutoSpeak") private var practiceAutoSpeak = false
+    /// App-only: the profile shows the goal, the widget never does.
+    @AppStorage("fluencyGoal") private var fluencyGoal = false
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
@@ -39,6 +46,35 @@ struct SettingsView: View {
                             .buttonStyle(.plain)
                             .accessibilityAddTraits(mode.rawValue == appearance ? .isSelected : [])
                         }
+                    }
+                }
+
+                section("Doodle", t,
+                        note: "The app only. The widget keeps its symbols and its serif \u{2014} "
+                            + "neither the drawings nor the face ships inside it.") {
+                    VStack(spacing: 10) {
+                        DoodleSample(theme: t)
+                        card(t) {
+                            row("Hand-drawn icons",
+                                "Swaps the app's symbols for the doodle set \u{2014} and the spinner for a camper.",
+                                t) {
+                                Toggle("Hand-drawn icons", isOn: $doodleIcons).labelsHidden()
+                            }
+                            rule(t)
+                            row("Handwritten type",
+                                "Sets the headwords and titles in Pulpen Snowman.",
+                                t,
+                                info: """
+                                Pulpen Snowman draws Latin letters, digits and \
+                                quotation marks. It has no Devanagari and no em-dash, \
+                                so the Hindi meaning \u{2014} and the odd long dash \u{2014} \
+                                keep the system face underneath.
+                                """) {
+                                Toggle("Handwritten type", isOn: $doodleFont).labelsHidden()
+                            }
+                        }
+                        .toggleStyle(.switch)
+                        .tint(t.accent)
                     }
                 }
 
@@ -67,6 +103,15 @@ struct SettingsView: View {
                                 .tint(t.accent)
                         }
                         rule(t)
+                        row("Speak the answer", "Reads it aloud the moment it appears, without tapping Pronounce.", t) {
+                            Toggle("Speak the answer", isOn: $practiceAutoSpeak)
+                                .labelsHidden()
+                                .toggleStyle(.switch)
+                                .tint(t.accent)
+                        }
+                        .disabled(!practiceEnabled)
+                        .opacity(practiceEnabled ? 1 : 0.45)
+                        rule(t)
                         row("Language", "The corpus the sentences come from.", t) {
                             // German is the only corpus that ships, so it is the only row.
                             Picker("Language", selection: $practiceLanguage) {
@@ -77,6 +122,27 @@ struct SettingsView: View {
                         }
                         .disabled(!practiceEnabled)
                         .opacity(practiceEnabled ? 1 : 0.45)
+                    }
+                }
+
+                section("Progress", t) {
+                    card(t) {
+                        row("Fluency goal",
+                            "Shows how far through 3,000 words you are, on your profile.",
+                            t,
+                            info: """
+                            Experts put fluency at around 3,000 words \u{2014} learn that \
+                            many in German and you follow roughly 95% of everyday speech.
+
+                            Turn this on and your profile tracks how far through those \
+                            3,000 you are. Every word you've already read in full is \
+                            counted, so you don't start from zero.
+                            """) {
+                            Toggle("Fluency goal", isOn: $fluencyGoal)
+                                .labelsHidden()
+                                .toggleStyle(.switch)
+                                .tint(t.accent)
+                        }
                     }
                 }
             }
@@ -125,12 +191,16 @@ struct SettingsView: View {
     private func row<C: View>(_ title: String,
                               _ caption: String,
                               _ t: Theme,
+                              info: String? = nil,
                               @ViewBuilder control: () -> C) -> some View {
         HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.system(size: 13))
-                    .foregroundStyle(t.ink)
+                HStack(spacing: 5) {
+                    Text(title)
+                        .font(.system(size: 13))
+                        .foregroundStyle(t.ink)
+                    if let info { InfoButton(text: info, theme: t) }
+                }
                 Text(caption)
                     .font(.system(size: 11))
                     .foregroundStyle(t.muted)
@@ -144,6 +214,75 @@ struct SettingsView: View {
     }
 }
 
+/// The (i) beside a setting: why you'd want it, one popover away, so the row keeps
+/// its one-line caption instead of growing a paragraph nobody reads twice.
+private struct InfoButton: View {
+    let text: String
+    let theme: Theme
+    @State private var showing = false
+
+    var body: some View {
+        Button { showing = true } label: {
+            Image(systemName: "info.circle")
+                .font(.system(size: 12))
+                .foregroundStyle(theme.muted)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("About this setting")
+        .popover(isPresented: $showing, arrowEdge: .bottom) {
+            // A popover is its own window and doesn't inherit the app's appearance
+            // override, so the surface is painted here rather than left to the system.
+            Text(text)
+                .font(.system(size: 12))
+                .foregroundStyle(theme.ink)
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(width: 250, alignment: .leading)
+                .padding(14)
+                .background(theme.surface)
+        }
+    }
+}
+
+/// Both halves of the doodle theme at once, in a strip the size of a row: the
+/// drawings the sidebar would wear, and a word in the face the headwords would
+/// take. It reads `\.doodle` rather than the two switches, so it shows what the
+/// app is actually about to look like and not what Settings thinks it asked for.
+private struct DoodleSample: View {
+    let theme: Theme
+    @Environment(\.doodle) private var doodle
+
+    private let glyphs: [Glyph] = [.home, .history, .practice, .bookmarks,
+                                   .dictionaries, .learned]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
+                ForEach(Array(glyphs.enumerated()), id: \.offset) { _, g in
+                    GlyphIcon(g, size: 15)
+                        .foregroundStyle(theme.ink)
+                }
+                Spacer(minLength: 0)
+                DoodleLoader(size: 22, road: false)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text("ephemeral")
+                    .font(doodle.face(30))
+                    .foregroundStyle(theme.ink)
+                Text("lasting a very short time")
+                    .font(.system(size: 12))
+                    .foregroundStyle(theme.muted)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(14)
+        .background(theme.surface, in: RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(theme.hairline))
+        .animation(.easeInOut(duration: 0.18), value: doodle)
+        .accessibilityHidden(true)   // the two rows under it say what it shows
+    }
+}
+
 /// A miniature page in the mode it names — paper, night, or both — so the choice
 /// is shown rather than spelled. System is the two halves side by side.
 private struct AppearanceTile: View {
@@ -151,6 +290,9 @@ private struct AppearanceTile: View {
     let selected: Bool
     let theme: Theme
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
         VStack(spacing: 8) {
             preview
@@ -184,7 +326,7 @@ private struct AppearanceTile: View {
     private func page(_ t: Theme) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("Aa")
-                .font(.serif(15))
+                .font(doodle.face(15))
                 .foregroundStyle(t.ink)
             Capsule().fill(t.muted).frame(width: 26, height: 2)
             Capsule().fill(t.rule).frame(width: 17, height: 2)

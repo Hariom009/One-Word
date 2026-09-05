@@ -149,6 +149,11 @@ nonisolated struct RelatedWordsIndex {
 final class RelatedWordsStore {
     private var index: RelatedWordsIndex?
     private var builtFor: String?
+    /// The book whose build has FINISHED — landed, or come back nil. `index == nil`
+    /// alone can't say "still working": a Mac without NLEmbedding never gets an
+    /// index, and a book with no vectorisable words gets an empty one, so a caller
+    /// waiting on `index` would wait for something that is never coming.
+    private var settled: String?
     private var task: Task<Void, Never>?
     private var observer: (any NSObjectProtocol)?
 
@@ -188,6 +193,10 @@ final class RelatedWordsStore {
     func load(_ bookID: String) {
         guard builtFor != bookID else { return }
         builtFor = bookID
+        // Cleared on every start, not only on a new book: coming BACK to a book
+        // whose build was cancelled part-way leaves `settled` naming it, and the
+        // second build would report itself finished before it began.
+        settled = nil
         index = nil
         let previous = task
         previous?.cancel()
@@ -197,7 +206,14 @@ final class RelatedWordsStore {
             let index = await self?.build(bookID)
             guard !Task.isCancelled else { return }
             self?.index = index
+            self?.settled = bookID
         }
+    }
+
+    /// True while this book's index is being built. For the one caller that shows
+    /// a wait — everything else just gets [] until the answer exists.
+    func isBuilding(_ bookID: String) -> Bool {
+        builtFor == bookID && settled != bookID
     }
 
     // ponytail: re-ranks once per body evaluation — measured 3.6ms at 12k words

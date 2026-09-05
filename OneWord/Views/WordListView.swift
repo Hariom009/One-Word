@@ -39,6 +39,9 @@ struct WordListView: View {
     /// itself. Nothing you pick elsewhere changes what either one can find.
     private var everywhere: Bool { wordbook == nil }
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme)
         let results = model.results(for: query)
@@ -100,7 +103,7 @@ struct WordListView: View {
     private func row(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 64) {
             Text(hit.word.term)
-                .font(.serif(20))
+                .font(doodle.face(20))
                 .foregroundStyle(t.ink)
                 .lineLimit(1)
                 .frame(width: Self.termWidth, alignment: .leading)
@@ -141,15 +144,13 @@ struct WordListView: View {
 
     private func emptyState(_ t: Theme) -> some View {
         VStack(spacing: 14) {
-            Image(systemName: query.isEmpty ? (wordbook?.symbol ?? "magnifyingglass") : "hexagon")
-                .font(.system(size: 52, weight: .thin))
-                .foregroundStyle(t.accent.opacity(0.5))
+            emptyMark(t)
             VStack(spacing: 2) {
                 Text(headline)
-                    .font(.serif(30)).foregroundStyle(t.ink)
+                    .font(doodle.face(30)).foregroundStyle(t.ink)
                 if !query.isEmpty {
                     Text("\u{201C}\(query)\u{201D}")
-                        .font(.serif(30).italic()).foregroundStyle(t.ink)
+                        .font(doodle.face(30).italic()).foregroundStyle(t.ink)
                 }
             }
             Text(footnote)
@@ -162,6 +163,24 @@ struct WordListView: View {
         .padding(40)
     }
 
+    /// The mark over an empty pane. Classic mode stamps the BOOK's own symbol —
+    /// the one on its cover — which the doodle set has no per-dictionary answer
+    /// for. It gives the nearest thing it does have: the shelf, or the ribbon when
+    /// the empty pane is Bookmarks.
+    @ViewBuilder
+    private func emptyMark(_ t: Theme) -> some View {
+        if query.isEmpty {
+            GlyphIcon(wordbook?.id == SavedWords.resource ? .bookmarks : .dictionaries,
+                      size: 52, weight: .thin)
+                .foregroundStyle(t.accent.opacity(0.5))
+        } else {
+            // No drawing for "nothing matched" in either set — the hexagon stands.
+            Image(systemName: "hexagon")
+                .font(.system(size: 52, weight: .thin))
+                .foregroundStyle(t.accent.opacity(0.5))
+        }
+    }
+
     private var headline: String {
         if !query.isEmpty { return "No words match" }
         return everywhere ? "Look in every book" : "Nothing here yet"
@@ -169,7 +188,7 @@ struct WordListView: View {
 
     private var footnote: String {
         if everywhere {
-            return "\(WordListViewModel.everywhereCount.formatted()) words across \(WordListViewModel.everywhereBooks.count) dictionaries, searched together \u{2014} each result says which one it came from."
+            return "\(WordListViewModel.everywhereCount.formatted()) words across \(WordListViewModel.everywhereBooks.count) dictionaries,searched together each result says which one it came from."
         }
         if query.isEmpty {
             return "Bookmark a word from its page, or select one in any app and choose Services \u{25B8} Save to One Word. Either way it lands here."

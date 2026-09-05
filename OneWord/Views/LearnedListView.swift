@@ -20,31 +20,45 @@ struct LearnedListView: View {
 
     @State private var log: [LearnedWord] = []
     @State private var query = ""
+    @State private var hovered: Int?
+    // Cached, not computed. Hovering re-runs `body` on every pointer move, and
+    // re-grouping the whole log each time is what made the magnification stutter.
+    @State private var lines: [Line] = []
     @Environment(\.colorScheme) private var scheme
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme)
         Group {
-            if days.isEmpty {
+            if lines.isEmpty {
                 emptyState(t)
             } else {
-                List(lines) { line in
-                    switch line {
-                    case .day(let day):
-                        header(day, t)
+                List {
+                    ForEach(Array(lines.enumerated()), id: \.element.id) { index, line in
+                        switch line {
+                        case .day(let day):
+                            header(day, t)
+                                .listRowBackground(t.background)
+                                .listRowSeparator(.hidden)
+                        case .word(let entry):
+                            NavigationLink {
+                                // The shelf travels with the entry, so re-opening a word
+                                // from the log doesn't log it again under whatever
+                                // dictionary happens to be selected.
+                                WordDetail(word: entry.word, shelf: entry.shelf)
+                            } label: {
+                                row(entry, t, magnification(index))
+                            }
+                            .onHover { inside in
+                                // A fast pointer can deliver the exit after the next
+                                // row's enter; only clear if we're still the hovered one.
+                                hovered = inside ? index : (hovered == index ? nil : hovered)
+                            }
                             .listRowBackground(t.background)
-                            .listRowSeparator(.hidden)
-                    case .word(let entry):
-                        NavigationLink {
-                            // The shelf travels with the entry, so re-opening a word
-                            // from the log doesn't log it again under whatever
-                            // dictionary happens to be selected.
-                            WordDetail(word: entry.word, shelf: entry.shelf)
-                        } label: {
-                            row(entry, t)
+                            .listRowSeparatorTint(t.hairline)
                         }
-                        .listRowBackground(t.background)
-                        .listRowSeparatorTint(t.hairline)
                     }
                 }
                 .listStyle(.plain)
@@ -56,18 +70,22 @@ struct LearnedListView: View {
         .navigationTitle("Learned")
         // ponytail: the native search field, not a hand-rolled top bar.
         .searchable(text: $query, prompt: "Search \(log.count) words")
-        .onAppear { log = LearnedWords.log }
+        .onAppear { log = LearnedWords.log; rebuild() }
         // Reading a word pushed off this very list adds to it, so it has to catch
         // up on the way back — .onAppear doesn't re-run on a pop.
         .onReceive(NotificationCenter.default.publisher(for: LearnedWords.didChange)) { _ in
             log = LearnedWords.log
+            rebuild()
         }
+        .onChange(of: query) { _, _ in rebuild() }
     }
 
-    private var results: [LearnedWord] {
-        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !q.isEmpty else { return log }
-        return log.filter { $0.word.term.localizedCaseInsensitiveContains(q) }
+    /// Only the row under the pointer swells. The neighbours used to swell too and
+    /// everything past them shrank, Dock-style — which meant one pointer move
+    /// resized every word on screen at once, and read as a glitch rather than a
+    /// focus.
+    private func magnification(_ index: Int) -> CGFloat {
+        index == hovered ? 1.55 : 1
     }
 
     /// One line of the list. A `Section` header pins itself to the top of a plain
@@ -85,17 +103,17 @@ struct LearnedListView: View {
         }
     }
 
-    /// The log flattened to rows: each day's label, then that day's sightings.
-    private var lines: [Line] {
-        days.flatMap { [Line.day($0.day)] + $0.words.map(Line.word) }
-    }
-
-    /// Sightings bucketed by the day they happened, newest day first. `log` is
-    /// already sorted, and `Dictionary(grouping:)` preserves that within a bucket.
-    private var days: [(day: Date, words: [LearnedWord])] {
-        Dictionary(grouping: results) { Calendar.current.startOfDay(for: $0.seenAt) }
+    /// The log, filtered and flattened to rows: each day's label, then that day's
+    /// sightings, newest day first. `log` is already sorted and
+    /// `Dictionary(grouping:)` preserves that within a bucket.
+    private func rebuild() {
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let results = q.isEmpty ? log : log.filter { $0.word.term.localizedCaseInsensitiveContains(q) }
+        lines = Dictionary(grouping: results) { Calendar.current.startOfDay(for: $0.seenAt) }
             .map { (day: $0.key, words: $0.value) }
             .sorted { $0.day > $1.day }
+            .flatMap { [Line.day($0.day)] + $0.words.map(Line.word) }
+        hovered = nil   // the rows just moved out from under the pointer
     }
 
     /// Two-part day header on the same columns as the rows: the short label over
@@ -131,27 +149,40 @@ struct LearnedListView: View {
         return day.formatted(.dateTime.weekday(.wide))
     }
 
-    private func row(_ entry: LearnedWord, _ t: Theme) -> some View {
+    private func row(_ entry: LearnedWord, _ t: Theme, _ scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
             Text(entry.word.term)
-                .font(.serif(20))
+                .font(doodle.face(20))
                 .foregroundStyle(t.ink)
                 .lineLimit(1)
+                // Scale only, never layout: a `List` re-lays-out on any height
+                // change and jumps rather than tweens, and the moving rows then
+                // fire fresh hover events at the pointer. The vertical padding
+                // below leaves room for the biggest step, so nothing collides.
+                .scaleEffect(scale, anchor: .leading)
+                .animation(.easeOut(duration: 0.14), value: scale)
                 .frame(width: Self.termWidth, alignment: .leading)
-            Text(entry.word.partOfSpeech)
-                .font(.system(size: 11).italic())
-                .foregroundStyle(t.muted)
-                .lineLimit(1)
-                .frame(width: Self.posWidth, alignment: .leading)
-            // One line, always — a two-line stack here gave timestamped and
-            // migrated rows different heights, which is what made the log look ragged.
-            Text(meta(of: entry))
-                .font(.system(size: 11).monospacedDigit())
-                .foregroundStyle(t.muted)
-                .lineLimit(1)
+            // Out of the way while the word is at full size: a long term (the
+            // idioms run to thirty characters) overruns its column at 1.55x and
+            // would otherwise land on top of these.
+            Group {
+                Text(entry.word.partOfSpeech)
+                    .font(.system(size: 11).italic())
+                    .foregroundStyle(t.muted)
+                    .lineLimit(1)
+                    .frame(width: Self.posWidth, alignment: .leading)
+                // One line, always — a two-line stack here gave timestamped and
+                // migrated rows different heights, which is what made the log look ragged.
+                Text(meta(of: entry))
+                    .font(.system(size: 11).monospacedDigit())
+                    .foregroundStyle(t.muted)
+                    .lineLimit(1)
+            }
+            .opacity(scale > 1.3 ? 0 : 1)
+            .animation(.easeOut(duration: 0.14), value: scale)
             Spacer(minLength: 0)
         }
-        .padding(.vertical, 7)
+        .padding(.vertical, 10)
         .padding(.horizontal, 12)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(summary(of: entry))
@@ -178,13 +209,19 @@ struct LearnedListView: View {
 
     private func emptyState(_ t: Theme) -> some View {
         VStack(spacing: 14) {
-            Image(systemName: query.isEmpty ? "checkmark.seal" : "hexagon")
-                .font(.system(size: 52, weight: .thin))
-                .foregroundStyle(t.accent.opacity(0.5))
+            Group {
+                if query.isEmpty {
+                    GlyphIcon(.learned, size: 52, weight: .thin)
+                } else {
+                    // No drawing for "nothing matched" in either set.
+                    Image(systemName: "hexagon").font(.system(size: 52, weight: .thin))
+                }
+            }
+            .foregroundStyle(t.accent.opacity(0.5))
             Text(query.isEmpty ? "Nothing read yet" : "No words match")
-                .font(.serif(30)).foregroundStyle(t.ink)
+                .font(doodle.face(30)).foregroundStyle(t.ink)
             Text(query.isEmpty
-                 ? "Every word you read in full lands here \u{2014} today's word, a peek, a search result, a related word \u{2014} with the day and time you met it."
+                 ? "Every word you read in full lands here — today's word, a peek, a search result, a related word — with the day and time you met it."
                  : "Nothing in your log matches \u{201C}\(query)\u{201D}.")
                 .font(.system(size: 13))
                 .foregroundStyle(t.muted)
