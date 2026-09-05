@@ -11,8 +11,10 @@ import SwiftUI
 import AVFoundation
 import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
 
-// ponytail: one shared synth — a local would deallocate mid-utterance.
-@MainActor private let speaker = AVSpeechSynthesizer()
+// ponytail: one shared synth — a local would deallocate mid-utterance, and two
+// synths would talk over each other when you leave a word mid-sentence for Practice.
+// Module-wide on purpose: SentenceView's Pronounce button speaks through this one.
+@MainActor let speaker = AVSpeechSynthesizer()
 
 struct WordDetail: View {
     let word: Word
@@ -33,56 +35,68 @@ struct WordDetail: View {
 
     var body: some View {
         let t = Theme.of(scheme)
-        let related = store.related(to: word, in: Wordbook.named(dictionaryID).id)
+        let related = store.related(to: word, in: shelfID)
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                //if showDate { dateLine(t) }
+            // ponytail: ZStack, so the outgoing word overlaps the incoming one.
+            // In the ScrollView's own stack the fading copy keeps its slot and
+            // shunts the new word down the page on its way out.
+            ZStack(alignment: .topLeading) {
+                VStack(alignment: .leading, spacing: 0) {
+                    //if showDate { dateLine(t) }
 
-                HStack(alignment: .lastTextBaseline, spacing: 16) {
-                    Text(word.term)
-                        .font(.serif(64))
-                        .foregroundStyle(t.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.4)
-                    Text(word.partOfSpeech)
-                        .font(.serif(16).italic())
-                        .foregroundStyle(t.muted)
-                }
+                    HStack(alignment: .lastTextBaseline, spacing: 16) {
+                        Text(word.term)
+                            .font(.serif(64))
+                            .foregroundStyle(t.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.4)
+                        Text(word.partOfSpeech)
+                            .font(.serif(16).italic())
+                            .foregroundStyle(t.muted)
+                    }
 
-                if showHindi, !word.hindi.isEmpty {
-                    Text(word.hindi)
-                        .font(.system(size: 25))
-                        .foregroundStyle(t.ink.opacity(0.5))
+                    if showHindi, !word.hindi.isEmpty {
+                        Text(word.hindi)
+                            .font(.system(size: 25))
+                            .foregroundStyle(t.ink.opacity(0.5))
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.leading, 18)
+                            .overlay(alignment: .leading) {
+                                Rectangle().fill(t.rule).frame(width: 2)
+                            }
+                            .padding(.top, 26)
+                    }
+
+                    Text(word.definition)
+                        .font(.serif(22))
+                        .foregroundStyle(t.definition)
                         .fixedSize(horizontal: false, vertical: true)
-                        .padding(.leading, 18)
-                        .overlay(alignment: .leading) {
-                            Rectangle().fill(t.rule).frame(width: 2)
-                        }
                         .padding(.top, 26)
+
+                    if showExample { footer(t) }
+
+                    relatedBox(related, t)
+                        // The box fades in when the background build lands — without
+                        // this it pops. On the box, not the column: up here it sprang
+                        // every paragraph's frame each time the word changed.
+                        .animation(.default, value: related)
                 }
-
-                Text(word.definition)
-                    .font(.serif(22))
-                    .foregroundStyle(t.definition)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 26)
-
-                if showExample { footer(t) }
-
-                relatedBox(related, t)
+                .frame(maxWidth: 720, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 56)
+                .padding(.vertical, 44)
+                // A day step swaps the word out from under a view that never
+                // moves; keyed on the term it cross-dissolves instead of cutting.
+                .id(word.term)
+                .transition(.opacity)
             }
-            .frame(maxWidth: 720, alignment: .leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 56)
-            .padding(.vertical, 44)
-            // The box fades in when the background build lands — without this it pops.
-            .animation(.default, value: related)
             .onChange(of: word.term) { showRelated = false }
         }
+        .animation(.easeInOut(duration: 0.22), value: word.term)
         .scrollContentBackground(.hidden)
         .background(t.background)
         // Re-fires on dictionary change and on every pop back; load is idempotent.
-        .task(id: dictionaryID) { store.load(Wordbook.named(dictionaryID).id) }
+        .task(id: shelfID) { store.load(shelfID) }
         // Every full-view route ends at THIS view — today's word, a peek, a search
         // result, a related word — so one call here marks them all learned rather
         // than each caller having to remember. `initial: true` catches the first
@@ -106,12 +120,10 @@ struct WordDetail: View {
                     withAnimation(.easeOut(duration: 0.25)) { stretch = 1.22 }
                     withAnimation(.easeInOut(duration: 0.35).delay(0.25)) { stretch = 1 }
                 } label: {
-                    Label(bookmarked ? "Remove Bookmark" : "Bookmark",
-                          systemImage: bookmarked ? "bookmark.fill" : "bookmark")
-                        .contentTransition(.symbolEffect(.replace))
-                        // Green stays for as long as it's bookmarked — the colour is
-                        // the state, so it lands only once the stretch has settled.
-                        .foregroundStyle(bookmarked ? Color.green : Color.primary)
+                    // The ribbon stays for as long as it's bookmarked — the glyph is
+                    // the state, so it lands only once the stretch has settled.
+                    BookmarkRibbon(filled: bookmarked)
+                        .accessibilityLabel(bookmarked ? "Remove Bookmark" : "Bookmark")
                         .animation(.easeInOut(duration: 0.3).delay(0.55), value: bookmarked)
                         // anchor: .top — the top edge is pinned, all the growth is
                         // downward. Applied outside the .animation above so it runs
@@ -165,7 +177,7 @@ struct WordDetail: View {
                         NavigationLink {
                             // The pushed screen reads the same environment store,
                             // so it renders its own box — that is the chain.
-                            WordDetail(word: w)
+                            WordDetail(word: w, shelf: shelf)
                         } label: {
                             relatedRow(w, t)
                         }
@@ -221,12 +233,17 @@ struct WordDetail: View {
         .contentShape(Rectangle())
     }
 
-    /// The shelf this word counts towards: the one the caller came from, or the
-    /// selected one when it didn't say. A just-captured word belongs to Bookmarks
-    /// wherever you happen to be reading it.
+    /// The book this word belongs to: the one the caller named, or the selected
+    /// one when it didn't say. Everything book-shaped on this page reads it — the
+    /// "same vein" box included, so a word opened from Medicine while Everyday
+    /// English is selected draws its neighbours from Medicine.
+    private var shelfID: String { shelf ?? dictionaryID }
+
+    /// The shelf this word counts towards. A just-captured word belongs to
+    /// Bookmarks wherever you happen to be reading it.
     private var learnedIn: String {
         if SavedWords.pinned?.term == word.term { return SavedWords.resource }
-        return shelf ?? dictionaryID
+        return shelfID
     }
 
     /// One VoiceOver utterance per row, covering every field the row displays.
@@ -260,5 +277,32 @@ struct WordDetail: View {
                 .foregroundStyle(t.muted)
                 .padding(.top, 40)
         }
+    }
+}
+
+/// The bookmark state as one glyph: the ribbon asset when kept — it carries its
+/// own colour, so nothing here tints it — and the outline symbol when not.
+/// Shared by the toggle above, the Bookmarks pane's count and the Profile stat.
+struct BookmarkRibbon: View {
+    var filled = true
+    /// Height, not a box. A ribbon is taller than it is wide (the asset's viewBox is
+    /// cropped to the artwork, so it fills what it's given); the width follows.
+    var size: CGFloat = 17
+
+    var body: some View {
+        Group {
+            if filled {
+                // The asset is a ribbon centred in a square canvas with a wide
+                // transparent margin, so fitting the canvas to a box shrinks the
+                // ribbon inside it. Draw the whole canvas oversized instead, and let
+                // the frame below take the ribbon's share of it (26×38 of 48×48).
+                Image("bookmark_icon").resizable().scaledToFit()
+                    .frame(width: size * 1.26, height: size * 1.26)
+            } else {
+                Image(systemName: "bookmark").resizable().scaledToFit()
+                    .foregroundStyle(Color.primary)
+            }
+        }
+        .frame(width: size * 0.7, height: size)
     }
 }

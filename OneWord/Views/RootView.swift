@@ -66,7 +66,7 @@ struct RootView: View {
     @ViewBuilder private var detail: some View {
         switch pane {
         case .home:         HomeView(pane: $pane)
-        case .history:      HistoryView(pane: $pane)
+        case .history:      HistoryView()
         case .practice:     SentenceView()
         case .bookmarks:    WordListView(wordbook: .saved)
         case .profile:      ProfileView()

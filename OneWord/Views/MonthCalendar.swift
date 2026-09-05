@@ -39,23 +39,79 @@ struct MonthCalendar: View {
             todayButton(t)
         }
         .padding(14)
+        // The selection can move from outside (day steppers, "go to today"), and
+        // the grid only shows one month — follow it there or the pick vanishes.
+        .onChange(of: selection) { _, picked in
+            guard !calendar.isDate(picked, equalTo: month, toGranularity: .month) else { return }
+            withAnimation(.easeOut(duration: 0.18)) { month = picked }
+        }
         // No background fill — the popover's own material, border and shadow are
         // what separate it from the page. Painting it opaque erased those edges.
     }
 
     // MARK: - Header
 
+    /// The title is a menu, not a label: stepping one month at a time is fine for
+    /// last week and useless for last spring.
     private func header(_ t: Theme) -> some View {
         HStack(spacing: 2) {
-            Text(month.formatted(.dateTime.month(.wide).year()))
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(t.ink)
-                .contentTransition(.numericText())
+            Menu {
+                Picker("Month", selection: monthBinding) {
+                    ForEach(Array(calendar.monthSymbols.enumerated()), id: \.offset) { index, name in
+                        Text(name).tag(index + 1)
+                    }
+                }
+                .pickerStyle(.menu)
+                Picker("Year", selection: yearBinding) {
+                    ForEach(years, id: \.self) { Text(String($0)).tag($0) }
+                }
+                .pickerStyle(.menu)
+            } label: {
+                // ponytail: a plain Text label. macOS draws a Menu's label through
+                // AppKit, which keeps only simple Text/Image — a hand-drawn chevron
+                // beside it gets dropped, so let the menu draw its own indicator.
+                Text(month.formatted(.dateTime.month(.wide).year()))
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(t.ink)
+                    .contentTransition(.numericText())
+            }
+            .menuStyle(.borderlessButton)
+            .fixedSize()
+            .help("Jump to a month or year")
             Spacer(minLength: 8)
             step("chevron.left", by: -1, t)
             step("chevron.right", by: 1, t)
         }
         .padding(.bottom, 12)
+    }
+
+    private var monthBinding: Binding<Int> {
+        Binding(get: { calendar.component(.month, from: month) },
+                set: { jump(month: $0, year: calendar.component(.year, from: month)) })
+    }
+
+    private var yearBinding: Binding<Int> {
+        Binding(get: { calendar.component(.year, from: month) },
+                set: { jump(month: calendar.component(.month, from: month), year: $0) })
+    }
+
+    /// Land on that month, or on `latest`'s when the pick is in the future — the
+    /// grid never browses past the newest allowed day, whichever way you got there.
+    private func jump(month wanted: Int, year: Int) {
+        var parts = DateComponents()
+        parts.year = year
+        parts.month = wanted
+        parts.day = 1
+        guard let target = calendar.date(from: parts),
+              let newest = calendar.dateInterval(of: .month, for: latest)?.start else { return }
+        withAnimation(.easeOut(duration: 0.18)) { month = min(target, newest) }
+    }
+
+    /// 2001 is the floor because the word rotation counts days from the reference
+    /// date — there is no history before day zero.
+    private var years: [Int] {
+        let newest = calendar.component(.year, from: latest)
+        return Array((2001...max(2001, newest)).reversed())
     }
 
     private func step(_ symbol: String, by delta: Int, _ t: Theme) -> some View {

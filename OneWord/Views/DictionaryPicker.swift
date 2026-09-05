@@ -2,49 +2,66 @@
 //  DictionaryPicker.swift
 //  OneWord
 //
-//  The shelf of dictionary covers — the Dictionaries pane. `onPick` lets the
-//  shell move on once you've chosen (the sidebar sends you back to Home).
+//  The shelf of dictionary covers. `DictionaryShelf` is the shelf itself over
+//  ANY selection; `DictionaryPicker` is the Dictionaries pane, which binds it to
+//  the app-wide pick. History binds the same shelf to a choice of its own.
 //
 
 import SwiftUI
 import WidgetKit
 
+/// The covers, in a grid, over whatever `selection` you hand it. Nothing here
+/// touches App Group storage — the owner decides how far the pick reaches.
+struct DictionaryShelf: View {
+    @Binding var selection: String
+    /// Narrower covers for the History sheet; the pane keeps the roomy default.
+    var minimum: CGFloat = 130
+    var padding: CGFloat = 24
+    var onPick: (Wordbook) -> Void = { _ in }
+
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        let t = Theme.of(scheme)
+        // Book covers on a shelf: ~2:3 portrait, laid out in flexible columns.
+        let columns = [GridItem(.adaptive(minimum: minimum, maximum: minimum * 1.54), spacing: 20)]
+        return ScrollView {
+            LazyVGrid(columns: columns, alignment: .leading, spacing: 24) {
+                ForEach(Wordbook.all) { book in
+                    BookCover(book: book, selected: book.id == selection)
+                        .onTapGesture {
+                            selection = book.id
+                            onPick(book)
+                        }
+                }
+            }
+            .padding(padding)
+        }
+        .background(t.background)
+    }
+}
+
+/// The Dictionaries pane: the shelf, bound to the app-wide pick. `onPick` lets
+/// the shell move on once you've chosen (the sidebar sends you back to Home).
 struct DictionaryPicker: View {
     var onPick: () -> Void = {}
 
     @AppStorage("dictionaryID", store: AppGroup.defaults)
     private var dictionaryID = Wordbook.everydayEnglish.id
-    @Environment(\.colorScheme) private var scheme
-
-    // Book covers on a shelf: ~2:3 portrait, laid out in flexible columns.
-    private let columns = [GridItem(.adaptive(minimum: 130, maximum: 200), spacing: 20)]
 
     var body: some View {
-        let t = Theme.of(scheme)
-        ScrollView {
-            LazyVGrid(columns: columns, alignment: .leading, spacing: 24) {
-                ForEach(Wordbook.all) { book in
-                    BookCover(book: book, selected: book.id == dictionaryID)
-                        .onTapGesture { select(book) }
-                }
-            }
-            .padding(24)
+        DictionaryShelf(selection: $dictionaryID) { _ in
+            WidgetCenter.shared.reloadAllTimelines()
+            onPick()   // picking one is the only reason you're on this pane
         }
-        .background(t.background)
         .navigationTitle("Dictionaries")
-    }
-
-    private func select(_ book: Wordbook) {
-        dictionaryID = book.id
-        WidgetCenter.shared.reloadAllTimelines()
-        onPick()   // picking one is the only reason you're on this pane
     }
 }
 
 /// A rectangular book cover: gray board, a spine stripe down the left, the
 /// dictionary's symbol and title. Lifts and gains a white ring when selected —
 /// white, not the accent, because every cover is a dark hue.
-private struct BookCover: View {
+struct BookCover: View {
     let book: Wordbook
     let selected: Bool
 
@@ -90,6 +107,25 @@ private struct BookCover: View {
         .accessibilityElement()
         .accessibilityLabel(book.name)
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+    }
+}
+
+/// A cover shrunk to a chip: the same hue, spine and symbol as the shelf, small
+/// enough to sit in a row that names the book beside it.
+struct BookChip: View {
+    let book: Wordbook
+    var height: CGFloat = 32
+
+    var body: some View {
+        Image(systemName: book.symbol)
+            .font(.system(size: height * 0.38, weight: .semibold))
+            .foregroundStyle(.white)
+            .frame(width: height * 0.8, height: height)
+            .background(book.coverColor)
+            .overlay(alignment: .leading) {
+                Rectangle().fill(.black.opacity(0.22)).frame(width: 3)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
 
