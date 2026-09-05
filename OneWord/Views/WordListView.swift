@@ -2,9 +2,11 @@
 //  WordListView.swift
 //  OneWord
 //
-//  Browse/search a dictionary alphabetically. Two panes use it: Search (follows
-//  the selected dictionary, with the picker in the toolbar) and Bookmarks (pinned
-//  to the saved list, no picker). Editorial styling; empty state when nothing matches.
+//  A word list. Two panes use it: Search, which is dictionary-agnostic — it
+//  belongs to no book, searches every one of them at once, and tags each result
+//  with the book it came from — and Bookmarks, pinned to the saved list and
+//  browsing itself alphabetically. Editorial styling; empty state when nothing
+//  matches.
 //
 
 import SwiftUI
@@ -18,27 +20,40 @@ struct WordListView: View {
     private static let posWidth: CGFloat = 96
     private static let hindiWidth: CGFloat = 420
 
-    /// nil = follow the selected dictionary. Set to pin the list to one book.
-    var wordbook: Wordbook? = nil
+    /// nil = the Search pane: no book of its own, every book searched. Set to pin
+    /// the list to one book.
+    let wordbook: Wordbook?
 
-    @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
-    @State private var model = WordListViewModel()
+    @State private var model: WordListViewModel
     @State private var query = ""
     @State private var searching = false
     @Environment(\.colorScheme) private var scheme
 
-    private var book: Wordbook { wordbook ?? Wordbook.named(dictionaryID) }
+    init(wordbook: Wordbook? = nil) {
+        self.wordbook = wordbook
+        _model = State(initialValue: WordListViewModel(wordbook: wordbook))
+    }
+
+    /// The Search pane searches across books; a pinned pane (Bookmarks) searches
+    /// itself. Nothing you pick elsewhere changes what either one can find.
+    private var everywhere: Bool { wordbook == nil }
 
     var body: some View {
         let t = Theme.of(scheme)
         let results = model.results(for: query)
+        // Matches can come from anywhere, so each one has to say where from.
+        // A pinned pane needs no tag — every row is the book in the title.
+        let mark = everywhere
         Group {
             if results.isEmpty {
                 emptyState(t)
             } else {
-                List(results) { word in
-                    NavigationLink { WordDetail(word: word, shelf: book.id) } label: { row(word, t) }
+                List(results) { hit in
+                    // The shelf travels with the hit: a word found in Medicine
+                    // while Everyday English is open must not be logged — or
+                    // opened — against Everyday English.
+                    NavigationLink { WordDetail(word: hit.word, shelf: hit.shelf) } label: { row(hit, t, mark: mark) }
                         .listRowBackground(t.background)
                         .listRowSeparatorTint(t.hairline)
                 }
@@ -48,77 +63,96 @@ struct WordListView: View {
             }
         }
         .background(t.background)
-        .navigationTitle(book.shortName)
+        .navigationTitle(wordbook?.shortName ?? "Search")
         // ponytail: the native search field, same as the Learned pane. The
         // hand-rolled top bar this replaces put a boxed field and a rule above
         // every list, including a Bookmarks pane holding three words.
-        .searchable(text: $query, isPresented: $searching, prompt: "Search \(model.count) words")
+        .searchable(text: $query, isPresented: $searching,
+                    prompt: everywhere ? "Search every dictionary" : "Search \(model.count) words")
         .toolbar {
-            if wordbook == nil {
+            // How many you've kept. Only Bookmarks — every other pane's total is
+            // already in the search prompt, and it never changes while you look at it.
+            if wordbook?.id == SavedWords.resource {
                 ToolbarItem {
-                    Picker("Dictionary", selection: $dictionaryID) {
-                        ForEach(Wordbook.all) { book in Text(book.shortName).tag(book.id) }
+                    HStack(spacing: 6) {
+                        BookmarkRibbon(size: 14)
+                        Text("\(model.count)")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(t.muted)
+                            .contentTransition(.numericText())
                     }
-                    .tint(t.accent)
+                    .help("\(model.count) bookmarked words")
+                    .accessibilityLabel("\(model.count) bookmarked words")
                 }
             }
         }
-        .onAppear {
-            model.select(book)
-            // ⌘K from the sidebar should land in the field. Only in Search —
-            // Bookmarks keeps the field collapsed to its toolbar button, which is
-            // the whole point of dropping the old always-on top bar.
-            if wordbook == nil { searching = true }
-        }
-        .onChange(of: dictionaryID) { _, _ in model.select(book) }
+        // ⌘K from the sidebar should land in the field. Only in Search —
+        // Bookmarks keeps the field collapsed to its toolbar button, which is
+        // the whole point of dropping the old always-on top bar.
+        .onAppear { if everywhere { searching = true } }
         // Bookmarks isn't a bundled file — a catch or a bookmark while this pane is
         // open changes it.
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
-            if book.id == SavedWords.resource { model.reload() }
+            if wordbook?.id == SavedWords.resource { model.reload() }
         }
     }
 
-    private func row(_ word: Word, _ t: Theme) -> some View {
+    private func row(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 64) {
-            Text(word.term)
+            Text(hit.word.term)
                 .font(.serif(20))
                 .foregroundStyle(t.ink)
                 .lineLimit(1)
                 .frame(width: Self.termWidth, alignment: .leading)
-            Text(word.partOfSpeech)
+            Text(hit.word.partOfSpeech)
                 .font(.system(size: 11).italic())
                 .foregroundStyle(t.muted)
                 .lineLimit(1)
                 .frame(width: Self.posWidth, alignment: .leading)
             if showHindi {
-                Text(word.hindi)
+                Text(hit.word.hindi)
                     .font(.system(size: 14))
                     .foregroundStyle(t.muted)
                     .lineLimit(1)
                     .frame(maxWidth: Self.hindiWidth, alignment: .leading)
             }
             Spacer(minLength: 0)
+            if mark { shelfMark(hit.shelf, t) }
         }
         .padding(.vertical, 7)
         .padding(.horizontal,12)
     }
 
+    /// Which book a match came from. Quiet, at the end of the row, behind the
+    /// three columns that are the point — the same symbol stamped on that book's
+    /// cover in the Dictionaries pane, with its short name so it reads without
+    /// hovering.
+    private func shelfMark(_ shelf: String, _ t: Theme) -> some View {
+        let shelfBook = Wordbook.named(shelf)
+        return HStack(spacing: 4) {
+            Image(systemName: shelfBook.symbol).font(.system(size: 9))
+            Text(shelfBook.shortName).font(.system(size: 11))
+        }
+        .foregroundStyle(t.muted)
+        .lineLimit(1)
+        .help(shelfBook.name)
+        .accessibilityLabel(shelfBook.name)
+    }
+
     private func emptyState(_ t: Theme) -> some View {
         VStack(spacing: 14) {
-            Image(systemName: query.isEmpty ? book.symbol : "hexagon")
+            Image(systemName: query.isEmpty ? (wordbook?.symbol ?? "magnifyingglass") : "hexagon")
                 .font(.system(size: 52, weight: .thin))
                 .foregroundStyle(t.accent.opacity(0.5))
             VStack(spacing: 2) {
-                Text(query.isEmpty ? "Nothing here yet" : "No words match")
+                Text(headline)
                     .font(.serif(30)).foregroundStyle(t.ink)
                 if !query.isEmpty {
                     Text("\u{201C}\(query)\u{201D}")
                         .font(.serif(30).italic()).foregroundStyle(t.ink)
                 }
             }
-            Text(query.isEmpty
-                 ? "Bookmark a word from its page, or select one in any app and choose Services \u{25B8} Save to One Word. Either way it lands here."
-                 : "You're searching \(book.shortName) \u{2014} \(model.count) words.")
+            Text(footnote)
                 .font(.system(size: 13))
                 .foregroundStyle(t.muted)
                 .multilineTextAlignment(.center)
@@ -126,6 +160,21 @@ struct WordListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(40)
+    }
+
+    private var headline: String {
+        if !query.isEmpty { return "No words match" }
+        return everywhere ? "Look in every book" : "Nothing here yet"
+    }
+
+    private var footnote: String {
+        if everywhere {
+            return "\(WordListViewModel.everywhereCount.formatted()) words across \(WordListViewModel.everywhereBooks.count) dictionaries, searched together \u{2014} each result says which one it came from."
+        }
+        if query.isEmpty {
+            return "Bookmark a word from its page, or select one in any app and choose Services \u{25B8} Save to One Word. Either way it lands here."
+        }
+        return "You're searching \(wordbook?.shortName ?? "") \u{2014} \(model.count) words."
     }
 }
 
