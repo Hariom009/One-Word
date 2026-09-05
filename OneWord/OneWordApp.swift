@@ -15,11 +15,15 @@ struct OneWordApp: App {
     // One index for the whole navigation stack — every WordDetail in a chain
     // serves itself from this store via the environment.
     @State private var relatedWords = RelatedWordsStore()
+    // One session for the whole window: the sidebar chip and the Profile pane
+    // read the same signed-in user rather than each owning a copy.
+    @State private var auth = AuthViewModel()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(relatedWords)
+                .environment(auth)
                 .preferredColorScheme((Appearance(rawValue: appearance) ?? .system).colorScheme)
         }
         .defaultSize(width: 1000, height: 680)

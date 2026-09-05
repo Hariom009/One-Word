@@ -48,6 +48,7 @@ struct RootView: View {
     /// Settings can hide the Practice row; the pane itself is unreachable then.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
     @Environment(\.colorScheme) private var scheme
+    @Environment(AuthViewModel.self) private var auth
 
     var body: some View {
         NavigationSplitView {
@@ -57,6 +58,9 @@ struct RootView: View {
             // pane switch drops whatever was pushed on top of the old one.
             NavigationStack { detail }
         }
+        // Here rather than in ProfileView: the sidebar shows who you are on launch,
+        // whether or not that pane is ever opened.
+        .task { auth.restore() }
     }
 
     @ViewBuilder private var detail: some View {
@@ -84,7 +88,11 @@ struct RootView: View {
             }
         }
         .safeAreaInset(edge: .top, spacing: 0) { searchField }
-        .safeAreaInset(edge: .bottom, spacing: 0) { pinnedRow(.settings) }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            // Signed in, the corner is who you are and Settings moves into its menu.
+            // Signed out there is no identity to show, so the row stays a plain one.
+            if auth.isSignedIn { accountChip } else { pinnedRow(.settings) }
+        }
         .navigationSplitViewColumnWidth(min: 190, ideal: 215, max: 300)
     }
 
@@ -117,6 +125,32 @@ struct RootView: View {
         .padding(.bottom, 6)
     }
 
+    /// Name, face, chevron. The chevron is decoration — the whole chip opens the menu,
+    /// which is a bigger target than a 9pt glyph and behaves the same.
+    private var accountChip: some View {
+        let t = Theme.of(scheme)
+        return Menu {
+            Button(Pane.settings.title) { pane = .settings }
+        } label: {
+            HStack(spacing: 8) {
+                AccountAvatar(url: auth.photoURL, size: 20, muted: t.muted)
+                Text(auth.displayName ?? "Signed in")
+                    .font(.system(size: 13))
+                    .foregroundStyle(t.ink)
+                    .lineLimit(1)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(t.muted)
+                Spacer(minLength: 0)
+            }
+            .contentShape(Rectangle())
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)     // the chevron above is ours; don't draw a second one
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+    }
+
     /// Sidebar row for a pane the List doesn't hold — same look, drawn by hand.
     private func pinnedRow(_ item: Pane) -> some View {
         Button { pane = item } label: {
@@ -137,4 +171,5 @@ struct RootView: View {
 #Preview {
     RootView()
         .environment(RelatedWordsStore())
+        .environment(AuthViewModel())
 }

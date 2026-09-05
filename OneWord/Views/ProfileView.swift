@@ -22,7 +22,8 @@ struct ProfileView: View {
     @Environment(\.colorScheme) private var scheme
 
     @State private var model = ProfileViewModel()
-    @State private var auth = AuthViewModel()
+    // Owned by the app so the sidebar chip shows the same user. RootView restores it.
+    @Environment(AuthViewModel.self) private var auth
 
     var body: some View {
         let t = Theme.of(scheme)
@@ -37,10 +38,7 @@ struct ProfileView: View {
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             model.refresh()
         }
-        .task {
-            model.refresh()
-            auth.restore()
-        }
+        .task { model.refresh() }
     }
 
     // MARK: - Signed out
@@ -122,7 +120,7 @@ struct ProfileView: View {
 
     private func accountRow(_ t: Theme) -> some View {
         HStack(spacing: 10) {
-            avatar(auth.photoURL, t)
+            AccountAvatar(url: auth.photoURL, size: 28, muted: t.muted)
             VStack(alignment: .leading, spacing: 1) {
                 Text(auth.displayName ?? "Signed in")
                     .font(.system(size: 13))
@@ -181,15 +179,24 @@ struct ProfileView: View {
         .disabled(auth.busy)
     }
 
-    private func avatar(_ url: URL?, _ t: Theme) -> some View {
+}
+
+/// The Google photo, or the generic head when there isn't one (or it hasn't loaded).
+/// Shared by the Profile pane and the sidebar account chip, which want different sizes.
+struct AccountAvatar: View {
+    let url: URL?
+    let size: CGFloat
+    let muted: Color
+
+    var body: some View {
         AsyncImage(url: url) { image in
             image.resizable().scaledToFill()
         } placeholder: {
             Image(systemName: "person.crop.circle")
-                .font(.system(size: 22))
-                .foregroundStyle(t.muted)
+                .font(.system(size: size * 0.8))
+                .foregroundStyle(muted)
         }
-        .frame(width: 28, height: 28)
+        .frame(width: size, height: size)
         .clipShape(Circle())
         .accessibilityHidden(true)   // the name beside it already says who this is
     }
@@ -197,4 +204,5 @@ struct ProfileView: View {
 
 #Preview {
     NavigationStack { ProfileView() }
+        .environment(AuthViewModel())
 }
