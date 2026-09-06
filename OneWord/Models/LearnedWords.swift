@@ -102,8 +102,9 @@ enum LearnedWords {
     /// they're separate shelves and the per-shelf numbers have to add up.
     static var total: Int { all.values.reduce(0) { $0 + $1.count } }
 
-    /// The mark the fluency goal counts toward: the ~3,000 words experts put at
-    /// roughly 95% of everyday speech. A denominator and nothing else — reading
-    /// is never capped, and the count above is kept whether or not you opted in.
+    /// The mark the fluency goal counts toward: the ~3,000 German words experts
+    /// put at roughly 95% of everyday speech. Measured against the German shelf
+    /// ONLY — a denominator and nothing else. Reading is never capped, and every
+    /// shelf's count is kept whether or not you opted in.
     static let fluencyGoal = 3000
 }

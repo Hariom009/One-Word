@@ -194,20 +194,21 @@ struct ProfileView: View {
     }
 
     /// How far through the 3,000-word mark you are, shown only if you asked for it
-    /// in Settings. Reads off the same count as the stat above — turning the goal
-    /// on doesn't start a second tally, it just gives the number a denominator.
+    /// in Settings. German only: the stat above counts every shelf, the goal
+    /// counts the one shelf the 3,000 figure was measured on.
     private func goal(_ t: Theme) -> some View {
         let target = LearnedWords.fluencyGoal
-        let left = target - model.learned
-        let fraction = min(Double(model.learned) / Double(target), 1)
+        let learned = model.learnedGerman
+        let left = target - learned
+        let fraction = min(Double(learned) / Double(target), 1)
         return VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Text("Toward fluency")
+                Text("Toward German fluency")
                     .font(.system(size: 11, weight: .bold))
                     .textCase(.uppercase).tracking(2)
                     .foregroundStyle(t.muted)
                 Spacer(minLength: 8)
-                Text("\(model.learned.formatted()) of \(target.formatted())")
+                Text("\(learned.formatted()) of \(target.formatted())")
                     .font(.system(size: 11).monospacedDigit())
                     .foregroundStyle(t.muted)
             }
@@ -217,20 +218,20 @@ struct ProfileView: View {
                 ZStack(alignment: .leading) {
                     Capsule().fill(t.ink.opacity(0.08))
                     Capsule().fill(t.accent)
-                        .frame(width: max(geo.size.width * fraction, model.learned > 0 ? 4 : 0))
+                        .frame(width: max(geo.size.width * fraction, learned > 0 ? 4 : 0))
                 }
             }
             .frame(height: 6)
             .animation(.snappy(duration: 0.3), value: fraction)
             Text(left > 0
-                 ? "\(left.formatted()) to go \u{2014} experts put 3,000 at about 95% of everyday speech."
-                 : "Past 3,000 \u{2014} the mark experts put at about 95% of everyday speech.")
+                 ? "\(left.formatted()) to go \u{2014} experts put 3,000 German words at about 95% of everyday speech."
+                 : "Past 3,000 \u{2014} the mark experts put at about 95% of everyday German.")
                 .font(.system(size: 11))
                 .foregroundStyle(t.muted)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Toward fluency. \(model.learned) of \(target) words.")
+        .accessibilityLabel("Toward German fluency. \(learned) of \(target) words.")
     }
 
     /// One big number under its glyph and caption. Two of them read as a pair,

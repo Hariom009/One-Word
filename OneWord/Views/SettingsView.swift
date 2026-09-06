@@ -128,14 +128,15 @@ struct SettingsView: View {
                 section("Progress", t) {
                     card(t) {
                         row("Fluency goal",
-                            "Shows how far through 3,000 words you are, on your profile.",
+                            "Shows how far through 3,000 German words you are, on your profile.",
                             t,
                             info: """
                             Experts put fluency at around 3,000 words \u{2014} learn that \
                             many in German and you follow roughly 95% of everyday speech.
 
                             Turn this on and your profile tracks how far through those \
-                            3,000 you are. Every word you've already read in full is \
+                            3,000 you are. Only the Dictionary of German counts toward \
+                            it, and every German word you've already read in full is \
                             counted, so you don't start from zero.
                             """) {
                             Toggle("Fluency goal", isOn: $fluencyGoal)

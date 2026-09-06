@@ -16,10 +16,13 @@ final class ProfileViewModel {
     private(set) var bookmarks = 0
     /// Every word you've read, across every shelf — a word met in two books counts twice.
     private(set) var learned = 0
+    /// The German shelf alone: the only count the fluency goal is measured against.
+    private(set) var learnedGerman = 0
 
     /// Cheap: both stores are already in memory. Safe to call on every change.
     func refresh() {
         bookmarks = SavedWords.all.count
         learned = LearnedWords.total
+        learnedGerman = LearnedWords.count(in: Wordbook.german.id)
     }
 }
