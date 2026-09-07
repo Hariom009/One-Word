@@ -62,14 +62,15 @@ struct GlyphIcon: View {
 ///
 /// The doodles are black line art with flat colour inside, so on night black the
 /// outlines — and anything black *within* them, like the tick inside the check's
-/// green ring — disappear into the page. They get a paper chip behind them there:
-/// the same fix `AvatarFace` uses for the illustrated faces, cut square instead of
-/// round because these are stamps, not portraits.
+/// green ring — disappear into the page. They get a thin light halo there: a
+/// blurred copy of the drawing's own silhouette, so every stroke picks up a pale
+/// rim and nothing else changes. No chip — a paper square behind a stamp read as
+/// a white box on the dark page.
 struct Doodle: View {
     let asset: String
     let size: CGFloat
     /// nil = decide from the scheme. Pass true where the drawing sits on something
-    /// dark in both themes, false where it never needs the chip.
+    /// dark in both themes, false where it never needs the halo.
     var plated: Bool?
     @Environment(\.colorScheme) private var scheme
 
@@ -86,12 +87,8 @@ struct Doodle: View {
             .scaledToFit()
             .padding(size * 0.07)
             .frame(width: size, height: size)
-            .background {
-                if plated ?? (scheme == .dark) {
-                    RoundedRectangle(cornerRadius: size * 0.26, style: .continuous)
-                        .fill(Color(hex: 0xF4F4F4))
-                }
-            }
+            .shadow(color: .white.opacity(plated ?? (scheme == .dark) ? 0.85 : 0),
+                    radius: max(0.6, size * 0.035))
     }
 }
 
@@ -127,11 +124,10 @@ struct DoodleLoader: View {
     private var camper: some View {
         VStack(spacing: size * 0.1) {
             Doodle("camper_doodle", size: size)
-                // Two curves on one view would fight, so the bounce is the camper's
-                // and the road keeps its own steady linear crawl below.
-                .offset(y: bobbing ? -size * 0.055 : size * 0.02)
-                .rotationEffect(.degrees(bobbing ? -2.5 : 2))
-                .animation(.easeInOut(duration: 0.42).repeatForever(autoreverses: true),
+                // A small forth-and-back sway, centred over the road, reads as the
+                // camper travelling; a vertical bob just looks like it's hopping.
+                .offset(x: bobbing ? size * 0.06 : -size * 0.06)
+                .animation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true),
                            value: bobbing)
             if road { roadway }
         }
