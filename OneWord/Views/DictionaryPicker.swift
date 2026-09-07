@@ -11,12 +11,11 @@ import SwiftUI
 import AppKit
 import WidgetKit
 
-/// The shelf's flip: the practice roll's shuffle clip, cut at a second — a swap
-/// is a one-beat interaction, not a roll. Loaded once, same shape as SentenceView.
+/// The shelf's flip: a half-second book pull, one beat like the swap itself.
+/// Loaded once, same shape as SentenceView's shuffle.
 @MainActor private let flipSound = Bundle.main
-    .url(forResource: "practice_sentence_shuffle", withExtension: "wav")
+    .url(forResource: "book_pull", withExtension: "mp3")
     .flatMap { NSSound(contentsOf: $0, byReference: true) }
-private let flipSoundDuration = 1.0
 
 /// The shelf: the chosen book stands large on the left, the rest sit small in
 /// a grid beside it. Tapping a small book swaps it into the big slot (and picks
@@ -32,9 +31,10 @@ struct DictionaryShelf: View {
     /// Shelf order; `order[0]` is the book standing large. Starts with the
     /// selection in front, then the rest in catalogue order.
     @State private var order: [Wordbook]
-    /// Pending cut of the flip sound; a fresh pick cancels it so the new flip
-    /// gets its full second rather than the tail of the last one's.
-    @State private var flipCut: Task<Void, Never>?
+    /// True while a swap is in flight. Taps in that window are dropped, so a burst
+    /// of clicks gives one clean swap at a time — not a pile of springs retargeting
+    /// mid-flight with the sound restarting under each.
+    @State private var swapping = false
 
     init(selection: Binding<String>, padding: CGFloat = 28, onPick: @escaping (Wordbook) -> Void = { _ in }) {
         _selection = selection
@@ -67,7 +67,11 @@ struct DictionaryShelf: View {
                     // Three across, like the mockup, whatever the window width.
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3),
                               alignment: .leading, spacing: 24) {
-                        ForEach(order.dropFirst()) { book in
+                        // Keyed by SLOT, not by book: a swap then changes what a stable cell
+                        // shows, so the two covers fly between their frames. Keyed by book,
+                        // one cell is removed and another inserted, and both ghost-fade in place.
+                        ForEach(order.indices.dropFirst(), id: \.self) { i in
+                            let book = order[i]
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("DICTIONARY OF")
                                     .font(.system(size: 11, weight: .medium))
@@ -90,20 +94,28 @@ struct DictionaryShelf: View {
             }
         }
         .background(t.background)
+        // Warm every book's decode off the main thread, so the first swap to a book
+        // doesn't stall the spring on a multi-MB JSON parse for its entry count.
+        .task {
+            let ids = order.map(\.id)
+            await Task.detached(priority: .utility) {
+                for id in ids { _ = WordProvider(resource: id) }
+            }.value
+        }
     }
 
     /// Swap the tapped book with the one in front and tell the owner. You stay
     /// on the shelf — picking is the whole job, there's nowhere to go next.
     private func pick(_ book: Wordbook) {
-        guard let i = order.firstIndex(of: book) else { return }
-        withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) { order.swapAt(0, i) }
-        flipCut?.cancel()
+        guard !swapping, let i = order.firstIndex(of: book) else { return }
+        swapping = true
+        withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+            order.swapAt(0, i)
+        } completion: {
+            swapping = false
+        }
         flipSound?.currentTime = 0
         flipSound?.play()
-        flipCut = Task {
-            guard (try? await Task.sleep(for: .seconds(flipSoundDuration))) != nil else { return }
-            flipSound?.stop()
-        }
         selection = book.id
         onPick(book)
     }
