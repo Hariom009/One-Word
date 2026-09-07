@@ -96,7 +96,7 @@ struct RootView: View {
         case .bookmarks:    WordListView(wordbook: .saved)
         case .profile:      ProfileView(pane: $pane)
         case .search:       WordListView()
-        case .dictionaries: DictionaryPicker { pane = .home }
+        case .dictionaries: DictionaryPicker()
         case .settings:     SettingsView()
         }
     }

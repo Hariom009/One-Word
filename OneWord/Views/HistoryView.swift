@@ -178,7 +178,7 @@ struct HistoryView: View {
             .padding(.top, 18)
             .padding(.bottom, 14)
             Rectangle().fill(t.hairline).frame(height: 1)
-            DictionaryShelf(selection: selection, minimum: 104, padding: 20) { _ in picking = false }
+            DictionaryShelf(selection: selection, padding: 20) { _ in picking = false }
         }
         .frame(width: 560, height: 520)
         .background(t.background)
