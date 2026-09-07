@@ -28,6 +28,7 @@ struct WordListView: View {
     @State private var model: WordListViewModel
     @State private var query = ""
     @State private var searching = false
+    @State private var hovered: String?
     @Environment(\.colorScheme) private var scheme
 
     init(wordbook: Wordbook? = nil) {
@@ -56,7 +57,15 @@ struct WordListView: View {
                     // The shelf travels with the hit: a word found in Medicine
                     // while Everyday English is open must not be logged — or
                     // opened — against Everyday English.
-                    NavigationLink { WordDetail(word: hit.word, shelf: hit.shelf) } label: { row(hit, t, mark: mark) }
+                    NavigationLink { WordDetail(word: hit.word, shelf: hit.shelf) } label: {
+                        row(hit, t, mark: mark, scale: hit.id == hovered ? 1.85 : 1)
+                    }
+                        // Same swell as the Learned pane. A fast pointer can deliver
+                        // the exit after the next row's enter; only clear if we're
+                        // still the hovered one.
+                        .onHover { inside in
+                            hovered = inside ? hit.id : (hovered == hit.id ? nil : hovered)
+                        }
                         .listRowBackground(t.background)
                         .listRowSeparatorTint(t.hairline)
                 }
@@ -78,12 +87,14 @@ struct WordListView: View {
             if wordbook?.id == SavedWords.resource {
                 ToolbarItem {
                     HStack(spacing: 6) {
-                        BookmarkRibbon(size: 14)
+                        BookmarkRibbon(size: 18)
                         Text("\(model.count)")
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(t.muted)
                             .contentTransition(.numericText())
                     }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
                     .help("\(model.count) bookmarked words")
                     .accessibilityLabel("\(model.count) bookmarked words")
                 }
@@ -100,29 +111,39 @@ struct WordListView: View {
         }
     }
 
-    private func row(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool) -> some View {
+    private func row(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool, scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 64) {
             Text(hit.word.term)
                 .font(doodle.face(20))
                 .foregroundStyle(t.ink)
                 .lineLimit(1)
+                // Scale only, never layout — see LearnedListView.row. The vertical
+                // padding below leaves room for the biggest step.
+                .scaleEffect(scale, anchor: .leading)
+                .animation(.easeOut(duration: 0.14), value: scale)
                 .frame(width: Self.termWidth, alignment: .leading)
-            Text(hit.word.partOfSpeech)
-                .font(.system(size: 11).italic())
-                .foregroundStyle(t.muted)
-                .lineLimit(1)
-                .frame(width: Self.posWidth, alignment: .leading)
-            if showHindi {
-                Text(hit.word.hindi)
-                    .font(.system(size: 14))
+            // Out of the way while the word is at full size, so a long term
+            // doesn't land on top of them.
+            Group {
+                Text(hit.word.partOfSpeech)
+                    .font(.system(size: 11).italic())
                     .foregroundStyle(t.muted)
                     .lineLimit(1)
-                    .frame(maxWidth: Self.hindiWidth, alignment: .leading)
+                    .frame(width: Self.posWidth, alignment: .leading)
+                if showHindi {
+                    Text(hit.word.hindi)
+                        .font(.system(size: 14))
+                        .foregroundStyle(t.muted)
+                        .lineLimit(1)
+                        .frame(maxWidth: Self.hindiWidth, alignment: .leading)
+                }
             }
+            .opacity(scale > 1.3 ? 0 : 1)
+            .animation(.easeOut(duration: 0.14), value: scale)
             Spacer(minLength: 0)
             if mark { shelfMark(hit.shelf, t) }
         }
-        .padding(.vertical, 7)
+        .padding(.vertical, 10)
         .padding(.horizontal,12)
     }
 

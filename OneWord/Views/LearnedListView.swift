@@ -85,7 +85,7 @@ struct LearnedListView: View {
     /// resized every word on screen at once, and read as a glitch rather than a
     /// focus.
     private func magnification(_ index: Int) -> CGFloat {
-        index == hovered ? 1.55 : 1
+        index == hovered ? 1.85 : 1
     }
 
     /// One line of the list. A `Section` header pins itself to the top of a plain
@@ -163,7 +163,7 @@ struct LearnedListView: View {
                 .animation(.easeOut(duration: 0.14), value: scale)
                 .frame(width: Self.termWidth, alignment: .leading)
             // Out of the way while the word is at full size: a long term (the
-            // idioms run to thirty characters) overruns its column at 1.55x and
+            // idioms run to thirty characters) overruns its column at 1.85x and
             // would otherwise land on top of these.
             Group {
                 Text(entry.word.partOfSpeech)
