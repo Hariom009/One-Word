@@ -20,6 +20,14 @@ enum Pane: Hashable, Identifiable {
 
     var id: Self { self }
 
+    /// Screenshot automation: `open --env ONEWORD_PANE=history "One Word.app"`
+    /// launches straight into that pane. Nil for anything but a pane title.
+    static var launchPane: Pane? {
+        guard let name = ProcessInfo.processInfo.environment["ONEWORD_PANE"] else { return nil }
+        return [Pane.home, .history, .practice, .bookmarks, .profile, .search, .dictionaries, .settings]
+            .first { $0.title.lowercased() == name.lowercased() }
+    }
+
     var title: String {
         switch self {
         case .home: "Home"
@@ -50,7 +58,7 @@ enum Pane: Hashable, Identifiable {
 }
 
 struct RootView: View {
-    @State private var pane: Pane = .home
+    @State private var pane: Pane = Pane.launchPane ?? .home
     /// Settings can hide the Practice row; the pane itself is unreachable then.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
     /// Set in Profile. Empty means "keep following the Google account".
