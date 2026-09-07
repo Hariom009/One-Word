@@ -12,6 +12,9 @@
 
 import SwiftUI
 import WidgetKit
+// NSWorkspace.open — MEMBER_IMPORT_VISIBILITY needs AppKit named directly. The
+// type resolves through SwiftUI; `.shared` and `.open(_:)` are members and don't.
+import AppKit
 
 struct SettingsView: View {
     @AppStorage("appearance") private var appearance = Appearance.system.rawValue
@@ -30,6 +33,14 @@ struct SettingsView: View {
     /// App-only: the profile shows the goal, the widget never does.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
     @Environment(\.colorScheme) private var scheme
+
+    /// The written-complaint half of Feedback. Owned here so an unsent draft
+    /// survives closing the sheet — it does not survive leaving the pane, which
+    /// is the same bargain every other unsaved field in the app makes.
+    @State private var feedback = FeedbackViewModel()
+    @State private var writing = false
+    /// No mail client answered. A dead button is worse than an address to copy.
+    @State private var mailFailed = false
 
     var body: some View {
         let t = Theme.of(scheme)
@@ -146,6 +157,46 @@ struct SettingsView: View {
                         }
                     }
                 }
+
+                section("Feedback", t,
+                        note: "Bugs, a wrong meaning, a word you'd like added \u{2014} "
+                            + "all of it helps.") {
+                    card(t) {
+                        Button { openMail() } label: {
+                            row("Email", "Opens a draft in your mail app.", t) {
+                                Image(systemName: "envelope")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(t.muted)
+                            }
+                            // `row` ends at .padding with no contentShape of its
+                            // own, so a bare Button would be hittable on the
+                            // glyphs only. This makes the whole row the target.
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityHint("Opens a new message to \(FeedbackViewModel.address)")
+                        rule(t)
+                        Button { feedback.reset(); writing = true } label: {
+                            row("Write a message",
+                                "Send it from here \u{2014} no mail app needed.", t) {
+                                Image(systemName: "square.and.pencil")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(t.muted)
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if mailFailed {
+                        // Renders above the section's note. A transient error
+                        // outranking a static footnote is the right way round.
+                        Text("No mail app is set up on this Mac. Write to \(FeedbackViewModel.address).")
+                            .font(.system(size: 11))
+                            .foregroundStyle(t.muted)
+                            .textSelection(.enabled)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
             }
             .frame(maxWidth: 520, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -153,6 +204,20 @@ struct SettingsView: View {
         }
         .background(t.background)
         .navigationTitle("Settings")
+        // `t`, not the sheet's own scheme read: a sheet is its own window, so it
+        // is handed the theme this pane is painted with.
+        .sheet(isPresented: $writing) { FeedbackView(theme: t, model: feedback) }
+    }
+
+    /// Hands a pre-addressed draft to whatever the Mac's mail client is. `open`
+    /// returns false when nothing is registered for mailto: — that is the only
+    /// failure worth showing, and it shows as an address rather than an alert.
+    private func openMail() {
+        guard let url = FeedbackViewModel.mailtoURL, NSWorkspace.shared.open(url) else {
+            mailFailed = true
+            return
+        }
+        mailFailed = false
     }
 
     // MARK: - Pieces
