@@ -73,18 +73,12 @@ struct SignInView: View {
             Task { await auth.signIn(presenting: window) }
         } label: {
             HStack(spacing: 9) {
-                // The spinner replaces the glyph rather than sitting beside it, so the
-                // button keeps its width and nothing shifts while the browser opens.
-                if auth.busy {
-                    // Falls back to the system spinner on its own when the
-                    // drawings are off, so this stays one branch, not two.
-                    DoodleLoader(size: 19, road: false)
-                } else {
-                    Image("google_icon")
-                        .resizable()
-                        .interpolation(.high)
-                        .frame(width: 15, height: 15)
-                }
+                // No spinner here: RootView dims the whole window while the
+                // browser round trip runs, so the button only changes its word.
+                Image("google_icon")
+                    .resizable()
+                    .interpolation(.high)
+                    .frame(width: 15, height: 15)
                 Text(auth.busy ? "Signing in…" : "Sign in with Google")
                     .font(.system(size: 13))
             }

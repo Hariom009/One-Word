@@ -83,6 +83,9 @@ struct RootView: View {
         // Here rather than in ProfileView: the gate needs the answer before anything
         // renders, and the sidebar shows who you are whether or not Profile is opened.
         .task { auth.restore() }
+        // Over the whole window, not the button: the browser round trip owns the
+        // screen until it resolves, and nothing behind it should take a click.
+        .busy(auth.busy, theme: Theme.of(scheme))
     }
 
     /// Everything behind the gate.

@@ -213,7 +213,7 @@ struct WordDetail: View {
     }
 
     /// The box's heading with the wait beside it, held on the same rule and the
-    /// same spacing, so when the index lands the heading doesn't move — the camper
+    /// same spacing, so when the index lands the heading doesn't move — the spinner
     /// is simply replaced by the disclosure arrow. Roughly 2.4s at 12,000 words,
     /// and it fades out to nothing when the book has no neighbours to offer.
     private func buildingBox(_ t: Theme) -> some View {
@@ -222,7 +222,7 @@ struct WordDetail: View {
                 .font(.system(size: 10, weight: .bold))
                 .textCase(.uppercase).tracking(1.6)
                 .foregroundStyle(t.muted)
-            DoodleLoader(size: 21, road: false)
+            ProgressView().controlSize(.small)
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

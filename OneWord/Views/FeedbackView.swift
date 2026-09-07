@@ -34,6 +34,8 @@ struct FeedbackView: View {
         }
         .frame(width: 520, height: 430)
         .background(theme.background)
+        // The sheet is its own window, so the dim goes on here, not at the root.
+        .busy(model.sending, theme: theme)
     }
 
     // MARK: - Compose
@@ -91,9 +93,6 @@ struct FeedbackView: View {
                     .monospacedDigit()
             }
             Spacer(minLength: 8)
-            if model.sending {
-                DoodleLoader(size: 17, road: false)
-            }
             Button("Send") {
                 // Unstructured and deliberately not cancelled: if the sheet closes
                 // mid-flight, finishing the write is the outcome we want. The model

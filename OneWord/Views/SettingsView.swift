@@ -67,7 +67,7 @@ struct SettingsView: View {
                         DoodleSample(theme: t)
                         card(t) {
                             row("Hand-drawn icons",
-                                "Swaps the app's symbols for the doodle set \u{2014} and the spinner for a camper.",
+                                "Swaps the app's symbols for the doodle set.",
                                 t) {
                                 Toggle("Hand-drawn icons", isOn: $doodleIcons).labelsHidden()
                             }
@@ -328,8 +328,6 @@ private struct DoodleSample: View {
                     GlyphIcon(g, size: 15)
                         .foregroundStyle(theme.ink)
                 }
-                Spacer(minLength: 0)
-                DoodleLoader(size: 22, road: false)
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text("ephemeral")

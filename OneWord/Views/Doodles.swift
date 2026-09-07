@@ -2,14 +2,13 @@
 //  Doodles.swift
 //  OneWord
 //
-//  How the doodle theme draws: one symbol (`GlyphIcon`) and one wait
-//  (`DoodleLoader`). Both read `\.doodle` themselves, so a call site asks for the
-//  meaning — "home", "the loader" — and never for a set. Turning the switch off is
-//  then a property change inside these two views rather than an `if` at every
-//  place the app happens to draw a glyph.
+//  How the doodle theme draws: one symbol (`GlyphIcon`), which reads `\.doodle`
+//  itself, so a call site asks for the meaning — "home" — and never for a set.
+//  Turning the switch off is then a property change inside this view rather than
+//  an `if` at every place the app happens to draw a glyph. The wait
+//  (`BusyOverlay`) lives here too, next to the only other chrome the app draws.
 //
-//  Dumb views: they hold no preference of their own, only the animation state the
-//  camper needs to keep rolling.
+//  Dumb views: they hold no preference of their own.
 //
 
 import SwiftUI
@@ -94,65 +93,35 @@ struct Doodle: View {
 
 // MARK: - A wait
 
-/// The wait, in the doodle theme's language: the camper rolling, with the road
-/// running out from under it. Falls back to the system spinner when the drawings
-/// are off, so a caller only ever asks for "the loader" and gets whichever one the
-/// reader chose.
-///
-/// The app waits in exactly two places — the sign-in round trip and the ~2.4s
-/// related-words index build — and both are short, so this never runs for long.
-struct DoodleLoader: View {
-    /// The camper's height. The road sizes itself from it.
-    var size: CGFloat = 30
-    /// The road only earns its space at pane size; inside a button there is none.
-    var road = true
-    @Environment(\.doodle) private var doodle
-    @State private var bobbing = false
-    @State private var rolling = false
+/// The whole-window wait: the screen dims and a system spinner sits over it,
+/// swallowing clicks until the work lands. Only for the round trips the reader
+/// must not interrupt — sign-in and a feedback send. Short in-place waits (the
+/// related-words index) use a small `ProgressView` inline instead.
+struct BusyOverlay: View {
+    let theme: Theme
 
     var body: some View {
-        if doodle.icons {
-            camper
-                .accessibilityElement()
-                .accessibilityLabel("Loading")
-        } else {
+        ZStack {
+            theme.background.opacity(0.7)
             ProgressView()
-                .controlSize(road ? .regular : .small)
         }
+        .ignoresSafeArea()
+        // Rectangle, not the default shape: the tint alone doesn't take hits, and
+        // the point is that nothing underneath does either.
+        .contentShape(Rectangle())
+        .transition(.opacity)
+        .accessibilityElement()
+        .accessibilityLabel("Loading")
     }
+}
 
-    private var camper: some View {
-        VStack(spacing: size * 0.1) {
-            Doodle("camper_doodle", size: size)
-                // A small forth-and-back sway, centred over the road, reads as the
-                // camper travelling; a vertical bob just looks like it's hopping.
-                .offset(x: bobbing ? size * 0.06 : -size * 0.06)
-                .animation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true),
-                           value: bobbing)
-            if road { roadway }
+extension View {
+    /// Dims and blocks the view while `busy` is true.
+    func busy(_ busy: Bool, theme: Theme) -> some View {
+        overlay {
+            if busy { BusyOverlay(theme: theme) }
         }
-        .onAppear {
-            bobbing = true
-            rolling = true
-        }
-    }
-
-    /// Dashes sliding left by exactly one dash-and-gap, forever — so the loop point
-    /// lands on an identical frame and the road never appears to jump back.
-    private var roadway: some View {
-        let pitch = size * 0.36
-        let thickness = max(1.5, size * 0.055)
-        return HStack(spacing: pitch * 0.55) {
-            ForEach(0..<8, id: \.self) { _ in
-                Capsule().frame(width: pitch * 0.45, height: thickness)
-            }
-        }
-        .foregroundStyle(.secondary)
-        .fixedSize()
-        .offset(x: rolling ? -pitch : 0)
-        .animation(.linear(duration: 0.5).repeatForever(autoreverses: false), value: rolling)
-        .frame(width: size, height: thickness, alignment: .center)
-        .clipped()
+        .animation(.easeInOut(duration: 0.15), value: busy)
     }
 }
 
@@ -167,7 +136,6 @@ private let previewGlyphs: [Glyph] = [.home, .history, .practice, .bookmarks,
                 ForEach(Array(previewGlyphs.enumerated()), id: \.offset) { _, g in
                     GlyphIcon(g, size: 15)
                 }
-                DoodleLoader(size: 26)
             }
             .environment(\.doodle, DoodleTheme(icons: on, handwriting: on))
         }
