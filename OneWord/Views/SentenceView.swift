@@ -74,7 +74,7 @@ struct SentenceView: View {
         // Same shape as WordDetail: the ScrollView fills the pane, so the paint
         // reaches the edges without anything claiming infinite height.
         .scrollContentBackground(.hidden)
-        .background(t.background)
+        .paneBackground(t)
         .overlay(alignment: .topTrailing) { hint(t) }
         .contentShape(Rectangle())
         // Space is the primary control, but a keyboard-only feature is

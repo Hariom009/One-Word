@@ -108,25 +108,13 @@ struct RootView: View {
             // One stack per pane: related words and list rows still push, and a
             // pane switch drops whatever was pushed on top of the old one.
             NavigationStack { detail }
-                .overlay { glow(t) }
         }
         // Midnight's periwinkle on the sidebar selection and every stock control;
         // nil leaves Light and Dark on the system accent they've always had.
         .tint(doodle.midnight ? t.accent : nil)
-    }
-
-    /// Midnight's one light, laid over whichever pane is showing — once, here,
-    /// rather than in every pane's background. plusLighter only ever adds light, so
-    /// white type stays white and only the navy lifts toward blue.
-    @ViewBuilder private func glow(_ t: Theme) -> some View {
-        if t.glow != .clear {
-            RadialGradient(colors: [t.glow, .clear], center: .top,
-                           startRadius: 0, endRadius: 560)
-                .blendMode(.plusLighter)
-                .opacity(0.3)
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
-        }
+        // macOS paints its own grey behind the toolbar; Midnight lets the navy run under it.
+        .toolbarBackground(doodle.midnight ? .hidden : .automatic, for: .windowToolbar)
+        .midnightScrollEdge(doodle.midnight)
     }
 
     @ViewBuilder private var detail: some View {
@@ -286,6 +274,15 @@ struct RootView: View {
         .padding(.horizontal, 10)
         .padding(.top, 8)
         .transition(.opacity)
+    }
+}
+
+private extension View {
+    /// macOS 26's hard scroll edge is the grey slab; soft fades text out under
+    /// the glass toolbar instead. Before 26 there is no edge effect to change.
+    @ViewBuilder func midnightScrollEdge(_ on: Bool) -> some View {
+        if #available(macOS 26, *) { scrollEdgeEffectStyle(on ? .soft : nil, for: .top) }
+        else { self }
     }
 }
 

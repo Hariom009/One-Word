@@ -101,7 +101,7 @@ struct WordDetail: View {
         }
         .animation(.easeInOut(duration: 0.22), value: word.term)
         .scrollContentBackground(.hidden)
-        .background(t.background)
+        .paneBackground(t)
         // Re-fires on dictionary change and on every pop back; load is idempotent.
         .task(id: shelfID) { store.load(shelfID) }
         // Every full-view route ends at THIS view — today's word, a peek, a search
@@ -205,7 +205,7 @@ struct WordDetail: View {
             }
             .tint(t.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .entryBlock(t)
+            .entryBlock(t) { withAnimation { showRelated.toggle() } }
         } else if store.isBuilding(shelfID) {
             buildingBox(t)
         }
@@ -307,13 +307,17 @@ private extension View {
     /// How a section sits under the definition: below a hairline in Light and Dark,
     /// or in a frosted tile of its own in Midnight. One place, so "Used as", the
     /// same-vein box and its loading line can never disagree about the shape.
+    /// `onTap` makes the whole tile a target, padding included — without it only
+    /// what's drawn inside answers. Controls inside still win their own clicks.
     @ViewBuilder
-    func entryBlock(_ t: Theme) -> some View {
+    func entryBlock(_ t: Theme, onTap: (() -> Void)? = nil) -> some View {
         if t.tiles {
             self
                 .padding(.horizontal, 22)
                 .padding(.vertical, 18)
                 .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(10)))
+                .contentShape(RoundedRectangle(cornerRadius: t.radius(10)))
+                .onTapGesture { onTap?() }
                 .padding(.top, 28)
         } else {
             self

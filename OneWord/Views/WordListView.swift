@@ -66,7 +66,9 @@ struct WordListView: View {
                         .onHover { inside in
                             hovered = inside ? hit.id : (hovered == hit.id ? nil : hovered)
                         }
-                        .listRowBackground(t.background)
+                        // Clear, so the pane's ground — Midnight's glow included —
+                        // shows through the rows instead of stopping at them.
+                        .listRowBackground(Color.clear)
                         .listRowSeparatorTint(t.hairline)
                 }
                 .listStyle(.plain)
@@ -74,7 +76,7 @@ struct WordListView: View {
                 .tint(t.accent)
             }
         }
-        .background(t.background)
+        .paneBackground(t)
         .navigationTitle(wordbook?.shortName ?? "Search")
         // ponytail: the native search field, same as the Learned pane. The
         // hand-rolled top bar this replaces put a boxed field and a rule above
@@ -113,15 +115,11 @@ struct WordListView: View {
 
     private func row(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool, scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 64) {
-            Text(hit.word.term)
-                .font(doodle.face(20))
+            // Size only, never layout — see SwellingTerm. The vertical padding
+            // below leaves room for the biggest step.
+            SwellingTerm(term: hit.word.term, scale: scale, width: Self.termWidth)
                 .foregroundStyle(t.ink)
-                .lineLimit(1)
-                // Scale only, never layout — see LearnedListView.row. The vertical
-                // padding below leaves room for the biggest step.
-                .scaleEffect(scale, anchor: .leading)
                 .animation(.easeOut(duration: 0.14), value: scale)
-                .frame(width: Self.termWidth, alignment: .leading)
             // Out of the way while the word is at full size, so a long term
             // doesn't land on top of them.
             Group {

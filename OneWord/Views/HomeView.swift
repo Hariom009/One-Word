@@ -19,14 +19,14 @@ struct HomeView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
-        WordDetail(word: model.word, showDate: true, dictionaryName: model.wordbook.name)
+        WordDetail(word: model.word, showDate: true, dictionaryName: model.wordbook.shortName)
             .navigationTitle(Date.now.formatted(.dateTime.month(.wide).day().year()))
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Button {
                         pane = .dictionaries
                     } label: {
-                        Text(model.wordbook.name)
+                        Text(model.wordbook.shortName)
                             .font(.caption2.weight(.semibold))
                             .lineLimit(1)
                             .padding(.horizontal, 12)
@@ -34,7 +34,7 @@ struct HomeView: View {
                     }
                    // .buttonStyle(.plain)
                     // The principal slot squeezes to whatever the toolbar leaves it, so
-                    // long names ("Dictionary of Corporate Slang") truncate. Ask for the
+                    // long names ("Corporate Slang") truncate. Ask for the
                     // ideal width instead and the chip sizes to its text.
                     .fixedSize()
                 }

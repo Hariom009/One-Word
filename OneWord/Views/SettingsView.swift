@@ -205,7 +205,7 @@ struct SettingsView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(24)
         }
-        .background(t.background)
+        .paneBackground(t)
         .navigationTitle("Settings")
         // `t`, not the sheet's own scheme read: a sheet is its own window, so it
         // is handed the theme this pane is painted with.

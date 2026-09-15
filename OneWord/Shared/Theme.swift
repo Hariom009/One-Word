@@ -25,7 +25,8 @@ struct Theme {
     /// Corner multiplier. 1 draws every radius exactly as its call site wrote it;
     /// Midnight's big tiles and pill controls are those same call sites, scaled.
     var roundness: CGFloat = 1
-    /// A light at the top of the reading pane. Clear draws none.
+    /// A light from the top of each pane, painted under its content by
+    /// `paneBackground(_:)`. Clear draws none.
     var glow: Color = .clear
     /// Entry sections as filled tiles rather than blocks under a hairline.
     var tiles = false
@@ -77,6 +78,27 @@ struct Theme {
     )
 
     static func of(_ scheme: ColorScheme) -> Theme { scheme == .dark ? .dark : .light }
+}
+
+extension View {
+    /// A pane's ground: the palette's background and, in Midnight, its glow from the
+    /// top. Under the content on purpose — the glow was first a blend-mode overlay
+    /// across the whole detail pane, and that re-composites everything beneath it on
+    /// every frame that moves: scrolls, pushes, pane switches.
+    func paneBackground(_ t: Theme) -> some View {
+        background {
+            ZStack {
+                t.background
+                if t.glow != .clear {
+                    // Plain alpha, no blend mode: 0.34 over the navy lands on the
+                    // colour the old 0.3 additive glow reached at its centre.
+                    RadialGradient(colors: [t.glow.opacity(0.34), t.glow.opacity(0)],
+                                   center: .top, startRadius: 0, endRadius: 560)
+                }
+            }
+            .ignoresSafeArea()
+        }
+    }
 }
 
 extension Color {

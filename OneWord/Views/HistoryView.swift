@@ -40,7 +40,7 @@ struct HistoryView: View {
             // and draw its related words there, not in whatever Home has open.
             WordDetail(word: model.word, shelf: book.id)
         }
-        .background(t.background)
+        .paneBackground(t)
         .navigationTitle("History")
         .toolbar {
             ToolbarItemGroup(placement: .navigation) {

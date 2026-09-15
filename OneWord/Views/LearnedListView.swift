@@ -40,7 +40,9 @@ struct LearnedListView: View {
                         switch line {
                         case .day(let day):
                             header(day, t)
-                                .listRowBackground(t.background)
+                                // Clear rows, so the pane's ground (Midnight's glow
+                                // included) shows through them.
+                                .listRowBackground(Color.clear)
                                 .listRowSeparator(.hidden)
                         case .word(let entry):
                             NavigationLink {
@@ -56,7 +58,7 @@ struct LearnedListView: View {
                                 // row's enter; only clear if we're still the hovered one.
                                 hovered = inside ? index : (hovered == index ? nil : hovered)
                             }
-                            .listRowBackground(t.background)
+                            .listRowBackground(Color.clear)
                             .listRowSeparatorTint(t.hairline)
                         }
                     }
@@ -66,7 +68,7 @@ struct LearnedListView: View {
                 .tint(t.accent)
             }
         }
-        .background(t.background)
+        .paneBackground(t)
         .navigationTitle("Learned")
         // ponytail: the native search field, not a hand-rolled top bar.
         .searchable(text: $query, prompt: "Search \(log.count) words")
@@ -151,17 +153,11 @@ struct LearnedListView: View {
 
     private func row(_ entry: LearnedWord, _ t: Theme, _ scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
-            Text(entry.word.term)
-                .font(doodle.face(20))
+            // Size only, never layout — see SwellingTerm. The vertical padding
+            // below leaves room for the biggest step, so nothing collides.
+            SwellingTerm(term: entry.word.term, scale: scale, width: Self.termWidth)
                 .foregroundStyle(t.ink)
-                .lineLimit(1)
-                // Scale only, never layout: a `List` re-lays-out on any height
-                // change and jumps rather than tweens, and the moving rows then
-                // fire fresh hover events at the pointer. The vertical padding
-                // below leaves room for the biggest step, so nothing collides.
-                .scaleEffect(scale, anchor: .leading)
                 .animation(.easeOut(duration: 0.14), value: scale)
-                .frame(width: Self.termWidth, alignment: .leading)
             // Out of the way while the word is at full size: a long term (the
             // idioms run to thirty characters) overruns its column at 1.85x and
             // would otherwise land on top of these.
@@ -230,6 +226,39 @@ struct LearnedListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(40)
+    }
+}
+
+/// A list row's word, swelling under the pointer — Learned, Search and Bookmarks.
+/// The type size itself tweens, not a `scaleEffect`: macOS draws a scaled Text at
+/// its resting size and stretches that bitmap, which went blurry at 1.85x.
+///
+/// Size only, never layout: the live word draws in an overlay on a resting-size
+/// stand-in. A `List` re-lays-out on any height change and jumps rather than
+/// tweens, and the moving rows then fire fresh hover events at the pointer.
+struct SwellingTerm: View, Animatable {
+    let term: String
+    var scale: CGFloat
+    let width: CGFloat
+    @Environment(\.doodle) var doodle
+
+    var animatableData: CGFloat {
+        get { scale }
+        set { scale = newValue }
+    }
+
+    var body: some View {
+        Text(term).font(doodle.face(20)).lineLimit(1)
+            .hidden()
+            .overlay(alignment: .leading) {
+                Text(term)
+                    .font(doodle.face(20 * scale))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
+                    // Truncates where the resting word would, just bigger.
+                    .frame(width: width * scale, alignment: .leading)
+            }
+            .frame(width: width, alignment: .leading)
     }
 }
 

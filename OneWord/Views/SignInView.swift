@@ -60,7 +60,7 @@ struct SignInView: View {
         }
         .padding(.all,24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(t.background)
+        .paneBackground(t)
     }
 
     private func signInButton(_ t: Theme) -> some View {
