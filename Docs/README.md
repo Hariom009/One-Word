@@ -87,6 +87,17 @@ Which skill lands where:
   *(the plan was revised in place to r4 — predates `Resolved/`)*
 - **Startup dictionary** — shipped.
   [brainstorm](01_Brainstorm/STARTUP_DICTIONARY_BRAINSTORM.md)
+- **Firebase auth** — planned, not built.
+  [plan](02_Plan/FIREBASE_AUTH_PLAN.md) ·
+  [audit](02_Plan/Audit/FIREBASE_AUTH_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/FIREBASE_AUTH_PLAN_RESOLVED.md)
+  *(blockers B1/B2 patched; majors M1/M2 carried forward unpatched — see its §0)*
+- **Feedback** — planned, not built.
+  [plan](02_Plan/FEEDBACK_PLAN.md) ·
+  [audit](02_Plan/Audit/FEEDBACK_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/FEEDBACK_PLAN_RESOLVED.md)
+  *(email + an in-app note filed to a Firestore `complaints` collection; every audit finding
+  resolved — build from the resolved plan, it stands alone)*
 - **Sentence practice** — planned, not built.
   [resolved plan](02_Plan/Resolved/SENTENCE_PRACTICE_PLAN_RESOLVED.md)
   *(plan and audit were worked through in session and never filed — the resolved plan

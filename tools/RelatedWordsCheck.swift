@@ -18,8 +18,8 @@ func load(_ id: String) -> [Word] {
 @main
 enum Check {
     static func main() {
-        let books = ["words", "emotions", "medical", "philosophy", "character",
-                     "eloquence", "curiosities", "startup", "idioms", "classical", "urdu"]
+        let books = ["words", "emotions", "philosophy", "startup",
+                     "idioms", "classical", "urdu", "german"]
         var indexes: [String: (words: [Word], index: RelatedWordsIndex)] = [:]
 
         // 1. Coverage ≥99% per book — a reworded definition can silently drop entries.
@@ -52,16 +52,15 @@ enum Check {
         precondition(!tenX.isEmpty && tenX.contains { $0.contains(" ") },
                      "10x engineer found \(tenX)")
 
-        // 3. The small books return REAL results (measured r4, operator-ruled) — not [].
-        precondition(nearest("character", "affable").contains("amiable"),
-                     "affable no longer finds amiable")
-        precondition(nearest("eloquence", "eloquent").contains("rhetoric"),
-                     "eloquent no longer finds rhetoric")
-        for id in ["character", "eloquence", "curiosities"] {
+        // 3. The small books return REAL results — not []. A short book has the
+        //    thinnest candidate pool, so it fails first on a floor mistune or a
+        //    broken tokenizer; `served > 0` would pass on 1/n and hide both.
+        //    Philosophy is left out on purpose: `nonmonotonic` and `quantify` have
+        //    no neighbour above the floor in 138 words, so it is 136/138 by nature
+        //    and an all-or-nothing bar there would only ever be a false alarm.
+        for id in ["german", "classical"] {
             let (words, index) = indexes[id]!
             let served = words.filter { !index.nearest(to: $0).isEmpty }.count
-            // Measured 20/20 per book — `served > 0` would pass on 1/20 and hide
-            // a floor mistune or a broken tokenizer.
             precondition(served == words.count, "\(id): only \(served)/\(words.count) served")
         }
 
@@ -117,7 +116,7 @@ enum Check {
         precondition(!startupIndex.nearest(to: lowered).map(\.term).contains(mixed.term),
                      "\(lowered.term) got \(mixed.term) back as related")
 
-        for id in ["character", "eloquence", "curiosities"] {
+        for id in ["german", "philosophy", "classical"] {
             let (words, index) = indexes[id]!
             let sample = words.prefix(2).map { "\($0.term) → \(index.nearest(to: $0).map(\.term).joined(separator: ", "))" }
             print("\(id): \(sample.joined(separator: " · "))")

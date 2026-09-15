@@ -86,7 +86,7 @@ OneWord/                        app target
   OneWordApp.swift              @main — window, scene, app-active refresh
   WordCapture.swift             AppKit glue: NSServices "Save to One Word" + HUD
   Views/                        SwiftUI only. No data loading, no persistence.
-    RootView, HomeView, HistoryView, WordDetail, WordListView,
+    RootView, PaneHeader, HomeView, HistoryView, WordDetail, WordListView,
     LearnedListView, ProfileView, SettingsView, DictionaryPicker, MonthCalendar
   ViewModels/                   @Observable. No view types. The unit-testable seam.
     WordViewModel, WordListViewModel, ProfileViewModel

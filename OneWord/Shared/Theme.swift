@@ -2,8 +2,10 @@
 //  Theme.swift
 //  OneWord — Shared (app + widget)
 //
-//  Monochrome: white paper / black night, everything on it a gray between the
-//  two. No hue anywhere. Resolve with Theme.of(colorScheme).
+//  Light and Dark are monochrome: white paper / black night, everything on it a
+//  gray between the two. Midnight is the one palette with a hue in it — a navy
+//  ground, frosted tiles, a periwinkle accent — and only the app paints with it
+//  (DoodleTheme.swift's `Theme.of(_:_:)`). The widget resolves Theme.of(colorScheme).
 //  ponytail: uses the system serif (New York) for headwords; bundle Newsreader +
 //  Tiro Devanagari fonts later for pixel-exact type.
 //
@@ -17,9 +19,21 @@ struct Theme {
     let muted: Color        // part of speech, labels
     let definition: Color
     let example: Color
-    let accent: Color       // emphasis — ink, not a hue
+    let accent: Color       // emphasis — ink, not a hue (Midnight's is periwinkle)
     let rule: Color         // the Hindi left border
     let hairline: Color     // dividers
+    /// Corner multiplier. 1 draws every radius exactly as its call site wrote it;
+    /// Midnight's big tiles and pill controls are those same call sites, scaled.
+    var roundness: CGFloat = 1
+    /// A light from the top of each pane, painted under its content by
+    /// `paneBackground(_:)`. Clear draws none.
+    var glow: Color = .clear
+    /// Entry sections as filled tiles rather than blocks under a hairline.
+    var tiles = false
+
+    /// A corner radius as this palette rounds it. SwiftUI clamps a radius to half
+    /// the shape's short side, so past that a small control simply becomes a pill.
+    func radius(_ r: CGFloat) -> CGFloat { r * roundness }
 
     static let light = Theme(
         background: .white,
@@ -45,7 +59,46 @@ struct Theme {
         hairline:   Color.white.opacity(0.11)
     )
 
+    /// Dark-only: choosing Midnight forces the dark scheme, so it has no paper half.
+    /// Surfaces are white laid over the navy rather than greys of their own, which
+    /// is what keeps a tile reading as frosted glass instead of a grey box.
+    static let midnight = Theme(
+        background: Color(hex: 0x080F1B),
+        surface:    Color.white.opacity(0.09),
+        ink:        Color(hex: 0xFBFBFC),
+        muted:      Color.white.opacity(0.55),
+        definition: Color.white.opacity(0.86),
+        example:    Color.white.opacity(0.7),
+        accent:     Color(hex: 0xA5B4FC),
+        rule:       Color(hex: 0xA5B4FC).opacity(0.6),
+        hairline:   Color.white.opacity(0.08),
+        roundness:  2.2,
+        glow:       Color(hex: 0x3B5BDB),
+        tiles:      true
+    )
+
     static func of(_ scheme: ColorScheme) -> Theme { scheme == .dark ? .dark : .light }
+}
+
+extension View {
+    /// A pane's ground: the palette's background and, in Midnight, its glow from the
+    /// top. Under the content on purpose — the glow was first a blend-mode overlay
+    /// across the whole detail pane, and that re-composites everything beneath it on
+    /// every frame that moves: scrolls, pushes, pane switches.
+    func paneBackground(_ t: Theme) -> some View {
+        background {
+            ZStack {
+                t.background
+                if t.glow != .clear {
+                    // Plain alpha, no blend mode: 0.34 over the navy lands on the
+                    // colour the old 0.3 additive glow reached at its centre.
+                    RadialGradient(colors: [t.glow.opacity(0.34), t.glow.opacity(0)],
+                                   center: .top, startRadius: 0, endRadius: 560)
+                }
+            }
+            .ignoresSafeArea()
+        }
+    }
 }
 
 extension Color {

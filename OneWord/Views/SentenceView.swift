@@ -9,6 +9,7 @@
 
 import SwiftUI
 import AppKit
+import AVFoundation
 
 /// The roll's sound, loaded once — same shape as WordDetail's file-scope speaker.
 /// `byReference: true` keeps the 15s file on disk instead of in memory: the roll
@@ -45,11 +46,17 @@ struct SentenceView: View {
     /// — window occluded, Space switched, app hidden — and without this the pane
     /// silently replaces the sentence you were reading and drops your reveal.
     @State private var rolledToken = -1
+    /// App-only, like `practiceEnabled`: the widget never speaks. Off by default
+    /// so the answer stays silent until you ask for it.
+    @AppStorage("practiceAutoSpeak") private var autoSpeak = false
     @Environment(\.colorScheme) private var scheme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         ScrollView {
             VStack(spacing: 0) {
                 reel(t)
@@ -67,7 +74,7 @@ struct SentenceView: View {
         // Same shape as WordDetail: the ScrollView fills the pane, so the paint
         // reaches the edges without anything claiming infinite height.
         .scrollContentBackground(.hidden)
-        .background(t.background)
+        .paneBackground(t)
         .overlay(alignment: .topTrailing) { hint(t) }
         .contentShape(Rectangle())
         // Space is the primary control, but a keyboard-only feature is
@@ -78,7 +85,6 @@ struct SentenceView: View {
             rolledToken = rollToken
             await performRoll()
         }
-        .navigationTitle("Practice")
         // One element, one label: the reel changes identity 12 times a roll, and
         // without this VoiceOver announces every step of it.
         .accessibilityElement(children: .ignore)
@@ -100,6 +106,17 @@ struct SentenceView: View {
                 .opacity(0)
                 .accessibilityHidden(true)
         }
+        // Last, so the header sits outside the pane's one accessibility element and
+        // its tap-to-advance: a click on Pronounce must not also roll the reel.
+        .paneHeader("Practice") {
+            Button(action: pronounce) {
+                Label("Pronounce", systemImage: "speaker.wave.2")
+            }
+            // Speaking the German before you have asked for it is the answer,
+            // read aloud. Rolling is unrevealed too, so this covers that as well.
+            .disabled(!revealed)
+            .help("Pronounce the German sentence")
+        }
     }
 
     // MARK: - Pieces
@@ -109,7 +126,8 @@ struct SentenceView: View {
     /// fixed frame is what keeps it a window when a sentence runs long.
     private func reel(_ t: Theme) -> some View {
         Text(scrambled ?? shown.en)
-            .font(.serif(56))
+            .font(doodle.face(56))
+            .tracking(doodle.tracking(56))
             .foregroundStyle(t.ink)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
@@ -123,7 +141,8 @@ struct SentenceView: View {
     /// left rule fights a centred block — colour and size carry the distinction here.
     private func german(_ t: Theme) -> some View {
         Text(shown.de)
-            .font(.serif(48))
+            .font(doodle.face(48))
+            .tracking(doodle.tracking(48))
             .foregroundStyle(t.definition)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
@@ -155,7 +174,21 @@ struct SentenceView: View {
     /// One key, three states: rolling ignores, unrevealed reveals, revealed rolls.
     private func advance() {
         guard !rolling else { return }
-        if revealed { rollToken += 1 } else { revealed = true }
+        if revealed {
+            rollToken += 1
+        } else {
+            revealed = true
+            if autoSpeak { pronounce() }
+        }
+    }
+
+    /// The Pronounce button's action, and what the auto-speak setting fires on
+    /// reveal — one path, so the header button and the setting can never drift.
+    private func pronounce() {
+        speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
+        let utterance = AVSpeechUtterance(string: shown.de)
+        utterance.voice = AVSpeechSynthesisVoice(language: "de-DE")
+        speaker.speak(utterance)
     }
 
     private func performRoll() async {

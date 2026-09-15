@@ -55,6 +55,18 @@ final class WordViewModel {
         word = provider.word(for: date, offset: WordSelectionStore.offset, pinned: SavedWords.pinned)
     }
 
+    /// History: a past day's word from ANY book, without touching anything shared.
+    /// The refresh offset and a fresh capture's pin both belong to TODAY, so a past
+    /// day ignores them — and picking a book to read old days in must not reset
+    /// what Home and the widget are showing, which is what `select` would do.
+    func show(_ wordbook: Wordbook, on date: Date) {
+        if wordbook != self.wordbook {
+            self.wordbook = wordbook
+            self.provider = WordProvider(resource: wordbook.id)
+        }
+        word = provider.word(for: date)
+    }
+
     /// Peek at another word from this dictionary. Not persisted and not shared:
     /// it expires on its own, and the widget never sees it.
     ///

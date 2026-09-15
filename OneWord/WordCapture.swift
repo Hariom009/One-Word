@@ -16,6 +16,8 @@
 import SwiftUI
 import AppKit
 import WidgetKit
+import FirebaseCore
+import GoogleSignIn
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -23,6 +25,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.servicesProvider = provider
+        configureFirebase()
+    }
+
+    /// Reads GoogleService-Info.plist from the bundle, then wires GoogleSignIn by hand.
+    ///
+    /// GIDSignIn does NOT read GoogleService-Info.plist — its only self-configuration
+    /// path is a GIDClientID key in Info.plist (GIDSignIn.m:1351), and an unconfigured
+    /// interactive signIn raises NSInvalidArgumentException (:723): a crash, not an
+    /// error you can catch. Handing it the id off FirebaseApp keeps
+    /// GoogleService-Info.plist the one place the client id lives.
+    private func configureFirebase() {
+        FirebaseApp.configure()
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            assertionFailure("No CLIENT_ID in GoogleService-Info.plist — sign-in would crash.")
+            return
+        }
+        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
     }
 }
 
@@ -72,7 +91,12 @@ enum CaptureHUD {
         hud.hasShadow = true
         hud.ignoresMouseEvents = true
         hud.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        hud.contentView = NSHostingView(rootView: CaptureHUDView(title: title, subtitle: subtitle))
+        // The HUD is its own NSPanel, so it is outside the window's environment and
+        // has to read the doodle switches itself. A one-shot read is right here:
+        // the panel lives 1.85s and never outlasts a flip of the switch.
+        hud.contentView = NSHostingView(
+            rootView: CaptureHUDView(title: title, subtitle: subtitle)
+                .environment(\.doodle, DoodleTheme.current))
         hud.setContentSize(hud.contentView?.fittingSize ?? NSSize(width: 260, height: 90))
 
         if let screen = NSScreen.main {
@@ -101,14 +125,16 @@ private struct CaptureHUDView: View {
     let title: String
     let subtitle: String?
 
+    /// The doodle theme's hand, for the display face. `.face()` hands back the
+    /// editorial serif untouched when the handwriting switch is off.
+    @Environment(\.doodle) private var doodle
     var body: some View {
         HStack(spacing: 14) {
-            Image(systemName: "bookmark.fill")
-                .font(.system(size: 22))
+            GlyphIcon(.bookmarked, size: 22)
                 .foregroundStyle(.primary)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .font(.serif(24))
+                    .font(doodle.face(24))
                     .lineLimit(1)
                 if let subtitle {
                     Text(subtitle)
