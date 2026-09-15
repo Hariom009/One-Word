@@ -2,9 +2,9 @@
 //  DictionaryPicker.swift
 //  OneWord
 //
-//  The shelf of painted dictionary covers. `DictionaryShelf` is the shelf itself over
-//  ANY selection; `DictionaryPicker` is the Dictionaries pane, which binds it to
-//  the app-wide pick. History binds the same shelf to a choice of its own.
+//  The bookshelf. `DictionaryShelf` is the shelf itself over ANY selection;
+//  `DictionaryPicker` is the Dictionaries pane, which binds it to the app-wide
+//  pick. History binds the same shelf to a choice of its own.
 //
 
 import SwiftUI
@@ -17,10 +17,12 @@ import WidgetKit
     .url(forResource: "book_pull", withExtension: "mp3")
     .flatMap { NSSound(contentsOf: $0, byReference: true) }
 
-/// The shelf: the chosen book stands large on the left, the rest sit small in
-/// a grid beside it. Tapping a small book swaps it into the big slot (and picks
-/// it). Nothing here touches App Group storage — the owner decides how far the
-/// pick reaches. Bookmarks has its own pane, so it isn't on the shelf.
+/// One plank: the chosen book stands face-out and large on the left, the rest stand
+/// spine-out beside it in catalogue order. Tapping a spine pulls that book off the
+/// shelf — it turns to face you as it grows into the front — while the one it
+/// replaces turns back to its spine and slides home into its gap. Nothing here
+/// touches App Group storage — the owner decides how far the pick reaches.
+/// Bookmarks has its own pane, so it isn't on the shelf.
 struct DictionaryShelf: View {
     @Binding var selection: String
     var padding: CGFloat = 28
@@ -29,97 +31,134 @@ struct DictionaryShelf: View {
     @Environment(\.colorScheme) private var scheme
     /// For Midnight's palette behind the shelf.
     @Environment(\.doodle) private var doodle
-    @Namespace private var shelf
-    /// Shelf order; `order[0]` is the book standing large. Starts with the
-    /// selection in front, then the rest in catalogue order.
-    @State private var order: [Wordbook]
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// The book standing face-out. Its own state rather than `selection`, so the turn
+    /// animates wherever the owner stores the pick.
+    @State private var front: String
     /// True while a swap is in flight. Taps in that window are dropped, so a burst
-    /// of clicks gives one clean swap at a time — not a pile of springs retargeting
-    /// mid-flight with the sound restarting under each.
+    /// of clicks gives one clean swap at a time, not the sound restarting under each.
     @State private var swapping = false
+
+    private static let books = Wordbook.all.filter { $0.id != Wordbook.saved.id }
+    // ponytail: 0.69 is the widest cover art (570×827); the narrower ones fit by height.
+    static let coverAspect: CGFloat = 0.69
+    /// How far down its art a cover's board reaches; below it only the ribbon hangs.
+    // ponytail: measured off the seven cut-out `Dictionary_of_*` covers (0.935–0.937).
+    static let boardFoot: CGFloat = 0.936
+    /// A spine's width as a share of its book's height — dictionaries are thick books.
+    static let thickness: CGFloat = 0.17
+    /// How large the spines stand beside the face-out book, when the width allows.
+    private static let spineScale: CGFloat = 0.85
+    private static let spineGap: CGFloat = 2
 
     init(selection: Binding<String>, padding: CGFloat = 28, onPick: @escaping (Wordbook) -> Void = { _ in }) {
         _selection = selection
         self.padding = padding
         self.onPick = onPick
-        let books = Wordbook.all.filter { $0.id != Wordbook.saved.id }
-        let front = books.filter { $0.id == selection.wrappedValue }
-        _order = State(initialValue: front + books.filter { $0.id != selection.wrappedValue })
+        let id = selection.wrappedValue
+        _front = State(initialValue: Self.books.contains { $0.id == id } ? id : Self.books[0].id)
+    }
+
+    /// The board every book stands on: the palette's surface under a lit top edge,
+    /// shadowed like the covers, so it reads on paper, night and Midnight's navy alike.
+    private func plank(_ t: Theme) -> some View {
+        t.surface
+            .overlay(alignment: .top) { t.hairline.frame(height: 1) }
+            .frame(height: 10)
+            .clipShape(RoundedRectangle(cornerRadius: t.radius(2)))
+            .shadow(color: .black.opacity(0.18), radius: 6, y: 4)
+    }
+
+    /// Where each book stands: the front one at the left edge, the spines packed left
+    /// to right from `start` in catalogue order, each as thick as it is tall.
+    private func positions(from start: CGFloat, spine: CGFloat) -> [String: CGFloat] {
+        var xs: [String: CGFloat] = [front: 0]
+        var x = start
+        for book in Self.books where book.id != front {
+            xs[book.id] = x
+            x += spine * book.height + Self.spineGap
+        }
+        return xs
     }
 
     var body: some View {
         let t = Theme.of(scheme, doodle)
         return GeometryReader { g in
-            ScrollView {
-                HStack(alignment: .top, spacing: padding) {
-                    VStack(spacing: 10) {
-                        BookCover(book: order[0], large: true)
-                            .matchedGeometryEffect(id: order[0].id, in: shelf)
-                        HStack(spacing: 6) {
-                            Text("\(order[0].entryCount, format: .number) entries")
-                                .foregroundStyle(t.ink)
-                            Text("\u{00B7} Selected for word of the day")
-                                .foregroundStyle(t.muted)
-                        }
-                        .font(.system(size: 12, weight: .medium))
-                        .lineLimit(1)
-                    }
-                    .frame(width: g.size.width * 0.4)
+            let w: CGFloat = max(0, g.size.width - padding * 2)
+            let h: CGFloat = max(0, g.size.height - padding * 2)
+            // The cover art's height at full size: a third of the width, or what the
+            // height leaves above the ribbon and caption (art + 26 in all).
+            let art: CGFloat = max(1, min(w * 0.33 / Self.coverAspect, h - 26))
+            let floor: CGFloat = max(0, (h - art - 26) / 2) + art * Self.boardFoot
+            let shelfStart: CGFloat = art * Self.coverAspect + padding
+            // Shrink the spines if all of them wouldn't fit beside the front book.
+            let room: CGFloat = w - shelfStart - Self.spineGap * CGFloat(Self.books.count)
+            let tall: CGFloat = art * Self.thickness * Self.books.map(\.height).reduce(0, +)
+            let k: CGFloat = max(0, min(Self.spineScale, room / tall))
+            let xs = positions(from: shelfStart, spine: art * Self.thickness * k)
 
-                    // Three across, like the mockup, whatever the window width.
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3),
-                              alignment: .leading, spacing: 24) {
-                        // Keyed by SLOT, not by book: a swap then changes what a stable cell
-                        // shows, so the two covers fly between their frames. Keyed by book,
-                        // one cell is removed and another inserted, and both ghost-fade in place.
-                        ForEach(order.indices.dropFirst(), id: \.self) { i in
-                            let book = order[i]
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("DICTIONARY OF")
-                                    .font(.system(size: 11, weight: .medium))
-                                    .tracking(1.6)
-                                    .foregroundStyle(t.muted)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.7)
-                                BookCover(book: book)
-                                    .matchedGeometryEffect(id: book.id, in: shelf)
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture { pick(book) }
-                            .accessibilityElement()
-                            .accessibilityLabel(book.name)
-                            .accessibilityAddTraits(.isButton)
-                        }
-                    }
+            ZStack(alignment: .topLeading) {
+                plank(t).offset(y: floor)
+
+                ForEach(Self.books) { book in
+                    let isFront = book.id == front
+                    let scale = (isFront ? 1 : k) * book.height
+                    ShelfBook(book: book, art: art, turn: isFront ? 1 : 0)
+                        // Gestures before the transforms, so the tap target moves and scales with the book.
+                        .contentShape(Rectangle())
+                        .onTapGesture { pick(book) }
+                        .allowsHitTesting(!isFront)
+                        .accessibilityElement()
+                        .accessibilityLabel(book.name)
+                        .accessibilityAddTraits(isFront ? .isSelected : .isButton)
+                        .accessibilityAction { pick(book) }
+                        // Transforms, not layout: the flight never reflows the shelf. The board stands on the plank.
+                        .scaleEffect(scale, anchor: .topLeading)
+                        .offset(x: xs[book.id] ?? 0, y: floor - art * Self.boardFoot * scale)
+                        // The book coming to the front flies over the spines it crosses.
+                        .zIndex(isFront ? 1 : 0)
                 }
-                .padding(padding)
+
+                HStack(spacing: 6) {
+                    Text("\(Wordbook.named(front).entryCount, format: .number) entries")
+                        .foregroundStyle(t.ink)
+                    Text("\u{00B7} Selected for word of the day")
+                        .foregroundStyle(t.muted)
+                }
+                .font(.system(size: 12, weight: .medium))
+                .lineLimit(1)
+                // Clear of the front book's ribbon, which hangs 6.4% of its art past the plank.
+                .offset(y: floor + art * (1 - Self.boardFoot) + 10)
             }
+            .frame(width: w, height: h, alignment: .topLeading)
+            .padding(padding)
         }
-        .background(t.background)
+        .paneBackground(t)
         // Warm every book's decode off the main thread, so the first swap to a book
-        // doesn't stall the spring on a multi-MB JSON parse for its entry count.
+        // doesn't stall the flight on a multi-MB JSON parse for its entry count.
         .task {
-            let ids = order.map(\.id)
+            let ids = Self.books.map(\.id)
             await Task.detached(priority: .utility) {
                 for id in ids { _ = WordProvider(resource: id) }
             }.value
         }
     }
 
-    /// Swap the tapped book with the one in front and tell the owner. You stay
-    /// on the shelf — picking is the whole job, there's nowhere to go next.
+    /// Pull the tapped book off the shelf and tell the owner. You stay on the
+    /// shelf — picking is the whole job, there's nowhere to go next.
     private func pick(_ book: Wordbook) {
-        guard !swapping, let i = order.firstIndex(of: book) else { return }
+        guard !swapping, book.id != front else { return }
+        selection = book.id
+        onPick(book)
+        guard !reduceMotion else { front = book.id; return }
         swapping = true
-        withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
-            order.swapAt(0, i)
+        flipSound?.currentTime = 0
+        flipSound?.play()
+        withAnimation(.smooth(duration: 0.6)) {
+            front = book.id
         } completion: {
             swapping = false
         }
-        flipSound?.currentTime = 0
-        flipSound?.play()
-        selection = book.id
-        onPick(book)
     }
 }
 
@@ -136,51 +175,87 @@ struct DictionaryPicker: View {
     }
 }
 
-/// A painted book cover with the title lettered on its front board. Large
-/// covers carry "DICTIONARY OF" over the name; small ones just the name (the
-/// shelf captions them). Type is sized off the cover's width so it fits either.
-struct BookCover: View {
+/// One book, turning between spine-out (`turn` 0) and face-out (1): the reference
+/// bookshelf's CSS rotateY, drawn flat. Each face is laid out once at full size and
+/// only squeezed and shaded as it turns, so nothing re-lays-out mid-flight.
+private struct ShelfBook: View, Animatable {
     let book: Wordbook
-    var large = false
+    /// The cover art's height at full size; the shelf scales the whole book from there.
+    let art: CGFloat
+    var turn: CGFloat
 
-    /// Cream lettering, like foil on the board.
-    private let foil = Color(hex: 0xF4E3B8)
-
-    var body: some View {
-        Image(book.image)
-            .resizable()
-            .scaledToFit()
-            .overlay {
-                GeometryReader { g in
-                    let w = g.size.width
-                    VStack(spacing: w * 0.02) {
-                        if large {
-                            Text("DICTIONARY OF")
-                                .font(.serif(w * 0.038))
-                                .tracking(w * 0.012)
-                                .foregroundStyle(foil.opacity(0.85))
-                        }
-                        Text(book.shortName)
-                            .font(.serif(w * (large ? 0.07 : 0.062), large ? .medium : .regular))
-                            .foregroundStyle(foil)
-                            // The big board fits any name on one line; the small ones may wrap.
-                            .lineLimit(large ? 1 : 2)
-                    }
-                    .textCase(large ? nil : .uppercase)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.6)
-                    // ponytail: the board sits at x 22–92% / y 12–98% of the art; foot of the board, centred on it.
-                    .frame(width: w * 0.6)
-                    .position(x: w * 0.575, y: g.size.height * 0.82)
-                }
-            }
-            .shadow(color: .black.opacity(0.18), radius: large ? 14 : 6, y: large ? 8 : 3)
+    var animatableData: CGFloat {
+        get { turn }
+        set { turn = newValue }
     }
 
+    var body: some View {
+        let a = turn * .pi / 2
+        let spine = art * DictionaryShelf.thickness
+        let cover = art * DictionaryShelf.coverAspect
+        ZStack(alignment: .topLeading) {
+            BookSpine(book: book, width: spine, height: art * DictionaryShelf.boardFoot)
+                .brightness(-0.3 * sin(a))
+                .scaleEffect(x: cos(a), y: 1, anchor: .leading)
+            // The cover hinges out from the spine's edge as the spine turns away.
+            Image(book.image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: cover, height: art, alignment: .leading)
+                .brightness(-0.3 * cos(a))
+                .scaleEffect(x: sin(a), y: 1, anchor: .leading)
+                .offset(x: spine * cos(a))
+        }
+        .frame(width: spine * cos(a) + cover * sin(a), height: art, alignment: .topLeading)
+        .shadow(color: .black.opacity(0.18), radius: 14, y: 8)
+        // Lifted off the plank mid-turn, set down again as it lands.
+        .offset(y: -art * 0.06 * sin(.pi * turn))
+    }
 }
 
-/// A cover shrunk to a chip: the same hue, spine and symbol as the shelf, small
-/// enough to sit in a row that names the book beside it.
+/// A book's spine, drawn: the cover's cloth rounded by light across its width, gilt
+/// bands at head and foot, and the short title running down it the way English
+/// spines read.
+private struct BookSpine: View {
+    let book: Wordbook
+    let width: CGFloat
+    let height: CGFloat
+
+    var body: some View {
+        // Lettered like the art prints its titles: ink on pale linen, cream on the rest.
+        let ink = book.isLight ? Color(hex: 0x2A2825) : Color(hex: 0xF1E6D2)
+        let bands = VStack(spacing: height * 0.008) {
+            ink.frame(height: max(1, height * 0.004))
+            ink.frame(height: max(1, height * 0.004))
+        }
+        .opacity(0.55)
+        return book.coverColor
+            .overlay {
+                LinearGradient(stops: [
+                    .init(color: .black.opacity(0.3), location: 0),
+                    .init(color: .white.opacity(0.12), location: 0.3),
+                    .init(color: .clear, location: 0.65),
+                    .init(color: .black.opacity(0.35), location: 1),
+                ], startPoint: .leading, endPoint: .trailing)
+            }
+            .overlay(alignment: .top) { bands.padding(.top, height * 0.07) }
+            .overlay(alignment: .bottom) { bands.padding(.bottom, height * 0.07) }
+            .overlay {
+                Text(book.shortName)
+                    .font(.serif(width * 0.4, .medium))
+                    .foregroundStyle(ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .frame(width: height * 0.66)
+                    .rotationEffect(.degrees(90))
+            }
+            .frame(width: width, height: height)
+            .clipShape(RoundedRectangle(cornerRadius: width * 0.1))
+    }
+}
+
+/// A cover shrunk to a chip: the same cloth and symbol as the shelf, small enough
+/// to sit in a row that names the book beside it.
 struct BookChip: View {
     let book: Wordbook
     var height: CGFloat = 32
@@ -188,7 +263,7 @@ struct BookChip: View {
     var body: some View {
         Image(systemName: book.symbol)
             .font(.system(size: height * 0.38, weight: .semibold))
-            .foregroundStyle(.white)
+            .foregroundStyle(book.isLight ? Color.black : .white)
             .frame(width: height * 0.8, height: height)
             .background(book.coverColor)
             .overlay(alignment: .leading) {
