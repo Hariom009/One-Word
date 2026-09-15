@@ -43,7 +43,8 @@ struct DictionaryShelf: View {
     // ponytail: 0.69 is the widest cover art (570×827); the narrower ones fit by height.
     static let coverAspect: CGFloat = 0.69
     /// How far down its art a cover's board reaches; below it only the ribbon hangs.
-    // ponytail: measured off the seven cut-out `Dictionary_of_*` covers (0.935–0.937).
+    // ponytail: measured off the eight `Dictionary_of_*` covers (0.936–0.939). Every cover must be
+    // cut out tight to the book: a transparent margin draws it short of its spine, so it pops mid-turn.
     static let boardFoot: CGFloat = 0.936
     /// A spine's width as a share of its book's height — dictionaries are thick books.
     static let thickness: CGFloat = 0.17
@@ -90,7 +91,9 @@ struct DictionaryShelf: View {
             // height leaves above the ribbon and caption (art + 26 in all).
             let art: CGFloat = max(1, min(w * 0.33 / Self.coverAspect, h - 26))
             let floor: CGFloat = max(0, (h - art - 26) / 2) + art * Self.boardFoot
-            let shelfStart: CGFloat = art * Self.coverAspect + padding
+            // Air between the face-out book and the first spine: a tenth of the art, so it keeps
+            // its proportion from the History sheet to a full-screen window.
+            let shelfStart: CGFloat = art * (Self.coverAspect + 0.1)
             // Shrink the spines if all of them wouldn't fit beside the front book.
             let room: CGFloat = w - shelfStart - Self.spineGap * CGFloat(Self.books.count)
             let tall: CGFloat = art * Self.thickness * Self.books.map(\.height).reduce(0, +)

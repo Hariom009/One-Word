@@ -26,7 +26,7 @@ struct Wordbook: Identifiable, Hashable {
     static let startup = Wordbook(id: "startup", name: "Dictionary of Corporate Slang", cover: 0x394C61, symbol: "briefcase.fill", mark: "TM", image: "Dictionary_of_CorporateSlang", height: 0.86)
     static let idioms = Wordbook(id: "idioms", name: "Dictionary of Idioms", cover: 0x3B5773, symbol: "quote.bubble.fill", mark: "\u{201D}", image: "Dictionary_of_Idioms", height: 0.93)
     static let classical = Wordbook(id: "classical", name: "Dictionary of Classical English", cover: 0x86786B, symbol: "building.columns.fill", mark: "\u{00C6}", image: "Dictionary_of_ClassicalEnglish", height: 0.98)
-    static let urdu = Wordbook(id: "urdu", name: "Dictionary of Urdu", cover: 0x4C3344, symbol: "scroll.fill", mark: "\u{0627}\u{0631}\u{062F}\u{0648}", image: "Dictionary_of_Urdu", height: 0.88)
+    static let urdu = Wordbook(id: "urdu", name: "Dictionary of Urdu", cover: 0x32422E, symbol: "scroll.fill", mark: "\u{0627}\u{0631}\u{062F}\u{0648}", image: "Dictionary_of_Urdu", height: 0.88)
     static let german = Wordbook(id: "german", name: "Dictionary of German", cover: 0x4A5260, symbol: "puzzlepiece.fill", mark: "\u{00DF}", image: "Dictionary_of_German", height: 0.94)
     /// Not a bundled json — WordProvider resolves this id from the words you bookmarked.
     static let saved = Wordbook(id: SavedWords.resource, name: "Bookmarks", cover: 0x2A4634, symbol: "bookmark.fill", mark: "\u{2014}", image: "Dictionary_of_Philosophy")
