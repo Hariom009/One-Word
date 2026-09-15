@@ -56,7 +56,7 @@ struct SentenceView: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         ScrollView {
             VStack(spacing: 0) {
                 reel(t)
@@ -128,6 +128,7 @@ struct SentenceView: View {
     private func reel(_ t: Theme) -> some View {
         Text(scrambled ?? shown.en)
             .font(doodle.face(56))
+            .tracking(doodle.tracking(56))
             .foregroundStyle(t.ink)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
@@ -142,6 +143,7 @@ struct SentenceView: View {
     private func german(_ t: Theme) -> some View {
         Text(shown.de)
             .font(doodle.face(48))
+            .tracking(doodle.tracking(48))
             .foregroundStyle(t.definition)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)

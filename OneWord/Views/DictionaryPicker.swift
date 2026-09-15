@@ -27,6 +27,8 @@ struct DictionaryShelf: View {
     var onPick: (Wordbook) -> Void = { _ in }
 
     @Environment(\.colorScheme) private var scheme
+    /// For Midnight's palette behind the shelf.
+    @Environment(\.doodle) private var doodle
     @Namespace private var shelf
     /// Shelf order; `order[0]` is the book standing large. Starts with the
     /// selection in front, then the rest in catalogue order.
@@ -46,7 +48,7 @@ struct DictionaryShelf: View {
     }
 
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         return GeometryReader { g in
             ScrollView {
                 HStack(alignment: .top, spacing: padding) {

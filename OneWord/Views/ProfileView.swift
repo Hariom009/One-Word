@@ -57,7 +57,7 @@ struct ProfileView: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
                 header(t)
@@ -101,12 +101,13 @@ struct ProfileView: View {
                         .foregroundStyle(t.ink)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
-                        .background(t.surface, in: RoundedRectangle(cornerRadius: 8))
-                        .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(t.hairline))
+                        .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(8)))
+                        .overlay(RoundedRectangle(cornerRadius: t.radius(8)).strokeBorder(t.hairline))
                         .onSubmit(save)
                 } else {
                     Text(shownName)
                         .font(doodle.face(28))
+                        .tracking(doodle.tracking(28))
                         .foregroundStyle(t.ink)
                         .lineLimit(1)
                 }
@@ -241,6 +242,7 @@ struct ProfileView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("\(count)")
                 .font(doodle.face(64))
+                .tracking(doodle.tracking(64))
                 .foregroundStyle(t.ink)
                 .contentTransition(.numericText())
             HStack(spacing: 6) {
@@ -387,8 +389,8 @@ struct ProfileView: View {
         .foregroundStyle(t.ink)
         .padding(.horizontal, 14)
         .padding(.vertical, 11)
-        .background(t.surface, in: RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(t.hairline))
+        .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(10)))
+        .overlay(RoundedRectangle(cornerRadius: t.radius(10)).strokeBorder(t.hairline))
         .contentShape(Rectangle())
     }
 

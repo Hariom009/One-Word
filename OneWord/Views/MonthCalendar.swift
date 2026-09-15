@@ -17,6 +17,8 @@ struct MonthCalendar: View {
     var onPick: (Date) -> Void
 
     @Environment(\.colorScheme) private var scheme
+    /// For Midnight's palette and rounder day cells.
+    @Environment(\.doodle) private var doodle
     @State private var month: Date
     @State private var hovered: Date?
 
@@ -31,7 +33,7 @@ struct MonthCalendar: View {
     }
 
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         VStack(spacing: 0) {
             header(t)
             weekdayRow(t)
@@ -169,7 +171,7 @@ struct MonthCalendar: View {
                 .foregroundStyle(isSelected ? t.background : (isFuture ? t.muted.opacity(0.4) : t.ink))
                 .frame(width: Self.cell.width, height: Self.cell.height)
                 .background {
-                    let shape = RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    let shape = RoundedRectangle(cornerRadius: t.radius(7), style: .continuous)
                     if isSelected {
                         shape.fill(t.ink)
                     } else if isHovered, !isFuture {

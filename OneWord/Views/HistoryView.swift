@@ -32,7 +32,7 @@ struct HistoryView: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         HStack(alignment: .top, spacing: 0) {
             rail(t)
             Divider().overlay(t.hairline)
@@ -90,6 +90,7 @@ struct HistoryView: View {
             HStack(alignment: .firstTextBaseline, spacing: 9) {
                 Text(date.formatted(.dateTime.day()))
                     .font(doodle.face(42))
+                    .tracking(doodle.tracking(42))
                     .foregroundStyle(t.ink)
                     .contentTransition(.numericText())
                 Text(date.formatted(.dateTime.month(.wide).year()))

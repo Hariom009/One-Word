@@ -23,13 +23,14 @@ struct SignInView: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         VStack(spacing: 16) {
             // The app's own face, in the serif the headwords use. Without it the
             // window is an unlabelled button and you can't tell what you're joining.
             Spacer()
             Text("One Word")
                 .font(doodle.face(34))
+                .tracking(doodle.tracking(34))
                 .foregroundStyle(t.ink)
             Text("enrich your vocab by only one word a day")
                 .font(doodle.face(12))
@@ -85,8 +86,8 @@ struct SignInView: View {
             .foregroundStyle(t.ink)
             .padding(.horizontal, 18)
             .padding(.vertical, 12)
-            .background(t.surface, in: RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(t.hairline))
+            .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(16)))
+            .overlay(RoundedRectangle(cornerRadius: t.radius(16)).strokeBorder(t.hairline))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

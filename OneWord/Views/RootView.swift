@@ -74,6 +74,9 @@ struct RootView: View {
     @State private var writing = false
     @Environment(\.colorScheme) private var scheme
     @Environment(AuthViewModel.self) private var auth
+    /// Midnight rides in with the doodle switches, so every palette read in the
+    /// shell goes through it.
+    @Environment(\.doodle) private var doodle
 
     var body: some View {
         Group {
@@ -81,7 +84,7 @@ struct RootView: View {
                 // At most one frame: restore() is a keychain read, not a round trip.
                 // Painting the window's own background rather than a spinner means a
                 // returning user sees no flicker between launch and the shell.
-                Theme.of(scheme).background.ignoresSafeArea()
+                Theme.of(scheme, doodle).background.ignoresSafeArea()
             } else if auth.isSignedIn {
                 shell
             } else {
@@ -93,17 +96,36 @@ struct RootView: View {
         .task { auth.restore() }
         // Over the whole window, not the button: the browser round trip owns the
         // screen until it resolves, and nothing behind it should take a click.
-        .busy(auth.busy, theme: Theme.of(scheme))
+        .busy(auth.busy, theme: Theme.of(scheme, doodle))
     }
 
     /// Everything behind the gate.
     private var shell: some View {
-        NavigationSplitView {
+        let t = Theme.of(scheme, doodle)
+        return NavigationSplitView {
             sidebar
         } detail: {
             // One stack per pane: related words and list rows still push, and a
             // pane switch drops whatever was pushed on top of the old one.
             NavigationStack { detail }
+                .overlay { glow(t) }
+        }
+        // Midnight's periwinkle on the sidebar selection and every stock control;
+        // nil leaves Light and Dark on the system accent they've always had.
+        .tint(doodle.midnight ? t.accent : nil)
+    }
+
+    /// Midnight's one light, laid over whichever pane is showing — once, here,
+    /// rather than in every pane's background. plusLighter only ever adds light, so
+    /// white type stays white and only the navy lifts toward blue.
+    @ViewBuilder private func glow(_ t: Theme) -> some View {
+        if t.glow != .clear {
+            RadialGradient(colors: [t.glow, .clear], center: .top,
+                           startRadius: 0, endRadius: 560)
+                .blendMode(.plusLighter)
+                .opacity(0.3)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
         }
     }
 
@@ -142,7 +164,11 @@ struct RootView: View {
                 }
             }
         }
-        .sheet(isPresented: $writing) { FeedbackView(theme: Theme.of(scheme), model: feedback) }
+        // The stock sidebar is a grey material. Midnight paints its navy through it,
+        // so the window reads as one ground; Light and Dark keep the material.
+        .scrollContentBackground(doodle.midnight ? .hidden : .automatic)
+        .background(doodle.midnight ? Theme.midnight.background : .clear)
+        .sheet(isPresented: $writing) { FeedbackView(theme: Theme.of(scheme, doodle), model: feedback) }
         .navigationSplitViewColumnWidth(min: 190, ideal: 215, max: 300)
     }
 
@@ -155,7 +181,7 @@ struct RootView: View {
     /// A launcher, not a field — the real search box lives in the Search pane, so
     /// there's only ever one query to keep straight.
     private var searchField: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         return Button { pane = .search } label: {
             HStack(spacing: 7) {
                 GlyphIcon(.search)
@@ -165,13 +191,13 @@ struct RootView: View {
                     .font(.system(size: 11, weight: .medium))
                     .padding(.horizontal, 5)
                     .padding(.vertical, 2)
-                    .background(t.background.opacity(0.7), in: RoundedRectangle(cornerRadius: 4))
+                    .background(t.background.opacity(0.7), in: RoundedRectangle(cornerRadius: t.radius(4)))
             }
             .font(.system(size: 13))
             .foregroundStyle(t.muted)
             .padding(.horizontal, 9)
             .padding(.vertical, 6)
-            .background(t.ink.opacity(0.06), in: RoundedRectangle(cornerRadius: 7))
+            .background(t.ink.opacity(0.06), in: RoundedRectangle(cornerRadius: t.radius(7)))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -184,7 +210,7 @@ struct RootView: View {
     /// Name and face, and that's the whole target: tapping the corner goes to
     /// Profile. Settings moved into Profile, so there's nothing left to unfold here.
     private var accountChip: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         return Button { pane = .profile } label: {
             HStack(spacing: 8) {
                 AccountAvatar(url: auth.photoURL, size: 20, muted: t.muted)
@@ -211,8 +237,8 @@ struct RootView: View {
     /// The permanent way to the notepad, and what the one-time card sits above —
     /// so closing the card never hides the way back.
     private var feedbackButton: some View {
-        let t = Theme.of(scheme)
-        return Button(action: write) { 
+        let t = Theme.of(scheme, doodle)
+        return Button(action: write) {
             GlyphIcon(.feedback)
                 .foregroundStyle(t.muted)
                 .padding(6)
@@ -227,7 +253,7 @@ struct RootView: View {
     /// Shown once, on the first launch after it shipped. Close or Write hides it
     /// for good; nothing else can.
     private var suggestionCard: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         return VStack(alignment: .leading, spacing: 4) {
             HStack(alignment: .top) {
                 Text("Have a suggestion?")
@@ -255,8 +281,8 @@ struct RootView: View {
                 .padding(.top, 6)
         }
         .padding(12)
-        .background(t.surface, in: RoundedRectangle(cornerRadius: 8))
-        .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(t.ink.opacity(0.1)))
+        .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(8)))
+        .overlay(RoundedRectangle(cornerRadius: t.radius(8)).strokeBorder(t.ink.opacity(0.1)))
         .padding(.horizontal, 10)
         .padding(.top, 8)
         .transition(.opacity)

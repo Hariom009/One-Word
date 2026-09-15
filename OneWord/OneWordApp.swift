@@ -29,7 +29,10 @@ struct OneWordApp: App {
             RootView()
                 .environment(relatedWords)
                 .environment(auth)
-                .environment(\.doodle, DoodleTheme(icons: doodleIcons, handwriting: doodleFont))
+                // Midnight rides the same value: it changes the face as well as the
+                // palette, and `face()` is the one place the face is decided.
+                .environment(\.doodle, DoodleTheme(icons: doodleIcons, handwriting: doodleFont,
+                                                   midnight: appearance == Appearance.midnight.rawValue))
                 .preferredColorScheme((Appearance(rawValue: appearance) ?? .system).colorScheme)
         }
         .defaultSize(width: 1000, height: 680)

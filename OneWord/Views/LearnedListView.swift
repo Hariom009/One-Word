@@ -30,7 +30,7 @@ struct LearnedListView: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         Group {
             if lines.isEmpty {
                 emptyState(t)
@@ -219,7 +219,7 @@ struct LearnedListView: View {
             }
             .foregroundStyle(t.accent.opacity(0.5))
             Text(query.isEmpty ? "Nothing read yet" : "No words match")
-                .font(doodle.face(30)).foregroundStyle(t.ink)
+                .font(doodle.face(30)).tracking(doodle.tracking(30)).foregroundStyle(t.ink)
             Text(query.isEmpty
                  ? "Every word you read in full lands here — today's word, a peek, a search result, a related word — with the day and time you met it."
                  : "Nothing in your log matches \u{201C}\(query)\u{201D}.")

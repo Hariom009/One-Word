@@ -7,6 +7,11 @@
 //  editorial serif, some want the marker face next to the app's own symbols, and
 //  some want the lot. So `icons` and `handwriting` are stored apart and read apart.
 //
+//  It carries Midnight too. Not a doodle — but Midnight is the other thing that
+//  changes the display face (to Plus Jakarta Sans), and `face()` is the one place
+//  the face is decided. Midnight itself is an Appearance, stored beside light and
+//  dark; this value only reports whether it is the one picked.
+//
 //  App-only, in the standard defaults (like `appearance`, unlike `showHindi`):
 //  neither the doodle art nor the Pulpen face is in the widget's bundle, so an App
 //  Group switch would promise the widget something it cannot draw.
@@ -62,13 +67,16 @@ enum Glyph {
 
 // MARK: - The theme
 
-/// Which half of the doodle theme is on. A value, not a store: `OneWordApp` reads
-/// the two defaults and puts one of these in the environment.
+/// Which half of the doodle theme is on, and whether Midnight is. A value, not a
+/// store: `OneWordApp` reads the defaults and puts one of these in the environment.
 nonisolated struct DoodleTheme: Equatable {
     /// Hand-drawn drawings in place of SF Symbols.
     var icons = false
     /// Pulpen Snowman in place of the editorial serif.
     var handwriting = false
+    /// The Midnight appearance: Plus Jakarta Sans for the display face, and the
+    /// navy palette through `Theme.of(_:_:)`.
+    var midnight = false
 
     /// The app as it has always looked, and the right default for a `#Preview`
     /// that doesn't say otherwise.
@@ -83,7 +91,9 @@ nonisolated struct DoodleTheme: Equatable {
     /// which AppKit puts on screen in a window of its own.
     static var current: DoodleTheme {
         DoodleTheme(icons: UserDefaults.standard.bool(forKey: iconsKey),
-                    handwriting: UserDefaults.standard.bool(forKey: handwritingKey))
+                    handwriting: UserDefaults.standard.bool(forKey: handwritingKey),
+                    midnight: UserDefaults.standard.string(forKey: "appearance")
+                        == Appearance.midnight.rawValue)
     }
 
     // MARK: The face
@@ -99,6 +109,15 @@ nonisolated struct DoodleTheme: Equatable {
     /// each other and leaves the marker face a hair of the generosity it wants.
     private static let opticalScale: CGFloat = 0.92
 
+    /// Plus Jakarta Sans ships as one variable font per slant, so here — unlike
+    /// Pulpen — the family name is the right handle: `.weight()` drives the wght
+    /// axis and `.italic()` finds the italic file. Both checked against a render.
+    private static let sansFamily = "Plus Jakarta Sans"
+
+    /// Measured the same way: Jakarta's caps stand 0.745em against New York's
+    /// 0.705em, and 0.946 lands them on the serif's cap height.
+    private static let sansScale: CGFloat = 0.946
+
     /// The app's display face at `size` — the one seam, so a headword, an
     /// empty-state headline and the wordmark can never end up in different faces.
     ///
@@ -106,14 +125,44 @@ nonisolated struct DoodleTheme: Equatable {
     /// `.system(size:)`, which does not scale with Dynamic Type. `.custom(_:size:)`
     /// does, and flipping the switch would quietly change more than the face.
     ///
-    /// Pulpen carries Latin, digits and curly quotes but no Devanagari and no
-    /// em-dash; CoreText falls those back to the system face on its own, so the
-    /// Hindi line stays readable rather than turning into a row of boxes.
+    /// Neither Pulpen nor Jakarta carries Devanagari (Pulpen has no em-dash either);
+    /// CoreText falls those back to the system face on its own, so the Hindi line
+    /// stays readable rather than turning into a row of boxes.
+    ///
+    /// Handwriting outranks Midnight. It is a choice about the face and nothing
+    /// else, so it wins the face; Midnight keeps its palette either way.
     func face(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
-        guard handwriting else { return .serif(size, weight) }
-        let light = weight == .light || weight == .ultraLight || weight == .thin
-        return .custom(light ? Self.lightFace : Self.regularFace,
-                       fixedSize: size * Self.opticalScale)
+        if handwriting {
+            let light = weight == .light || weight == .ultraLight || weight == .thin
+            return .custom(light ? Self.lightFace : Self.regularFace,
+                           fixedSize: size * Self.opticalScale)
+        }
+        if midnight {
+            // Regular reads thin set light-on-navy, so regular asks draw at medium;
+            // every other weight is taken as meant.
+            return .custom(Self.sansFamily, fixedSize: size * Self.sansScale)
+                .weight(weight == .regular ? .medium : weight)
+        }
+        return .serif(size, weight)
+    }
+
+    /// Letter-spacing for display type drawn at `size`. Midnight's sans is set
+    /// tight, −3%, the way a geometric face is meant to be read large; the serif and
+    /// the marker were spaced for their own tracking and get none. Only the big set
+    /// pieces ask — at row size the sans keeps its natural spacing.
+    func tracking(_ size: CGFloat) -> CGFloat {
+        midnight && !handwriting ? -size * Self.sansScale * 0.03 : 0
+    }
+}
+
+// MARK: - The palette
+
+extension Theme {
+    /// The palette a pane paints with: Midnight's navy when that appearance is
+    /// picked, otherwise paper or night by the scheme. App-side only — the widget
+    /// has no DoodleTheme and keeps calling `Theme.of(scheme)`.
+    static func of(_ scheme: ColorScheme, _ look: DoodleTheme) -> Theme {
+        look.midnight ? .midnight : .of(scheme)
     }
 }
 
@@ -124,8 +173,8 @@ private struct DoodleThemeKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    /// Which half of the doodle theme is on. Read it at the top of a body beside
-    /// `Theme.of(scheme)` — the two answer the same kind of question.
+    /// The doodle switches and Midnight. Read it at the top of a body beside
+    /// `Theme.of(scheme, doodle)` — the two answer the same kind of question.
     var doodle: DoodleTheme {
         get { self[DoodleThemeKey.self] }
         set { self[DoodleThemeKey.self] = newValue }

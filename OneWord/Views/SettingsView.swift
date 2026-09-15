@@ -33,6 +33,8 @@ struct SettingsView: View {
     /// App-only: the profile shows the goal, the widget never does.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
     @Environment(\.colorScheme) private var scheme
+    /// The doodle switches and Midnight, as the app root resolved them.
+    @Environment(\.doodle) private var doodle
 
     /// The written-complaint half of Feedback. Owned here so an unsent draft
     /// survives closing the sheet — it does not survive leaving the pane, which
@@ -43,10 +45,11 @@ struct SettingsView: View {
     @State private var mailFailed = false
 
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
-                section("Appearance", t) {
+                section("Appearance", t,
+                        note: "The app only \u{2014} the desktop widget follows the Mac's own light or dark.") {
                     HStack(spacing: 10) {
                         ForEach(Appearance.allCases) { mode in
                             Button { appearance = mode.rawValue } label: {
@@ -245,8 +248,8 @@ struct SettingsView: View {
 
     private func card<C: View>(_ t: Theme, @ViewBuilder content: () -> C) -> some View {
         VStack(spacing: 0) { content() }
-            .background(t.surface, in: RoundedRectangle(cornerRadius: 10))
-            .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(t.hairline))
+            .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(10)))
+            .overlay(RoundedRectangle(cornerRadius: t.radius(10)).strokeBorder(t.hairline))
     }
 
     /// Inset so the rule reads as a row separator, not a card divider.
@@ -340,8 +343,8 @@ private struct DoodleSample: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
-        .background(theme.surface, in: RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(theme.hairline))
+        .background(theme.surface, in: RoundedRectangle(cornerRadius: theme.radius(10)))
+        .overlay(RoundedRectangle(cornerRadius: theme.radius(10)).strokeBorder(theme.hairline))
         .animation(.easeInOut(duration: 0.18), value: doodle)
         .accessibilityHidden(true)   // the two rows under it say what it shows
     }
@@ -361,8 +364,8 @@ private struct AppearanceTile: View {
         VStack(spacing: 8) {
             preview
                 .frame(height: 58)
-                .clipShape(RoundedRectangle(cornerRadius: 7))
-                .overlay(RoundedRectangle(cornerRadius: 7).strokeBorder(theme.hairline))
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius(7)))
+                .overlay(RoundedRectangle(cornerRadius: theme.radius(7)).strokeBorder(theme.hairline))
             HStack(spacing: 5) {
                 Image(systemName: selected ? "largecircle.fill.circle" : "circle")
                     .font(.system(size: 11))
@@ -373,24 +376,29 @@ private struct AppearanceTile: View {
         }
         .padding(7)
         .background(selected ? theme.ink.opacity(0.06) : .clear,
-                    in: RoundedRectangle(cornerRadius: 11))
-        .overlay(RoundedRectangle(cornerRadius: 11)
+                    in: RoundedRectangle(cornerRadius: theme.radius(11)))
+        .overlay(RoundedRectangle(cornerRadius: theme.radius(11))
             .strokeBorder(selected ? theme.ink.opacity(0.3) : .clear))
         .contentShape(Rectangle())
     }
 
     @ViewBuilder private var preview: some View {
         switch mode {
-        case .light:  page(.light)
-        case .dark:   page(.dark)
-        case .system: HStack(spacing: 0) { page(.light); page(.dark) }
+        case .light:    page(.light)
+        case .dark:     page(.dark)
+        case .system:   HStack(spacing: 0) { page(.light); page(.dark) }
+        case .midnight: page(.midnight, midnight: true)
         }
     }
 
-    private func page(_ t: Theme) -> some View {
-        VStack(alignment: .leading, spacing: 5) {
+    /// Each page in the face it would really get: Midnight's in the sans, the rest
+    /// in the serif or the marker — not all four in whichever face is on right now.
+    private func page(_ t: Theme, midnight: Bool = false) -> some View {
+        var look = doodle
+        look.midnight = midnight
+        return VStack(alignment: .leading, spacing: 5) {
             Text("Aa")
-                .font(doodle.face(15))
+                .font(look.face(15))
                 .foregroundStyle(t.ink)
             Capsule().fill(t.muted).frame(width: 26, height: 2)
             Capsule().fill(t.rule).frame(width: 17, height: 2)

@@ -37,7 +37,7 @@ struct WordDetail: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         let related = store.related(to: word, in: shelfID)
         ScrollView {
             // ponytail: ZStack, so the outgoing word overlaps the incoming one.
@@ -50,6 +50,7 @@ struct WordDetail: View {
                     HStack(alignment: .lastTextBaseline, spacing: 16) {
                         Text(word.term)
                             .font(doodle.face(64))
+                            .tracking(doodle.tracking(64))
                             .foregroundStyle(t.ink)
                             .lineLimit(1)
                             .minimumScaleFactor(0.4)
@@ -204,9 +205,7 @@ struct WordDetail: View {
             }
             .tint(t.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 24)
-            .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
-            .padding(.top, 34)
+            .entryBlock(t)
         } else if store.isBuilding(shelfID) {
             buildingBox(t)
         }
@@ -226,9 +225,7 @@ struct WordDetail: View {
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 24)
-        .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
-        .padding(.top, 34)
+        .entryBlock(t)
         .accessibilityLabel("Looking for related words")
     }
 
@@ -296,14 +293,33 @@ struct WordDetail: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 24)
-            .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
-            .padding(.top, 34)
+            .entryBlock(t)
         } else {
             Label("No example on file", systemImage: "book.closed")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(t.muted)
                 .padding(.top, 40)
+        }
+    }
+}
+
+private extension View {
+    /// How a section sits under the definition: below a hairline in Light and Dark,
+    /// or in a frosted tile of its own in Midnight. One place, so "Used as", the
+    /// same-vein box and its loading line can never disagree about the shape.
+    @ViewBuilder
+    func entryBlock(_ t: Theme) -> some View {
+        if t.tiles {
+            self
+                .padding(.horizontal, 22)
+                .padding(.vertical, 18)
+                .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(10)))
+                .padding(.top, 28)
+        } else {
+            self
+                .padding(.top, 24)
+                .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
+                .padding(.top, 34)
         }
     }
 }

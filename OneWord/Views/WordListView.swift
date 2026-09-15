@@ -44,7 +44,7 @@ struct WordListView: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        let t = Theme.of(scheme)
+        let t = Theme.of(scheme, doodle)
         let results = model.results(for: query)
         // Matches can come from anywhere, so each one has to say where from.
         // A pinned pane needs no tag — every row is the book in the title.
@@ -168,7 +168,7 @@ struct WordListView: View {
             emptyMark(t)
             VStack(spacing: 2) {
                 Text(headline)
-                    .font(doodle.face(30)).foregroundStyle(t.ink)
+                    .font(doodle.face(30)).tracking(doodle.tracking(30)).foregroundStyle(t.ink)
                 if !query.isEmpty {
                     Text("\u{201C}\(query)\u{201D}")
                         .font(doodle.face(30).italic()).foregroundStyle(t.ink)
