@@ -48,7 +48,7 @@ struct FeedbackView: View {
                         .font(doodle.face(19))
                         .foregroundStyle(theme.ink)
                     // Say plainly what gets sent. It is their name and address.
-                    Text("It reaches Hari with your name and email attached.")
+                    Text("It reaches the developer with your name and email attached.")
                         .font(.system(size: 11))
                         .foregroundStyle(theme.muted)
                         .fixedSize(horizontal: false, vertical: true)

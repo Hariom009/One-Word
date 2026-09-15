@@ -31,7 +31,7 @@ import SwiftUI
 /// arriving later is a single string, here, and nothing else moves.
 enum Glyph {
     case home, history, practice, bookmarks, dictionaries
-    case search, settings, profile
+    case search, settings, profile, feedback
     case learned, selected, bookmarked
 
     /// The SF Symbol. Always present — it is what the app has always drawn.
@@ -52,6 +52,7 @@ enum Glyph {
         case .search:       ("magnifyingglass", nil)
         case .settings:     ("gearshape", nil)
         case .profile:      ("person.crop.circle", nil)
+        case .feedback:     ("bubble.left", nil)
         case .learned:      ("checkmark.seal", "check_doodle")
         case .selected:     ("checkmark.circle.fill", "check_doodle")
         case .bookmarked:   ("bookmark.fill", "bookmark_doodle")

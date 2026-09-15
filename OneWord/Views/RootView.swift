@@ -64,6 +64,14 @@ struct RootView: View {
     /// Set in Profile. Empty means "keep following the Google account".
     /// The picture is `AccountAvatar`'s own business, so only the name is read here.
     @AppStorage("profileName") private var profileName = ""
+    /// The one-time "have a suggestion?" card. Flipped by its own close or Write
+    /// button and never consulted again. An inline card rather than a popover: a
+    /// macOS popover dismisses on any focus loss, so it closed itself at launch.
+    @AppStorage("suggestionCalloutSeen") private var calloutSeen = false
+    /// Owned here, like SettingsView owns its copy, so an unsent draft outlives
+    /// the dismissed sheet.
+    @State private var feedback = FeedbackViewModel()
+    @State private var writing = false
     @Environment(\.colorScheme) private var scheme
     @Environment(AuthViewModel.self) private var auth
 
@@ -126,8 +134,15 @@ struct RootView: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
             // The sidebar only exists behind the gate, so there is always a user to
             // show here — the corner is who you are, and the way in to Profile.
-            accountChip
+            VStack(spacing: 0) {
+                if !calloutSeen { suggestionCard }
+                HStack(spacing: 0) {
+                    accountChip
+                    feedbackButton
+                }
+            }
         }
+        .sheet(isPresented: $writing) { FeedbackView(theme: Theme.of(scheme), model: feedback) }
         .navigationSplitViewColumnWidth(min: 190, ideal: 215, max: 300)
     }
 
@@ -183,8 +198,68 @@ struct RootView: View {
         }
         .buttonStyle(.plain)
         .help("Show your profile")
-        .padding(.horizontal, 12)
+        .padding(.leading, 12)
         .padding(.vertical, 13)
+    }
+
+    private func write() {
+        calloutSeen = true
+        feedback.reset()
+        writing = true
+    }
+
+    /// The permanent way to the notepad, and what the one-time card sits above —
+    /// so closing the card never hides the way back.
+    private var feedbackButton: some View {
+        let t = Theme.of(scheme)
+        return Button(action: write) { 
+            GlyphIcon(.feedback)
+                .foregroundStyle(t.muted)
+                .padding(6)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help("Send a suggestion")
+        .accessibilityLabel("Send a suggestion")
+        .padding(.trailing, 6)
+    }
+
+    /// Shown once, on the first launch after it shipped. Close or Write hides it
+    /// for good; nothing else can.
+    private var suggestionCard: some View {
+        let t = Theme.of(scheme)
+        return VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .top) {
+                Text("Have a suggestion?")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(t.ink)
+                Spacer(minLength: 8)
+                Button { calloutSeen = true } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(t.muted)
+                        .padding(3)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Close")
+            }
+            Text("One line is enough. It goes straight to us.")
+                .font(.system(size: 12))
+                .foregroundStyle(t.muted)
+                .fixedSize(horizontal: false, vertical: true)
+            Button("Write a line", action: write)
+                .buttonStyle(.plain)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(t.ink)
+                .padding(.top, 6)
+        }
+        .padding(12)
+        .background(t.surface, in: RoundedRectangle(cornerRadius: 8))
+        .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(t.ink.opacity(0.1)))
+        .padding(.horizontal, 10)
+        .padding(.top, 8)
+        .transition(.opacity)
     }
 }
 
