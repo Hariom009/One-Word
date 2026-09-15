@@ -73,7 +73,7 @@ struct ProfileView: View {
             .padding(24)
         }
         .paneBackground(t)
-        .navigationTitle("Profile")
+        .paneHeader("Profile")
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             model.refresh()
         }

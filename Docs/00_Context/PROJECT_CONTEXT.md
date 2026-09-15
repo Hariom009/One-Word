@@ -26,13 +26,13 @@ just sits on the Mac's display and rotates daily.
   see [tools/gen_words](../../tools/gen_words/README.md) to regenerate/expand. `Word.hindi` is the
   Hindi rendering of the *definition* (context makes offline NMT reliable).
 - App UI done: `OneWordApp` → `HomeView` → `WordViewModel` (today's word + Hindi, MVVM).
-- Browse/search: `WordListView` lists a whole dictionary alphabetically with a toolbar search
-  field; a search button on the today screen opens it. `Wordbook` (`OneWord/Models/Wordbook.swift`) is
+- Browse/search: `WordListView` lists a whole dictionary alphabetically with a search field
+  in its pane header; the sidebar's Search (⌘K) opens it. `Wordbook` (`OneWord/Models/Wordbook.swift`) is
   the dictionary registry — four so far: **Everyday English** (`words.json`, 12k),
   **Emotions** (`emotions.json`, ~990), **Philosophy** (`philosophy.json`, ~140) and
   **Medical** (`medical.json`, ~1.7k) — the themed ones are dominant-sense filtered (no
   generic words), all from open WordNet (not the copyrighted books/MedlinePlus). Each
-  dictionary has its own word of the day; a toolbar picker switches them.
+  dictionary has its own word of the day; a chip in Home's header opens the Dictionaries pane to switch them.
 - **Widget Extension target `OneWordWidget` now exists and is live.** Builds green, the
   `.appex` embeds in the app, and the system registers it (`pluginkit -m | grep OneWord`).
   Drop it on the desktop via right-click desktop ▸ Edit Widgets ▸ "Word of the Day".

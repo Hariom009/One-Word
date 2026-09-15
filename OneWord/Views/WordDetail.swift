@@ -24,12 +24,13 @@ struct WordDetail: View {
     /// re-opened from a list gets logged against whatever dictionary happens to be
     /// selected, which reads as a second sighting that never happened.
     var shelf: String? = nil
+    /// Home and History host the word inside their own pane: they paint the ground
+    /// and put `WordActions` in their header, so the page draws neither.
+    var embedded = false
     @Environment(\.colorScheme) private var scheme
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @State private var showRelated = false
-    @State private var bookmarked = false
-    @State private var stretch: CGFloat = 1
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
 
@@ -37,9 +38,21 @@ struct WordDetail: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
+        if embedded {
+            page
+        } else {
+            // A screen of its own, pushed from a list or a related word: its own
+            // ground, and its buttons in its own header.
+            page
+                .paneBackground(Theme.of(scheme, doodle))
+                .paneHeader(back: true) { WordActions(word: word) }
+        }
+    }
+
+    private var page: some View {
         let t = Theme.of(scheme, doodle)
         let related = store.related(to: word, in: shelfID)
-        ScrollView {
+        return ScrollView {
             // ponytail: ZStack, so the outgoing word overlaps the incoming one.
             // In the ScrollView's own stack the fading copy keeps its slot and
             // shunts the new word down the page on its way out.
@@ -101,7 +114,6 @@ struct WordDetail: View {
         }
         .animation(.easeInOut(duration: 0.22), value: word.term)
         .scrollContentBackground(.hidden)
-        .paneBackground(t)
         // Re-fires on dictionary change and on every pop back; load is idempotent.
         .task(id: shelfID) { store.load(shelfID) }
         // Every full-view route ends at THIS view — today's word, a peek, a search
@@ -110,51 +122,6 @@ struct WordDetail: View {
         // render; the term catches HomeView swapping the word underneath us.
         .onChange(of: word.term, initial: true) {
             LearnedWords.record(word, in: learnedIn)
-            bookmarked = SavedWords.contains(word)
-        }
-        // The Bookmarks pane can un-bookmark the word under us, and a Services
-        // catch bookmarks one — either way the star has to agree with the store.
-        .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
-            bookmarked = SavedWords.contains(word)
-        }
-        // in WordDetail, not HomeView, so the list's detail screen gets it too
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                // Learned is everything you've read; this is the shelf you curate.
-                Button {
-                    bookmarked = SavedWords.toggle(word)
-                    // A ribbon being pulled: it lengthens downward, then settles.
-                    withAnimation(.easeOut(duration: 0.25)) { stretch = 1.22 }
-                    withAnimation(.easeInOut(duration: 0.35).delay(0.25)) { stretch = 1 }
-                } label: {
-                    // The ribbon stays for as long as it's bookmarked — the glyph is
-                    // the state, so it lands only once the stretch has settled.
-                    BookmarkRibbon(filled: bookmarked)
-                        .accessibilityLabel(bookmarked ? "Remove Bookmark" : "Bookmark")
-                        .animation(.easeInOut(duration: 0.3).delay(0.55), value: bookmarked)
-                        // anchor: .top — the top edge is pinned, all the growth is
-                        // downward. Applied outside the .animation above so it runs
-                        // on the button's own transaction, not the delayed one.
-                        .scaleEffect(y: stretch, anchor: .top)
-                }
-                .disabled(word.term == SavedWords.placeholder.term)
-                .help(bookmarked ? "Remove \(word.term) from Bookmarks"
-                                 : "Bookmark \(word.term)")
-            }
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
-                    let utterance = AVSpeechUtterance(string: word.term)
-                    // Urdu headwords are Devanagari — an en-US voice reads them as silence.
-                    // Derived from the term, not the book, so any future script lands too.
-                    let devanagari = word.term.unicodeScalars.contains { (0x900...0x97F).contains($0.value) }
-                    utterance.voice = AVSpeechSynthesisVoice(language: devanagari ? "hi-IN" : "en-US")
-                    speaker.speak(utterance)
-                } label: {
-                    Label("Pronounce", systemImage: "speaker.wave.2")
-                }
-                .help("Pronounce \(word.term)")
-            }
         }
     }
 
@@ -299,6 +266,59 @@ struct WordDetail: View {
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(t.muted)
                 .padding(.top, 40)
+        }
+    }
+}
+
+/// A word's own buttons — keep it, hear it — for whichever header shows the word:
+/// its own when pushed, Home's or History's when they host it. The bookmark state
+/// lives here, beside the one button that changes it.
+struct WordActions: View {
+    let word: Word
+    @State private var bookmarked = false
+    @State private var stretch: CGFloat = 1
+
+    var body: some View {
+        HStack(spacing: 6) {
+            // Learned is everything you've read; this is the shelf you curate.
+            Button {
+                bookmarked = SavedWords.toggle(word)
+                // A ribbon being pulled: it lengthens downward, then settles.
+                withAnimation(.easeOut(duration: 0.25)) { stretch = 1.22 }
+                withAnimation(.easeInOut(duration: 0.35).delay(0.25)) { stretch = 1 }
+            } label: {
+                // The ribbon stays for as long as it's bookmarked — the glyph is
+                // the state, so it lands only once the stretch has settled.
+                BookmarkRibbon(filled: bookmarked)
+                    .accessibilityLabel(bookmarked ? "Remove Bookmark" : "Bookmark")
+                    .animation(.easeInOut(duration: 0.3).delay(0.55), value: bookmarked)
+                    // anchor: .top — the top edge is pinned, all the growth is
+                    // downward. Applied outside the .animation above so it runs
+                    // on the button's own transaction, not the delayed one.
+                    .scaleEffect(y: stretch, anchor: .top)
+            }
+            .disabled(word.term == SavedWords.placeholder.term)
+            .help(bookmarked ? "Remove \(word.term) from Bookmarks"
+                             : "Bookmark \(word.term)")
+
+            Button {
+                speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
+                let utterance = AVSpeechUtterance(string: word.term)
+                // Urdu headwords are Devanagari — an en-US voice reads them as silence.
+                // Derived from the term, not the book, so any future script lands too.
+                let devanagari = word.term.unicodeScalars.contains { (0x900...0x97F).contains($0.value) }
+                utterance.voice = AVSpeechSynthesisVoice(language: devanagari ? "hi-IN" : "en-US")
+                speaker.speak(utterance)
+            } label: {
+                Label("Pronounce", systemImage: "speaker.wave.2")
+            }
+            .help("Pronounce \(word.term)")
+        }
+        .onChange(of: word.term, initial: true) { bookmarked = SavedWords.contains(word) }
+        // The Bookmarks pane can un-bookmark the word under us, and a Services
+        // catch bookmarks one — either way the ribbon has to agree with the store.
+        .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
+            bookmarked = SavedWords.contains(word)
         }
     }
 }

@@ -2,9 +2,9 @@
 //  RootView.swift
 //  OneWord
 //
-//  The window shell: a sidebar of sections beside the reading pane. Each pane
-//  sets its own navigationTitle and toolbar, so the unified title bar adapts to
-//  whatever is showing instead of carrying every button all the time.
+//  The window shell: a sidebar of sections beside the reading pane. The window
+//  has no toolbar — each pane draws its own header (PaneHeader.swift) with just
+//  the buttons it needs, so the strip adapts to whatever is showing.
 //
 //  It is also the gate. Signed out, the whole shell is replaced by SignInView —
 //  no pane, no search, no dictionary is reachable without a session. The widget
@@ -59,6 +59,9 @@ enum Pane: Hashable, Identifiable {
 
 struct RootView: View {
     @State private var pane: Pane = Pane.launchPane ?? .home
+    /// Bound so a pane's header can fold the sidebar: with no toolbar there is no
+    /// stock toggle to do it.
+    @State private var columns: NavigationSplitViewVisibility = .all
     /// Settings can hide the Practice row; the pane itself is unreachable then.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
     /// Set in Profile. Empty means "keep following the Google account".
@@ -102,19 +105,17 @@ struct RootView: View {
     /// Everything behind the gate.
     private var shell: some View {
         let t = Theme.of(scheme, doodle)
-        return NavigationSplitView {
+        return NavigationSplitView(columnVisibility: $columns) {
             sidebar
         } detail: {
             // One stack per pane: related words and list rows still push, and a
             // pane switch drops whatever was pushed on top of the old one.
             NavigationStack { detail }
         }
+        .environment(\.sidebar, $columns)
         // Midnight's periwinkle on the sidebar selection and every stock control;
         // nil leaves Light and Dark on the system accent they've always had.
         .tint(doodle.midnight ? t.accent : nil)
-        // macOS paints its own grey behind the toolbar; Midnight lets the navy run under it.
-        .toolbarBackground(doodle.midnight ? .hidden : .automatic, for: .windowToolbar)
-        .midnightScrollEdge(doodle.midnight)
     }
 
     @ViewBuilder private var detail: some View {
@@ -158,6 +159,11 @@ struct RootView: View {
         .background(doodle.midnight ? Theme.midnight.background : .clear)
         .sheet(isPresented: $writing) { FeedbackView(theme: Theme.of(scheme, doodle), model: feedback) }
         .navigationSplitViewColumnWidth(min: 190, ideal: 215, max: 300)
+        // The stock toggle is the one toolbar item a split view adds by itself, so
+        // without it the window has no toolbar — which in full screen macOS would
+        // paint grey in a window of its own. PaneHeader carries the toggle instead.
+        // Not `.toolbar(.hidden, for: .windowToolbar)`: that hid the traffic lights too.
+        .toolbar(removing: .sidebarToggle)
     }
 
     /// A sidebar row. `Label`'s systemImage form can only take an SF Symbol, so
@@ -274,15 +280,6 @@ struct RootView: View {
         .padding(.horizontal, 10)
         .padding(.top, 8)
         .transition(.opacity)
-    }
-}
-
-private extension View {
-    /// macOS 26's hard scroll edge is the grey slab; soft fades text out under
-    /// the glass toolbar instead. Before 26 there is no edge effect to change.
-    @ViewBuilder func midnightScrollEdge(_ on: Bool) -> some View {
-        if #available(macOS 26, *) { scrollEdgeEffectStyle(on ? .soft : nil, for: .top) }
-        else { self }
     }
 }
 

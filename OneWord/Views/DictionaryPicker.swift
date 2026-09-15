@@ -174,7 +174,7 @@ struct DictionaryPicker: View {
         DictionaryShelf(selection: $dictionaryID) { _ in
             WidgetCenter.shared.reloadAllTimelines()
         }
-        .navigationTitle("Dictionaries")
+        .paneHeader("Dictionaries")
     }
 }
 

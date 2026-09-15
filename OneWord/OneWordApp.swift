@@ -36,5 +36,8 @@ struct OneWordApp: App {
                 .preferredColorScheme((Appearance(rawValue: appearance) ?? .system).colorScheme)
         }
         .defaultSize(width: 1000, height: 680)
+        // Title bar hidden, traffic lights kept: every pane draws its own header,
+        // and RootView switches the window's toolbar off.
+        .windowStyle(.hiddenTitleBar)
     }
 }

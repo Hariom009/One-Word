@@ -12,7 +12,7 @@
 |---|---|
 | **App** | One Word — a "word a day" vocabulary app |
 | **Platform** | macOS 14+ (Sonoma). Native desktop app **+ a desktop/Notification-Center widget**. |
-| **Tech** | SwiftUI, MVVM (design in SwiftUI-friendly terms — system materials, SF Symbols, toolbars). |
+| **Tech** | SwiftUI, MVVM (design in SwiftUI-friendly terms — system materials, SF Symbols, in-pane headers). |
 | **Languages** | Bilingual: **English + Hindi (Devanagari)**. Every word shows a Hindi meaning. |
 | **Current look** | Plain, unstyled native SwiftUI. **No visual identity yet — that's what needs designing.** |
 
@@ -97,8 +97,8 @@ from Everyday English for now). Design the picker so it scales to more dictionar
 - **Content:** `term` (hero), `partOfSpeech`, `hindi`, `definition`, `example`.
 - **Current layout:** left-aligned vertical stack — big bold term, italic part of speech,
   Hindi line, definition, quoted example. Plain.
-- **Toolbar (top):** a **Search button** (magnifying-glass) and a **Dictionary picker**
-  (book icon + name) beside it.
+- **Header (top of the pane — there is no window toolbar):** the app name and today's date
+  on the left; the **Dictionary chip**, New Word, Bookmark and Pronounce on the right.
 - **Design goal:** this is the signature screen. Make one word feel special — strong
   typographic hierarchy, generous space, maybe a subtle date ("Word for July 25"). The
   Hindi should feel like a first-class part of the entry, not an afterthought.
@@ -134,20 +134,22 @@ from Everyday English for now). Design the picker so it scales to more dictionar
 
 ```
 Word of the Day (home)
-   ├─ [toolbar] Search ───────────► All Words (list + search + dictionary picker)
+   ├─ [sidebar] Search ───────────► All Words (list + search field in its header)
    │                                     └─ tap a word ──► Word Detail
-   └─ [toolbar] Dictionary picker (shared with the list)
+   └─ [header] Dictionary chip (shared with the list)
 
 Widget (separate, on desktop) ── Word of the Day + refresh button
 ```
 
 Single-window macOS app, `NavigationStack` (push/back). The dictionary selection is shared
-between the home toolbar and the list.
+between the home header and the list.
 
 ## 8. Constraints & specifics
 
-- **macOS-native conventions:** window toolbar, SF Symbols, system materials
+- **macOS-native conventions:** SF Symbols, system materials
   (`.regularMaterial`, `.fill.tertiary` for the widget background), standard control sizes.
+- **No window toolbar.** Each pane draws its own header (`PaneHeader`) on its own ground, so
+  every appearance owns the top edge — in full screen too, where macOS paints a toolbar grey.
 - **Bilingual typography:** English (Latin) **and** Hindi (Devanagari) must both look good.
   Pick/pair fonts that render Devanagari well; mind line-height and vertical rhythm when the
   two scripts sit together.

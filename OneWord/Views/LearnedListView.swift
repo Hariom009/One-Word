@@ -69,9 +69,10 @@ struct LearnedListView: View {
             }
         }
         .paneBackground(t)
-        .navigationTitle("Learned")
-        // ponytail: the native search field, not a hand-rolled top bar.
-        .searchable(text: $query, prompt: "Search \(log.count) words")
+        // Only ever pushed, from Profile.
+        .paneHeader("Learned", back: true) {
+            HeaderSearchField(prompt: "Search \(log.count) words", text: $query)
+        }
         .onAppear { log = LearnedWords.log; rebuild() }
         // Reading a word pushed off this very list adds to it, so it has to catch
         // up on the way back — .onAppear doesn't re-run on a pop.

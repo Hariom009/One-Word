@@ -85,18 +85,6 @@ struct SentenceView: View {
             rolledToken = rollToken
             await performRoll()
         }
-        .navigationTitle("Practice")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: pronounce) {
-                    Label("Pronounce", systemImage: "speaker.wave.2")
-                }
-                // Speaking the German before you have asked for it is the answer,
-                // read aloud. Rolling is unrevealed too, so this covers that as well.
-                .disabled(!revealed)
-                .help("Pronounce the German sentence")
-            }
-        }
         // One element, one label: the reel changes identity 12 times a roll, and
         // without this VoiceOver announces every step of it.
         .accessibilityElement(children: .ignore)
@@ -117,6 +105,17 @@ struct SentenceView: View {
                 .keyboardShortcut(.space, modifiers: [])
                 .opacity(0)
                 .accessibilityHidden(true)
+        }
+        // Last, so the header sits outside the pane's one accessibility element and
+        // its tap-to-advance: a click on Pronounce must not also roll the reel.
+        .paneHeader("Practice") {
+            Button(action: pronounce) {
+                Label("Pronounce", systemImage: "speaker.wave.2")
+            }
+            // Speaking the German before you have asked for it is the answer,
+            // read aloud. Rolling is unrevealed too, so this covers that as well.
+            .disabled(!revealed)
+            .help("Pronounce the German sentence")
         }
     }
 
@@ -184,7 +183,7 @@ struct SentenceView: View {
     }
 
     /// The Pronounce button's action, and what the auto-speak setting fires on
-    /// reveal — one path, so the toolbar and the setting can never drift.
+    /// reveal — one path, so the header button and the setting can never drift.
     private func pronounce() {
         speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
         let utterance = AVSpeechUtterance(string: shown.de)

@@ -206,7 +206,7 @@ struct SettingsView: View {
             .padding(24)
         }
         .paneBackground(t)
-        .navigationTitle("Settings")
+        .paneHeader("Settings")
         // `t`, not the sheet's own scheme read: a sheet is its own window, so it
         // is handed the theme this pane is painted with.
         .sheet(isPresented: $writing) { FeedbackView(theme: t, model: feedback) }

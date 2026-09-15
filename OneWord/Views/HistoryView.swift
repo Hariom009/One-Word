@@ -38,22 +38,22 @@ struct HistoryView: View {
             Divider().overlay(t.hairline)
             // The book travels with the word: reading an old Medicine day must log
             // and draw its related words there, not in whatever Home has open.
-            WordDetail(word: model.word, shelf: book.id)
+            // Embedded: one ground and one header across rail and word, so the glow
+            // is a single light rather than one per column.
+            WordDetail(word: model.word, shelf: book.id, embedded: true)
         }
         .paneBackground(t)
-        .navigationTitle("History")
-        .toolbar {
-            ToolbarItemGroup(placement: .navigation) {
-                // Bare arrows: nothing in this pane types, and walking day by day
-                // is the whole job here.
-                Button { step(-1) } label: { Label("Previous Day", systemImage: "chevron.left") }
-                    .keyboardShortcut(.leftArrow, modifiers: [])
-                    .help("Previous day (\u{2190})")
-                Button { step(1) } label: { Label("Next Day", systemImage: "chevron.right") }
-                    .keyboardShortcut(.rightArrow, modifiers: [])
-                    .help("Next day (\u{2192})")
-                    .disabled(calendar.isDateInToday(date))
-            }
+        .paneHeader("History") {
+            // Bare arrows: nothing in this pane types, and walking day by day
+            // is the whole job here.
+            Button { step(-1) } label: { Label("Previous Day", systemImage: "chevron.left") }
+                .keyboardShortcut(.leftArrow, modifiers: [])
+                .help("Previous day (\u{2190})")
+            Button { step(1) } label: { Label("Next Day", systemImage: "chevron.right") }
+                .keyboardShortcut(.rightArrow, modifiers: [])
+                .help("Next day (\u{2192})")
+                .disabled(calendar.isDateInToday(date))
+            WordActions(word: model.word)
         }
         .sheet(isPresented: $picking) { picker(t) }
         .onAppear { show() }

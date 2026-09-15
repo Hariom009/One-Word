@@ -27,7 +27,6 @@ struct WordListView: View {
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @State private var model: WordListViewModel
     @State private var query = ""
-    @State private var searching = false
     @State private var hovered: String?
     @Environment(\.colorScheme) private var scheme
 
@@ -77,35 +76,28 @@ struct WordListView: View {
             }
         }
         .paneBackground(t)
-        .navigationTitle(wordbook?.shortName ?? "Search")
-        // ponytail: the native search field, same as the Learned pane. The
-        // hand-rolled top bar this replaces put a boxed field and a rule above
-        // every list, including a Bookmarks pane holding three words.
-        .searchable(text: $query, isPresented: $searching,
-                    prompt: everywhere ? "Search every dictionary" : "Search \(model.count) words")
-        .toolbar {
+        // The field rides in the header strip — no row of its own above the list,
+        // which a Bookmarks pane holding three words never needed.
+        .paneHeader(wordbook?.shortName ?? "Search") {
             // How many you've kept. Only Bookmarks — every other pane's total is
             // already in the search prompt, and it never changes while you look at it.
             if wordbook?.id == SavedWords.resource {
-                ToolbarItem {
-                    HStack(spacing: 6) {
-                        BookmarkRibbon(size: 18)
-                        Text("\(model.count)")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(t.muted)
-                            .contentTransition(.numericText())
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .help("\(model.count) bookmarked words")
-                    .accessibilityLabel("\(model.count) bookmarked words")
+                HStack(spacing: 6) {
+                    BookmarkRibbon(size: 18)
+                    Text("\(model.count)")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(t.muted)
+                        .contentTransition(.numericText())
                 }
+                .padding(.horizontal, 6)
+                .help("\(model.count) bookmarked words")
+                .accessibilityLabel("\(model.count) bookmarked words")
             }
+            // ⌘K from the sidebar should land in the field, so only Search takes
+            // focus; Bookmarks waits to be clicked.
+            HeaderSearchField(prompt: everywhere ? "Search every dictionary" : "Search \(model.count) words",
+                              text: $query, focusOnAppear: everywhere)
         }
-        // ⌘K from the sidebar should land in the field. Only in Search —
-        // Bookmarks keeps the field collapsed to its toolbar button, which is
-        // the whole point of dropping the old always-on top bar.
-        .onAppear { if everywhere { searching = true } }
         // Bookmarks isn't a bundled file — a catch or a bookmark while this pane is
         // open changes it.
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
