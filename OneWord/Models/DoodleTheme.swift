@@ -7,10 +7,10 @@
 //  editorial serif, some want the marker face next to the app's own symbols, and
 //  some want the lot. So `icons` and `handwriting` are stored apart and read apart.
 //
-//  It carries Midnight too. Not a doodle — but Midnight is the other thing that
-//  changes the display face (to Plus Jakarta Sans), and `face()` is the one place
-//  the face is decided. Midnight itself is an Appearance, stored beside light and
-//  dark; this value only reports whether it is the one picked.
+//  It carries the appearance too. Not a doodle — but an appearance is the other
+//  thing that can change the display face (Midnight's is Plus Jakarta Sans), and
+//  `face()` is the one place the face is decided. The appearance is stored beside
+//  the doodle switches' own keys; this value carries which one is picked.
 //
 //  App-only, in the standard defaults (like `appearance`, unlike `showHindi`):
 //  neither the doodle art nor the Pulpen face is in the widget's bundle, so an App
@@ -67,16 +67,18 @@ enum Glyph {
 
 // MARK: - The theme
 
-/// Which half of the doodle theme is on, and whether Midnight is. A value, not a
-/// store: `OneWordApp` reads the defaults and puts one of these in the environment.
+/// Which half of the doodle theme is on, and which appearance is picked. A value,
+/// not a store: `OneWordApp` reads the defaults and puts one of these in the environment.
 nonisolated struct DoodleTheme: Equatable {
     /// Hand-drawn drawings in place of SF Symbols.
     var icons = false
     /// Pulpen Snowman in place of the editorial serif.
     var handwriting = false
-    /// The Midnight appearance: Plus Jakarta Sans for the display face, and the
-    /// navy palette through `Theme.of(_:_:)`.
-    var midnight = false
+    /// The appearance picked in Settings. It decides the palette through
+    /// `Theme.of(_:_:)`, and Midnight also changes the display face to Plus Jakarta
+    /// Sans. The appearance itself rather than a flag per theme, so a new one is a
+    /// case the compiler walks through every switch.
+    var appearance: Appearance = .system
 
     /// The app as it has always looked, and the right default for a `#Preview`
     /// that doesn't say otherwise.
@@ -92,8 +94,9 @@ nonisolated struct DoodleTheme: Equatable {
     static var current: DoodleTheme {
         DoodleTheme(icons: UserDefaults.standard.bool(forKey: iconsKey),
                     handwriting: UserDefaults.standard.bool(forKey: handwritingKey),
-                    midnight: UserDefaults.standard.string(forKey: "appearance")
-                        == Appearance.midnight.rawValue)
+                    // A missing or unknown string is System, as it is at the app root.
+                    appearance: UserDefaults.standard.string(forKey: "appearance")
+                        .flatMap(Appearance.init(rawValue:)) ?? .system)
     }
 
     // MARK: The face
@@ -137,8 +140,8 @@ nonisolated struct DoodleTheme: Equatable {
             return .custom(light ? Self.lightFace : Self.regularFace,
                            fixedSize: size * Self.opticalScale)
         }
-        if midnight {
-            // Regular reads thin set light-on-navy, so regular asks draw at medium;
+        if appearance == .midnight {
+            // Regular reads thin set light-on-dark, so regular asks draw at medium;
             // every other weight is taken as meant.
             return .custom(Self.sansFamily, fixedSize: size * Self.sansScale)
                 .weight(weight == .regular ? .medium : weight)
@@ -151,18 +154,24 @@ nonisolated struct DoodleTheme: Equatable {
     /// the marker were spaced for their own tracking and get none. Only the big set
     /// pieces ask — at row size the sans keeps its natural spacing.
     func tracking(_ size: CGFloat) -> CGFloat {
-        midnight && !handwriting ? -size * Self.sansScale * 0.03 : 0
+        appearance == .midnight && !handwriting ? -size * Self.sansScale * 0.03 : 0
     }
 }
 
 // MARK: - The palette
 
 extension Theme {
-    /// The palette a pane paints with: Midnight's navy when that appearance is
-    /// picked, otherwise paper or night by the scheme. App-side only — the widget
-    /// has no DoodleTheme and keeps calling `Theme.of(scheme)`.
+    /// The palette a pane paints with: the appearance's own when it brings one,
+    /// otherwise paper or night by the scheme. App-side only, and here rather than in
+    /// Theme.swift on purpose — that file is compiled into the widget, which has no
+    /// Appearance and no DoodleTheme.
     static func of(_ scheme: ColorScheme, _ look: DoodleTheme) -> Theme {
-        look.midnight ? .midnight : .of(scheme)
+        // No `default`: a new appearance has to name its palette here to compile.
+        switch look.appearance {
+        case .midnight:              return .midnight
+        case .umber:                 return .umber
+        case .system, .light, .dark: return .of(scheme)
+        }
     }
 }
 

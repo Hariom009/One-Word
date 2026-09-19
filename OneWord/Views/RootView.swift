@@ -113,9 +113,9 @@ struct RootView: View {
             NavigationStack { detail }
         }
         .environment(\.sidebar, $columns)
-        // Midnight's periwinkle on the sidebar selection and every stock control;
-        // nil leaves Light and Dark on the system accent they've always had.
-        .tint(doodle.midnight ? t.accent : nil)
+        // A painted appearance's own accent on the sidebar selection and every stock
+        // control; nil leaves Light and Dark on the system accent they've always had.
+        .tint(doodle.appearance.paintsPalette ? t.accent : nil)
     }
 
     @ViewBuilder private var detail: some View {
@@ -132,7 +132,8 @@ struct RootView: View {
     }
 
     private var sidebar: some View {
-        List(selection: $pane) {
+        let t = Theme.of(scheme, doodle)
+        return List(selection: $pane) {
             ForEach([Pane.home, .history, .practice, .bookmarks]
                         .filter { $0 != .practice || practiceEnabled }) { item in
                 row(item).tag(item)
@@ -153,11 +154,13 @@ struct RootView: View {
                 }
             }
         }
-        // The stock sidebar is a grey material. Midnight paints its navy through it,
-        // so the window reads as one ground; Light and Dark keep the material.
-        .scrollContentBackground(doodle.midnight ? .hidden : .automatic)
-        .background(doodle.midnight ? Theme.midnight.background : .clear)
-        .sheet(isPresented: $writing) { FeedbackView(theme: Theme.of(scheme, doodle), model: feedback) }
+        // The stock sidebar is a grey material. A painted appearance takes it over with
+        // the panes' own ground — Midnight's band included, which has no x in it, so it
+        // meets the pane's copy across the divider and the window reads as one surface.
+        // Light and Dark keep the material.
+        .scrollContentBackground(doodle.appearance.paintsPalette ? .hidden : .automatic)
+        .background { if doodle.appearance.paintsPalette { PaneGround(t: t) } }
+        .sheet(isPresented: $writing) { FeedbackView(theme: t, model: feedback) }
         .navigationSplitViewColumnWidth(min: 190, ideal: 215, max: 300)
         // The stock toggle is the one toolbar item a split view adds by itself, so
         // without it the window has no toolbar — which in full screen macOS would

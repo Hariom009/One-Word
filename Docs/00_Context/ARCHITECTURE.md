@@ -75,6 +75,42 @@ policy: .after(midnight))`). No timers, no background fetch.
   models and the timeline provider so both can be tested with a stub list.
 - Keep `words.json` the single source of word data; don't duplicate copy in code.
 
+## Appearances — adding a theme
+
+An appearance is a `case` of `Appearance` (`Models/`) and, if it brings its own palette, a
+`static let` on `Theme` (`Shared/`). Every pane reads colour as `t.<token>` and every corner
+as `t.radius(_:)`, so a new theme is values, not view code.
+
+1. Add the `case` to `Appearance`. Its three switches — `name`, `colorScheme`,
+   `paintsPalette` — have no `default`, so the file won't compile until each answers.
+2. Build. The compiler now names the two remaining sites: `Theme.of(_:_:)` in
+   `DoodleTheme.swift` and `AppearanceTile.preview` in `SettingsView.swift`. **Never answer
+   either with `default:`** — that failure is the checklist.
+3. Add the palette as a `static let` on `Theme`. Leave `roundness`, `glow` and `tiles` out
+   unless the theme needs them; the defaults are square corners, no band, hairline sections.
+4. Compute contrast for ink, definition, example, muted and accent against both `background`
+   and `surface` before shipping. AA is the floor.
+
+Rules that have already cost something:
+
+- **Give it an opaque `surface` unless there is a reason not to.** Anything outside the app's
+  own windows — a popover — doesn't inherit the appearance override, and a see-through
+  surface lands on whatever the system drew. Midnight's is translucent on purpose (the
+  frosted read over its band) and pays for it: `InfoButton` paints `background` underneath.
+- **`Theme.swift` names nothing app-only.** It is compiled into the widget (for `Font.serif`)
+  and into `tools/check_learned.sh` by path; neither has `Appearance` or `DoodleTheme`. That
+  is why palette resolution lives in `DoodleTheme.swift`'s `extension Theme`.
+- **`Appearance` and `DoodleTheme` are `nonisolated` and never touch a `Theme`**, which is
+  MainActor by the project default. Resolve palettes only in `Theme.of(_:_:)`.
+- **A stored raw value is forever.** `appearance` is a string in `UserDefaults`; renaming a
+  shipped case silently drops its users to System.
+- **The band is in points and has no x in it** (`PaneGround`). `PaneHeader` repaints the
+  pane's ground in a 52pt strip, and the sidebar paints it too; a gradient sized to its
+  bounds would show a seam at both. A second glowing theme should reuse the band, and only
+  then promote its height and stops to `Theme` fields.
+- The type is still called `DoodleTheme` though it now carries the appearance. Known
+  misnomer; a rename touches every pane for no behaviour.
+
 ## Testing seam
 `WordProvider.word(for:)` and `WordViewModel` are pure over an injected word list — unit-test
 date→word mapping (boundaries: day rollover, list wrap-around) without WidgetKit or SwiftUI.

@@ -3,9 +3,12 @@
 //  OneWord — Shared (app + widget)
 //
 //  Light and Dark are monochrome: white paper / black night, everything on it a
-//  gray between the two. Midnight is the one palette with a hue in it — a navy
-//  ground, frosted tiles, a periwinkle accent — and only the app paints with it
-//  (DoodleTheme.swift's `Theme.of(_:_:)`). The widget resolves Theme.of(colorScheme).
+//  gray between the two. Midnight is the one palette with a hue in it — a near-black
+//  ground under a band of deep blue, frosted tiles, a light-blue accent — and only
+//  the app paints with it (DoodleTheme.swift's `Theme.of(_:_:)`). The widget reads
+//  no Theme at all: it paints black or white by the scheme, and is in this file's
+//  audience only for `Font.serif`. So nothing app-only may be named here. Umber is
+//  the other painted palette: warm, flat and opaque, with no glow at all.
 //  ponytail: uses the system serif (New York) for headwords; bundle Newsreader +
 //  Tiro Devanagari fonts later for pixel-exact type.
 //
@@ -19,14 +22,15 @@ struct Theme {
     let muted: Color        // part of speech, labels
     let definition: Color
     let example: Color
-    let accent: Color       // emphasis — ink, not a hue (Midnight's is periwinkle)
+    let accent: Color       // emphasis — ink, not a hue (Midnight's is a light blue)
     let rule: Color         // the Hindi left border
     let hairline: Color     // dividers
     /// Corner multiplier. 1 draws every radius exactly as its call site wrote it;
     /// Midnight's big tiles and pill controls are those same call sites, scaled.
     var roundness: CGFloat = 1
-    /// A light from the top of each pane, painted under its content by
-    /// `paneBackground(_:)`. Clear draws none.
+    /// A light across the top of each pane, painted under its content by
+    /// `paneBackground(_:)`. This is the band's peak colour, drawn opaque at the top
+    /// edge and faded out below it. Clear draws none.
     var glow: Color = .clear
     /// Entry sections as filled tiles rather than blocks under a hairline.
     var tiles = false
@@ -60,44 +64,89 @@ struct Theme {
     )
 
     /// Dark-only: choosing Midnight forces the dark scheme, so it has no paper half.
-    /// Surfaces are white laid over the navy rather than greys of their own, which
-    /// is what keeps a tile reading as frosted glass instead of a grey box.
+    /// A neutral near-black ground with a band of deep blue across its top edge.
+    /// Surfaces are white laid over that ground rather than greys of their own, which
+    /// is what keeps a tile reading as frosted glass instead of a grey box — over the
+    /// band a tile picks the blue up. The price of a see-through surface: anything
+    /// outside the app's own windows (a popover) must paint `background` under it.
     static let midnight = Theme(
-        background: Color(hex: 0x080F1B),
-        surface:    Color.white.opacity(0.09),
+        background: Color(hex: 0x0F0F0F),
+        surface:    Color.white.opacity(0.07),
         ink:        Color(hex: 0xFBFBFC),
         muted:      Color.white.opacity(0.55),
         definition: Color.white.opacity(0.86),
         example:    Color.white.opacity(0.7),
-        accent:     Color(hex: 0xA5B4FC),
-        rule:       Color(hex: 0xA5B4FC).opacity(0.6),
+        accent:     Color(hex: 0xA8C7FA),
+        rule:       Color(hex: 0xA8C7FA).opacity(0.6),
         hairline:   Color.white.opacity(0.08),
         roundness:  2.2,
-        glow:       Color(hex: 0x3B5BDB),
+        glow:       Color(hex: 0x15204E),
         tiles:      true
+    )
+
+    /// Dark-only, and Midnight's opposite on every axis: where that one gets its depth
+    /// from light — a band, glass over it — this one gets it from temperature, and
+    /// nothing glows or floats. A warm charcoal lifted just off black so it reads as
+    /// stock rather than void, parchment ink, and one hue, brass, spent on the Hindi
+    /// rule. It keeps the serif, the hairlines and the corners as drawn, so roundness,
+    /// glow and tiles are left at their defaults on purpose. Surfaces are opaque.
+    static let umber = Theme(
+        background: Color(hex: 0x161412),
+        surface:    Color(hex: 0x1F1C19),
+        ink:        Color(hex: 0xEDE6DA),
+        muted:      Color(hex: 0x9C9284),
+        definition: Color(hex: 0xDDD5C8),
+        example:    Color(hex: 0xB9AFA0),
+        accent:     Color(hex: 0xD0A667),
+        rule:       Color(hex: 0xD0A667).opacity(0.55),
+        hairline:   Color(hex: 0xEDE6DA).opacity(0.10)
     )
 
     static func of(_ scheme: ColorScheme) -> Theme { scheme == .dark ? .dark : .light }
 }
 
-extension View {
-    /// A pane's ground: the palette's background and, in Midnight, its glow from the
-    /// top. Under the content on purpose — the glow was first a blend-mode overlay
-    /// across the whole detail pane, and that re-composites everything beneath it on
-    /// every frame that moves: scrolls, pushes, pane switches.
-    func paneBackground(_ t: Theme) -> some View {
-        background {
-            ZStack {
-                t.background
+/// A pane's ground: the palette's background and, where the palette has a glow, a
+/// band of it across the top edge. A view of its own so the sidebar can paint the
+/// same ground the panes do.
+struct PaneGround: View {
+    let t: Theme
+
+    /// In points, never a share of the bounds. `PaneHeader` paints this same ground
+    /// again in a 52pt strip over the pane, and the two only meet without a seam if
+    /// the band is the same size in both. There is no x in it either, so the
+    /// sidebar's copy meets the pane's at any column width — and nothing re-centres
+    /// while the sidebar folds.
+    private static let bandHeight: CGFloat = 330
+
+    var body: some View {
+        t.background
+            .overlay(alignment: .top) {
                 if t.glow != .clear {
-                    // Plain alpha, no blend mode: 0.34 over the navy lands on the
-                    // colour the old 0.3 additive glow reached at its centre.
-                    RadialGradient(colors: [t.glow.opacity(0.34), t.glow.opacity(0)],
-                                   center: .top, startRadius: 0, endRadius: 560)
+                    // Plain alpha, no blend mode. Full at the edge, half by 45% of
+                    // the band, gone at its foot — and faded to the glow at zero
+                    // opacity rather than to `.clear`, which drags the ramp
+                    // through grey on the way down.
+                    LinearGradient(stops: [.init(color: t.glow, location: 0),
+                                           .init(color: t.glow.opacity(0.5), location: 0.45),
+                                           .init(color: t.glow.opacity(0), location: 1)],
+                                   startPoint: .top, endPoint: .bottom)
+                        .frame(height: Self.bandHeight)
                 }
             }
+            // The band is taller than the header strip. Unclipped, the header's copy
+            // would spill down over the content scrolling beneath it.
+            .clipped()
             .ignoresSafeArea()
-        }
+    }
+}
+
+extension View {
+    /// Paints `PaneGround` under this pane. Under the content on purpose — the glow
+    /// was first a blend-mode overlay across the whole detail pane, and that
+    /// re-composites everything beneath it on every frame that moves: scrolls,
+    /// pushes, pane switches.
+    func paneBackground(_ t: Theme) -> some View {
+        background { PaneGround(t: t) }
     }
 }
 

@@ -50,7 +50,10 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 30) {
                 section("Appearance", t,
                         note: "The app only \u{2014} the desktop widget follows the Mac's own light or dark.") {
-                    HStack(spacing: 10) {
+                    // A grid, not a row: five tiles fill this column at 96pt each, and a
+                    // sixth — or a narrow window — wraps instead of clipping a name.
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 92), spacing: 10)],
+                              spacing: 10) {
                         ForEach(Appearance.allCases) { mode in
                             Button { appearance = mode.rawValue } label: {
                                 AppearanceTile(mode: mode,
@@ -301,6 +304,9 @@ private struct InfoButton: View {
         .popover(isPresented: $showing, arrowEdge: .bottom) {
             // A popover is its own window and doesn't inherit the app's appearance
             // override, so the surface is painted here rather than left to the system.
+            // The ground goes under it because a surface may be see-through: Midnight's
+            // is 7% white, and on a Mac in Light mode that alone lands on a light
+            // popover and leaves near-white ink on near-white.
             Text(text)
                 .font(.system(size: 12))
                 .foregroundStyle(theme.ink)
@@ -309,6 +315,7 @@ private struct InfoButton: View {
                 .frame(width: 250, alignment: .leading)
                 .padding(14)
                 .background(theme.surface)
+                .background(theme.background)
         }
     }
 }
@@ -384,18 +391,19 @@ private struct AppearanceTile: View {
 
     @ViewBuilder private var preview: some View {
         switch mode {
-        case .light:    page(.light)
-        case .dark:     page(.dark)
-        case .system:   HStack(spacing: 0) { page(.light); page(.dark) }
-        case .midnight: page(.midnight, midnight: true)
+        case .light:    page(.light, as: .light)
+        case .dark:     page(.dark, as: .dark)
+        case .system:   HStack(spacing: 0) { page(.light, as: .light); page(.dark, as: .dark) }
+        case .midnight: page(.midnight, as: .midnight)
+        case .umber:    page(.umber, as: .umber)
         }
     }
 
     /// Each page in the face it would really get: Midnight's in the sans, the rest
     /// in the serif or the marker — not all four in whichever face is on right now.
-    private func page(_ t: Theme, midnight: Bool = false) -> some View {
+    private func page(_ t: Theme, as mode: Appearance) -> some View {
         var look = doodle
-        look.midnight = midnight
+        look.appearance = mode
         return VStack(alignment: .leading, spacing: 5) {
             Text("Aa")
                 .font(look.face(15))
@@ -405,7 +413,17 @@ private struct AppearanceTile: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(8)
-        .background(t.background)
+        .background {
+            // A miniature of the ground, not the ground itself: the real band is
+            // taller than this whole tile and would fill it with flat blue.
+            ZStack {
+                t.background
+                if t.glow != .clear {
+                    LinearGradient(colors: [t.glow, t.glow.opacity(0)],
+                                   startPoint: .top, endPoint: .bottom)
+                }
+            }
+        }
     }
 }
 
