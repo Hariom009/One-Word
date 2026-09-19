@@ -137,6 +137,11 @@ struct PaneGround: View {
             // would spill down over the content scrolling beneath it.
             .clipped()
             .ignoresSafeArea()
+            // `.clipped()` clips what is drawn, not what is hit: the header's copy of
+            // the band still took every click in the 278pt below its strip, so in
+            // Midnight nothing near the top of a pane could be pressed. A ground never
+            // needs a click; the header's drag area is a separate view.
+            .allowsHitTesting(false)
     }
 }
 

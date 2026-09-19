@@ -161,6 +161,9 @@ struct RootView: View {
         .scrollContentBackground(doodle.appearance.paintsPalette ? .hidden : .automatic)
         .background { if doodle.appearance.paintsPalette { PaneGround(t: t) } }
         .sheet(isPresented: $writing) { FeedbackView(theme: t, model: feedback) }
+        // macOS 27 honours the column's max but lets the divider drag past its min —
+        // down to 140pt, where "Search" wraps. The content's own min width holds it.
+        .frame(minWidth: 190)
         .navigationSplitViewColumnWidth(min: 190, ideal: 215, max: 300)
         // The stock toggle is the one toolbar item a split view adds by itself, so
         // without it the window has no toolbar — which in full screen macOS would
