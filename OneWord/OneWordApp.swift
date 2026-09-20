@@ -24,16 +24,19 @@ struct OneWordApp: App {
     // read the same signed-in user rather than each owning a copy.
     @State private var auth = AuthViewModel()
 
+    /// The stored string, parsed once. A missing or unknown value is System.
+    private var look: Appearance { Appearance(rawValue: appearance) ?? .system }
+
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(relatedWords)
                 .environment(auth)
-                // Midnight rides the same value: it changes the face as well as the
-                // palette, and `face()` is the one place the face is decided.
+                // The appearance rides the same value: it can change the face as well as
+                // the palette, and `face()` is the one place the face is decided.
                 .environment(\.doodle, DoodleTheme(icons: doodleIcons, handwriting: doodleFont,
-                                                   midnight: appearance == Appearance.midnight.rawValue))
-                .preferredColorScheme((Appearance(rawValue: appearance) ?? .system).colorScheme)
+                                                   appearance: look))
+                .preferredColorScheme(look.colorScheme)
         }
         .defaultSize(width: 1000, height: 680)
         // Title bar hidden, traffic lights kept: every pane draws its own header,

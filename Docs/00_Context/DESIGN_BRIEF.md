@@ -39,6 +39,22 @@ room to breathe.
 - Needs: an **app icon**, an accent color, a type pairing (a display face for the headword
   + a readable body face + a Devanagari face for Hindi), and a light **+** dark theme.
 
+### Appearances, as built
+
+Five, picked in Settings. The app only — the widget always follows the Mac's light or dark.
+
+| | What it is | Why it exists |
+|---|---|---|
+| **System** | Light or Dark, following the Mac | the default |
+| **Light** | white paper, black ink, greys between; serif; hairline rules | the editorial page |
+| **Dark** | the same, inverted | the editorial page at night |
+| **Midnight** | near-black (`#0F0F0F`) under a band of deep blue across the top edge; translucent "frosted" tiles; geometric sans, tight; corners ×2.2 so controls turn into pills; a light-blue accent | the modern look — depth from *light* |
+| **Umber** | flat warm charcoal (`#161412`), parchment ink, opaque surfaces; serif; hairline rules; corners as drawn; one hue, brass, spent on the Hindi rule | the "warmer ambers/golds" direction above, as a dark theme — depth from *temperature*, nothing glows |
+
+Midnight and Umber are deliberate opposites on every axis (lit / flat, glass / opaque, sans /
+serif, pills / square, cool / warm). A further appearance should earn its slot the same way —
+by taking a position the others don't — rather than by being a recolour of one of them.
+
 ## 4. Content model — what every "word" contains
 
 Each entry has 5 fields (this is the exact data you're laying out):
@@ -154,6 +170,7 @@ between the home header and the list.
   Pick/pair fonts that render Devanagari well; mind line-height and vertical rhythm when the
   two scripts sit together.
 - **Light & dark mode** both required (the widget especially — it sits on arbitrary wallpaper).
+  The app adds two painted appearances on top, Midnight and Umber (§3); both force dark.
 - **Empty fields:** `hindi` and `example` can be empty → the line is hidden; design must not
   leave a gap or dangling label.
 - **Long content:** some definitions are long (see "trade"); some Hindi is long. Handle

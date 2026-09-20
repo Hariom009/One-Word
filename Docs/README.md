@@ -98,6 +98,32 @@ Which skill lands where:
   [resolved plan](02_Plan/Resolved/FEEDBACK_PLAN_RESOLVED.md)
   *(email + an in-app note filed to a Firestore `complaints` collection; every audit finding
   resolved — build from the resolved plan, it stands alone)*
+- **Themes** — built on `feat/themes` (Steps 1–4: the `Appearance` refactor, Midnight's repaint +
+  the popover fix, Umber, these docs); not merged. Build and gates green; the by-eye checks in
+  the resolved checklist are still open.
+  [brainstorm](01_Brainstorm/THEMES_BRAINSTORM.md) *(written after the plan — it had no
+  upstream brainstorm; weighs which themes to ship and argues F1/F2)* →
+  [plan](02_Plan/THEMES_PLAN.md) ·
+  [audit](02_Plan/Audit/THEMES_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/THEMES_PLAN_RESOLVED.md) →
+  [checklist](03_Checklist/THEMES_CHECKLIST.md) ·
+  [checklist audit](03_Checklist/Audit/THEMES_CHECKLIST_AUDIT.md) →
+  [resolved checklist](03_Checklist/Resolved/THEMES_CHECKLIST_RESOLVED.md)
+  *(**tick the resolved checklist** — it stands alone. The first checklist has two gates that
+  cannot do their job; every new done-when in the resolved one was dry-run against `main`.)*
+  *(every audit finding resolved — build from the resolved plan, it stands alone. The
+  second theme's pick and name are the one open call; they gate Step 3 only.)*
+  *(Midnight repainted near-black with a blue band from the top; a second dark theme, Umber;
+  the Midnight flag becomes the `Appearance` so a theme is a `case` and a `static let`)*
+- **Themes — the rest of the slate** — planned, not built.
+  [brainstorm](01_Brainstorm/THEMES_BRAINSTORM.md) →
+  [plan](02_Plan/THEMES_SLATE_PLAN.md) ·
+  [audit](02_Plan/Audit/THEMES_SLATE_PLAN_AUDIT.md)
+  *(builds the brainstorm's three Tier A items on top of the shipped Themes work: **Paper**,
+  a warm light palette; the **widget** finally reading `Theme`; and **High Contrast**, the
+  first appearance that resolves by scheme. Each step ships alone.)*
+  *(audit: Steps 1–2 ready; **Step 3 needs a rewrite first** — it was written against
+  pre-Step-2 code, and its auto-contrast path never reaches the widget)*
 - **Sentence practice** — planned, not built.
   [resolved plan](02_Plan/Resolved/SENTENCE_PRACTICE_PLAN_RESOLVED.md)
   *(plan and audit were worked through in session and never filed — the resolved plan

@@ -61,7 +61,7 @@ struct DictionaryShelf: View {
     }
 
     /// The board every book stands on: the palette's surface under a lit top edge,
-    /// shadowed like the covers, so it reads on paper, night and Midnight's navy alike.
+    /// shadowed like the covers, so it reads on paper, night and Midnight's near-black alike.
     private func plank(_ t: Theme) -> some View {
         t.surface
             .overlay(alignment: .top) { t.hairline.frame(height: 1) }

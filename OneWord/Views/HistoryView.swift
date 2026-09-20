@@ -179,7 +179,9 @@ struct HistoryView: View {
             .padding(.top, 18)
             .padding(.bottom, 14)
             Rectangle().fill(t.hairline).frame(height: 1)
-            DictionaryShelf(selection: selection, padding: 20) { _ in picking = false }
+            // No dismiss on pick: the sheet stays up so the book's turn plays out, same as
+            // the Dictionaries pane. Done (or Esc) closes it.
+            DictionaryShelf(selection: selection, padding: 20)
         }
         .frame(width: 560, height: 520)
         .background(t.background)
