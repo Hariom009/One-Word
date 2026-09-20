@@ -4,9 +4,13 @@ Which *kinds* of theme One Word should ship, and the reason each earns a slot.
 
 > **Where this sits.** Out of order on purpose: `02_Plan/THEMES_PLAN.md` was written first,
 > straight from an operator brief with no upstream brainstorm (its §Scope says so). This
-> fills that gap and answers the one call the resolved plan left open — **F1/F2, the second
-> theme and its name** (`Resolved/THEMES_PLAN_RESOLVED.md:44`, Q2). Nothing here is decided.
-> Grounded in the code at `c5d1ba4`; Steps 1–3 of the plan are **not built yet**.
+> fills that gap and looks at the slate as a whole. Nothing here is decided.
+>
+> **Grounded in the working tree at `5f0b6bd`, where the Themes plan is already built** —
+> `Appearance` carries the theme, Midnight is repainted near-black with its band, and
+> **Umber has shipped** (`Theme.swift:93`, `Appearance.swift:17`). The resolved plan's open
+> call F1/F2 is therefore closed by the code: Umber, named Umber. §5 below reads that as a
+> confirmation, not a recommendation.
 
 ---
 
@@ -30,7 +34,7 @@ not a field. Anything **outside** this table (paper grain, a second gradient sha
 per-theme Devanagari face, time-of-day switching) is a new mechanism, and the plan's §10
 rule applies: don't build the mechanism until a theme on the list needs it.
 
-## 2. What the space looks like once the plan ships
+## 2. What the space looks like today (Umber shipped)
 
 | | Light | Dark | Midnight | Umber |
 |---|---|---|---|---|
@@ -82,7 +86,7 @@ roundness 1 · glow .clear · tiles false
 **Why it earns a slot**
 
 1. **It is the only candidate that adds to the light half.** Every other theme on this page,
-   shipped or proposed, is dark. Light : dark is 1 : 3 today and 1 : 4 after Umber.
+   shipped or proposed, is dark. With Umber shipped, light : dark is **1 : 3**.
 2. **It is the direction the brief named first** and the one the app was described as
    wanting from the beginning — "a beautiful desk dictionary."
 3. **Pure white is the worst ground for the thing this app does.** Long definitions, two
@@ -130,8 +134,8 @@ The widget has never read `Theme`, and Settings admits it.
    PROJECT_CONTEXT's whole pitch is "the word is just *there* on their desktop, no app to
    open." The surface people actually look at is the one theming doesn't reach.
 2. **Every theme you add makes the mismatch worse.** With Light and Dark, black/white was
-   *correct*. With Midnight, Umber, Paper and High Contrast it is wrong four ways, and a
-   user who picks Paper sees a stark white widget next to a cream app.
+   *correct*. Midnight and Umber already broke it; Paper and High Contrast make it wrong
+   four ways, and a user who picks Paper sees a stark white widget next to a cream app.
 3. **Most of the wiring exists.** `Theme.swift` and `AppGroup.swift` are already compiled
    into both targets; `SavedWords`/`WordSelectionStore` already cross the App Group. What's
    missing is `Appearance` on the widget's side of the fence and the choice written to the
@@ -240,14 +244,14 @@ axis with the least room left. If Manuscript gets picked, this stops being optio
 Five painted looks plus System is about the ceiling before the picker stops being a choice
 and starts being a menu. Proposed:
 
-| Slot | Theme | Carries |
-|---|---|---|
-| 1 | **Light** | neutral paper, the default |
-| 2 | **Dark** | neutral night, the default |
-| 3 | **Midnight** | cool, lit, glass, sans, pills |
-| 4 | **Paper** | warm light, serif, hairlines ← **new** |
-| 5 | **Umber** | warm dark, serif, hairlines |
-| — | **High Contrast** | resolves by scheme; ideally auto from the system setting |
+| Slot | Theme | Carries | State |
+|---|---|---|---|
+| 1 | **Light** | neutral paper, the default | shipped |
+| 2 | **Dark** | neutral night, the default | shipped |
+| 3 | **Midnight** | cool, lit, glass, sans, pills | shipped |
+| 4 | **Paper** | warm light, serif, hairlines | **new** |
+| 5 | **Umber** | warm dark, serif, hairlines | shipped |
+| — | **High Contrast** | resolves by scheme; ideally auto from the system setting | **new** |
 
 That reads as a **2 × 2 the user can feel** — warm/cool × light/dark — with Midnight as the
 one expressive outlier and High Contrast off to the side as an accessibility answer rather
@@ -255,24 +259,24 @@ than a taste. Graphite, Moss and Manuscript stay as forks; Sundial stays in Tier
 
 ### Order to build
 
-1. **Plan Step 1** — the flag becomes the `Appearance`. Everything below is blocked on it,
-   and it changes no pixels.
-2. **Paper** (A-1). Biggest hole, values only, and it makes the picker feel like a grid
-   instead of a list of dark modes.
-3. **Umber** (plan Step 3, F1 default confirmed). Paper's partner — building the pair
-   together is what makes both legible as a *system*.
-4. **Widget parity** (A-3). Do it here, while the slate is five and not eight.
-5. **High Contrast** (A-2). The first theme that resolves rather than being a constant.
-6. Hold Graphite / Moss / Manuscript. Revisit after the five have been lived with.
+The `Appearance` refactor and Umber are done, so the remaining order is:
 
-### On the open call (plan F1/F2)
+1. **Paper** (A-1). Biggest hole, values only, and it makes the picker read as a grid of
+   pairs instead of a list of dark modes.
+2. **Widget parity** (A-3). Do it here, while the slate is six and not eight.
+3. **High Contrast** (A-2). The first theme that *resolves* rather than being a constant.
+4. Hold Graphite / Moss / Manuscript. Revisit after the six have been lived with.
 
-**Keep Umber, keep the name** — but the argument for it changes. The plan justified Umber as
-"the different approach to Midnight." The stronger argument is that **Umber is half of a
-pair**: it only fully pays off with Paper beside it, and building them together answers the
-plan's own risk that Umber reads as "Dark, but brown." On its own that risk is real. Next to
-Paper it evaporates, because the warmth becomes a *dimension of the system* rather than a
-quirk of one theme.
+Filed as [`02_Plan/THEMES_SLATE_PLAN.md`](../02_Plan/THEMES_SLATE_PLAN.md).
+
+### On Umber, now that it has shipped
+
+The plan justified Umber as "the different approach to Midnight," and flagged its own risk
+that it reads as *"Dark, but brown."* That risk is real while Umber stands alone. **Paper is
+what retires it** — with a warm light theme beside it, warmth stops being one theme's quirk
+and becomes a dimension of the system: warm/cool × light/dark, with Midnight as the one
+expressive outlier. That is the strongest argument for building Paper next, and it is an
+argument about the theme already in the app, not the new one.
 
 ---
 
