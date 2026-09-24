@@ -128,8 +128,12 @@ Which skill lands where:
   [resolved plan](02_Plan/Resolved/SENTENCE_PRACTICE_PLAN_RESOLVED.md)
   *(plan and audit were worked through in session and never filed — the resolved plan
   carries the audit findings in §1 and stands alone)*
-- **Dictionary 3000** — in progress on `feat/dictionaries-3000`.
+- **Dictionary 3000** — built on `feat/dictionaries-3000`; not merged. Build and all gates green.
   [plan](02_Plan/DICTIONARY_3000_PLAN.md)
-  *(Corporate Slang, Philosophy, Classical English and Idioms each to ≥ 3,000 entries: ~8,900 new.
-  One code change, generalising `expand-dictionary.js`, then a Philosophy reset and four themed
-  runs. Philosophy and Corporate Slang are near their genuine ceiling: stop and report rather than pad.)*
+  *(Idioms 3,047 · Corporate Slang 3,038 · Philosophy 3,076 · Classical English 3,193 — every
+  original entry untouched, Philosophy's 138 rewritten first. Each book took a first run plus
+  a top-up; Idioms needed none. Batches ran ~50 entries per theme, not the plan's ~110.)*
+  *(Lessons for the next run: the merge's case-fold lowercased names until two fixes landed, and
+  a name the book never writes on its own still slips through, so scan definition openings by hand.
+  Never tell editors to stay inside their theme: they drop words they only guess a neighbour
+  will write, and Classical's first pass lost 30% that way.)*
