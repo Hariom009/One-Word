@@ -36,6 +36,8 @@ struct ProfileView: View {
     @AppStorage("profileAvatar") private var avatar = Avatar.account.rawValue
     /// Set in Settings. Off, the raw count above is the whole story.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
+    /// The goal counts only the German shelf, so it waits for German to unlock.
+    @Environment(PremiumViewModel.self) private var premium
 
     @State private var editing = false
     @State private var draftName = ""
@@ -63,7 +65,7 @@ struct ProfileView: View {
                 header(t)
                 if editing { picture(t) }
                 stats(t)
-                if fluencyGoal { goal(t) }
+                if fluencyGoal && premium.allows(Wordbook.german.id) { goal(t) }
                 details(t)
                 rows(t)
                 footer(t)
@@ -538,5 +540,6 @@ struct LearnedSeal: View {
 #Preview {
     NavigationStack { ProfileView(pane: .constant(.profile)) }
         .environment(AuthViewModel())
+        .environment(PremiumViewModel())
         .frame(width: 780, height: 720)
 }

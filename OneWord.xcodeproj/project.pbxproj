@@ -18,6 +18,7 @@
 		92E2AB170B5A8261678553DE /* WordProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FFB551199DA0B818E57D55 /* WordProvider.swift */; };
 		A546D10CC8A6C1B69CEC2FEF /* philosophy.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B567267BBFDED8FB15FC6DF /* philosophy.json */; };
 		A687D06EAAA2104944770B53 /* WordSelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF289F3457ECA946401C67 /* WordSelectionStore.swift */; };
+		8F79308649D2CE63237474B3 /* Premium.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B9A32BBBA58C279F7F24E1 /* Premium.swift */; };
 		A7B255858D4DE82417020018 /* WordEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA7CFBB6598FD5C51F519F /* WordEntry.swift */; };
 		AA0000010000000000000002 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = AA0000010000000000000001 /* FirebaseCore */; };
 		AA0000010000000000000005 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = AA0000010000000000000004 /* GoogleSignIn */; };
@@ -79,6 +80,7 @@
 		B23BBFBDE3CE4671C3E12906 /* WordTimelineProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordTimelineProvider.swift; path = OneWordWidget/WordTimelineProvider.swift; sourceTree = "<group>"; };
 		BFCC5B563011545500C0FE1F /* One Word.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One Word.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CF289F3457ECA946401C67 /* WordSelectionStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordSelectionStore.swift; path = OneWord/Shared/WordSelectionStore.swift; sourceTree = "<group>"; };
+		F1B9A32BBBA58C279F7F24E1 /* Premium.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Premium.swift; path = OneWord/Shared/Premium.swift; sourceTree = "<group>"; };
 		D9090519E3AF740D8B3721FE /* Word.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Word.swift; path = OneWord/Shared/Word.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +142,7 @@
 				24FFB551199DA0B818E57D55 /* WordProvider.swift */,
 				55C811B3A327A36356E4F0A2 /* words.json */,
 				C5CF289F3457ECA946401C67 /* WordSelectionStore.swift */,
+				F1B9A32BBBA58C279F7F24E1 /* Premium.swift */,
 				A09D9551D935D59C10E8C312 /* Theme.swift */,
 				6F21027AD3F1A04808DD5036 /* AppGroup.swift */,
 				251E69A6F52172455BF1BF41 /* emotions.json */,
@@ -318,6 +321,7 @@
 				92E2AB170B5A8261678553DE /* WordProvider.swift in Sources */,
 				EBEC398F5303F3C1079E8231 /* RefreshWordIntent.swift in Sources */,
 				A687D06EAAA2104944770B53 /* WordSelectionStore.swift in Sources */,
+				8F79308649D2CE63237474B3 /* Premium.swift in Sources */,
 				DE9579143936E10B5687ADC9 /* Theme.swift in Sources */,
 				C5AB0CCFF565F10B96E1CA8F /* AppGroup.swift in Sources */,
 				DA0761F51201AE66FDF45E1F /* SavedWords.swift in Sources */,

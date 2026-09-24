@@ -9,6 +9,7 @@ One Word/
 ├── OneWord/              macOS app target
 ├── OneWordWidget/        WidgetKit extension target
 ├── OneWord.xcodeproj/    project file — see "Adding files" below
+├── StoreKit/             OneWord.storekit — local purchase testing, used by the OneWord scheme's Run action (not shipped)
 ├── tools/                verification gates + word generators (not shipped)
 └── Docs/                 all written docs — see Docs/README.md
 ```
@@ -22,7 +23,7 @@ One Word/
 | `Views/` | SwiftUI `View`s only. | **No data loading, no persistence, no JSON.** |
 | `ViewModels/` | `@Observable` classes driving those views. | `import Observation` only — **never** SwiftUI, never a view type. This is the testable seam. |
 | `Models/` | App-only data and state: `Wordbook`, `Appearance`, `LearnedWords`, `RelatedWords`, `Sentences` — and app-only data files (`sentences.json`). | No SwiftUI. Not visible to the widget. |
-| `Shared/` | `Word`, `WordProvider`, `WordSelectionStore`, `SavedWords`, `Theme`, `AppGroup`, and every `<book>.json`. | **Member of BOTH targets.** Anything the widget reads must live here. |
+| `Shared/` | `Word`, `WordProvider`, `WordSelectionStore`, `SavedWords`, `Theme`, `AppGroup`, `Premium`, and every `<book>.json`. | **Member of BOTH targets.** Anything the widget reads must live here. |
 | `Assets.xcassets/` | App icon, accent color. | |
 
 ## OneWordWidget/ — the widget
@@ -40,14 +41,15 @@ No view models: a widget is timeline-driven, not user-event-driven, so `Timeline
 | `check_related.sh` | Related-words embedding coverage per book (≥99%). |
 | `check_learned.sh` | Learned-log recording and per-shelf counting. |
 | `check_capture.sh` | Pinned-word precedence over the daily offset. |
+| `check_premium.sh` | Premium's rules: what's free, what unlocking opens, and what losing Premium does to the pick. |
 | `check_sentences.sh` | Practice corpus decodes; the reel's draw excludes and stays uniform. |
 | `*Check.swift` | Headless harnesses the `check_*.sh` scripts compile and run. |
 | `gen_words/` | Python word-set generation/translation. Has its own README. |
 
-Run all five before calling work done:
+Run all six before calling work done:
 
 ```bash
-for s in check_words check_related check_learned check_capture check_sentences; do bash tools/$s.sh; done
+for s in check_words check_related check_learned check_capture check_sentences check_premium; do bash tools/$s.sh; done
 ```
 
 They compile source **by explicit path** — moving a Swift file means updating the script

@@ -69,4 +69,5 @@ struct HomeView: View {
 #Preview {
     NavigationStack { HomeView(pane: .constant(.home)) }
         .environment(RelatedWordsStore())
+        .environment(PremiumViewModel())
 }

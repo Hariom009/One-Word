@@ -128,7 +128,20 @@ Which skill lands where:
   [resolved plan](02_Plan/Resolved/SENTENCE_PRACTICE_PLAN_RESOLVED.md)
   *(plan and audit were worked through in session and never filed — the resolved plan
   carries the audit findings in §1 and stands alone)*
-- **Dictionary 3000** — built on `feat/dictionaries-3000`; not merged. Build and all gates green.
+- **Premium** — shipped (Steps 1–6 + 8). Build and all gates green; free tier smoke-tested
+  live. Purchase, refund, Ask to Buy and restore still need an Xcode Run with
+  `StoreKit/OneWord.storekit`; App Store Connect setup and the sign-in plan gate release.
+  [plan](02_Plan/PREMIUM_PLAN.md) ·
+  [audit](02_Plan/Audit/PREMIUM_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md)
+  *(Everyday English free; the other seven dictionaries unlock together with one $9.99
+  non-consumable Apple in-app purchase, sold from a premium bar under the shelf. Search keeps
+  locked words as a teaser. The lock's rules live in `Shared/Premium.swift` so the widget obeys
+  them. Grounded in the 2026-09-21 dictionary-lineup scout run.)*
+  *(every audit finding resolved — **build from the resolved plan, it stands alone**. Search rows
+  hide a locked word's Hindi; the German goal hides until German unlocks. **Release is gated** on a
+  separate sign-in plan: Sign in with Apple + in-app account deletion.)*
+- **Dictionary 3000** — shipped. Build and all gates green.
   [plan](02_Plan/DICTIONARY_3000_PLAN.md)
   *(Idioms 3,047 · Corporate Slang 3,038 · Philosophy 3,076 · Classical English 3,193 — every
   original entry untouched, Philosophy's 138 rewritten first. Each book took a first run plus

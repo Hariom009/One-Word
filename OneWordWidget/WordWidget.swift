@@ -19,22 +19,26 @@ enum WidgetDictionary: String, AppEnum {
     case followApp, words, emotions, philosophy, startup, idioms, classical, urdu, german
 
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Dictionary"
+    // ponytail: the "· Premium" suffixes mirror Premium.free by hand — a literal is all
+    // AppIntents accepts here. A locked pick shows Everyday English; the label says why.
     static var caseDisplayRepresentations: [WidgetDictionary: DisplayRepresentation] = [
         .followApp:   "Follow App Settings",
         .words:       "Everyday English",
-        .emotions:    "Emotions",
-        .philosophy:  "Philosophy",
-        .startup:     "Corporate Slang",
-        .idioms:      "Idioms",
-        .classical:   "Classical English",
-        .urdu:        "Urdu",
-        .german:      "German",
+        .emotions:    "Emotions · Premium",
+        .philosophy:  "Philosophy · Premium",
+        .startup:     "Corporate Slang · Premium",
+        .idioms:      "Idioms · Premium",
+        .classical:   "Classical English · Premium",
+        .urdu:        "Urdu · Premium",
+        .german:      "German · Premium",
     ]
 
     /// Bundled JSON resource name (`<resource>.json`). `.followApp` resolves at read
     /// time from the App Group so it mirrors the app's current Settings choice.
+    /// Resolved through Premium: this is the widget's only dictionary read, so the one
+    /// gate here covers both the Edit-menu pick and Follow App Settings.
     var resource: String {
-        self == .followApp ? AppGroup.dictionaryID : rawValue
+        Premium.resolve(self == .followApp ? AppGroup.dictionaryID : rawValue)
     }
 }
 
