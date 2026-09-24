@@ -124,7 +124,7 @@ non-consumable in-app purchase. Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLV
 - **Views read `premium.allows(_:)` from the environment, never `Premium.isUnlocked`** — that
   is a `UserDefaults` read Observation can't see; a view reading it misses the purchase.
 - **The gates, one per route:** the shelf (`DictionaryShelf.pick`, the pick's only writer —
-  a locked book comes forward but isn't picked); the widget (`WidgetDictionary.resource`, its
+  a locked book stays on the shelf, neither turned nor picked); the widget (`WidgetDictionary.resource`, its
   only dictionary read); search rows (no Hindi gloss for a locked hit); `WordDetail`, where
   every full-view route ends (headword + `PremiumBar`, no bookmark, not counted as learned);
   and Practice (`RootView.detail` shows the plans in its place, and the sidebar's selection

@@ -32,8 +32,8 @@ struct DictionaryShelf: View {
     /// For Midnight's palette behind the shelf.
     @Environment(\.doodle) private var doodle
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    /// What's unlocked. A locked book still stands on the shelf and still comes forward
-    /// when tapped — it just isn't picked.
+    /// What's unlocked. A locked book stands on the shelf but stays there — only an
+    /// unlocked one comes forward and is picked.
     @Environment(PremiumViewModel.self) private var premium
     /// The book standing face-out. Its own state rather than `selection`, so the turn
     /// animates wherever the owner stores the pick.
@@ -41,6 +41,8 @@ struct DictionaryShelf: View {
     /// True while a swap is in flight. Taps in that window are dropped, so a burst
     /// of clicks gives one clean swap at a time, not the sound restarting under each.
     @State private var swapping = false
+    /// Refused taps per locked book; each one animates a whole `Shake`.
+    @State private var shakes: [String: CGFloat] = [:]
 
     private static let books = Wordbook.all.filter { $0.id != Wordbook.saved.id }
     // ponytail: 0.69 is the widest cover art (570×827); the narrower ones fit by height.
@@ -117,13 +119,13 @@ struct DictionaryShelf: View {
                         .allowsHitTesting(!isFront)
                         .accessibilityElement()
                         .accessibilityLabel(book.name)
-                        .accessibilityAddTraits(isFront ? .isSelected : .isButton)
+                        .accessibilityAddTraits(isFront ? .isSelected : locked ? [] : .isButton)
                         .accessibilityValue(locked ? "Premium" : "")
-                        .accessibilityHint(locked ? "Shows how to unlock" : "")
                         .accessibilityAction { pick(book) }
                         // Transforms, not layout: the flight never reflows the shelf. The board stands on the plank.
                         .scaleEffect(scale, anchor: .topLeading)
                         .offset(x: xs[book.id] ?? 0, y: floor - art * Self.boardFoot * scale)
+                        .modifier(Shake(taps: shakes[book.id] ?? 0))
                         // The book coming to the front flies over the spines it crosses.
                         .zIndex(isFront ? 1 : 0)
                 }
@@ -160,11 +162,9 @@ struct DictionaryShelf: View {
                 for id in ids { _ = WordProvider(resource: id) }
             }.value
         }
-        // You pulled a locked book forward and then bought it: it's the one you meant.
+        // Premium lost with a paid book face-out: it goes home, the pick comes forward.
         .onChange(of: premium.isUnlocked) { _, unlocked in
-            guard unlocked, front != selection else { return }
-            selection = front
-            onPick(.named(front))
+            if !unlocked, !premium.allows(front) { front = selection }
         }
     }
 
@@ -172,11 +172,9 @@ struct DictionaryShelf: View {
     /// shelf — picking is the whole job, there's nowhere to go next.
     private func pick(_ book: Wordbook) {
         guard !swapping, book.id != front else { return }
-        // A locked book comes forward to be looked at, not picked — the bar sells it.
-        if premium.allows(book.id) {
-            selection = book.id
-            onPick(book)
-        }
+        guard premium.allows(book.id) else { return refuse(book) }
+        selection = book.id
+        onPick(book)
         guard !reduceMotion else { front = book.id; return }
         swapping = true
         flipSound?.currentTime = 0
@@ -186,6 +184,28 @@ struct DictionaryShelf: View {
         } completion: {
             swapping = false
         }
+    }
+
+    /// A locked book stays on the shelf and shakes its head, with a buzz through the
+    /// trackpad (Force Touch only — elsewhere it's silent). The bar sells it.
+    private func refuse(_ book: Wordbook) {
+        NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
+        guard !reduceMotion else { return }
+        withAnimation(.linear(duration: 0.4)) { shakes[book.id, default: 0] += 1 }
+    }
+}
+
+/// The refused-tap wiggle, like a wrong password's: three quick side-to-side shakes
+/// per whole step of `taps`, back at rest on every integer.
+private struct Shake: GeometryEffect {
+    var taps: CGFloat
+    var animatableData: CGFloat {
+        get { taps }
+        set { taps = newValue }
+    }
+
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(translationX: 4 * sin(taps * .pi * 6), y: 0))
     }
 }
 
