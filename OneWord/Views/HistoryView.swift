@@ -201,4 +201,5 @@ struct HistoryView: View {
 #Preview {
     NavigationStack { HistoryView() }
         .environment(RelatedWordsStore())
+        .environment(PremiumViewModel())
 }

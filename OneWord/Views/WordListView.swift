@@ -29,6 +29,8 @@ struct WordListView: View {
     @State private var query = ""
     @State private var hovered: String?
     @Environment(\.colorScheme) private var scheme
+    /// Search spans locked books too: their words are listed as a teaser, meaning withheld.
+    @Environment(PremiumViewModel.self) private var premium
 
     init(wordbook: Wordbook? = nil) {
         self.wordbook = wordbook
@@ -120,7 +122,8 @@ struct WordListView: View {
                     .foregroundStyle(t.muted)
                     .lineLimit(1)
                     .frame(width: Self.posWidth, alignment: .leading)
-                if showHindi {
+                // The gloss IS the meaning for a Hindi reader — a locked word keeps it.
+                if showHindi && premium.allows(hit.shelf) {
                     Text(hit.word.hindi)
                         .font(.system(size: 14))
                         .foregroundStyle(t.muted)
@@ -143,14 +146,16 @@ struct WordListView: View {
     /// hovering.
     private func shelfMark(_ shelf: String, _ t: Theme) -> some View {
         let shelfBook = Wordbook.named(shelf)
+        let locked = !premium.allows(shelf)
         return HStack(spacing: 4) {
             Image(systemName: shelfBook.symbol).font(.system(size: 9))
             Text(shelfBook.shortName).font(.system(size: 11))
+            if locked { Image(systemName: "lock.fill").font(.system(size: 8)) }
         }
         .foregroundStyle(t.muted)
         .lineLimit(1)
         .help(shelfBook.name)
-        .accessibilityLabel(shelfBook.name)
+        .accessibilityLabel(locked ? "\(shelfBook.name), Premium" : shelfBook.name)
     }
 
     private func emptyState(_ t: Theme) -> some View {
@@ -211,4 +216,5 @@ struct WordListView: View {
 #Preview {
     NavigationStack { WordListView() }
         .environment(RelatedWordsStore())
+        .environment(PremiumViewModel())
 }

@@ -111,6 +111,26 @@ Rules that have already cost something:
 - The type is still called `DoodleTheme` though it now carries the appearance. Known
   misnomer; a rename touches every pane for no behaviour.
 
+## Premium — where the lock lives
+
+Everyday English (and Bookmarks) is free; every other dictionary unlocks with one
+non-consumable in-app purchase. Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
+
+- **The rule is `Shared/Premium.swift`**, `nonisolated` so the widget can read it off-main:
+  `free`, `allows(_:)`, `resolve(_:)`, and the flag mirrored into the App Group.
+- **`Premium.set(unlocked:)` is its only writer**, called only by `PremiumViewModel` (the one
+  StoreKit owner, held at the app root). Losing Premium also walks a locked `dictionaryID`
+  back to `"words"`, so every raw `@AppStorage("dictionaryID")` reader stays right untouched.
+- **Views read `premium.allows(_:)` from the environment, never `Premium.isUnlocked`** — that
+  is a `UserDefaults` read Observation can't see; a view reading it misses the purchase.
+- **The gates, one per route:** the shelf (`DictionaryShelf.pick`, the pick's only writer —
+  a locked book comes forward but isn't picked); the widget (`WidgetDictionary.resource`, its
+  only dictionary read); search rows (no Hindi gloss for a locked hit); and `WordDetail`, where
+  every full-view route ends (headword + `PremiumBar`, no bookmark, not counted as learned).
+- **Never gate `WordProvider`.** It feeds search, the shelf's entry counts and warm-up.
+- A new sheet or pane that shows a word or the shelf inherits the environment. An AppKit-hosted
+  view (`NSHostingView`, like the capture HUD) does **not** — inject `PremiumViewModel` there.
+
 ## Testing seam
 `WordProvider.word(for:)` and `WordViewModel` are pure over an injected word list — unit-test
 date→word mapping (boundaries: day rollover, list wrap-around) without WidgetKit or SwiftUI.
@@ -125,11 +145,11 @@ OneWord/                        app target
     RootView, PaneHeader, HomeView, HistoryView, WordDetail, WordListView,
     LearnedListView, ProfileView, SettingsView, DictionaryPicker, MonthCalendar
   ViewModels/                   @Observable. No view types. The unit-testable seam.
-    WordViewModel, WordListViewModel, ProfileViewModel
+    WordViewModel, WordListViewModel, ProfileViewModel, PremiumViewModel
   Models/                       App-only model + state. No SwiftUI.
     Wordbook, Appearance, LearnedWords, RelatedWords
   Shared/                       MEMBER OF BOTH TARGETS — app + widget
-    Word, WordProvider, WordSelectionStore, SavedWords, Theme, AppGroup, *.json
+    Word, WordProvider, WordSelectionStore, SavedWords, Theme, AppGroup, Premium, *.json
   Assets.xcassets/
 
 OneWordWidget/                  widget target

@@ -32,6 +32,9 @@ struct DictionaryShelf: View {
     /// For Midnight's palette behind the shelf.
     @Environment(\.doodle) private var doodle
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// What's unlocked. A locked book still stands on the shelf and still comes forward
+    /// when tapped — it just isn't picked.
+    @Environment(PremiumViewModel.self) private var premium
     /// The book standing face-out. Its own state rather than `selection`, so the turn
     /// animates wherever the owner stores the pick.
     @State private var front: String
@@ -106,7 +109,8 @@ struct DictionaryShelf: View {
                 ForEach(Self.books) { book in
                     let isFront = book.id == front
                     let scale = (isFront ? 1 : k) * book.height
-                    ShelfBook(book: book, art: art, turn: isFront ? 1 : 0)
+                    let locked = !premium.allows(book.id)
+                    ShelfBook(book: book, art: art, turn: isFront ? 1 : 0, locked: locked)
                         // Gestures before the transforms, so the tap target moves and scales with the book.
                         .contentShape(Rectangle())
                         .onTapGesture { pick(book) }
@@ -114,6 +118,8 @@ struct DictionaryShelf: View {
                         .accessibilityElement()
                         .accessibilityLabel(book.name)
                         .accessibilityAddTraits(isFront ? .isSelected : .isButton)
+                        .accessibilityValue(locked ? "Premium" : "")
+                        .accessibilityHint(locked ? "Shows how to unlock" : "")
                         .accessibilityAction { pick(book) }
                         // Transforms, not layout: the flight never reflows the shelf. The board stands on the plank.
                         .scaleEffect(scale, anchor: .topLeading)
@@ -125,8 +131,17 @@ struct DictionaryShelf: View {
                 HStack(spacing: 6) {
                     Text("\(Wordbook.named(front).entryCount, format: .number) entries")
                         .foregroundStyle(t.ink)
-                    Text("\u{00B7} Selected for word of the day")
-                        .foregroundStyle(t.muted)
+                    if premium.allows(front) {
+                        Text("\u{00B7} Selected for word of the day")
+                            .foregroundStyle(t.muted)
+                    } else {
+                        Text("\u{00B7} Premium")
+                            .foregroundStyle(t.muted)
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: 9))
+                            .foregroundStyle(t.muted)
+                            .accessibilityHidden(true)
+                    }
                 }
                 .font(.system(size: 12, weight: .medium))
                 .lineLimit(1)
@@ -145,14 +160,23 @@ struct DictionaryShelf: View {
                 for id in ids { _ = WordProvider(resource: id) }
             }.value
         }
+        // You pulled a locked book forward and then bought it: it's the one you meant.
+        .onChange(of: premium.isUnlocked) { _, unlocked in
+            guard unlocked, front != selection else { return }
+            selection = front
+            onPick(.named(front))
+        }
     }
 
     /// Pull the tapped book off the shelf and tell the owner. You stay on the
     /// shelf — picking is the whole job, there's nowhere to go next.
     private func pick(_ book: Wordbook) {
         guard !swapping, book.id != front else { return }
-        selection = book.id
-        onPick(book)
+        // A locked book comes forward to be looked at, not picked — the bar sells it.
+        if premium.allows(book.id) {
+            selection = book.id
+            onPick(book)
+        }
         guard !reduceMotion else { front = book.id; return }
         swapping = true
         flipSound?.currentTime = 0
@@ -169,10 +193,20 @@ struct DictionaryShelf: View {
 struct DictionaryPicker: View {
     @AppStorage("dictionaryID", store: AppGroup.defaults)
     private var dictionaryID = Wordbook.everydayEnglish.id
+    @Environment(PremiumViewModel.self) private var premium
 
     var body: some View {
         DictionaryShelf(selection: $dictionaryID) { _ in
             WidgetCenter.shared.reloadAllTimelines()
+        }
+        // The premium bar: a bottom inset, the way the header is a top one, so
+        // PaneGround (which ignores the safe area) paints under both.
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            if !premium.isUnlocked {
+                PremiumBar()
+                    .padding(.horizontal, 28)
+                    .padding(.bottom, 24)
+            }
         }
         .paneHeader("Dictionaries")
     }
@@ -186,6 +220,7 @@ private struct ShelfBook: View, Animatable {
     /// The cover art's height at full size; the shelf scales the whole book from there.
     let art: CGFloat
     var turn: CGFloat
+    var locked = false
 
     var animatableData: CGFloat {
         get { turn }
@@ -197,7 +232,7 @@ private struct ShelfBook: View, Animatable {
         let spine = art * DictionaryShelf.thickness
         let cover = art * DictionaryShelf.coverAspect
         ZStack(alignment: .topLeading) {
-            BookSpine(book: book, width: spine, height: art * DictionaryShelf.boardFoot)
+            BookSpine(book: book, width: spine, height: art * DictionaryShelf.boardFoot, locked: locked)
                 .brightness(-0.3 * sin(a))
                 .scaleEffect(x: cos(a), y: 1, anchor: .leading)
             // The cover hinges out from the spine's edge as the spine turns away.
@@ -223,6 +258,7 @@ private struct BookSpine: View {
     let book: Wordbook
     let width: CGFloat
     let height: CGFloat
+    var locked = false
 
     var body: some View {
         // Lettered like the art prints its titles: ink on pale linen, cream on the rest.
@@ -243,6 +279,16 @@ private struct BookSpine: View {
             }
             .overlay(alignment: .top) { bands.padding(.top, height * 0.07) }
             .overlay(alignment: .bottom) { bands.padding(.bottom, height * 0.07) }
+            // Between the foot's bands and the title, which never reaches this far down.
+            .overlay(alignment: .bottom) {
+                if locked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: min(width * 0.28, 15)))
+                        .foregroundStyle(ink.opacity(0.8))
+                        .padding(.bottom, height * 0.1)
+                        .accessibilityHidden(true)
+                }
+            }
             .overlay {
                 Text(book.shortName)
                     .font(.serif(width * 0.4, .medium))
@@ -278,4 +324,5 @@ struct BookChip: View {
 
 #Preview {
     DictionaryPicker()
+        .environment(PremiumViewModel())
 }

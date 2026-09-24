@@ -293,4 +293,5 @@ struct RootView: View {
     RootView()
         .environment(RelatedWordsStore())
         .environment(AuthViewModel())
+        .environment(PremiumViewModel())
 }

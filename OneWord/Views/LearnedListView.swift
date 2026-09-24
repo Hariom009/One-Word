@@ -266,4 +266,5 @@ struct SwellingTerm: View, Animatable {
 #Preview {
     NavigationStack { LearnedListView() }
         .environment(RelatedWordsStore())
+        .environment(PremiumViewModel())
 }

@@ -35,6 +35,8 @@ struct SettingsView: View {
     @Environment(\.colorScheme) private var scheme
     /// The doodle switches and Midnight, as the app root resolved them.
     @Environment(\.doodle) private var doodle
+    /// Premium's section, and the fluency goal, which only the German shelf feeds.
+    @Environment(PremiumViewModel.self) private var premium
 
     /// The written-complaint half of Feedback. Owned here so an unsent draft
     /// survives closing the sheet — it does not survive leaving the pane, which
@@ -48,6 +50,22 @@ struct SettingsView: View {
         let t = Theme.of(scheme, doodle)
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
+                // First, because it's the one thing here that isn't a preference. The bar
+                // carries Restore Purchase, which App Review needs reachable.
+                section("Premium", t) {
+                    if premium.isUnlocked {
+                        card(t) {
+                            row("All dictionaries unlocked", "Every shelf is yours, for good.", t) {
+                                Image(systemName: "checkmark.seal")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(t.muted)
+                            }
+                        }
+                    } else {
+                        PremiumBar()
+                    }
+                }
+
                 section("Appearance", t,
                         note: "The app only \u{2014} the desktop widget follows the Mac's own light or dark.") {
                     // A grid, not a row: five tiles fill this column at 96pt each, and a
@@ -142,24 +160,28 @@ struct SettingsView: View {
                     }
                 }
 
-                section("Progress", t) {
-                    card(t) {
-                        row("Fluency goal",
-                            "Shows how far through 3,000 German words you are, on your profile.",
-                            t,
-                            info: """
-                            Experts put fluency at around 3,000 words \u{2014} learn that \
-                            many in German and you follow roughly 95% of everyday speech.
+                // Only the German shelf counts toward the goal, so it waits for German to
+                // unlock. The switch keeps its value, and comes back as you left it.
+                if premium.allows(Wordbook.german.id) {
+                    section("Progress", t) {
+                        card(t) {
+                            row("Fluency goal",
+                                "Shows how far through 3,000 German words you are, on your profile.",
+                                t,
+                                info: """
+                                Experts put fluency at around 3,000 words \u{2014} learn that \
+                                many in German and you follow roughly 95% of everyday speech.
 
-                            Turn this on and your profile tracks how far through those \
-                            3,000 you are. Only the Dictionary of German counts toward \
-                            it, and every German word you've already read in full is \
-                            counted, so you don't start from zero.
-                            """) {
-                            Toggle("Fluency goal", isOn: $fluencyGoal)
-                                .labelsHidden()
-                                .toggleStyle(.switch)
-                                .tint(t.accent)
+                                Turn this on and your profile tracks how far through those \
+                                3,000 you are. Only the Dictionary of German counts toward \
+                                it, and every German word you've already read in full is \
+                                counted, so you don't start from zero.
+                                """) {
+                                Toggle("Fluency goal", isOn: $fluencyGoal)
+                                    .labelsHidden()
+                                    .toggleStyle(.switch)
+                                    .tint(t.accent)
+                            }
                         }
                     }
                 }
@@ -429,4 +451,5 @@ private struct AppearanceTile: View {
 
 #Preview {
     NavigationStack { SettingsView() }
+        .environment(PremiumViewModel())
 }
