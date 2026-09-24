@@ -50,7 +50,10 @@ struct WordListView: View {
         // Matches can come from anywhere, so each one has to say where from.
         // A pinned pane needs no tag — every row is the book in the title.
         let mark = everywhere
-        Group {
+        // A ZStack, not a Group: a Group hands its modifiers to each branch, so the header
+        // (and its search field) was rebuilt whenever list and empty state traded places —
+        // dropping focus mid-word, or refocusing with the typed text all selected.
+        ZStack {
             if results.isEmpty {
                 emptyState(t)
             } else {
