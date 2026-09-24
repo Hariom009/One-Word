@@ -11,12 +11,15 @@
 //
 
 import SwiftUI
+import AppKit
 import StoreKit   // Product.displayPrice — MEMBER_IMPORT_VISIBILITY needs it named
 
 struct PremiumView: View {
     @Environment(PremiumViewModel.self) private var premium
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
+    /// Pixels per point on the screen the pane is on — the fan's covers are drawn to it.
+    @Environment(\.displayScale) private var displayScale
 
     /// Everything Premium opens, in shelf order.
     private static let books = Wordbook.all.filter { !Premium.free.contains($0.id) }
@@ -94,10 +97,7 @@ struct PremiumView: View {
         return HStack(spacing: -20) {
             ForEach(Array(Self.books.enumerated()), id: \.element.id) { i, book in
                 let away = CGFloat(i) - mid
-                Image(book.image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 100)
+                Image(nsImage: Self.cover(book.image, height: 100, scale: displayScale))
                     .shadow(color: .black.opacity(0.28), radius: 10, y: 6)
                     .rotationEffect(.degrees(away * 5), anchor: .bottom)
                     .offset(y: abs(away) * abs(away) * 1.8)
@@ -106,6 +106,35 @@ struct PremiumView: View {
         }
         .padding(.top, 6)
         .accessibilityHidden(true)
+    }
+
+    /// A cover drawn down to the exact pixels it's shown at, once. Left to Core Animation,
+    /// a ~570×828 painting shrunk 8× at draw time comes out speckled — the printed title
+    /// breaks up — because its filter samples a few source pixels and skips the rest; Core
+    /// Graphics' high-quality resample averages all of them. Keyed on the screen's scale,
+    /// so moving the window to a Retina display draws the covers again at 2×.
+    // ponytail: the shelf still lets Core Animation scale its covers; it shows them large
+    // enough (~2× down) that it doesn't need this. Reuse it there if a small shelf ever does.
+    private static var covers: [String: NSImage] = [:]
+
+    private static func cover(_ name: String, height: CGFloat, scale: CGFloat) -> NSImage {
+        let key = "\(name)@\(height)x\(scale)"
+        if let drawn = covers[key] { return drawn }
+        guard let full = NSImage(named: name)?.cgImage(forProposedRect: nil, context: nil, hints: nil),
+              let space = CGColorSpace(name: CGColorSpace.sRGB),
+              let context = CGContext(data: nil,
+                                      width: Int((CGFloat(full.width) / CGFloat(full.height) * height * scale).rounded()),
+                                      height: Int((height * scale).rounded()),
+                                      bitsPerComponent: 8, bytesPerRow: 0, space: space,
+                                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+        else { return NSImage(named: name) ?? NSImage() }
+        context.interpolationQuality = .high
+        context.draw(full, in: CGRect(x: 0, y: 0, width: context.width, height: context.height))
+        let drawn = context.makeImage().map {
+            NSImage(cgImage: $0, size: NSSize(width: CGFloat(context.width) / scale, height: height))
+        } ?? NSImage(named: name) ?? NSImage()
+        covers[key] = drawn
+        return drawn
     }
 
     private func free(_ t: Theme) -> some View {
