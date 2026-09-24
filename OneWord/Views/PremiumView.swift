@@ -148,7 +148,7 @@ struct PremiumView: View {
             VStack(alignment: .leading, spacing: 14) {
                 perk("A new word every day, on your desktop widget", t)
                 perk("A Hindi meaning and an example with every word", t)
-                perk("Search, History, Practice and Bookmarks", t)
+                perk("Search, History and Bookmarks", t)
                 perk("Works offline \u{2014} every word is already on your Mac", t)
             }
             rule(t)
@@ -169,6 +169,7 @@ struct PremiumView: View {
                 perk("Everything in Free", t, strong: true)
                 perk("\(Self.books.count) more dictionaries \u{2014} on the shelf, in search and on your widget",
                      t, strong: true)
+                perk("Practice \u{2014} English sentences to put into German", t, strong: true)
             }
             rule(t)
             label("Adds", t)

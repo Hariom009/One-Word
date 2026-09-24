@@ -127,7 +127,8 @@ struct RootView: View {
         switch pane {
         case .home:         HomeView(pane: $pane)
         case .history:      HistoryView()
-        case .practice:     SentenceView()
+        // The gate itself, so a launch pane or a lapsed purchase can't land on it either.
+        case .practice:     if premium.isUnlocked { SentenceView() } else { PremiumView() }
         case .bookmarks:    WordListView(wordbook: .saved)
         case .profile:      ProfileView(pane: $pane)
         case .search:       WordListView()
@@ -139,7 +140,9 @@ struct RootView: View {
 
     private var sidebar: some View {
         let t = Theme.of(scheme, doodle)
-        return List(selection: $pane) {
+        // A locked Practice row still takes the click — it goes to the plans instead.
+        let selection = Binding { pane } set: { pane = $0 == .practice && !premium.isUnlocked ? .premium : $0 }
+        return List(selection: selection) {
             ForEach([Pane.home, .history, .practice, .bookmarks]
                         .filter { $0 != .practice || practiceEnabled }) { item in
                 row(item).tag(item)
@@ -182,7 +185,22 @@ struct RootView: View {
     /// A sidebar row. `Label`'s systemImage form can only take an SF Symbol, so
     /// the icon is built by hand and the theme decides what goes in it.
     private func row(_ item: Pane) -> some View {
-        Label { Text(item.title) } icon: { GlyphIcon(item.glyph) }
+        let locked = item == .practice && !premium.isUnlocked
+        return Label {
+            HStack(spacing: 6) {
+                Text(item.title)
+                if locked {
+                    Spacer(minLength: 0)
+                    // The shelf's lock: same glyph, size and ink as a locked book's.
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 9))
+                        .foregroundStyle(Theme.of(scheme, doodle).muted)
+                        .accessibilityHidden(true)
+                }
+            }
+        } icon: { GlyphIcon(item.glyph) }
+        .accessibilityValue(locked ? "Premium" : "")
+        .accessibilityHint(locked ? "Shows how to unlock" : "")
     }
 
     /// A launcher, not a field — the real search box lives in the Search pane, so
