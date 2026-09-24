@@ -210,7 +210,13 @@ for batch in batches:
         dfn = w["definition"].strip().rstrip(".")
         first = dfn.split()[0]
         word = (re.findall(r"[A-Za-z']+", first) or [""])[0]
-        proper = word in cap and word[:1].lower() + word[1:] not in low
+        base = re.sub(r"'s$", "", word)
+        nxt = dfn.split()[1:2]
+        # A name, if the book never writes it lowercase and either writes it capitalised
+        # elsewhere ("Heidegger" -> "Heidegger's") or a capital follows ("Derek Parfit's").
+        # Philosophy lost 232 capitals to the old test, which missed both shapes.
+        proper = base[:1].lower() + base[1:] not in low and (
+            base in cap or (bool(nxt) and nxt[0][:1].isupper()))
         if dfn[:1].isupper() and not (len(first) > 1 and first.isupper()) and not proper:
             dfn = dfn[0].lower() + dfn[1:]
         w["definition"] = dfn
