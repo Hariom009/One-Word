@@ -9,6 +9,9 @@
 //  plans as tall cards. Premium is one payment, not a subscription, and the page says
 //  so plainly; it's what buyers of a word app ask for.
 //
+//  Once Premium is yours there's nothing left to sell: the cards give way to what it
+//  opened — each feature as a tile, then every dictionary on the shelf.
+//
 
 import SwiftUI
 import AppKit
@@ -36,11 +39,15 @@ struct PremiumView: View {
             ScrollView {
                 VStack(spacing: 34) {
                     hero(t)
-                    // Side by side, sharing the column and the taller card's height.
-                    // ponytail: no stacked fallback for very narrow windows — ViewThatFits
-                    // sized the pair to its ideal width, not the column's.
-                    HStack(alignment: .top, spacing: 24) { free(t); lifetime(t) }
-                        .fixedSize(horizontal: false, vertical: true)
+                    if premium.isUnlocked {
+                        owned(t)
+                    } else {
+                        // Side by side, sharing the column and the taller card's height.
+                        // ponytail: no stacked fallback for very narrow windows — ViewThatFits
+                        // sized the pair to its ideal width, not the column's.
+                        HStack(alignment: .top, spacing: 24) { free(t); lifetime(t) }
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
                 .frame(maxWidth: 1000)
                 .padding(.horizontal, 44)
@@ -67,7 +74,7 @@ struct PremiumView: View {
         VStack(spacing: 18) {
             fan
             VStack(spacing: 10) {
-                Text("One Word Premium")
+                Text(premium.isUnlocked ? "Premium \u{00B7} Unlocked" : "One Word Premium")
                     .font(.system(size: 11, weight: .bold))
                     .textCase(.uppercase)
                     .tracking(2.5)
@@ -77,9 +84,12 @@ struct PremiumView: View {
                     .tracking(doodle.tracking(44))
                     .foregroundStyle(t.ink)
                     .multilineTextAlignment(.center)
-                Text("Premium is a single purchase, not a subscription. Pay once and all "
-                     + "\(Self.shelf.count) dictionaries stay unlocked, on every Mac signed in "
-                     + "to your Apple Account.")
+                Text(premium.isUnlocked
+                     ? "Thank you for supporting One Word. All of this is yours for good, on "
+                       + "every Mac signed in to your Apple Account."
+                     : "Premium is a single purchase, not a subscription. Pay once and all "
+                       + "\(Self.shelf.count) dictionaries stay unlocked, on every Mac signed in "
+                       + "to your Apple Account.")
                     .font(.system(size: 15))
                     .foregroundStyle(t.muted)
                     .multilineTextAlignment(.center)
@@ -156,7 +166,7 @@ struct PremiumView: View {
             bookRow(.everydayEnglish, t)
             // Level with Premium's action, so the pair reads as one row of choices.
             Spacer(minLength: 4)
-            footer(premium.isUnlocked ? "Included in Premium" : "Your current plan", t)
+            footer("Your current plan", t)
         }
     }
 
@@ -206,33 +216,109 @@ struct PremiumView: View {
         }
     }
 
-    /// Unlocked: a thank-you. Otherwise the purchase, full width, with Restore under it
-    /// and whatever is in the way under that.
-    @ViewBuilder
+    /// The purchase, full width, with Restore under it and whatever is in the way under that.
     private func action(_ t: Theme) -> some View {
-        if premium.isUnlocked {
-            Label("Unlocked \u{2014} thank you for supporting One Word.", systemImage: "checkmark.seal.fill")
-                .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(t.ink)
-                .frame(maxWidth: .infinity, minHeight: 44)
-                .background(t.ink.opacity(0.06), in: RoundedRectangle(cornerRadius: t.radius(10)))
-        } else {
-            VStack(spacing: 10) {
-                UnlockButton(large: true)
-                Button("Restore Purchase") { Task { await premium.restore() } }
-                    .buttonStyle(.plain)
+        VStack(spacing: 10) {
+            UnlockButton(large: true)
+            Button("Restore Purchase") { Task { await premium.restore() } }
+                .buttonStyle(.plain)
+                .font(.system(size: 12))
+                .foregroundStyle(t.muted)
+                .disabled(premium.phase == .purchasing)
+            if let problem = premium.problem {
+                Text(problem)
                     .font(.system(size: 12))
                     .foregroundStyle(t.muted)
-                    .disabled(premium.phase == .purchasing)
-                if let problem = premium.problem {
-                    Text(problem)
-                        .font(.system(size: 12))
-                        .foregroundStyle(t.muted)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
+    }
+
+    // MARK: - Owned
+
+    /// What Premium opened, for someone who has it: six features as tiles, three to a
+    /// row, then the whole shelf with its word counts.
+    // ponytail: the tiles only say where each feature lives; they don't jump there. Pass
+    // RootView's pane binding in if people go looking for a way through.
+    private func owned(_ t: Theme) -> some View {
+        VStack(alignment: .leading, spacing: 34) {
+            VStack(alignment: .leading, spacing: 16) {
+                label("What Premium opens", t)
+                VStack(spacing: 20) {
+                    HStack(alignment: .top, spacing: 20) {
+                        tile("books.vertical.fill", "The whole shelf",
+                             "\(Self.books.count) more dictionaries beside Everyday English. Pick "
+                             + "any one from the shelf and your word of the day comes from it.", t)
+                        tile("magnifyingglass", "Search every book",
+                             "Search reaches all \(Self.shelf.count) dictionaries, and every entry "
+                             + "opens in full, its Hindi meaning included.", t)
+                        tile("text.bubble.fill", "Practice",
+                             "An English sentence rolls in. Put it into German, then reveal "
+                             + "the answer and hear it spoken.", t)
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                    HStack(alignment: .top, spacing: 20) {
+                        tile("bookmark.fill", "Bookmark anything",
+                             "Save words from every dictionary, and each one you read in full "
+                             + "counts toward what you've learned.", t)
+                        tile("flag.checkered", "A German fluency goal",
+                             "Track your way to the 3,000 words fluency takes. Turn it on in "
+                             + "Settings, under Progress.", t)
+                        tile("square.grid.2x2.fill", "Any book on your widget",
+                             "Let a widget follow the app, or give it a dictionary of its own "
+                             + "from Edit Widget.", t)
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            VStack(alignment: .leading, spacing: 16) {
+                HStack(alignment: .firstTextBaseline) {
+                    label("Your dictionaries", t)
+                    Spacer()
+                    // Once every count is in — a partial sum would tick upward as they land.
+                    if counts.count == Self.shelf.count {
+                        Text("\(counts.values.reduce(0, +).formatted()) words in all")
+                            .font(.system(size: 12).monospacedDigit())
+                            .foregroundStyle(t.muted)
+                    }
+                }
+                card(t) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 18, alignment: .leading),
+                                             count: 4),
+                              alignment: .leading, spacing: 20) {
+                        ForEach(Self.shelf) { bookRow($0, t) }
+                    }
+                }
+                // Its own height, not the window's: the pane is at least as tall as the window.
+                .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    /// A feature: its symbol in an accent disc, a name in the display face, a line on it.
+    private func tile(_ symbol: String, _ title: String, _ text: String, _ t: Theme) -> some View {
+        card(t, padding: 24) {
+            Image(systemName: symbol)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(t.accent)
+                .frame(width: 38, height: 38)
+                .background(t.accent.opacity(0.14), in: Circle())
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(title)
+                    .font(doodle.face(21))
+                    .tracking(doodle.tracking(21))
+                    .foregroundStyle(t.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(text)
+                    .font(.system(size: 14))
+                    .foregroundStyle(t.muted)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 
     /// Where Free's card ends: a quiet bar in the same place and size as Premium's button.
@@ -307,11 +393,11 @@ struct PremiumView: View {
     /// A plan as a tall card: the Settings surface at a larger scale. Premium is lifted —
     /// outlined in the accent, with a shadow under the shape only, so no text casts one.
     /// Which plan is yours is said at each card's foot, where the choice is made.
-    private func card<C: View>(_ t: Theme, emphasized: Bool = false,
+    private func card<C: View>(_ t: Theme, emphasized: Bool = false, padding: CGFloat = 30,
                                @ViewBuilder _ content: () -> C) -> some View {
         let shape = RoundedRectangle(cornerRadius: t.radius(18))
         return VStack(alignment: .leading, spacing: 18) { content() }
-            .padding(30)
+            .padding(padding)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background {
                 shape.fill(t.surface)

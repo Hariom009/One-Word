@@ -125,12 +125,15 @@ non-consumable in-app purchase. Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLV
   is a `UserDefaults` read Observation can't see; a view reading it misses the purchase.
 - **The gates, one per route:** the shelf (`DictionaryShelf.pick`, the pick's only writer —
   a locked book comes forward but isn't picked); the widget (`WidgetDictionary.resource`, its
-  only dictionary read); search rows (no Hindi gloss for a locked hit); and `WordDetail`, where
-  every full-view route ends (headword + `PremiumBar`, no bookmark, not counted as learned).
+  only dictionary read); search rows (no Hindi gloss for a locked hit); `WordDetail`, where
+  every full-view route ends (headword + `PremiumBar`, no bookmark, not counted as learned);
+  and Practice (`RootView.detail` shows the plans in its place, and the sidebar's selection
+  binding sends a locked Practice click to them).
 - **Never gate `WordProvider`.** It feeds search, the shelf's entry counts and warm-up.
 - **Where it's sold:** `PremiumBar` inline (under the shelf, first in Settings, in place of a
   locked entry) and `PremiumView`, the Free-vs-Premium plans pane, reached from the FREE /
-  PREMIUM `PlanTag` in the sidebar's corner. Both buy through `UnlockButton`, and read what's in
+  PREMIUM `PlanTag` in the sidebar's corner. Once Premium is owned that pane stops selling and
+  lists what it opened instead. Both buy through `UnlockButton`, and read what's in
   the way from `PremiumViewModel.problem`, so they can't say different things.
 - A new sheet or pane that shows a word or the shelf inherits the environment. An AppKit-hosted
   view (`NSHostingView`, like the capture HUD) does **not** — inject `PremiumViewModel` there.
