@@ -128,9 +128,9 @@ Which skill lands where:
   [resolved plan](02_Plan/Resolved/SENTENCE_PRACTICE_PLAN_RESOLVED.md)
   *(plan and audit were worked through in session and never filed — the resolved plan
   carries the audit findings in §1 and stands alone)*
-- **Premium** — built on `feat/premium` (Steps 1–6 + 8); not merged. Build and all gates green;
-  free tier smoke-tested live. Purchase, refund, Ask to Buy and restore still need an Xcode Run
-  with `StoreKit/OneWord.storekit`; App Store Connect setup and the sign-in plan gate release.
+- **Premium** — shipped (Steps 1–6 + 8). Build and all gates green; free tier smoke-tested
+  live. Purchase, refund, Ask to Buy and restore still need an Xcode Run with
+  `StoreKit/OneWord.storekit`; App Store Connect setup and the sign-in plan gate release.
   [plan](02_Plan/PREMIUM_PLAN.md) ·
   [audit](02_Plan/Audit/PREMIUM_PLAN_AUDIT.md) →
   [resolved plan](02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md)
@@ -141,3 +141,12 @@ Which skill lands where:
   *(every audit finding resolved — **build from the resolved plan, it stands alone**. Search rows
   hide a locked word's Hindi; the German goal hides until German unlocks. **Release is gated** on a
   separate sign-in plan: Sign in with Apple + in-app account deletion.)*
+- **Dictionary 3000** — shipped. Build and all gates green.
+  [plan](02_Plan/DICTIONARY_3000_PLAN.md)
+  *(Idioms 3,047 · Corporate Slang 3,038 · Philosophy 3,076 · Classical English 3,193 — every
+  original entry untouched, Philosophy's 138 rewritten first. Each book took a first run plus
+  a top-up; Idioms needed none. Batches ran ~50 entries per theme, not the plan's ~110.)*
+  *(Lessons for the next run: the merge's case-fold lowercased names until two fixes landed, and
+  a name the book never writes on its own still slips through, so scan definition openings by hand.
+  Never tell editors to stay inside their theme: they drop words they only guess a neighbour
+  will write, and Classical's first pass lost 30% that way.)*
