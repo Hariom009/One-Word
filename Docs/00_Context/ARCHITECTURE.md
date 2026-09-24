@@ -128,6 +128,10 @@ non-consumable in-app purchase. Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLV
   only dictionary read); search rows (no Hindi gloss for a locked hit); and `WordDetail`, where
   every full-view route ends (headword + `PremiumBar`, no bookmark, not counted as learned).
 - **Never gate `WordProvider`.** It feeds search, the shelf's entry counts and warm-up.
+- **Where it's sold:** `PremiumBar` inline (under the shelf, first in Settings, in place of a
+  locked entry) and `PremiumView`, the Free-vs-Premium plans pane, reached from the FREE /
+  PREMIUM `PlanTag` in the sidebar's corner. Both buy through `UnlockButton`, and read what's in
+  the way from `PremiumViewModel.problem`, so they can't say different things.
 - A new sheet or pane that shows a word or the shelf inherits the environment. An AppKit-hosted
   view (`NSHostingView`, like the capture HUD) does **not** — inject `PremiumViewModel` there.
 
@@ -143,7 +147,8 @@ OneWord/                        app target
   WordCapture.swift             AppKit glue: NSServices "Save to One Word" + HUD
   Views/                        SwiftUI only. No data loading, no persistence.
     RootView, PaneHeader, HomeView, HistoryView, WordDetail, WordListView,
-    LearnedListView, ProfileView, SettingsView, DictionaryPicker, MonthCalendar
+    LearnedListView, ProfileView, SettingsView, DictionaryPicker, MonthCalendar,
+    PremiumBar (+ UnlockButton), PremiumView (+ PlanTag)
   ViewModels/                   @Observable. No view types. The unit-testable seam.
     WordViewModel, WordListViewModel, ProfileViewModel, PremiumViewModel
   Models/                       App-only model + state. No SwiftUI.

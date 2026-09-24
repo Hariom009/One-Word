@@ -44,6 +44,15 @@ final class PremiumViewModel {
 
     func allows(_ id: String) -> Bool { Premium.allows(id, unlocked: isUnlocked) }
 
+    /// What's in the way of buying, if anything — shown in place of the pitch.
+    var problem: String? {
+        switch phase {
+        case .failed(let message): return message
+        case .pending: return "Waiting for approval."
+        default: return storeUnavailable ? "The App Store isn't reachable right now." : nil
+        }
+    }
+
     /// Entitlements first — they're on this Mac and work offline — then the price, which
     /// needs the network. Neither waits on the other's failure.
     func load() async {

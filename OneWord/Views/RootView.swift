@@ -14,9 +14,10 @@
 import SwiftUI
 
 /// The window's sections. Search and Settings sit outside the list (pinned to the
-/// top and bottom of the sidebar); the rest are list rows.
+/// top and bottom of the sidebar); the rest are list rows. Premium is reached from
+/// the plan tag in the sidebar's corner, so it has no row either.
 enum Pane: Hashable, Identifiable {
-    case home, history, practice, bookmarks, profile, search, dictionaries, settings
+    case home, history, practice, bookmarks, profile, search, dictionaries, settings, premium
 
     var id: Self { self }
 
@@ -24,7 +25,7 @@ enum Pane: Hashable, Identifiable {
     /// launches straight into that pane. Nil for anything but a pane title.
     static var launchPane: Pane? {
         guard let name = ProcessInfo.processInfo.environment["ONEWORD_PANE"] else { return nil }
-        return [Pane.home, .history, .practice, .bookmarks, .profile, .search, .dictionaries, .settings]
+        return [Pane.home, .history, .practice, .bookmarks, .profile, .search, .dictionaries, .settings, .premium]
             .first { $0.title.lowercased() == name.lowercased() }
     }
 
@@ -38,6 +39,7 @@ enum Pane: Hashable, Identifiable {
         case .search: "Search"
         case .dictionaries: "Dictionaries"
         case .settings: "Settings"
+        case .premium: "Premium"
         }
     }
 
@@ -53,6 +55,7 @@ enum Pane: Hashable, Identifiable {
         case .search: .search
         case .dictionaries: .dictionaries
         case .settings: .settings
+        case .premium: .premium
         }
     }
 }
@@ -77,6 +80,8 @@ struct RootView: View {
     @State private var writing = false
     @Environment(\.colorScheme) private var scheme
     @Environment(AuthViewModel.self) private var auth
+    /// For the plan tag in the corner.
+    @Environment(PremiumViewModel.self) private var premium
     /// Midnight rides in with the doodle switches, so every palette read in the
     /// shell goes through it.
     @Environment(\.doodle) private var doodle
@@ -128,6 +133,7 @@ struct RootView: View {
         case .search:       WordListView()
         case .dictionaries: DictionaryPicker()
         case .settings:     SettingsView()
+        case .premium:      PremiumView()
         }
     }
 
@@ -150,6 +156,7 @@ struct RootView: View {
                 if !calloutSeen { suggestionCard }
                 HStack(spacing: 0) {
                     accountChip
+                    planTag
                     feedbackButton
                 }
             }
@@ -226,6 +233,22 @@ struct RootView: View {
         .help("Show your profile")
         .padding(.leading, 12)
         .padding(.vertical, 13)
+    }
+
+    /// Which plan you're on, beside who you are — and the way to see what Premium
+    /// holds. Its own button, so the name still goes to Profile.
+    private var planTag: some View {
+        let owned = premium.isUnlocked
+        return Button { pane = .premium } label: {
+            PlanTag(text: owned ? "Premium" : "Free", filled: owned)
+                .padding(.vertical, 6)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help(owned ? "Premium — every dictionary is yours" : "Free plan — see what Premium adds")
+        .accessibilityLabel(owned ? "Premium plan" : "Free plan")
+        .accessibilityHint("Shows the plans")
+        .padding(.trailing, 4)
     }
 
     private func write() {

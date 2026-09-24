@@ -37,7 +37,7 @@ import SwiftUI
 enum Glyph {
     case home, history, practice, bookmarks, dictionaries
     case search, settings, profile, feedback
-    case learned, selected, bookmarked
+    case learned, selected, bookmarked, premium
 
     /// The SF Symbol. Always present — it is what the app has always drawn.
     var symbol: String { art.symbol }
@@ -61,6 +61,7 @@ enum Glyph {
         case .learned:      ("checkmark.seal", "check_doodle")
         case .selected:     ("checkmark.circle.fill", "check_doodle")
         case .bookmarked:   ("bookmark.fill", "bookmark_doodle")
+        case .premium:      ("lock.open", nil)
         }
     }
 }
