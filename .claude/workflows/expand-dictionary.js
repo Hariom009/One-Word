@@ -177,11 +177,21 @@ for f in ${JSON.stringify(blocklist)}:
     for w in json.load(open(os.path.join(root, f))):
         owner.setdefault(w["term"].strip().lower(), "blocklist")
 out, rejected, dupes, collide = list(existing), [], 0, {}
+batches = []
 for path in ${JSON.stringify(ok.map(b => `${scratch}/${id}-batch-${b.n}.json`))}:
     try:
-        batch = json.load(open(path))
+        batches.append(json.load(open(path)))
     except Exception as e:
-        rejected.append((path, "unparseable: %s" % e)); continue
+        rejected.append((path, "unparseable: %s" % e))
+# A proper noun is a word the book writes capitalised mid-sentence and never in lowercase.
+# ponytail: corpus evidence, not a dictionary. It misses a name the book never repeats
+# mid-sentence, and it once kept "State" capitalised; the Idioms run had 1 such case in 3,047.
+low, cap = set(), set()
+for w in existing + [w for b in batches for w in b if isinstance(w, dict)]:
+    for txt in (w.get("definition", ""), w.get("example", "")):
+        for t in re.findall(r"[A-Za-z']+", str(txt))[1:]:
+            (low if t[0].islower() else cap).add(t)
+for batch in batches:
     for w in batch:
         if not isinstance(w, dict) or set(w) != KEYS:
             rejected.append((str(w)[:40], "schema")); continue
@@ -196,9 +206,12 @@ for path in ${JSON.stringify(ok.map(b => `${scratch}/${id}-batch-${b.n}.json`))}
         if bad: rejected.append((w["term"], ",".join(bad))); continue
         # House style, enforced not requested: every shipped book has 0 sentence-cased and
         # 0 period-terminated definitions. A third of one run came back sentence-cased.
+        # Proper nouns keep their capital: the Idioms run lowercased 35 "British"/"Indian".
         dfn = w["definition"].strip().rstrip(".")
         first = dfn.split()[0]
-        if dfn[:1].isupper() and not (len(first) > 1 and first.isupper()):
+        word = (re.findall(r"[A-Za-z']+", first) or [""])[0]
+        proper = word in cap and word[:1].lower() + word[1:] not in low
+        if dfn[:1].isupper() and not (len(first) > 1 and first.isupper()) and not proper:
             dfn = dfn[0].lower() + dfn[1:]
         w["definition"] = dfn
         taken.add(key); out.append(w)
