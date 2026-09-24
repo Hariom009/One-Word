@@ -1,968 +1,968 @@
 [
-  {
-    "term": "solipsism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) दार्शनिक सिद्धांत यह है कि स्वयं वह सब है जिसे आप अस्तित्व में जानते हैं।",
-    "definition": "(philosophy) the philosophical theory that the self is all that you know to exist",
-    "example": ""
-  },
-  {
-    "term": "ism",
-    "partOfSpeech": "noun",
-    "hindi": "एक विश्वास (या विश्वास की प्रणाली) कुछ समूह या स्कूल द्वारा अधिकृत के रूप में स्वीकार किया",
-    "definition": "a belief (or system of beliefs) accepted as authoritative by some group or school",
-    "example": ""
-  },
-  {
-    "term": "nullification",
-    "partOfSpeech": "noun",
-    "hindi": "राज्यों के अधिकार सिद्धांत कि एक राज्य संयुक्त राज्य कांग्रेस द्वारा पारित संघीय कानून को पहचानने या लागू करने से इनकार कर सकता है",
-    "definition": "the states'-rights doctrine that a state can refuse to recognize or to enforce a federal law passed by the United States Congress",
-    "example": ""
-  },
-  {
-    "term": "dynamism",
-    "partOfSpeech": "noun",
-    "hindi": "विभिन्न सिद्धांतों या सिद्धांतों या दार्शनिक प्रणालियों में से कोई भी जो कुछ इमामेन्ट फोर्स या एनर्जी के मामले में ब्रह्मांड की घटनाओं को समझाने का प्रयास करता है।",
-    "definition": "any of the various theories or doctrines or philosophical systems that attempt to explain the phenomena of the universe in terms of some immanent force or energy",
-    "example": ""
-  },
-  {
-    "term": "prescriptivism",
-    "partOfSpeech": "noun",
-    "hindi": "(ethics) एक सिद्धांत है कि नैतिक बयान उचित दृष्टिकोण और व्यवहार निर्धारित करता है",
-    "definition": "(ethics) a doctrine holding that moral statements prescribe appropriate attitudes and behavior",
-    "example": ""
-  },
-  {
-    "term": "humanitarianism",
-    "partOfSpeech": "noun",
-    "hindi": "मानव कल्याण को बढ़ावा देने के सिद्धांत",
-    "definition": "the doctrine that people's duty is to promote human welfare",
-    "example": ""
-  },
-  {
-    "term": "predicate",
-    "partOfSpeech": "noun",
-    "hindi": "(जैविक) एक प्रस्ताव के विषय से क्या भविष्यवाणी की जाती है; एक प्रस्ताव में दूसरा कार्यकाल पहले शब्द से ही होता है।",
-    "definition": "(logic) what is predicated of the subject of a proposition; the second term in a proposition is predicated of the first term by means of the copula",
-    "example": "`Socrates is a man' predicates manhood of Socrates"
-  },
-  {
-    "term": "nominalism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत कि एक ही शब्द द्वारा लेबल किए गए विभिन्न वस्तुओं में सामान्य लेकिन उनके नाम में कुछ भी नहीं है।",
-    "definition": "(philosophy) the doctrine that the various objects labeled by the same term have nothing in common but their name",
-    "example": ""
-  },
-  {
-    "term": "rationalism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत जो ज्ञान को बिना अनुभव के कारण हासिल किया जाता है",
-    "definition": "(philosophy) the doctrine that knowledge is acquired by reason without resort to experience",
-    "example": ""
-  },
-  {
-    "term": "syncategorematic",
-    "partOfSpeech": "adjective",
-    "hindi": "एक शब्द है कि विषय के रूप में खड़े नहीं हो सकता है या (विशेष रूप से) एक प्रस्ताव की भविष्यवाणी लेकिन अन्य शर्तों के साथ संयोजन के रूप में इस्तेमाल किया जाना चाहिए",
-    "definition": "of a term that cannot stand as the subject or (especially) the predicate of a proposition but must be used in conjunction with other terms",
-    "example": "`or' is a syncategorematic term"
-  },
-  {
-    "term": "contextualism",
-    "partOfSpeech": "noun",
-    "hindi": "किसी भी सिद्धांत ने समस्याओं को हल करने या शर्तों के अर्थ को स्थापित करने में संदर्भ के महत्व पर जोर दिया",
-    "definition": "any doctrine emphasizing the importance of the context in solving problems or establishing the meaning of terms",
-    "example": ""
-  },
-  {
-    "term": "deconstructionism",
-    "partOfSpeech": "noun",
-    "hindi": "आलोचना का एक दार्शनिक सिद्धांत (आमतौर पर साहित्य या फिल्म) जो अपनी सतह के नीचे delving द्वारा एक काम में गहरी बैठा विरोधाभासों को उजागर करना चाहता है",
-    "definition": "a philosophical theory of criticism (usually of literature or film) that seeks to expose deep-seated contradictions in a work by delving below its surface meaning",
-    "example": ""
-  },
-  {
-    "term": "animism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत है कि सभी प्राकृतिक वस्तुओं और ब्रह्मांड ही आत्मा है",
-    "definition": "the doctrine that all natural objects and the universe itself have souls",
-    "example": "animism is common among primitive peoples"
-  },
-  {
-    "term": "predication",
-    "partOfSpeech": "noun",
-    "hindi": "(English) आत्म-साक्ष्य की घोषणा; कुछ ऐसा जो तर्क के आधार पर माना जा सकता है",
-    "definition": "(logic) a declaration of something self-evident; something that can be assumed as the basis for argument",
-    "example": ""
-  },
-  {
-    "term": "peripateticism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) Aristotle का दर्शन जो तर्क और भौतिक विज्ञान और नैतिकता और कविताओं और राजनीति और प्राकृतिक विज्ञान से संबंधित है।",
-    "definition": "(philosophy) the philosophy of Aristotle that deals with logic and metaphysics and ethics and poetics and politics and natural science",
-    "example": "Aristotelianism profoundly influenced Western thought"
-  },
-  {
-    "term": "utilitarianism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत है कि उपयोगी अच्छा है; विशेष रूप से Jeremy Bentham और जेम्स मिल द्वारा विस्तृत; उद्देश्य सबसे बड़ी संख्या के लिए सबसे बड़ी खुशी होने के लिए कहा गया था",
-    "definition": "doctrine that the useful is the good; especially as elaborated by Jeremy Bentham and James Mill; the aim was said to be the greatest happiness for the greatest number",
-    "example": ""
-  },
-  {
-    "term": "interchangeable",
-    "partOfSpeech": "adjective",
-    "hindi": "(mathematics, तर्क) जैसे तर्क या भूमिकाओं का आदान-प्रदान किया जा सकता है",
-    "definition": "(mathematics, logic) such that the arguments or roles can be interchanged",
-    "example": "the arguments of the symmetric relation, `is a sister of,' are interchangeable"
-  },
-  {
-    "term": "aesthetics",
-    "partOfSpeech": "noun",
-    "hindi": "(कला) सौंदर्य और स्वाद के साथ व्यवहार करने वाले दर्शन की शाखा (कला पर लागू होने वाले मूल्यांकन मानदंडों पर जोर देना)",
-    "definition": "(art) the branch of philosophy dealing with beauty and taste (emphasizing the evaluative criteria that are applied to art)",
-    "example": "traditional aesthetics assumed the existence of universal and timeless criteria of artistic value"
-  },
-  {
-    "term": "discursive",
-    "partOfSpeech": "adjective",
-    "hindi": "अंतर्ज्ञान के बजाय कारण या तर्क से निष्कर्ष निकालना",
-    "definition": "proceeding to a conclusion by reason or argument rather than intuition",
-    "example": ""
-  },
-  {
-    "term": "determinism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) एक दार्शनिक सिद्धांत है कि सभी घटनाओं antecedent पर्याप्त कारणों के अपरिहार्य परिणाम हैं रखती है; अक्सर मुक्त इच्छा की संभावना से इनकार करने के रूप में समझा जाएगा",
-    "definition": "(philosophy) a philosophical theory holding that all events are inevitable consequences of antecedent sufficient causes; often understood as denying the possibility of free will",
-    "example": ""
-  },
-  {
-    "term": "naturalism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत कि दुनिया को आध्यात्मिक या अलौकिक स्पष्टीकरण के लिए सहारा के बिना वैज्ञानिक शब्दों में समझा जा सकता है",
-    "definition": "(philosophy) the doctrine that the world can be understood in scientific terms without recourse to spiritual or supernatural explanations",
-    "example": ""
-  },
-  {
-    "term": "presentism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत यह है कि Apocalypse (जैसा कि बुक ऑफ रिवेलेशन्स) की पवित्र भविष्यवाणी वर्तमान में पूरा होने के दौरान होती है।",
-    "definition": "the doctrine that the Scripture prophecies of the Apocalypse (as in the Book of Revelations) are presently in the course of being fulfilled",
-    "example": ""
-  },
-  {
-    "term": "feminism",
-    "partOfSpeech": "noun",
-    "hindi": "एक सिद्धांत जो महिलाओं के लिए समान अधिकारों की वकालत करता है",
-    "definition": "a doctrine that advocates equal rights for women",
-    "example": ""
-  },
-  {
-    "term": "empiricism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत है कि ज्ञान अनुभव से डरावना",
-    "definition": "(philosophy) the doctrine that knowledge derives from experience",
-    "example": ""
-  },
-  {
-    "term": "deconstruction",
-    "partOfSpeech": "noun",
-    "hindi": "आलोचना का एक दार्शनिक सिद्धांत (आमतौर पर साहित्य या फिल्म) जो अपनी सतह के नीचे delving द्वारा एक काम में गहरी बैठा विरोधाभासों को उजागर करना चाहता है",
-    "definition": "a philosophical theory of criticism (usually of literature or film) that seeks to expose deep-seated contradictions in a work by delving below its surface meaning",
-    "example": ""
-  },
-  {
-    "term": "pacificism",
-    "partOfSpeech": "noun",
-    "hindi": "यह सिद्धांत कि सभी हिंसा अनुचित है",
-    "definition": "the doctrine that all violence is unjustifiable",
-    "example": ""
-  },
-  {
-    "term": "internationalism",
-    "partOfSpeech": "noun",
-    "hindi": "यह सिद्धांत कि राष्ट्रों को सहयोग करना चाहिए क्योंकि उनके सामान्य हित उनके मतभेदों की तुलना में अधिक महत्वपूर्ण हैं",
-    "definition": "the doctrine that nations should cooperate because their common interests are more important than their differences",
-    "example": ""
-  },
-  {
-    "term": "entelechy",
-    "partOfSpeech": "noun",
-    "hindi": "(Aristotle) कुछ ऐसी स्थिति जो पूरी तरह से महसूस हो रही है; यथार्थता के विपरीत",
-    "definition": "(Aristotle) the state of something that is fully realized; actuality as opposed to potentiality",
-    "example": ""
-  },
-  {
-    "term": "freethinking",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत यह है कि कारण आचरण को विनियमित करने के लिए सही आधार है",
-    "definition": "the doctrine that reason is the right basis for regulating conduct",
-    "example": ""
-  },
-  {
-    "term": "bioethics",
-    "partOfSpeech": "noun",
-    "hindi": "नैतिकता की शाखा जो जैव चिकित्सा विज्ञान में नैतिक मूल्यों का अध्ययन करती है",
-    "definition": "the branch of ethics that studies moral values in the biomedical sciences",
-    "example": ""
-  },
-  {
-    "term": "humanism",
-    "partOfSpeech": "noun",
-    "hindi": "मानव कल्याण को बढ़ावा देने के सिद्धांत",
-    "definition": "the doctrine that people's duty is to promote human welfare",
-    "example": ""
-  },
-  {
-    "term": "cosmology",
-    "partOfSpeech": "noun",
-    "hindi": "ब्रह्मांड की उत्पत्ति और प्रकृति का आध्यात्मिक अध्ययन",
-    "definition": "the metaphysical study of the origin and nature of the universe",
-    "example": ""
-  },
-  {
-    "term": "phenomenology",
-    "partOfSpeech": "noun",
-    "hindi": "मानव अनुभव के अध्ययन के आधार पर एडमंड हुसरेल द्वारा प्रस्तावित एक दार्शनिक सिद्धांत जिसमें उद्देश्य वास्तविकता के विचार को ध्यान में नहीं लिया जाता है।",
-    "definition": "a philosophical doctrine proposed by Edmund Husserl based on the study of human experience in which considerations of objective reality are not taken into account",
-    "example": ""
-  },
-  {
-    "term": "nonmonotonic",
-    "partOfSpeech": "adjective",
-    "hindi": "मोनोटोनिक",
-    "definition": "not monotonic",
-    "example": ""
-  },
-  {
-    "term": "infer",
-    "partOfSpeech": "verb",
-    "hindi": "कटौती द्वारा कारण; कटौती द्वारा स्थापित",
-    "definition": "reason by deduction; establish by deduction",
-    "example": ""
-  },
-  {
-    "term": "esthetic",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) एक दार्शनिक सिद्धांत के रूप में क्या सुंदर है",
-    "definition": "(philosophy) a philosophical theory as to what is beautiful",
-    "example": "he despised the esthetic of minimalism"
-  },
-  {
-    "term": "tautology",
-    "partOfSpeech": "noun",
-    "hindi": "(English) एक बयान जो जरूरी है",
-    "definition": "(logic) a statement that is necessarily true",
-    "example": "the statement `he is brave or he is not brave' is a tautology"
-  },
-  {
-    "term": "amoralism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत कि नैतिक भेद अमान्य हैं",
-    "definition": "the doctrine that moral distinctions are invalid",
-    "example": ""
-  },
-  {
-    "term": "conscience",
-    "partOfSpeech": "noun",
-    "hindi": "नैतिक या नैतिक सिद्धांतों से तर्कहीन प्रेरणा जो किसी व्यक्ति के विचारों और कार्यों को नियंत्रित करती है",
-    "definition": "motivation deriving logically from ethical or moral principles that govern a person's thoughts and actions",
-    "example": ""
-  },
-  {
-    "term": "existentialism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) एक 20 वीं सदी के दार्शनिक आंदोलन मुख्य रूप से यूरोप में; माना जाता है कि लोग पूरी तरह से स्वतंत्र हैं और इस प्रकार वे खुद को बनाने के लिए जिम्मेदार हैं",
-    "definition": "(philosophy) a 20th-century philosophical movement chiefly in Europe; assumes that people are entirely free and thus responsible for what they make of themselves",
-    "example": ""
-  },
-  {
-    "term": "credo",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांतों या मान्यताओं की किसी भी प्रणाली",
-    "definition": "any system of principles or beliefs",
-    "example": ""
-  },
-  {
-    "term": "axiology",
-    "partOfSpeech": "noun",
-    "hindi": "मूल्यों और मूल्य निर्णयों का अध्ययन",
-    "definition": "the study of values and value judgments",
-    "example": ""
-  },
-  {
-    "term": "probabilism",
-    "partOfSpeech": "noun",
-    "hindi": "एक रोमन कैथोलिक प्रणाली है कि जब विशेषज्ञ राय अलग एक अभिनेता किसी भी ठोस संभावित राय का पालन कर सकते हैं कि वह भले ही कुछ अलग राय अधिक संभावना हो सकता है",
-    "definition": "a Roman Catholic system of casuistry that when expert opinions differ an actor can follow any solidly probable opinion that he wishes even though some different opinion might be more probable",
-    "example": ""
-  },
-  {
-    "term": "quantifier",
-    "partOfSpeech": "noun",
-    "hindi": "(logic) एक शब्द (जैसे `some' या `all' या `no') जो एक तार्किक प्रस्ताव में चर को बांधता है",
-    "definition": "(logic) a word (such as `some' or `all' or `no') that binds the variables in a logical proposition",
-    "example": ""
-  },
-  {
-    "term": "postulation",
-    "partOfSpeech": "noun",
-    "hindi": "(English) आत्म-साक्ष्य की घोषणा; कुछ ऐसा जो तर्क के आधार पर माना जा सकता है",
-    "definition": "(logic) a declaration of something self-evident; something that can be assumed as the basis for argument",
-    "example": ""
-  },
-  {
-    "term": "relativism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) दार्शनिक सिद्धांत कि निर्णय के सभी मानदंड व्यक्तियों और स्थितियों में शामिल होने के सापेक्ष हैं",
-    "definition": "(philosophy) the philosophical doctrine that all criteria of judgment are relative to the individuals and situations involved",
-    "example": ""
-  },
-  {
-    "term": "abolitionism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत जो दासता के उन्मूलन के लिए कहता है",
-    "definition": "the doctrine that calls for the abolition of slavery",
-    "example": ""
-  },
-  {
-    "term": "testament",
-    "partOfSpeech": "noun",
-    "hindi": "विश्वास का एक पेशा",
-    "definition": "a profession of belief",
-    "example": "he stated his political testament"
-  },
-  {
-    "term": "imitation",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत जो प्रकृति या मानव व्यवहार के प्रतिनिधित्व को सटीक नकल होना चाहिए",
-    "definition": "the doctrine that representations of nature or human behavior should be accurate imitations",
-    "example": ""
-  },
-  {
-    "term": "asceticism",
-    "partOfSpeech": "noun",
-    "hindi": "यह सिद्धांत कि विश्व स्तर पर सुखों के त्याग के माध्यम से एक उच्च आध्यात्मिक या बौद्धिक राज्य प्राप्त करना संभव है।",
-    "definition": "the doctrine that through renunciation of worldly pleasures it is possible to achieve a high spiritual or intellectual state",
-    "example": ""
-  },
-  {
-    "term": "scopal",
-    "partOfSpeech": "adjective",
-    "hindi": "या दायरे से संबंधित",
-    "definition": "of or relating to scope",
-    "example": "scopal dependency"
-  },
-  {
-    "term": "formalism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत है कि औपचारिक संरचना के बजाय सामग्री है क्या प्रतिनिधित्व किया जाना चाहिए",
-    "definition": "the doctrine that formal structure rather than content is what should be represented",
-    "example": ""
-  },
-  {
-    "term": "positivism",
-    "partOfSpeech": "noun",
-    "hindi": "अनुभववाद का रूप जो अवधारणात्मक अनुभव पर सभी ज्ञान को आधार बनाता है (intuition or revelation पर नहीं)",
-    "definition": "the form of empiricism that bases all knowledge on perceptual experience (not on intuition or revelation)",
-    "example": ""
-  },
-  {
-    "term": "neuroethics",
-    "partOfSpeech": "noun",
-    "hindi": "न्यूरोलॉजिकल रोगों के उपचार के नैतिक निहितार्थ का अध्ययन",
-    "definition": "the study of ethical implications of treatments for neurological diseases",
-    "example": ""
-  },
-  {
-    "term": "hereditarianism",
-    "partOfSpeech": "noun",
-    "hindi": "दार्शनिक सिद्धांत कि आनुवंशिकता बौद्धिक विकास को निर्धारित करने में पर्यावरण की तुलना में अधिक महत्वपूर्ण है",
-    "definition": "the philosophical doctrine that heredity is more important than environment in determining intellectual growth",
-    "example": ""
-  },
-  {
-    "term": "operationalism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत है कि एक प्रस्ताव के अर्थ को साबित करने या इसे लागू करने में शामिल संचालन के होते हैं",
-    "definition": "(philosophy) the doctrine that the meaning of a proposition consists of the operations involved in proving or applying it",
-    "example": ""
-  },
-  {
-    "term": "philosopher",
-    "partOfSpeech": "noun",
-    "hindi": "दर्शन में विशेषज्ञ",
-    "definition": "a specialist in philosophy",
-    "example": ""
-  },
-  {
-    "term": "mimesis",
-    "partOfSpeech": "noun",
-    "hindi": "कला और साहित्य में प्रकृति और मानव व्यवहार का अनुकरणीय प्रतिनिधित्व",
-    "definition": "the imitative representation of nature and human behavior in art and literature",
-    "example": ""
-  },
-  {
-    "term": "subjectivism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत जो ज्ञान और मूल्य आपके व्यक्तिपरक अनुभव से निर्भर हैं और सीमित हैं",
-    "definition": "(philosophy) the doctrine that knowledge and value are dependent on and limited by your subjective experience",
-    "example": ""
-  },
-  {
-    "term": "explicandum",
-    "partOfSpeech": "noun",
-    "hindi": "(संस्कृत) कुछ (एक तथ्य या चीज या अभिव्यक्ति) का एक बयान समझाया जाना चाहिए",
-    "definition": "(logic) a statement of something (a fact or thing or expression) to be explained",
-    "example": ""
-  },
-  {
-    "term": "epicureanism",
-    "partOfSpeech": "noun",
-    "hindi": "बौद्ध धर्म का सिद्धांत जो कई प्राचीन यूनानी दार्शनिकों द्वारा बचाव किया गया था",
-    "definition": "a doctrine of hedonism that was defended by several ancient Greek philosophers",
-    "example": ""
-  },
-  {
-    "term": "hedonism",
-    "partOfSpeech": "noun",
-    "hindi": "नैतिक सिद्धांत के विषय में खुशी की खोज",
-    "definition": "the pursuit of pleasure as a matter of ethical principle",
-    "example": ""
-  },
-  {
-    "term": "dialectic",
-    "partOfSpeech": "noun",
-    "hindi": "तर्क की किसी भी औपचारिक प्रणाली जो तार्किक तर्कों के आदान-प्रदान द्वारा सच्चाई पर पहुंचती है",
-    "definition": "any formal system of reasoning that arrives at the truth by the exchange of logical arguments",
-    "example": ""
-  },
-  {
-    "term": "intuitionism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत जो ज्ञान को मुख्य रूप से अंतर्ज्ञान द्वारा अधिग्रहित किया जाता है",
-    "definition": "(philosophy) the doctrine that knowledge is acquired primarily by intuition",
-    "example": ""
-  },
-  {
-    "term": "doctrine",
-    "partOfSpeech": "noun",
-    "hindi": "एक विश्वास (या विश्वास की प्रणाली) कुछ समूह या स्कूल द्वारा अधिकृत के रूप में स्वीकार किया",
-    "definition": "a belief (or system of beliefs) accepted as authoritative by some group or school",
-    "example": ""
-  },
-  {
-    "term": "intensional",
-    "partOfSpeech": "adjective",
-    "hindi": "विशेषताओं के सेट का उपयोग जो किसी दिए गए शब्द के रेफरेंट को अलग करते हैं",
-    "definition": "used of the set of attributes that distinguish the referents of a given word",
-    "example": ""
-  },
-  {
-    "term": "secularism",
-    "partOfSpeech": "noun",
-    "hindi": "एक सिद्धांत जो धर्म और धार्मिक विचारों को अस्वीकार करता है",
-    "definition": "a doctrine that rejects religion and religious considerations",
-    "example": ""
-  },
-  {
-    "term": "instrumentalism",
-    "partOfSpeech": "noun",
-    "hindi": "व्यावहारिक दर्शन की एक प्रणाली जो विचार को उन उपकरणों पर विचार करती है जिन्हें हमारे कार्यों को निर्देशित करना चाहिए और उनका मूल्य उनकी सफलता से मापा जाता है।",
-    "definition": "a system of pragmatic philosophy that considers idea to be instruments that should guide our actions and their value is measured by their success",
-    "example": ""
-  },
-  {
-    "term": "methodology",
-    "partOfSpeech": "noun",
-    "hindi": "दर्शन की शाखा जो किसी विशेष अनुशासन में जांच के सिद्धांतों और प्रक्रियाओं का विश्लेषण करती है",
-    "definition": "the branch of philosophy that analyzes the principles and procedures of inquiry in a particular discipline",
-    "example": ""
-  },
-  {
-    "term": "reincarnationism",
-    "partOfSpeech": "noun",
-    "hindi": "एक सिद्धांत यह है कि शरीर की मृत्यु पर आत्मा दूसरे शरीर में फिर से पैदा होती है या फिर मृत्यु हो जाती है।",
-    "definition": "a doctrine that on the death of the body the soul migrates to or is born again in another body",
-    "example": ""
-  },
-  {
-    "term": "egoism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत यह है कि नैतिकता के आधार पर अपने खुद के कल्याण की खोज",
-    "definition": "(ethics) the theory that the pursuit of your own welfare in the basis of morality",
-    "example": ""
-  },
-  {
-    "term": "explanans",
-    "partOfSpeech": "noun",
-    "hindi": "(logic) बयान जो स्पष्ट व्याख्या करते हैं; व्याख्यात्मक परिसर",
-    "definition": "(logic) statements that explain the explicandum; the explanatory premises",
-    "example": ""
-  },
-  {
-    "term": "logic",
-    "partOfSpeech": "noun",
-    "hindi": "दर्शन की शाखा जो अनुमान का विश्लेषण करती है",
-    "definition": "the branch of philosophy that analyzes inference",
-    "example": ""
-  },
-  {
-    "term": "descriptivism",
-    "partOfSpeech": "noun",
-    "hindi": "(ethics) एक सिद्धांत है कि नैतिक बयानों में एक सच्चाई मान है",
-    "definition": "(ethics) a doctrine holding that moral statements have a truth value",
-    "example": ""
-  },
-  {
-    "term": "noninterchangeable",
-    "partOfSpeech": "adjective",
-    "hindi": "ऐसा नहीं कि किसी अभिव्यक्ति की शर्तों को अर्थ बदलने के बिना बदला नहीं जा सकता है",
-    "definition": "such that the terms of an expression cannot be interchanged without changing the meaning",
-    "example": "the arguments of the symmetric relation, `is the father of', are noninterchangeable"
-  },
-  {
-    "term": "establishmentism",
-    "partOfSpeech": "noun",
-    "hindi": "सामाजिक या राजनीतिक प्रतिष्ठान का समर्थन करने का सिद्धांत",
-    "definition": "the doctrine of supporting the social or political establishment",
-    "example": ""
-  },
-  {
-    "term": "ethicism",
-    "partOfSpeech": "noun",
-    "hindi": "एक सिद्धांत जो नैतिकता और नैतिक विचार मान्य और महत्वपूर्ण हैं",
-    "definition": "a doctrine that ethics and ethical ideas are valid and important",
-    "example": "his ethicism often led him to moralize"
-  },
-  {
-    "term": "unilateralism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत कि राष्ट्रों को व्यक्तिगत रूप से सलाह या अन्य राष्ट्रों की भागीदारी के बिना अपने विदेशी मामलों का संचालन करना चाहिए",
-    "definition": "the doctrine that nations should conduct their foreign affairs individualistically without the advice or involvement of other nations",
-    "example": ""
-  },
-  {
-    "term": "categorematic",
-    "partOfSpeech": "adjective",
-    "hindi": "एक शब्द या वाक्यांश जो विषय के रूप में खड़े होने में सक्षम है या (विशेष रूप से) एक प्रस्ताव के भविष्यवाणी",
-    "definition": "of a term or phrase capable of standing as the subject or (especially) the predicate of a proposition",
-    "example": ""
-  },
-  {
-    "term": "extensional",
-    "partOfSpeech": "adjective",
-    "hindi": "उन संस्थाओं के वर्ग को सूचीबद्ध करके एक शब्द को परिभाषित करना जिसके लिए शब्द सही ढंग से लागू होता है",
-    "definition": "defining a word by listing the class of entities to which the word correctly applies",
-    "example": ""
-  },
-  {
-    "term": "ethics",
-    "partOfSpeech": "noun",
-    "hindi": "सही और गलत विचारों के आधार पर प्रेरणा",
-    "definition": "motivation based on ideas of right and wrong",
-    "example": ""
-  },
-  {
-    "term": "semiotics",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) संकेतों और प्रतीकों के कार्यों का एक दार्शनिक सिद्धांत",
-    "definition": "(philosophy) a philosophical theory of the functions of signs and symbols",
-    "example": ""
-  },
-  {
-    "term": "apodictic",
-    "partOfSpeech": "adjective",
-    "hindi": "एक प्रस्ताव का; आवश्यक रूप से सच या तार्किक रूप से निश्चित",
-    "definition": "of a proposition; necessarily true or logically certain",
-    "example": ""
-  },
-  {
-    "term": "proposition",
-    "partOfSpeech": "noun",
-    "hindi": "(logic) एक बयान जो कुछ की पुष्टि या इनकार करता है और या तो सच या झूठा है",
-    "definition": "(logic) a statement that affirms or denies something and is either true or false",
-    "example": ""
-  },
-  {
-    "term": "morals",
-    "partOfSpeech": "noun",
-    "hindi": "सही और गलत विचारों के आधार पर प्रेरणा",
-    "definition": "motivation based on ideas of right and wrong",
-    "example": ""
-  },
-  {
-    "term": "logicism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) दार्शनिक सिद्धांत कि गणित के सभी औपचारिक तर्क से प्राप्त किया जा सकता है",
-    "definition": "(philosophy) the philosophical theory that all of mathematics can be derived from formal logic",
-    "example": ""
-  },
-  {
-    "term": "animalism",
-    "partOfSpeech": "noun",
-    "hindi": "यह सिद्धांत कि मनुष्य प्रकृति में विशुद्ध रूप से पशु हैं और आध्यात्मिक प्रकृति की कमी है",
-    "definition": "the doctrine that human beings are purely animal in nature and lacking a spiritual nature",
-    "example": ""
-  },
-  {
-    "term": "transeunt",
-    "partOfSpeech": "adjective",
-    "hindi": "मानसिक क्रिया के कारण मन के बाहर प्रभाव पड़ता है",
-    "definition": "of a mental act; causing effects outside the mind",
-    "example": ""
-  },
-  {
-    "term": "paradox",
-    "partOfSpeech": "noun",
-    "hindi": "एक बयान है कि खुद को विरोधाभास",
-    "definition": "(logic) a statement that contradicts itself",
-    "example": "`I always lie' is a paradox because if it is true it must be false"
-  },
-  {
-    "term": "dogma",
-    "partOfSpeech": "noun",
-    "hindi": "एक धार्मिक सिद्धांत जिसे सबूत के बिना सच घोषित किया जाता है",
-    "definition": "a religious doctrine that is proclaimed as true without proof",
-    "example": ""
-  },
-  {
-    "term": "apodeictic",
-    "partOfSpeech": "adjective",
-    "hindi": "एक प्रस्ताव का; आवश्यक रूप से सच या तार्किक रूप से निश्चित",
-    "definition": "of a proposition; necessarily true or logically certain",
-    "example": ""
-  },
-  {
-    "term": "reformism",
-    "partOfSpeech": "noun",
-    "hindi": "सुधार का सिद्धांत",
-    "definition": "a doctrine of reform",
-    "example": ""
-  },
-  {
-    "term": "quantify",
-    "partOfSpeech": "verb",
-    "hindi": "एक मात्रात्मक के रूप में उपयोग करें",
-    "definition": "use as a quantifier",
-    "example": ""
-  },
-  {
-    "term": "populism",
-    "partOfSpeech": "noun",
-    "hindi": "राजनीतिक सिद्धांत जो विशेषाधिकार प्राप्त अभिजात वर्ग के साथ अपने संघर्ष में आम लोगों के अधिकारों और शक्तियों का समर्थन करता है",
-    "definition": "the political doctrine that supports the rights and powers of the common people in their struggle with the privileged elite",
-    "example": ""
-  },
-  {
-    "term": "metaphysics",
-    "partOfSpeech": "noun",
-    "hindi": "होने और जानने का दार्शनिक अध्ययन",
-    "definition": "the philosophical study of being and knowing",
-    "example": ""
-  },
-  {
-    "term": "esthetics",
-    "partOfSpeech": "noun",
-    "hindi": "(कला) सौंदर्य और स्वाद के साथ व्यवहार करने वाले दर्शन की शाखा (कला पर लागू होने वाले मूल्यांकन मानदंडों पर जोर देना)",
-    "definition": "(art) the branch of philosophy dealing with beauty and taste (emphasizing the evaluative criteria that are applied to art)",
-    "example": "traditional aesthetics assumed the existence of universal and timeless criteria of artistic value"
-  },
-  {
-    "term": "postulate",
-    "partOfSpeech": "noun",
-    "hindi": "(logic) एक ऐसा प्रस्ताव जो तार्किक तर्क के लिए आधार प्रदान करने के लिए सही रूप में स्वीकार किया जाता है",
-    "definition": "(logic) a proposition that is accepted as true in order to provide a basis for logical reasoning",
-    "example": ""
-  },
-  {
-    "term": "semiology",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) संकेतों और प्रतीकों के कार्यों का एक दार्शनिक सिद्धांत",
-    "definition": "(philosophy) a philosophical theory of the functions of signs and symbols",
-    "example": ""
-  },
-  {
-    "term": "dualism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत है कि वास्तविकता में दो बुनियादी opposing तत्वों के होते हैं, अक्सर मन और पदार्थ (या मन और शरीर), या अच्छा और बुरा",
-    "definition": "the doctrine that reality consists of two basic opposing elements, often taken to be mind and matter (or mind and body), or good and evil",
-    "example": ""
-  },
-  {
-    "term": "transitivity",
-    "partOfSpeech": "noun",
-    "hindi": "(लौकिक और गणित) तीन तत्वों के बीच एक संबंध, जैसे कि यह पहले और दूसरे के बीच है और यह दूसरे और तीसरे के बीच भी है, यह जरूरी है कि पहले और तीसरे के बीच होना चाहिए।",
-    "definition": "(logic and mathematics) a relation between three elements such that if it holds between the first and second and it also holds between the second and third it must necessarily hold between the first and third",
-    "example": ""
-  },
-  {
-    "term": "scruples",
-    "partOfSpeech": "noun",
-    "hindi": "नैतिक या नैतिक सिद्धांतों से तर्कहीन प्रेरणा जो किसी व्यक्ति के विचारों और कार्यों को नियंत्रित करती है",
-    "definition": "motivation deriving logically from ethical or moral principles that govern a person's thoughts and actions",
-    "example": ""
-  },
-  {
-    "term": "eudemonism",
-    "partOfSpeech": "noun",
-    "hindi": "एक नैतिक प्रणाली जो कारण के आधार पर जीवन के माध्यम से व्यक्तिगत भलाई के संदर्भ में कार्यों का मूल्यांकन करती है",
-    "definition": "an ethical system that evaluates actions by reference to personal well-being through a life based on reason",
-    "example": ""
-  },
-  {
-    "term": "jurisprudence",
-    "partOfSpeech": "noun",
-    "hindi": "कानून और सिद्धांतों से संबंधित दर्शन की शाखा जो अदालतों को निर्णय लेने के लिए नेतृत्व करती हैं, वे करते हैं।",
-    "definition": "the branch of philosophy concerned with the law and the principles that lead courts to make the decisions they do",
-    "example": ""
-  },
-  {
-    "term": "arity",
-    "partOfSpeech": "noun",
-    "hindi": "तर्कों की संख्या जो एक फ़ंक्शन ले सकता है",
-    "definition": "the number of arguments that a function can take",
-    "example": ""
-  },
-  {
-    "term": "passivism",
-    "partOfSpeech": "noun",
-    "hindi": "यह सिद्धांत कि सभी हिंसा अनुचित है",
-    "definition": "the doctrine that all violence is unjustifiable",
-    "example": ""
-  },
-  {
-    "term": "antiestablishmentism",
-    "partOfSpeech": "noun",
-    "hindi": "सामाजिक और राजनीतिक प्रतिष्ठान के विरोध का सिद्धांत",
-    "definition": "the doctrine of opposition to the social and political establishment",
-    "example": ""
-  },
-  {
-    "term": "presentational",
-    "partOfSpeech": "adjective",
-    "hindi": "(विशेष रूप से मनोविज्ञान या दर्शन में) प्रस्तुति से संबंधित या उससे संबंधित",
-    "definition": "of or relating to a presentation (especially in psychology or philosophy)",
-    "example": "what Whitehead calls `perception in the presentational immediacy'"
-  },
-  {
-    "term": "pacifism",
-    "partOfSpeech": "noun",
-    "hindi": "यह सिद्धांत कि सभी हिंसा अनुचित है",
-    "definition": "the doctrine that all violence is unjustifiable",
-    "example": ""
-  },
-  {
-    "term": "pragmatism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) सिद्धांत है कि व्यावहारिक परिणाम ज्ञान और अर्थ और मूल्य के मानदंड हैं",
-    "definition": "(philosophy) the doctrine that practical consequences are the criteria of knowledge and meaning and value",
-    "example": ""
-  },
-  {
-    "term": "endaemonism",
-    "partOfSpeech": "noun",
-    "hindi": "एक नैतिक प्रणाली जो कारण के आधार पर जीवन के माध्यम से व्यक्तिगत भलाई के संदर्भ में कार्यों का मूल्यांकन करती है",
-    "definition": "an ethical system that evaluates actions by reference to personal well-being through a life based on reason",
-    "example": ""
-  },
-  {
-    "term": "transcendentalism",
-    "partOfSpeech": "noun",
-    "hindi": "दर्शन की किसी भी प्रणाली ने अनुभवजन्य और सामग्री के ऊपर सहज और आध्यात्मिक पर जोर दिया",
-    "definition": "any system of philosophy emphasizing the intuitive and spiritual above the empirical and material",
-    "example": ""
-  },
-  {
-    "term": "posit",
-    "partOfSpeech": "noun",
-    "hindi": "(logic) एक ऐसा प्रस्ताव जो तार्किक तर्क के लिए आधार प्रदान करने के लिए सही रूप में स्वीकार किया जाता है",
-    "definition": "(logic) a proposition that is accepted as true in order to provide a basis for logical reasoning",
-    "example": ""
-  },
-  {
-    "term": "philosophy",
-    "partOfSpeech": "noun",
-    "hindi": "एक विश्वास (या विश्वास की प्रणाली) कुछ समूह या स्कूल द्वारा अधिकृत के रूप में स्वीकार किया",
-    "definition": "a belief (or system of beliefs) accepted as authoritative by some group or school",
-    "example": ""
-  },
-  {
-    "term": "literalism",
-    "partOfSpeech": "noun",
-    "hindi": "कला या साहित्य में यथार्थवादी (शाब्दिक) चित्रण के सिद्धांत",
-    "definition": "the doctrine of realistic (literal) portrayal in art or literature",
-    "example": ""
-  },
-  {
-    "term": "tenet",
-    "partOfSpeech": "noun",
-    "hindi": "एक धार्मिक सिद्धांत जिसे सबूत के बिना सच घोषित किया जाता है",
-    "definition": "a religious doctrine that is proclaimed as true without proof",
-    "example": ""
-  },
-  {
-    "term": "egalitarianism",
-    "partOfSpeech": "noun",
-    "hindi": "मानव जाति की समानता का सिद्धांत और राजनीतिक और आर्थिक और सामाजिक समानता की इच्छा",
-    "definition": "the doctrine of the equality of mankind and the desirability of political and economic and social equality",
-    "example": ""
-  },
-  {
-    "term": "equalitarianism",
-    "partOfSpeech": "noun",
-    "hindi": "मानव जाति की समानता का सिद्धांत और राजनीतिक और आर्थिक और सामाजिक समानता की इच्छा",
-    "definition": "the doctrine of the equality of mankind and the desirability of political and economic and social equality",
-    "example": ""
-  },
-  {
-    "term": "monism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत है कि वास्तविकता एक बुनियादी पदार्थ या तत्व के होते हैं",
-    "definition": "the doctrine that reality consists of a single basic substance or element",
-    "example": ""
-  },
-  {
-    "term": "multiculturalism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत है कि कई अलग संस्कृतियों (एक राष्ट्रीय संस्कृति के बजाय) शांतिपूर्वक और समान रूप से एक देश में सहयोग कर सकते हैं",
-    "definition": "the doctrine that several different cultures (rather than one national culture) can coexist peacefully and equitably in a single country",
-    "example": ""
-  },
-  {
-    "term": "deduce",
-    "partOfSpeech": "verb",
-    "hindi": "कटौती द्वारा कारण; कटौती द्वारा स्थापित",
-    "definition": "reason by deduction; establish by deduction",
-    "example": ""
-  },
-  {
-    "term": "environmentalism",
-    "partOfSpeech": "noun",
-    "hindi": "दार्शनिक सिद्धांत कि वातावरण बौद्धिक विकास का निर्धारण करने में heredity की तुलना में अधिक महत्वपूर्ण है",
-    "definition": "the philosophical doctrine that environment is more important than heredity in determining intellectual growth",
-    "example": ""
-  },
-  {
-    "term": "nihilism",
-    "partOfSpeech": "noun",
-    "hindi": "एक क्रांतिकारी सिद्धांत जो अपने स्वयं के लिए सामाजिक प्रणाली के विनाश की वकालत करता है",
-    "definition": "a revolutionary doctrine that advocates destruction of the social system for its own sake",
-    "example": ""
-  },
-  {
-    "term": "mentalism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) एक सिद्धांत जो दिमाग सही वास्तविकता है और वह वस्तुएं केवल मन की जागरूकता के पहलुओं के रूप में मौजूद हैं।",
-    "definition": "(philosophy) a doctrine that mind is the true reality and that objects exist only as aspects of the mind's awareness",
-    "example": ""
-  },
-  {
-    "term": "creed",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांतों या मान्यताओं की किसी भी प्रणाली",
-    "definition": "any system of principles or beliefs",
-    "example": ""
-  },
-  {
-    "term": "vitalism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) एक सिद्धांत है कि जीवन भौतिकी और रसायन विज्ञान से अलग एक महत्वपूर्ण सिद्धांत है",
-    "definition": "(philosophy) a doctrine that life is a vital principle distinct from physics and chemistry",
-    "example": ""
-  },
-  {
-    "term": "immanent",
-    "partOfSpeech": "adjective",
-    "hindi": "मानसिक क्रिया पूरी तरह से मन में प्रदर्शन किया",
-    "definition": "of a mental act performed entirely within the mind",
-    "example": "a cognition is an immanent act of mind"
-  },
-  {
-    "term": "experimentalism",
-    "partOfSpeech": "noun",
-    "hindi": "एक अनुभवजन्य सिद्धांत जो प्रयोगात्मक सिद्धांतों की वकालत करता है",
-    "definition": "an empirical doctrine that advocates experimental principles",
-    "example": ""
-  },
-  {
-    "term": "explanandum",
-    "partOfSpeech": "noun",
-    "hindi": "(संस्कृत) कुछ (एक तथ्य या चीज या अभिव्यक्ति) का एक बयान समझाया जाना चाहिए",
-    "definition": "(logic) a statement of something (a fact or thing or expression) to be explained",
-    "example": ""
-  },
-  {
-    "term": "teleology",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) अपने सिरों या उद्देश्यों द्वारा एक सिद्धांत की व्याख्या घटना",
-    "definition": "(philosophy) a doctrine explaining phenomena by their ends or purposes",
-    "example": ""
-  },
-  {
-    "term": "creationism",
-    "partOfSpeech": "noun",
-    "hindi": "पुस्तक ऑफ जेनेसिस में दिए गए क्रिएशन के खाते में साक्षर विश्वास",
-    "definition": "the literal belief in the account of Creation given in the Book of Genesis",
-    "example": "creationism denies the theory of evolution of species"
-  },
-  {
-    "term": "secessionism",
-    "partOfSpeech": "noun",
-    "hindi": "एक सिद्धांत जो बचाव के अधिकार को बनाए रखता है",
-    "definition": "a doctrine that maintains the right of secession",
-    "example": ""
-  },
-  {
-    "term": "conceptualism",
-    "partOfSpeech": "noun",
-    "hindi": "सिद्धांत यह है कि विभिन्न वस्तुओं के लिए एक सामान्य शब्द का अनुप्रयोग एक मानसिक इकाई के अस्तित्व को इंगित करता है जो एप्लिकेशन को मध्यस्थता करता है",
-    "definition": "the doctrine that the application of a general term to various objects indicates the existence of a mental entity that mediates the application",
-    "example": ""
-  },
-  {
-    "term": "aesthetic",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) एक दार्शनिक सिद्धांत के रूप में क्या सुंदर है",
-    "definition": "(philosophy) a philosophical theory as to what is beautiful",
-    "example": "he despised the esthetic of minimalism"
-  },
-  {
-    "term": "idealism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) दार्शनिक सिद्धांत कि विचार केवल वास्तविकता हैं",
-    "definition": "(philosophy) the philosophical theory that ideas are the only reality",
-    "example": ""
-  },
-  {
-    "term": "epistemology",
-    "partOfSpeech": "noun",
-    "hindi": "ज्ञान के दार्शनिक सिद्धांत",
-    "definition": "the philosophical theory of knowledge",
-    "example": ""
-  },
-  {
-    "term": "derive",
-    "partOfSpeech": "verb",
-    "hindi": "कटौती द्वारा कारण; कटौती द्वारा स्थापित",
-    "definition": "reason by deduction; establish by deduction",
-    "example": ""
-  },
-  {
-    "term": "physicalism",
-    "partOfSpeech": "noun",
-    "hindi": "(philosophy) दार्शनिक सिद्धांत है कि मामला केवल वास्तविकता है",
-    "definition": "(philosophy) the philosophical theory that matter is the only reality",
-    "example": ""
-  },
-  {
-    "term": "dianoetic",
-    "partOfSpeech": "adjective",
-    "hindi": "अंतर्ज्ञान के बजाय कारण या तर्क से निष्कर्ष निकालना",
-    "definition": "proceeding to a conclusion by reason or argument rather than intuition",
-    "example": ""
-  }
+ {
+  "term": "solipsism",
+  "partOfSpeech": "noun",
+  "hindi": "अहंमात्रवाद — केवल अपने मन को ही निश्चित रूप से वास्तविक मानने का मत",
+  "definition": "the view that only your own mind is certainly real, and that everything else might exist only inside your experience",
+  "example": "After three hours of gaming alone, Rohan joked that his solipsism was confirmed: nobody had texted, so maybe nobody else existed."
+ },
+ {
+  "term": "ism",
+  "partOfSpeech": "noun",
+  "hindi": "वाद — कोई भी विशिष्ट सिद्धांत या विचारधारा",
+  "definition": "an informal word for any distinctive doctrine, theory or belief system, borrowed from the ending of names like realism, stoicism and socialism",
+  "example": "Priya's uncle has an ism for everything, and by dessert he had blamed the traffic on three of them."
+ },
+ {
+  "term": "nullification",
+  "partOfSpeech": "noun",
+  "hindi": "निरस्तीकरण — राज्य द्वारा संघीय कानून को अपने यहाँ अमान्य ठहराने का सिद्धांत",
+  "definition": "the political doctrine that a member state may declare a national or federal statute invalid within its own borders and refuse to enforce it",
+  "example": "In civics class, Meera argued that nullification would turn the country into a group project where every member ignores the rubric."
+ },
+ {
+  "term": "dynamism",
+  "partOfSpeech": "noun",
+  "hindi": "गतिवाद — जगत को भीतर सक्रिय शक्ति या ऊर्जा से समझाने का मत",
+  "definition": "any theory that explains the natural world through forces or energy active inside things, rather than through passive, lifeless matter",
+  "example": "Watching the pressure cooker rattle on the stove, Kabir declared himself a convert to dynamism: clearly the dal had energy of its own."
+ },
+ {
+  "term": "prescriptivism",
+  "partOfSpeech": "noun",
+  "hindi": "आदेशवाद — नैतिक कथनों को तथ्य नहीं, आचरण के निर्देश मानने का मत",
+  "definition": "the view in ethics that moral statements work like instructions, telling people what to do rather than describing facts about the world",
+  "example": "Anika's prescriptivism shows in the flat group chat, where 'stealing yogurt is wrong' really just means 'hands off my yogurt'."
+ },
+ {
+  "term": "humanitarianism",
+  "partOfSpeech": "noun",
+  "hindi": "लोकहितवाद — दुखी मनुष्यों की भलाई को अपना कर्तव्य मानने का मत",
+  "definition": "the view that people have a duty to reduce human suffering and improve the welfare of others, whoever and wherever they are",
+  "example": "Her humanitarianism is practical: she skipped the debate about global poverty and set up a monthly donation before lunch."
+ },
+ {
+  "term": "predicate",
+  "partOfSpeech": "noun",
+  "hindi": "विधेय — वाक्य में उद्देश्य के बारे में कही गई बात",
+  "definition": "in logic, the part of a statement that says something about its subject, such as 'is mortal' in 'Socrates is mortal'",
+  "example": "In 'the chai is too sweet', the predicate is 'too sweet', and it is also Nani's entire review."
+ },
+ {
+  "term": "nominalism",
+  "partOfSpeech": "noun",
+  "hindi": "नामवाद — सामान्य गुणों को केवल नाम मानने का मत",
+  "definition": "the view that general ideas such as redness or justice are only names we apply, and that only particular, individual things really exist",
+  "example": "Arguing over whether a hot dog is a sandwich, Dev took the nominalism route: there is no sandwich essence, just things we choose to call sandwiches."
+ },
+ {
+  "term": "rationalism",
+  "partOfSpeech": "noun",
+  "hindi": "बुद्धिवाद — ज्ञान का मुख्य स्रोत तर्कबुद्धि को मानने का मत",
+  "definition": "the view that reason, rather than sensory experience, is the main source of knowledge, and that some truths can be known by thinking alone",
+  "example": "Her rationalism kicked in during the quiz: she had never seen a square circle, yet knew without looking that none could exist."
+ },
+ {
+  "term": "syncategorematic",
+  "partOfSpeech": "adjective",
+  "hindi": "आश्रित पद — अकेले अर्थ न रखकर दूसरे शब्दों के सहारे अर्थ देने वाला",
+  "definition": "describing a word, like 'every', 'never' or 'and', that has no meaning standing alone and works only when joined with other words",
+  "example": "The group chat reply 'and?' fell flat, because a syncategorematic word cannot carry a whole conversation by itself."
+ },
+ {
+  "term": "contextualism",
+  "partOfSpeech": "noun",
+  "hindi": "संदर्भवाद — अर्थ और सत्य को संदर्भ पर निर्भर मानने का मत",
+  "definition": "the view that the meaning or truth of a statement, especially a claim to know something, depends on the situation in which it is made",
+  "example": "'I know where my keys are' sounds fine at home but shaky at the airport, which is contextualism in a nutshell."
+ },
+ {
+  "term": "deconstructionism",
+  "partOfSpeech": "noun",
+  "hindi": "विखंडनवाद — पाठ में छिपे अंतर्विरोध खोजने वाली आलोचना-परंपरा",
+  "definition": "the school of criticism, begun by Jacques Derrida, holding that every text hides contradictions and that its meaning is never fully fixed",
+  "example": "Two weeks into deconstructionism, Tara could no longer read a cereal box without finding a hidden war between 'natural' and 'flavoured'."
+ },
+ {
+  "term": "animism",
+  "partOfSpeech": "noun",
+  "hindi": "जीववाद — प्रकृति की वस्तुओं में आत्मा मानने का विश्वास",
+  "definition": "the belief that natural things such as rivers, trees, animals and mountains possess a soul or spirit of their own",
+  "example": "When Grandma thanks the neem tree each morning, she is practising a quiet animism her village has kept for generations."
+ },
+ {
+  "term": "predication",
+  "partOfSpeech": "noun",
+  "hindi": "विधेयन — किसी विषय पर कोई गुण आरोपित करने की क्रिया",
+  "definition": "in logic, the action of saying that some quality or property belongs to a subject, as when a sentence calls the soup cold",
+  "example": "'Monday is exhausting' is a predication the whole office would sign without reading."
+ },
+ {
+  "term": "peripateticism",
+  "partOfSpeech": "noun",
+  "hindi": "अरस्तूवाद — अरस्तू और टहलते हुए पढ़ाने वाली उनकी परंपरा का दर्शन",
+  "definition": "the philosophy of Aristotle and his followers, covering logic, nature, ethics and politics, named after his habit of teaching while walking",
+  "example": "The professor's peripateticism is literal: she lectures on ethics while pacing the corridor, and the back row follows with laptops open."
+ },
+ {
+  "term": "utilitarianism",
+  "partOfSpeech": "noun",
+  "hindi": "उपयोगितावाद — अधिकतम लोगों के अधिकतम सुख को नैतिक कसौटी मानने का मत",
+  "definition": "the view that the right action is whichever choice produces the greatest total happiness for the greatest number of people",
+  "example": "Ordering the pizza everyone could tolerate instead of the one Arjun loved was pure utilitarianism, and Arjun sulked all evening."
+ },
+ {
+  "term": "interchangeable",
+  "partOfSpeech": "adjective",
+  "hindi": "परस्पर-विनिमेय — अर्थ या सत्य बदले बिना एक-दूसरे की जगह रखे जा सकने वाले",
+  "definition": "in logic, able to swap places without changing whether a statement is true, as with two names for the same thing",
+  "example": "In the quiz, 'Mumbai' and 'Bombay' were interchangeable, so Neha scored the point either way."
+ },
+ {
+  "term": "aesthetics",
+  "partOfSpeech": "noun",
+  "hindi": "सौंदर्यशास्त्र — सौंदर्य, रुचि और कला के मूल्यांकन का दर्शन",
+  "definition": "the branch of philosophy that studies beauty, taste and artistic value, asking what makes something beautiful and how we judge artworks; also spelled esthetics",
+  "example": "The canteen debate over whether a banana taped to a wall counts as art was aesthetics, whether anyone called it that or not."
+ },
+ {
+  "term": "discursive",
+  "partOfSpeech": "adjective",
+  "hindi": "तर्कमूलक — अंतर्ज्ञान से नहीं, क्रमबद्ध तर्क से निष्कर्ष तक पहुँचने वाला",
+  "definition": "reaching a conclusion step by step through reasoning and argument, rather than grasping it all at once by intuition",
+  "example": "Geometry proofs are discursive: you cannot just feel that the angles add up, you have to walk there line by line."
+ },
+ {
+  "term": "determinism",
+  "partOfSpeech": "noun",
+  "hindi": "नियतिवाद — हर घटना को पूर्व कारणों से अनिवार्यतः तय मानने का मत",
+  "definition": "the view that every event, including human choices, is fixed in advance by earlier causes, which many think leaves no room for free will",
+  "example": "Blaming determinism for eating the last samosa did not impress his sister, who had causes of her own for being angry."
+ },
+ {
+  "term": "naturalism",
+  "partOfSpeech": "noun",
+  "hindi": "प्रकृतिवाद — जगत को अलौकिक शक्तियों के बिना, प्राकृतिक कारणों से समझने का मत",
+  "definition": "the view that everything can be explained by natural causes and scientific study, without appeal to spirits or supernatural powers",
+  "example": "When the lights flickered, Aisha's naturalism sent her straight to the fuse box while her cousin was still listening for footsteps."
+ },
+ {
+  "term": "presentism",
+  "partOfSpeech": "noun",
+  "hindi": "वर्तमानवाद — केवल वर्तमान को ही वास्तविक मानने का मत",
+  "definition": "the view in philosophy of time that only present things truly exist, while the past no longer exists and the future does not exist yet",
+  "example": "Stuck in traffic, Vikram adopted presentism: yesterday's plans were gone, tomorrow's meeting wasn't real, and only this red light existed."
+ },
+ {
+  "term": "feminism",
+  "partOfSpeech": "noun",
+  "hindi": "नारीवाद — स्त्रियों के समान अधिकारों और अवसरों का समर्थन करने वाला मत",
+  "definition": "the movement and body of ideas holding that women deserve equal rights and opportunities, and questioning how gender shapes power in society",
+  "example": "Feminism came up at the family dinner when Riya asked why only the women were clearing the plates."
+ },
+ {
+  "term": "empiricism",
+  "partOfSpeech": "noun",
+  "hindi": "अनुभववाद — ज्ञान का स्रोत इंद्रियों के अनुभव को मानने का मत",
+  "definition": "the view that knowledge comes mainly from experience gathered through the senses, rather than from reason or ideas we are born with",
+  "example": "Her empiricism is simple: she will believe the new café makes good coffee once she has tasted it herself."
+ },
+ {
+  "term": "deconstruction",
+  "partOfSpeech": "noun",
+  "hindi": "विखंडन — पाठ को खोलकर उसके छिपे अंतर्विरोध दिखाने की पद्धति",
+  "definition": "a method of close reading that pulls apart a text to reveal the contradictions and assumptions hidden beneath its surface meaning",
+  "example": "Her deconstruction of the wedding invitation revealed that 'casual dress' secretly meant 'dress to impress the aunties'."
+ },
+ {
+  "term": "pacificism",
+  "partOfSpeech": "noun",
+  "hindi": "शांतिवाद — युद्ध और हर प्रकार की हिंसा को अनुचित मानने का मत",
+  "definition": "the view that warfare and violence are never justified and that every dispute should be settled by peaceful means; a less common spelling of pacifism",
+  "example": "His pacificism extends even to the office table-tennis league, where he refuses to smash on principle."
+ },
+ {
+  "term": "internationalism",
+  "partOfSpeech": "noun",
+  "hindi": "अंतरराष्ट्रीयतावाद — राष्ट्रों के आपसी सहयोग को सर्वोपरि मानने का मत",
+  "definition": "the view that nations should work together closely, because their shared interests matter more than their differences",
+  "example": "The hostel kitchen, with Korean noodles beside Punjabi pickle, ran on a cheerful internationalism nobody had voted for."
+ },
+ {
+  "term": "entelechy",
+  "partOfSpeech": "noun",
+  "hindi": "पूर्णसिद्धि — किसी वस्तु की संभावना का पूरी तरह साकार हो जाना",
+  "definition": "in Aristotle's philosophy, the state of a thing that has fully become what it had the potential to be, like a seed grown into a towering tree",
+  "example": "Watching her former intern lead the whole product launch, Sunita felt she was witnessing entelechy in a lanyard."
+ },
+ {
+  "term": "freethinking",
+  "partOfSpeech": "noun",
+  "hindi": "स्वतंत्र चिंतन — परंपरा या सत्ता के बजाय तर्क के आधार पर विश्वास बनाने का मत",
+  "definition": "the view that beliefs, especially about religion, should be formed by reason and evidence rather than accepted from tradition or authority",
+  "example": "Kiran's freethinking shows at book club, where she refuses to accept any claim just because a bestseller printed it."
+ },
+ {
+  "term": "bioethics",
+  "partOfSpeech": "noun",
+  "hindi": "जैवनीतिशास्त्र — चिकित्सा और जीवविज्ञान से उठे नैतिक प्रश्नों का अध्ययन",
+  "definition": "the branch of ethics that studies moral questions raised by medicine and biology, such as organ donation, gene editing and caring for dying patients",
+  "example": "The group chat turned into a bioethics seminar when someone asked whether parents should be allowed to edit their baby's genes."
+ },
+ {
+  "term": "humanism",
+  "partOfSpeech": "noun",
+  "hindi": "मानवतावाद — मानव की गरिमा, बुद्धि और कल्याण को केंद्र में रखने वाला मत",
+  "definition": "the outlook that places human dignity, reason and welfare at the centre, seeking to live well without relying on supernatural authority",
+  "example": "Her humanism shows in small things: she learns the name of every security guard and asks how their children are doing."
+ },
+ {
+  "term": "cosmology",
+  "partOfSpeech": "noun",
+  "hindi": "ब्रह्मांडमीमांसा — ब्रह्मांड की उत्पत्ति और स्वरूप का दार्शनिक अध्ययन",
+  "definition": "the part of philosophy that asks about the origin, structure and nature of the universe as a whole, such as whether it had a beginning",
+  "example": "Lying on the terrace at midnight, the cousins drifted into cosmology: did the universe begin, or has it always been here?"
+ },
+ {
+  "term": "phenomenology",
+  "partOfSpeech": "noun",
+  "hindi": "परिघटनाविज्ञान — अनुभव जैसा भीतर से प्रतीत होता है, उसका अध्ययन",
+  "definition": "the study of experience as it feels from the inside, describing how things appear to consciousness before asking what lies behind them; developed by Edmund Husserl",
+  "example": "Describing exactly how the first sip of monsoon chai feels, rather than measuring its temperature, is a small exercise in phenomenology."
+ },
+ {
+  "term": "nonmonotonic",
+  "partOfSpeech": "adjective",
+  "hindi": "संशोधनीय — नई जानकारी मिलने पर पुराना निष्कर्ष बदल सकने वाला (तर्क)",
+  "definition": "describing reasoning in which adding newly learned information can overturn a conclusion that was previously drawn, as everyday reasoning often does",
+  "example": "Riya's nonmonotonic reasoning kicked in when a friend posted a photo of the empty hall, and the party she had assumed was on was suddenly off."
+ },
+ {
+  "term": "infer",
+  "partOfSpeech": "verb",
+  "hindi": "अनुमान करना — प्रमाण या तर्क के आधार पर निष्कर्ष निकालना",
+  "definition": "to draw a conclusion from evidence or from statements already accepted, by reasoning rather than being told directly",
+  "example": "From the empty biscuit tin and the crumbs on his shirt, Mum could infer exactly who had been up at midnight."
+ },
+ {
+  "term": "esthetic",
+  "partOfSpeech": "noun",
+  "hindi": "सौंदर्यदृष्टि — क्या सुंदर है, इस पर टिकी विचार-शैली या रुचि",
+  "definition": "a particular set of ideas or principles about what is beautiful or artistically good, guiding someone's taste and choices; American spelling of aesthetic",
+  "example": "His apartment follows a strict esthetic: white walls, one plant, and absolutely nowhere to put your bag."
+ },
+ {
+  "term": "tautology",
+  "partOfSpeech": "noun",
+  "hindi": "पुनरुक्ति — अपनी बनावट के कारण ही सदा सत्य रहने वाला कथन",
+  "definition": "a statement that is true in every possible case purely because of its logical form, such as 'either it will rain or it will not'",
+  "example": "The weather app's forecast, 'it may or may not rain today', is a tautology dressed up as useful information."
+ },
+ {
+  "term": "amoralism",
+  "partOfSpeech": "noun",
+  "hindi": "नीतिनिरपेक्षतावाद — सही-गलत के नैतिक भेदों को ही अमान्य मानने का मत",
+  "definition": "the view that moral distinctions between right and wrong have no real authority, so moral rules need not guide anyone's choices",
+  "example": "Rahul claimed amoralism when he grabbed the last parking spot, yet he glared at the driver who did the same to him an hour later."
+ },
+ {
+  "term": "conscience",
+  "partOfSpeech": "noun",
+  "hindi": "अंतरात्मा — सही-गलत का बोध कराने वाली भीतरी आवाज़",
+  "definition": "the inner sense of right and wrong that judges your own actions and motives, often felt as guilt or unease when you go against it",
+  "example": "Her conscience kicked in halfway through copying the homework, so she closed the laptop and asked her friend to explain the sums instead."
+ },
+ {
+  "term": "existentialism",
+  "partOfSpeech": "noun",
+  "hindi": "अस्तित्ववाद — मनुष्य को पूर्णतः स्वतंत्र और अपने जीवन-अर्थ का रचयिता मानने वाला दर्शन",
+  "definition": "a twentieth-century movement holding that people are completely free, with no fixed nature, and so fully responsible for creating meaning through their choices",
+  "example": "Arnav's existentialism phase began the night he realised no aptitude test could choose his career for him."
+ },
+ {
+  "term": "credo",
+  "partOfSpeech": "noun",
+  "hindi": "मूलमंत्र — किसी व्यक्ति या समूह के आधारभूत सिद्धांत",
+  "definition": "a short, clear statement of the core beliefs or principles that guide how a person or group thinks and behaves",
+  "example": "The startup's credo, printed on every mug, is 'ship small, ship often', though the coffee machine has not shipped anything in weeks."
+ },
+ {
+  "term": "axiology",
+  "partOfSpeech": "noun",
+  "hindi": "मूल्यमीमांसा — मूल्यों और मूल्य-निर्णयों का दार्शनिक अध्ययन",
+  "definition": "the branch of philosophy that studies value, asking what makes things good, worthwhile or beautiful, and how we judge them",
+  "example": "Arguing over whether the pricier phone was actually 'worth it', the roommates had stumbled into axiology without realising."
+ },
+ {
+  "term": "probabilism",
+  "partOfSpeech": "noun",
+  "hindi": "संभाव्यतावाद — निश्चितता के अभाव में संभावना को आचरण का आधार मानने का मत",
+  "definition": "the view that certainty is rarely possible, so reasonable belief and action should follow what is probable; in Catholic ethics, the rule that one may follow any well-supported opinion",
+  "example": "Her probabilism settles most debates: she cannot prove the train will be late, but she packs a snack anyway."
+ },
+ {
+  "term": "quantifier",
+  "partOfSpeech": "noun",
+  "hindi": "परिमाणक — 'सब', 'कुछ', 'कोई नहीं' जैसे मात्रा बताने वाले तार्किक शब्द",
+  "definition": "in logic, a word such as 'every', 'some' or 'none' that tells how many members of a group a statement makes its claim about",
+  "example": "'Everyone liked the movie' collapsed the moment Kabir challenged its quantifier, since he had walked out at the interval."
+ },
+ {
+  "term": "postulation",
+  "partOfSpeech": "noun",
+  "hindi": "अभिधारणा — बिना प्रमाण के तर्क का आधार मान ली गई बात",
+  "definition": "the action of assuming something as true without proof, so that it can serve as a starting point for an argument or theory",
+  "example": "Every board game night begins with the same postulation: nobody flips the table, however badly Monopoly goes."
+ },
+ {
+  "term": "relativism",
+  "partOfSpeech": "noun",
+  "hindi": "सापेक्षवाद — सत्य और नैतिकता को व्यक्ति, संस्कृति या परिस्थिति के सापेक्ष मानने का मत",
+  "definition": "the view that truth, knowledge or morality are not absolute but depend on the person, culture or situation making the judgment",
+  "example": "Invoking relativism to defend pineapple on pizza did not help Sameer, since the whole table shared one very firm standard."
+ },
+ {
+  "term": "abolitionism",
+  "partOfSpeech": "noun",
+  "hindi": "उन्मूलनवाद — दासप्रथा को पूरी तरह समाप्त करने का आंदोलन और मत",
+  "definition": "the movement and moral view that slavery must be ended completely, and more broadly that deeply unjust institutions should be abolished",
+  "example": "In history class, the students traced how abolitionism grew from pamphlets and kitchen-table meetings into a force that changed laws."
+ },
+ {
+  "term": "testament",
+  "partOfSpeech": "noun",
+  "hindi": "आस्था-घोषणा — अपने विश्वासों और सिद्धांतों का औपचारिक कथन",
+  "definition": "a formal statement of what a person believes or stands for, setting out their core principles, as in a political testament",
+  "example": "Her farewell email to the team read like a testament: honest feedback, long lunches, and never a meeting on Friday afternoon."
+ },
+ {
+  "term": "imitation",
+  "partOfSpeech": "noun",
+  "hindi": "अनुकरण सिद्धांत — कला को प्रकृति और जीवन की सच्ची नकल मानने का मत",
+  "definition": "the theory that paintings, stories and other artworks should faithfully copy nature and the way people really live",
+  "example": "The director's devotion to imitation meant the actors ate real, cold parathas in every take of the breakfast scene."
+ },
+ {
+  "term": "asceticism",
+  "partOfSpeech": "noun",
+  "hindi": "वैराग्यवाद — सांसारिक सुख त्यागकर आत्मिक उन्नति पाने का मार्ग",
+  "definition": "the view and practice of giving up worldly pleasures and comforts in order to reach a higher spiritual or mental state",
+  "example": "His month of phone-free asceticism lasted until the cricket final, when he suddenly remembered where he had hidden the phone."
+ },
+ {
+  "term": "scopal",
+  "partOfSpeech": "adjective",
+  "hindi": "व्याप्ति-संबंधी — किसी तार्किक शब्द के प्रभाव-क्षेत्र से जुड़ा",
+  "definition": "relating to scope, meaning how much of a sentence a word like 'every' or 'never' controls, which can change the whole meaning",
+  "example": "'Every student didn't pass' has a scopal ambiguity that sent the class group chat into a panic until the teacher clarified."
+ },
+ {
+  "term": "formalism",
+  "partOfSpeech": "noun",
+  "hindi": "रूपवाद — विषयवस्तु से अधिक रूप और संरचना को महत्व देने का मत",
+  "definition": "the view that form and structure, rather than content or subject matter, are what matter most, especially when judging artworks or mathematics",
+  "example": "The poetry teacher's formalism meant she graded the sonnet's rhyme scheme first and its heartbreak second."
+ },
+ {
+  "term": "positivism",
+  "partOfSpeech": "noun",
+  "hindi": "प्रत्यक्षवाद — केवल अवलोकन और विज्ञान से सिद्ध ज्ञान को मान्य मानने का मत",
+  "definition": "the view that genuine knowledge comes only from what can be observed and tested scientifically, rejecting intuition, revelation and speculation as sources",
+  "example": "Anil's positivism shows at dinner, where he refuses to believe the new diet works until someone shows him an actual study."
+ },
+ {
+  "term": "neuroethics",
+  "partOfSpeech": "noun",
+  "hindi": "तंत्रिकानीतिशास्त्र — मस्तिष्क-विज्ञान से उठे नैतिक प्रश्नों का अध्ययन",
+  "definition": "the study of moral questions raised by brain science and brain treatments, such as reading thoughts, boosting memory or altering personality",
+  "example": "When a startup promised a headband that sharpens focus by zapping your brain, the class debate turned into neuroethics."
+ },
+ {
+  "term": "hereditarianism",
+  "partOfSpeech": "noun",
+  "hindi": "आनुवंशिकतावाद — बुद्धि और स्वभाव को मुख्यतः वंशानुगत मानने का मत",
+  "definition": "the view that heredity, the traits passed down through genes, matters more than upbringing or surroundings in shaping intelligence and character",
+  "example": "Uncle's hereditarianism, 'our family is naturally good at maths', did not survive Ishaan's report card."
+ },
+ {
+  "term": "operationalism",
+  "partOfSpeech": "noun",
+  "hindi": "संक्रियावाद — किसी अवधारणा का अर्थ उसे मापने की विधि से तय मानने का मत",
+  "definition": "the view that the meaning of a scientific idea is simply the procedures used to measure or test it, so 'length' means whatever a ruler reports",
+  "example": "The fitness app's operationalism is blunt: according to it, 'active' simply means ten thousand steps, stairs or no stairs."
+ },
+ {
+  "term": "philosopher",
+  "partOfSpeech": "noun",
+  "hindi": "दार्शनिक — अस्तित्व, ज्ञान और नैतिकता के मूल प्रश्नों पर गहराई से विचार करने वाला",
+  "definition": "a person who studies or thinks deeply about basic questions of existence, knowledge, reality, mind and right action",
+  "example": "After two cups of cutting chai, the rickshaw driver turned philosopher and asked whether traffic was a punishment or a test."
+ },
+ {
+  "term": "mimesis",
+  "partOfSpeech": "noun",
+  "hindi": "अनुकृति — कला और साहित्य में प्रकृति और जीवन का अनुकरण",
+  "definition": "the imitation or representation of nature and human life in painting, theatre and literature, an idea central to Plato and Aristotle",
+  "example": "The street play's mimesis was so sharp that the audience recognised their own landlord within seconds."
+ },
+ {
+  "term": "subjectivism",
+  "partOfSpeech": "noun",
+  "hindi": "व्यक्तिनिष्ठतावाद — ज्ञान और मूल्य को व्यक्ति के अपने अनुभव पर आश्रित मानने का मत",
+  "definition": "the view that knowledge and values depend on, and are limited by, each person's own experience, feelings and point of view",
+  "example": "When Neha said the movie was great 'for me', her brother accused her of subjectivism, then admitted he had cried at the end."
+ },
+ {
+  "term": "explicandum",
+  "partOfSpeech": "noun",
+  "hindi": "व्याख्येय — जिस तथ्य या कथन की व्याख्या करनी हो",
+  "definition": "the thing, fact or expression that needs explaining, as opposed to the explanation that is offered for it",
+  "example": "The explicandum was simple, a missing phone charger, but the family's explanations ranged from the dog to a conspiracy."
+ },
+ {
+  "term": "epicureanism",
+  "partOfSpeech": "noun",
+  "hindi": "संयमित सुखवाद — भय-मुक्त, सादे आनंद को जीवन का ध्येय मानने वाला यूनानी दर्शन",
+  "definition": "the philosophy of Epicurus, holding that the goal of life is calm, simple pleasure found in friendship and freedom from fear and pain",
+  "example": "His epicureanism is modest: good friends, a plate of hot pakoras, and no work emails after seven."
+ },
+ {
+  "term": "hedonism",
+  "partOfSpeech": "noun",
+  "hindi": "सुखवाद — सुख को ही सर्वोच्च भलाई मानने का मत",
+  "definition": "the view that pleasure is the highest good, and that seeking pleasure and avoiding pain is the proper goal of human life",
+  "example": "Ordering dessert before even glancing at the mains was Tanya's small act of hedonism, and the waiter respected it."
+ },
+ {
+  "term": "dialectic",
+  "partOfSpeech": "noun",
+  "hindi": "द्वंद्वात्मक पद्धति — विरोधी तर्कों के टकराव से सत्य तक पहुँचने की विधि",
+  "definition": "a method of seeking truth through reasoned dialogue, in which opposing arguments are tested against each other until a better view emerges",
+  "example": "The roommates' nightly dialectic about who should do the dishes has so far produced a rota, a truce and three new arguments."
+ },
+ {
+  "term": "intuitionism",
+  "partOfSpeech": "noun",
+  "hindi": "अंतःप्रज्ञावाद — ज्ञान, विशेषकर नैतिक ज्ञान, को सीधी अंतर्दृष्टि से प्राप्त मानने का मत",
+  "definition": "the view that some basic truths, especially moral ones, are grasped directly by intuition, a kind of immediate insight, rather than proved",
+  "example": "Asked why cheating was wrong, Mira fell back on intuitionism: she just saw it, the way you see that two plus two makes four."
+ },
+ {
+  "term": "doctrine",
+  "partOfSpeech": "noun",
+  "hindi": "सिद्धांत — किसी समूह या परंपरा द्वारा मान्य और सिखाया गया मत",
+  "definition": "a belief or set of beliefs taught and accepted as authoritative by a school of thought, religion or political group",
+  "example": "In their house, the doctrine that whoever cooks does not wash up has never once been challenged."
+ },
+ {
+  "term": "intensional",
+  "partOfSpeech": "adjective",
+  "hindi": "गुणार्थक — शब्द के अर्थ को उसके लक्षणों से जोड़ने वाला",
+  "definition": "relating to the qualities a word implies, the features something must have to deserve that word, rather than the actual things it names",
+  "example": "An intensional definition of 'sandwich' lists what makes one, while pointing at the lunch counter merely shows you some."
+ },
+ {
+  "term": "secularism",
+  "partOfSpeech": "noun",
+  "hindi": "धर्मनिरपेक्षता — शासन और सार्वजनिक जीवन को धर्म से अलग रखने का सिद्धांत",
+  "definition": "the principle that government, courts and public institutions should stay separate from religion, neither backing nor controlling any faith",
+  "example": "The school's secularism meant the assembly included songs from every festival, and nobody's holiday got skipped."
+ },
+ {
+  "term": "instrumentalism",
+  "partOfSpeech": "noun",
+  "hindi": "साधनवाद — विचारों और सिद्धांतों को कार्य के साधन मानने का मत",
+  "definition": "the view that ideas and theories are tools for guiding action and predicting results, judged by how well they work rather than whether they are literally true",
+  "example": "Priya's instrumentalism about maps is total: she doesn't care whether the app is accurate, only whether it gets her to the metro on time."
+ },
+ {
+  "term": "methodology",
+  "partOfSpeech": "noun",
+  "hindi": "पद्धतिशास्त्र — किसी विषय में ज्ञान खोजने की विधियों और नियमों का अध्ययन",
+  "definition": "the study of the methods and principles used to investigate questions within a subject, asking which ways of finding things out are reliable",
+  "example": "The class survey only asked her friends, and the teacher's red ink said one word beside it: methodology."
+ },
+ {
+  "term": "reincarnationism",
+  "partOfSpeech": "noun",
+  "hindi": "पुनर्जन्मवाद — आत्मा के नए शरीर में लौट आने का मत",
+  "definition": "the belief that after the body dies, the soul or inner self is born again into a fresh body, human or otherwise",
+  "example": "Grandma's reincarnationism came up at dinner when she insisted the stray dog that visits every Tuesday has her late husband's stubborn streak."
+ },
+ {
+  "term": "egoism",
+  "partOfSpeech": "noun",
+  "hindi": "स्वार्थवाद — अपने हित को ही नैतिकता की कसौटी मानने का मत",
+  "definition": "the ethical view that each person should pursue their own welfare, treating self-interest as the proper basis of morality",
+  "example": "Arguing that he only returned the lost wallet to feel good about himself, Kabir defended egoism all the way to the metro station."
+ },
+ {
+  "term": "explanans",
+  "partOfSpeech": "noun",
+  "hindi": "व्याख्याकारक — वे कथन जिनसे किसी बात की व्याख्या की जाती है",
+  "definition": "in logic and science, the group of statements or premises that supply an explanation, as opposed to the explanandum, the fact being explained",
+  "example": "When the cake sank, 'the oven door was opened too early' became the explanans and the flat sponge the explanandum."
+ },
+ {
+  "term": "logic",
+  "partOfSpeech": "noun",
+  "hindi": "तर्कशास्त्र — सही अनुमान और प्रमाण के नियमों का अध्ययन",
+  "definition": "the branch of philosophy that studies reasoning itself, working out which arguments have conclusions that genuinely follow from their starting claims",
+  "example": "The group chat's logic collapsed when someone argued that since pizza is food and salad is food, salad is basically pizza."
+ },
+ {
+  "term": "descriptivism",
+  "partOfSpeech": "noun",
+  "hindi": "वर्णनवाद — नैतिक कथनों को सच या झूठ हो सकने वाले तथ्य-कथन मानने का मत",
+  "definition": "in ethics, the view that moral statements describe facts and so can be true or false, just like ordinary factual claims",
+  "example": "Riya's descriptivism showed when she said 'cheating on the quiz is wrong' is as much a fact as 'the quiz is on Friday'."
+ },
+ {
+  "term": "noninterchangeable",
+  "partOfSpeech": "adjective",
+  "hindi": "अविनिमेय — जिन्हें आपस में अदला-बदली करने से अर्थ ही बदल जाए",
+  "definition": "in logic, describing terms that cannot swap places in a statement without changing its meaning, as with 'parent' and 'child'",
+  "example": "In 'Meera is Arjun's older sister' the two names are noninterchangeable, as Arjun loudly reminds everyone at family dinners."
+ },
+ {
+  "term": "establishmentism",
+  "partOfSpeech": "noun",
+  "hindi": "व्यवस्थावाद — स्थापित सत्ता और संस्थाओं के समर्थन का मत",
+  "definition": "the stance of supporting the existing social and political establishment, its institutions and those who hold power; the opposite of antiestablishmentism",
+  "example": "Dev's establishmentism surfaces every time he defends the housing society committee, even after it banned balcony plants."
+ },
+ {
+  "term": "ethicism",
+  "partOfSpeech": "noun",
+  "hindi": "नीतिवाद — नैतिक विचारों को सार्थक और सर्वोपरि मानने का मत",
+  "definition": "the view that ethics and moral ideas are valid and important, often showing up as a strong habit of judging things morally",
+  "example": "His ethicism turned a simple choice of breakfast cereal into a ten-minute talk on fair wages for farmers."
+ },
+ {
+  "term": "unilateralism",
+  "partOfSpeech": "noun",
+  "hindi": "एकपक्षवाद — दूसरे देशों से सलाह लिए बिना विदेश नीति चलाने का मत",
+  "definition": "the political stance that a nation should handle its foreign affairs alone, without consulting or relying on other countries",
+  "example": "The flatmate who repainted the kitchen orange without asking anyone was practising pure unilateralism."
+ },
+ {
+  "term": "categorematic",
+  "partOfSpeech": "adjective",
+  "hindi": "स्वतंत्रार्थक — जो पद अकेले ही वाक्य का उद्देश्य या विधेय बन सके",
+  "definition": "in logic, describing a word that carries meaning by itself and can stand as the subject of a statement or as what is said about that subject, unlike 'every' or 'and'",
+  "example": "In 'every student passed', the word 'student' is categorematic, while 'every' only works when propped up by another word."
+ },
+ {
+  "term": "extensional",
+  "partOfSpeech": "adjective",
+  "hindi": "विस्तारपरक — शब्द का अर्थ उसके दायरे में आने वाली चीज़ें गिनाकर बताने वाला",
+  "definition": "describing a definition or meaning given by listing the actual things a word applies to, rather than stating the features they share",
+  "example": "Asked what 'sibling' means, my nephew gave an extensional answer by simply pointing at his three sisters."
+ },
+ {
+  "term": "ethics",
+  "partOfSpeech": "noun",
+  "hindi": "नीतिशास्त्र — सही-गलत और अच्छे आचरण का दार्शनिक अध्ययन",
+  "definition": "the branch of philosophy that studies right and wrong, asking how people should live and treat each other",
+  "example": "A kitchen debate over whether to eat a flatmate's leftovers without asking turned into a full hour of ethics."
+ },
+ {
+  "term": "semiotics",
+  "partOfSpeech": "noun",
+  "hindi": "संकेतविज्ञान — चिह्नों और प्रतीकों से अर्थ बनने का अध्ययन",
+  "definition": "the study of signs and symbols, such as words, gestures, images and emojis, and how they come to carry meaning; also called semiology",
+  "example": "A lecture on semiotics finally explained why a single thumbs-up emoji from her boss felt quietly terrifying."
+ },
+ {
+  "term": "apodictic",
+  "partOfSpeech": "adjective",
+  "hindi": "निश्चयात्मक — जो तर्क से अनिवार्यतः सत्य सिद्ध हो",
+  "definition": "describing a statement that is necessarily true and can be shown with complete certainty, like 'every triangle has three sides'; also spelled apodeictic",
+  "example": "That seven plus five makes twelve is apodictic, which did not stop my little brother from demanding a recount."
+ },
+ {
+  "term": "proposition",
+  "partOfSpeech": "noun",
+  "hindi": "प्रतिज्ञप्ति — ऐसा कथन जो या तो सच हो या झूठ",
+  "definition": "in logic, a statement that asserts or denies something and must be either true or false, whatever language it is expressed in",
+  "example": "'The milk has gone off' is a proposition, and one sniff at the fridge settled whether it was true."
+ },
+ {
+  "term": "morals",
+  "partOfSpeech": "noun",
+  "hindi": "नैतिक मूल्य — सही-गलत के वे सिद्धांत जिनसे व्यक्ति का आचरण चलता है",
+  "definition": "a person's principles about right and wrong, the standards that guide their choices and their sense of what they owe others",
+  "example": "Her morals were tested when the vending machine dropped two snacks for the price of one."
+ },
+ {
+  "term": "logicism",
+  "partOfSpeech": "noun",
+  "hindi": "तर्कमूलवाद — गणित को शुद्ध तर्कशास्त्र पर टिका मानने का मत",
+  "definition": "the view that all of mathematics can be built up from pure logic, so that numbers and sums rest on logical rules alone",
+  "example": "Watching his sister prove that one plus one equals two in forty lines, Aman finally understood what logicism was asking."
+ },
+ {
+  "term": "animalism",
+  "partOfSpeech": "noun",
+  "hindi": "पशुवाद — मनुष्य को मूलतः पशु ही मानने का मत",
+  "definition": "the view that human beings are purely animals by nature, with no separate spiritual side, so that each person simply is a living organism",
+  "example": "After three hours without lunch, his snarling at the printer made a strong case for animalism."
+ },
+ {
+  "term": "transeunt",
+  "partOfSpeech": "adjective",
+  "hindi": "बहिर्गामी — मन की ऐसी क्रिया जिसका असर मन से बाहर पड़े",
+  "definition": "describing a mental action whose effects pass beyond the mind into the outside world, as opposed to one that stays within it",
+  "example": "Deciding to text back was immanent, but actually hitting send made it transeunt, and now the whole group knows."
+ },
+ {
+  "term": "paradox",
+  "partOfSpeech": "noun",
+  "hindi": "विरोधाभास — ऐसा कथन जो स्वयं का ही खंडन करता प्रतीत हो",
+  "definition": "a statement or argument that seems to contradict itself, reaching an absurd conclusion from apparently sensible starting points",
+  "example": "The office sign reading 'ignore this sign' created a small paradox for everyone waiting at the lift."
+ },
+ {
+  "term": "dogma",
+  "partOfSpeech": "noun",
+  "hindi": "रूढ़ सिद्धांत — बिना प्रमाण के अटल सत्य मान लिया गया मत",
+  "definition": "a belief or doctrine laid down by an authority as certainly true and not open to question or proof",
+  "example": "In our office, 'never deploy on Friday' has hardened from sensible advice into dogma."
+ },
+ {
+  "term": "apodeictic",
+  "partOfSpeech": "adjective",
+  "hindi": "निश्चयात्मक — जो अनिवार्यतः और निर्विवाद रूप से सत्य हो",
+  "definition": "describing a statement that is necessarily true and beyond any doubt, as certain as a proof in geometry; also spelled apodictic",
+  "example": "The teacher called the claim that a square has four equal sides apodeictic, and the class moved on without argument."
+ },
+ {
+  "term": "reformism",
+  "partOfSpeech": "noun",
+  "hindi": "सुधारवाद — क्रांति के बजाय धीरे-धीरे सुधार से समाज बदलने का मत",
+  "definition": "the political view that society should be improved through gradual changes within existing institutions rather than by revolution",
+  "example": "Her reformism showed at the residents' meeting, where she proposed fixing the lift schedule instead of firing the whole committee."
+ },
+ {
+  "term": "quantify",
+  "partOfSpeech": "verb",
+  "hindi": "परिमाणित करना — किसी पद पर 'सभी' या 'कुछ' लगाकर उसका दायरा तय करना",
+  "definition": "in logic, to mark how much of a group a statement covers by attaching a word like 'every' or 'some' to a term",
+  "example": "Before the debate on whether teenagers are lazy, the teacher asked us to quantify the claim: all teenagers, or just some?"
+ },
+ {
+  "term": "populism",
+  "partOfSpeech": "noun",
+  "hindi": "लोकवाद — आम जनता को अभिजात वर्ग के विरुद्ध खड़ा करने वाली राजनीति",
+  "definition": "in political theory, the outlook that pits ordinary people, seen as honest and united, against a corrupt or privileged elite who hold power",
+  "example": "The class president candidate's populism peaked when he promised to abolish homework on behalf of 'the real students'."
+ },
+ {
+  "term": "metaphysics",
+  "partOfSpeech": "noun",
+  "hindi": "तत्त्वमीमांसा — अस्तित्व और यथार्थ के मूल स्वरूप का अध्ययन",
+  "definition": "the branch of philosophy that asks what reality is fundamentally like, covering existence, time, cause, identity and mind",
+  "example": "A late-night argument about whether a rebuilt bicycle is still the same bicycle wandered straight into metaphysics."
+ },
+ {
+  "term": "esthetics",
+  "partOfSpeech": "noun",
+  "hindi": "सौंदर्यशास्त्र — सौंदर्य, रुचि और कलात्मक मूल्य का अध्ययन",
+  "definition": "the branch of philosophy that studies beauty, taste and artistic value, asking what makes something worth admiring; American spelling of aesthetics",
+  "example": "Two flatmates arguing over whether the neon cactus lamp is ugly or brilliant are, whether they know it or not, doing esthetics."
+ },
+ {
+  "term": "postulate",
+  "partOfSpeech": "noun",
+  "hindi": "अभिगृहीत — तर्क की नींव के रूप में बिना प्रमाण स्वीकारा गया कथन",
+  "definition": "in logic and mathematics, a statement accepted as true without proof so that further reasoning can be built upon it",
+  "example": "The group project began from one shaky postulate: that someone else had already made the slides."
+ },
+ {
+  "term": "semiology",
+  "partOfSpeech": "noun",
+  "hindi": "संकेतविज्ञान — संकेतों द्वारा अर्थ-निर्माण का अध्ययन",
+  "definition": "the study of signs and how they create meaning in language, fashion, advertising and everyday life; another name for semiotics",
+  "example": "Her semiology essay argued that a café's handwritten menu board signals 'authentic' far more than it signals 'lunch'."
+ },
+ {
+  "term": "dualism",
+  "partOfSpeech": "noun",
+  "hindi": "द्वैतवाद — यथार्थ को दो मूल तत्त्वों, जैसे मन और पदार्थ, से बना मानने का मत",
+  "definition": "the view that reality is made of a pair of fundamentally different kinds of thing, usually mind and matter, or sometimes good and evil",
+  "example": "Insisting that his exhausted body went to the gym while his mind stayed in bed, Nikhil gave a sleepy defence of dualism."
+ },
+ {
+  "term": "transitivity",
+  "partOfSpeech": "noun",
+  "hindi": "संक्रामकता — अ-ब और ब-स के संबंध से अ-स का संबंध निकलने का गुण",
+  "definition": "in logic and mathematics, the property of a relation such that if it links the first thing to the second, and the second to the third, it also links the first to the third",
+  "example": "Transitivity tells us that if Priya is taller than Sam and Sam is taller than Leo, then Priya is taller than Leo, no measuring tape needed."
+ },
+ {
+  "term": "scruples",
+  "partOfSpeech": "noun",
+  "hindi": "नैतिक संकोच — अंतरात्मा की वह झिझक जो गलत काम से रोके",
+  "definition": "moral hesitations drawn from one's principles that make a person uneasy about doing something they think may be wrong",
+  "example": "His scruples kicked in halfway through copying the answers, so he left the group chat and did the homework himself."
+ },
+ {
+  "term": "eudemonism",
+  "partOfSpeech": "noun",
+  "hindi": "कल्याणवाद — विवेकपूर्ण जीवन से मिलने वाले सच्चे कल्याण को नैतिकता की कसौटी मानने का मत",
+  "definition": "the ethical view that actions are right when they lead to a flourishing life, a lasting well-being reached by living according to reason; also spelled endaemonism",
+  "example": "Tara's eudemonism made skipping the party easy, since an evening mastering a new guitar song felt like the deeper kind of happiness."
+ },
+ {
+  "term": "jurisprudence",
+  "partOfSpeech": "noun",
+  "hindi": "विधिशास्त्र — कानून के स्वरूप और न्यायिक निर्णयों के आधारों का दर्शन",
+  "definition": "the philosophy of legal systems, asking what laws are, what gives them authority and what principles guide judges in deciding cases",
+  "example": "A classroom argument over whether an unfair school rule still counts as a rule turned into a crash course in jurisprudence."
+ },
+ {
+  "term": "arity",
+  "partOfSpeech": "noun",
+  "hindi": "स्थानसंख्या — किसी संबंध या फलन में भरे जाने वाले खाली स्थानों की गिनती",
+  "definition": "in logic and mathematics, the number of inputs, or empty slots, that a function or relation needs; 'gives' has three slots, as in 'Asha gives Ravi a book'",
+  "example": "The relation 'sits between' has an arity of three, which is why the seating chart for the family wedding needed a spreadsheet."
+ },
+ {
+  "term": "passivism",
+  "partOfSpeech": "noun",
+  "hindi": "निष्क्रिय प्रतिरोधवाद — अन्याय का जवाब हिंसा से न देकर सहन करने का मत",
+  "definition": "the principle of meeting wrongs with passive, nonviolent endurance rather than force, holding that all violence is unjustified; closely related to pacifism",
+  "example": "When the neighbour's music thumped past midnight, Arjun's passivism meant earplugs and a polite note, not a shouting match."
+ },
+ {
+  "term": "antiestablishmentism",
+  "partOfSpeech": "noun",
+  "hindi": "व्यवस्था-विरोधवाद — स्थापित सत्ता और संस्थाओं के विरोध का मत",
+  "definition": "the stance of opposing the existing social and political establishment and distrusting those who hold power; the opposite of establishmentism",
+  "example": "His antiestablishmentism extends even to the school canteen, where he refuses the official menu on principle."
+ },
+ {
+  "term": "presentational",
+  "partOfSpeech": "adjective",
+  "hindi": "प्रस्तुतिपरक — मन के सामने सीधे उपस्थित अनुभव से संबंधित",
+  "definition": "in philosophy and psychology, relating to what is directly present to the mind in experience, such as colours and sounds, before any interpretation",
+  "example": "Before she recognised it as her ringtone, the sound was just a presentational blur of chirps in a noisy train carriage."
+ },
+ {
+  "term": "pacifism",
+  "partOfSpeech": "noun",
+  "hindi": "शांतिवाद — युद्ध और हिंसा को हर हाल में अनुचित मानने का मत",
+  "definition": "the view that warfare and violence are never justified and that disputes should be settled by peaceful means; also spelled pacificism",
+  "example": "Her pacifism faced its toughest test when her little brother stole the last samosa."
+ },
+ {
+  "term": "pragmatism",
+  "partOfSpeech": "noun",
+  "hindi": "व्यवहारवाद — विचारों के अर्थ और सत्य को उनके व्यावहारिक परिणामों से आँकने का मत",
+  "definition": "the philosophical view that the meaning and truth of an idea lie in its practical consequences, in what difference believing it makes",
+  "example": "In a spirit of pragmatism, the flatmates stopped debating who was right about the dishwasher and asked which method left fewer greasy plates."
+ },
+ {
+  "term": "endaemonism",
+  "partOfSpeech": "noun",
+  "hindi": "कल्याणवाद — सच्चे मानवीय कल्याण को नैतिक कर्म की कसौटी मानने का मत",
+  "definition": "the ethical view that actions should be judged by whether they lead to a flourishing life, a deep well-being gained by living according to reason; a variant spelling of eudemonism",
+  "example": "His endaemonism made him quit a well-paid job he hated for a smaller one where he actually looked forward to Mondays."
+ },
+ {
+  "term": "transcendentalism",
+  "partOfSpeech": "noun",
+  "hindi": "अतीन्द्रियवाद — इन्द्रिय-अनुभव से परे अंतर्ज्ञान और आत्मा को प्रधान मानने वाला दर्शन",
+  "definition": "any philosophy that places intuition and the spiritual above sensory experience and material things, notably a nineteenth-century American movement that prized nature and self-reliance",
+  "example": "Leaving her phone at home for a weekend of forest walks, Neha joked that she was trying out transcendentalism."
+ },
+ {
+  "term": "posit",
+  "partOfSpeech": "noun",
+  "hindi": "आधार-कल्पना — तर्क आगे बढ़ाने के लिए सत्य मान लिया गया कथन",
+  "definition": "in logic, a claim assumed to be true without proof so that an argument or theory can be built on top of it",
+  "example": "The whole plan for the road trip rested on one posit: that the car would start."
+ },
+ {
+  "term": "philosophy",
+  "partOfSpeech": "noun",
+  "hindi": "दर्शन — यथार्थ, ज्ञान और आचरण के मूल प्रश्नों का चिंतन",
+  "definition": "the study of the deepest questions about reality, knowledge, reason and right conduct; also any guiding system of beliefs held by a person or group",
+  "example": "Stuck in traffic, the cab driver shared his whole philosophy of life, which mostly involved patience and extra chutney."
+ },
+ {
+  "term": "literalism",
+  "partOfSpeech": "noun",
+  "hindi": "शाब्दिकतावाद — शब्दों या चित्रण को ज्यों-का-त्यों लेने का आग्रह",
+  "definition": "the practice of taking words at their exact surface meaning, or, in artwork and literature, of portraying things exactly as they appear",
+  "example": "Told to 'break a leg' before the school play, Ishan's literalism had him double-checking the stage for loose planks."
+ },
+ {
+  "term": "tenet",
+  "partOfSpeech": "noun",
+  "hindi": "मूल सिद्धांत — किसी मत या समूह द्वारा सत्य माना गया बुनियादी विश्वास",
+  "definition": "a principle or belief held as true by a group, school of thought or movement, often forming part of its core teachings",
+  "example": "A central tenet of our study group is that nobody opens social media until the first chapter is done."
+ },
+ {
+  "term": "egalitarianism",
+  "partOfSpeech": "noun",
+  "hindi": "समतावाद — सभी मनुष्यों को समान मानने और समान अधिकार देने का मत",
+  "definition": "the view that all people are equal in worth and should have equal political, economic and social rights and chances; also called equalitarianism",
+  "example": "The flat's egalitarianism is written on the fridge: everyone takes out the rubbish, landlord's nephew included."
+ },
+ {
+  "term": "equalitarianism",
+  "partOfSpeech": "noun",
+  "hindi": "समतावाद — सबको बराबर हक और अवसर मिलने का मत",
+  "definition": "the view that all people are of equal worth and deserve the same political, economic and social rights; a less common name for egalitarianism",
+  "example": "In a burst of equalitarianism, the cricket team decided the captain would carry the kit bag like everyone else."
+ },
+ {
+  "term": "monism",
+  "partOfSpeech": "noun",
+  "hindi": "एकत्ववाद — समस्त यथार्थ को एक ही मूल तत्त्व से बना मानने का मत",
+  "definition": "the view that reality is made of a single basic substance or kind of thing, rather than a pair or many",
+  "example": "Sunita argued for monism over chai, insisting that her thoughts and the biscuit in her hand were ultimately made of the same stuff."
+ },
+ {
+  "term": "multiculturalism",
+  "partOfSpeech": "noun",
+  "hindi": "बहुसंस्कृतिवाद — एक देश में अनेक संस्कृतियों के समान और शांतिपूर्ण सहअस्तित्व का मत",
+  "definition": "the view that many different cultures can live together peacefully and on equal terms within a single country, each keeping its own traditions",
+  "example": "The office potluck, with biryani beside sushi beside pierogi, was multiculturalism served on paper plates."
+ },
+ {
+  "term": "deduce",
+  "partOfSpeech": "verb",
+  "hindi": "निगमन करना — दिए गए आधार-वाक्यों से निष्कर्ष तर्कपूर्वक निकालना",
+  "definition": "to reach a conclusion that must be true if the starting statements are true, by reasoning step by step from general rules",
+  "example": "All the dosa stalls close at ten and it was half past ten, so Mira deduced that dinner would be instant noodles."
+ },
+ {
+  "term": "environmentalism",
+  "partOfSpeech": "noun",
+  "hindi": "परिवेशवाद — बौद्धिक विकास में आनुवंशिकता से अधिक परिवेश को निर्णायक मानने का मत",
+  "definition": "the view that surroundings and upbringing matter more than inherited traits in shaping a person's intelligence and character; the opposite of hereditarianism",
+  "example": "Pointing out that he only learned to cook after moving in with chefs, Rohan made an easy case for environmentalism."
+ },
+ {
+  "term": "nihilism",
+  "partOfSpeech": "noun",
+  "hindi": "शून्यवाद — जीवन, नैतिकता या मूल्यों के किसी वास्तविक आधार को नकारने का मत",
+  "definition": "the view that life has no built-in meaning or value and that moral rules have no real foundation; historically, also a movement urging the destruction of the existing social order",
+  "example": "After his third rejected internship application, Varun flirted with nihilism until his mother placed a plate of hot parathas in front of him."
+ },
+ {
+  "term": "mentalism",
+  "partOfSpeech": "noun",
+  "hindi": "मनोवाद — मन को ही असली यथार्थ मानने का मत",
+  "definition": "the view that mind is the true reality and that objects exist only as contents of someone's awareness",
+  "example": "Staring at the unwashed dishes, Kiran wished his mentalism were strong enough to make them vanish by simply ignoring them."
+ },
+ {
+  "term": "creed",
+  "partOfSpeech": "noun",
+  "hindi": "आस्था-सूत्र — जीवन को दिशा देने वाले मूल सिद्धांतों का समूह",
+  "definition": "any system of beliefs or principles that guides how a person or group thinks and lives, whether religious, political or personal",
+  "example": "Our running club's creed is simple: nobody gets left behind, and nobody brags about their marathon time at breakfast."
+ },
+ {
+  "term": "vitalism",
+  "partOfSpeech": "noun",
+  "hindi": "प्राणवाद — जीवन को भौतिकी-रसायन से परे किसी विशेष प्राण-शक्ति से चलता मानने का मत",
+  "definition": "the view that living things are driven by a special life force that cannot be fully explained by physics and chemistry",
+  "example": "Watching the wilted basil perk up an hour after watering, Pooja joked that her windowsill was making the case for vitalism."
+ },
+ {
+  "term": "immanent",
+  "partOfSpeech": "adjective",
+  "hindi": "अंतर्वर्ती — जो मन के भीतर ही घटे और बाहर असर न डाले",
+  "definition": "describing a mental action that takes place wholly within the mind, such as thinking or wishing, without producing effects outside it; more broadly, present within something",
+  "example": "Silently rehearsing a comeback on the bus is immanent; saying it aloud to the man hogging two seats is another matter entirely."
+ },
+ {
+  "term": "experimentalism",
+  "partOfSpeech": "noun",
+  "hindi": "प्रयोगवाद — ज्ञान और विचारों को प्रयोग द्वारा परखने का आग्रह",
+  "definition": "the view that ideas and beliefs should be tested through experiment and experience, closely linked to pragmatism in education and science",
+  "example": "In a fit of experimentalism, the flatmates timed three different ways of boiling pasta instead of arguing about it."
+ },
+ {
+  "term": "explanandum",
+  "partOfSpeech": "noun",
+  "hindi": "व्याख्येय — वह तथ्य या घटना जिसकी व्याख्या की जानी है",
+  "definition": "in logic and science, the fact, event or statement that needs explaining, as opposed to the explanans, which does the explaining",
+  "example": "The explanandum at breakfast was simple: why was the milk carton in the cupboard, and who was going to confess?"
+ },
+ {
+  "term": "teleology",
+  "partOfSpeech": "noun",
+  "hindi": "प्रयोजनवाद — वस्तुओं और घटनाओं को उनके उद्देश्य या लक्ष्य से समझाने का मत",
+  "definition": "the practice of explaining things by the goals or purposes they serve, as in saying that eyes exist for seeing",
+  "example": "Claiming that the office coffee machine exists purely to test his patience, Farhan slipped into grumpy teleology."
+ },
+ {
+  "term": "creationism",
+  "partOfSpeech": "noun",
+  "hindi": "सृष्टिवाद — ब्रह्मांड और जीवों को किसी दैवी सृष्टिकर्ता की रचना मानने का मत",
+  "definition": "the belief that the universe and living beings were made by a divine creator, often as described in scripture such as the Book of Genesis, rather than through evolution alone",
+  "example": "A biology lesson on evolution became a respectful discussion of creationism when a student asked how the two views compare."
+ },
+ {
+  "term": "secessionism",
+  "partOfSpeech": "noun",
+  "hindi": "पृथकतावाद — किसी क्षेत्र या समूह के राज्य से अलग होने के अधिकार का समर्थन",
+  "definition": "in political theory, the view that a region or group has the right to break away from a larger state and govern itself",
+  "example": "When the top floor of the hostel threatened to run its own Wi-Fi network, the warden sensed a whiff of secessionism."
+ },
+ {
+  "term": "conceptualism",
+  "partOfSpeech": "noun",
+  "hindi": "संकल्पनावाद — सामान्य शब्दों को मन की संकल्पनाओं से जुड़ा मानने का मत",
+  "definition": "the view that a general word like 'chair' fits many different objects because the mind forms a concept linking them, rather than because some shared 'chairness' exists outside minds",
+  "example": "Debating whether a beanbag counts as a chair, the class drifted into conceptualism: maybe 'chair' just lives in our heads."
+ },
+ {
+  "term": "aesthetic",
+  "partOfSpeech": "noun",
+  "hindi": "सौंदर्यदृष्टि — सुंदरता के बारे में कोई विशेष सिद्धांत या रुचि",
+  "definition": "a particular theory or sense of what is beautiful or artistically pleasing, as held by a person, movement or style; also spelled esthetic",
+  "example": "Her room follows a strict minimalist aesthetic, which mostly means her clothes live in a pile inside the wardrobe."
+ },
+ {
+  "term": "idealism",
+  "partOfSpeech": "noun",
+  "hindi": "प्रत्ययवाद — यथार्थ को मूलतः मानसिक या विचारमय मानने का मत",
+  "definition": "the view that reality is fundamentally made of minds and ideas, so that the physical world depends on being thought or perceived",
+  "example": "On the walk to school Kunal tried out idealism, wondering whether the traffic jam existed only because everyone kept thinking about it."
+ },
+ {
+  "term": "epistemology",
+  "partOfSpeech": "noun",
+  "hindi": "ज्ञानमीमांसा — ज्ञान के स्वरूप, स्रोत और सीमाओं का अध्ययन",
+  "definition": "the branch of philosophy that studies knowledge itself: what it is, where it comes from and how we can tell it apart from mere belief",
+  "example": "A forwarded message about a miracle cure sparked some family-chat epistemology when Aunt Meena asked how anyone actually knew it worked."
+ },
+ {
+  "term": "derive",
+  "partOfSpeech": "verb",
+  "hindi": "व्युत्पन्न करना — स्वीकृत आधारों से तर्क द्वारा कोई निष्कर्ष निकालना",
+  "definition": "in logic, to obtain a conclusion from starting statements by applying accepted rules of reasoning, step by step",
+  "example": "From the rule that phones stay off at dinner and the sight of Dad scrolling, Riya derived a clear case of hypocrisy."
+ },
+ {
+  "term": "physicalism",
+  "partOfSpeech": "noun",
+  "hindi": "भौतिकवाद — हर अस्तित्व को अंततः भौतिक मानने का मत",
+  "definition": "the view that everything that exists is ultimately physical, so that even thoughts and feelings are nothing beyond physical processes",
+  "example": "Clutching his coffee, Aryan argued for physicalism, claiming his morning mood was nothing more than brain chemistry awaiting caffeine."
+ },
+ {
+  "term": "dianoetic",
+  "partOfSpeech": "adjective",
+  "hindi": "विमर्शात्मक — अंतर्ज्ञान के बजाय क्रमबद्ध तर्क से निष्कर्ष तक पहुँचने वाला",
+  "definition": "describing thinking that reaches a conclusion through step-by-step reasoning and argument rather than through direct intuition",
+  "example": "Her dianoetic approach to choosing a phone involved a spreadsheet, three columns of pros and cons and zero gut feeling."
+ }
 ]
