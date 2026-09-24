@@ -128,3 +128,8 @@ Which skill lands where:
   [resolved plan](02_Plan/Resolved/SENTENCE_PRACTICE_PLAN_RESOLVED.md)
   *(plan and audit were worked through in session and never filed — the resolved plan
   carries the audit findings in §1 and stands alone)*
+- **Dictionary 3000** — in progress on `feat/dictionaries-3000`.
+  [plan](02_Plan/DICTIONARY_3000_PLAN.md)
+  *(Corporate Slang, Philosophy, Classical English and Idioms each to ≥ 3,000 entries: ~8,900 new.
+  One code change, generalising `expand-dictionary.js`, then a Philosophy reset and four themed
+  runs. Philosophy and Corporate Slang are near their genuine ceiling: stop and report rather than pad.)*
