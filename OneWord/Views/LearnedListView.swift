@@ -31,7 +31,10 @@ struct LearnedListView: View {
     @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme, doodle)
-        Group {
+        // A ZStack, not a Group: a Group hands its modifiers to each branch, so the header
+        // (and its search field) was rebuilt whenever list and empty state traded places —
+        // dropping focus mid-word, or refocusing with the typed text all selected.
+        ZStack {
             if lines.isEmpty {
                 emptyState(t)
             } else {
@@ -266,4 +269,5 @@ struct SwellingTerm: View, Animatable {
 #Preview {
     NavigationStack { LearnedListView() }
         .environment(RelatedWordsStore())
+        .environment(PremiumViewModel())
 }

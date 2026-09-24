@@ -14,9 +14,10 @@
 import SwiftUI
 
 /// The window's sections. Search and Settings sit outside the list (pinned to the
-/// top and bottom of the sidebar); the rest are list rows.
+/// top and bottom of the sidebar); the rest are list rows. Premium is reached from
+/// the plan tag in the sidebar's corner, so it has no row either.
 enum Pane: Hashable, Identifiable {
-    case home, history, practice, bookmarks, profile, search, dictionaries, settings
+    case home, history, practice, bookmarks, profile, search, dictionaries, settings, premium
 
     var id: Self { self }
 
@@ -24,7 +25,7 @@ enum Pane: Hashable, Identifiable {
     /// launches straight into that pane. Nil for anything but a pane title.
     static var launchPane: Pane? {
         guard let name = ProcessInfo.processInfo.environment["ONEWORD_PANE"] else { return nil }
-        return [Pane.home, .history, .practice, .bookmarks, .profile, .search, .dictionaries, .settings]
+        return [Pane.home, .history, .practice, .bookmarks, .profile, .search, .dictionaries, .settings, .premium]
             .first { $0.title.lowercased() == name.lowercased() }
     }
 
@@ -38,6 +39,7 @@ enum Pane: Hashable, Identifiable {
         case .search: "Search"
         case .dictionaries: "Dictionaries"
         case .settings: "Settings"
+        case .premium: "Premium"
         }
     }
 
@@ -53,6 +55,7 @@ enum Pane: Hashable, Identifiable {
         case .search: .search
         case .dictionaries: .dictionaries
         case .settings: .settings
+        case .premium: .premium
         }
     }
 }
@@ -77,6 +80,8 @@ struct RootView: View {
     @State private var writing = false
     @Environment(\.colorScheme) private var scheme
     @Environment(AuthViewModel.self) private var auth
+    /// For the plan tag in the corner.
+    @Environment(PremiumViewModel.self) private var premium
     /// Midnight rides in with the doodle switches, so every palette read in the
     /// shell goes through it.
     @Environment(\.doodle) private var doodle
@@ -122,18 +127,22 @@ struct RootView: View {
         switch pane {
         case .home:         HomeView(pane: $pane)
         case .history:      HistoryView()
-        case .practice:     SentenceView()
+        // The gate itself, so a launch pane or a lapsed purchase can't land on it either.
+        case .practice:     if premium.isUnlocked { SentenceView() } else { PremiumView() }
         case .bookmarks:    WordListView(wordbook: .saved)
         case .profile:      ProfileView(pane: $pane)
         case .search:       WordListView()
         case .dictionaries: DictionaryPicker()
         case .settings:     SettingsView()
+        case .premium:      PremiumView()
         }
     }
 
     private var sidebar: some View {
         let t = Theme.of(scheme, doodle)
-        return List(selection: $pane) {
+        // A locked Practice row still takes the click — it goes to the plans instead.
+        let selection = Binding { pane } set: { pane = $0 == .practice && !premium.isUnlocked ? .premium : $0 }
+        return List(selection: selection) {
             ForEach([Pane.home, .history, .practice, .bookmarks]
                         .filter { $0 != .practice || practiceEnabled }) { item in
                 row(item).tag(item)
@@ -150,6 +159,7 @@ struct RootView: View {
                 if !calloutSeen { suggestionCard }
                 HStack(spacing: 0) {
                     accountChip
+                    planTag
                     feedbackButton
                 }
             }
@@ -175,7 +185,22 @@ struct RootView: View {
     /// A sidebar row. `Label`'s systemImage form can only take an SF Symbol, so
     /// the icon is built by hand and the theme decides what goes in it.
     private func row(_ item: Pane) -> some View {
-        Label { Text(item.title) } icon: { GlyphIcon(item.glyph) }
+        let locked = item == .practice && !premium.isUnlocked
+        return Label {
+            HStack(spacing: 6) {
+                Text(item.title)
+                if locked {
+                    Spacer(minLength: 0)
+                    // The shelf's lock: same glyph, size and ink as a locked book's.
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 9))
+                        .foregroundStyle(Theme.of(scheme, doodle).muted)
+                        .accessibilityHidden(true)
+                }
+            }
+        } icon: { GlyphIcon(item.glyph) }
+        .accessibilityValue(locked ? "Premium" : "")
+        .accessibilityHint(locked ? "Shows how to unlock" : "")
     }
 
     /// A launcher, not a field — the real search box lives in the Search pane, so
@@ -226,6 +251,22 @@ struct RootView: View {
         .help("Show your profile")
         .padding(.leading, 12)
         .padding(.vertical, 13)
+    }
+
+    /// Which plan you're on, beside who you are — and the way to see what Premium
+    /// holds. Its own button, so the name still goes to Profile.
+    private var planTag: some View {
+        let owned = premium.isUnlocked
+        return Button { pane = .premium } label: {
+            PlanTag(text: owned ? "Premium" : "Free", filled: owned)
+                .padding(.vertical, 6)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help(owned ? "Premium — every dictionary is yours" : "Free plan — see what Premium adds")
+        .accessibilityLabel(owned ? "Premium plan" : "Free plan")
+        .accessibilityHint("Shows the plans")
+        .padding(.trailing, 4)
     }
 
     private func write() {
@@ -293,4 +334,5 @@ struct RootView: View {
     RootView()
         .environment(RelatedWordsStore())
         .environment(AuthViewModel())
+        .environment(PremiumViewModel())
 }

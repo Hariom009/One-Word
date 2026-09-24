@@ -32,12 +32,17 @@ struct DictionaryShelf: View {
     /// For Midnight's palette behind the shelf.
     @Environment(\.doodle) private var doodle
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// What's unlocked. A locked book stands on the shelf but stays there — only an
+    /// unlocked one comes forward and is picked.
+    @Environment(PremiumViewModel.self) private var premium
     /// The book standing face-out. Its own state rather than `selection`, so the turn
     /// animates wherever the owner stores the pick.
     @State private var front: String
     /// True while a swap is in flight. Taps in that window are dropped, so a burst
     /// of clicks gives one clean swap at a time, not the sound restarting under each.
     @State private var swapping = false
+    /// Refused taps per locked book; each one animates a whole `Shake`.
+    @State private var shakes: [String: CGFloat] = [:]
 
     private static let books = Wordbook.all.filter { $0.id != Wordbook.saved.id }
     // ponytail: 0.69 is the widest cover art (570×827); the narrower ones fit by height.
@@ -106,18 +111,21 @@ struct DictionaryShelf: View {
                 ForEach(Self.books) { book in
                     let isFront = book.id == front
                     let scale = (isFront ? 1 : k) * book.height
-                    ShelfBook(book: book, art: art, turn: isFront ? 1 : 0)
+                    let locked = !premium.allows(book.id)
+                    ShelfBook(book: book, art: art, turn: isFront ? 1 : 0, locked: locked)
                         // Gestures before the transforms, so the tap target moves and scales with the book.
                         .contentShape(Rectangle())
                         .onTapGesture { pick(book) }
                         .allowsHitTesting(!isFront)
                         .accessibilityElement()
                         .accessibilityLabel(book.name)
-                        .accessibilityAddTraits(isFront ? .isSelected : .isButton)
+                        .accessibilityAddTraits(isFront ? .isSelected : locked ? [] : .isButton)
+                        .accessibilityValue(locked ? "Premium" : "")
                         .accessibilityAction { pick(book) }
                         // Transforms, not layout: the flight never reflows the shelf. The board stands on the plank.
                         .scaleEffect(scale, anchor: .topLeading)
                         .offset(x: xs[book.id] ?? 0, y: floor - art * Self.boardFoot * scale)
+                        .modifier(Shake(taps: shakes[book.id] ?? 0))
                         // The book coming to the front flies over the spines it crosses.
                         .zIndex(isFront ? 1 : 0)
                 }
@@ -125,8 +133,17 @@ struct DictionaryShelf: View {
                 HStack(spacing: 6) {
                     Text("\(Wordbook.named(front).entryCount, format: .number) entries")
                         .foregroundStyle(t.ink)
-                    Text("\u{00B7} Selected for word of the day")
-                        .foregroundStyle(t.muted)
+                    if premium.allows(front) {
+                        Text("\u{00B7} Selected for word of the day")
+                            .foregroundStyle(t.muted)
+                    } else {
+                        Text("\u{00B7} Premium")
+                            .foregroundStyle(t.muted)
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: 9))
+                            .foregroundStyle(t.muted)
+                            .accessibilityHidden(true)
+                    }
                 }
                 .font(.system(size: 12, weight: .medium))
                 .lineLimit(1)
@@ -145,12 +162,17 @@ struct DictionaryShelf: View {
                 for id in ids { _ = WordProvider(resource: id) }
             }.value
         }
+        // Premium lost with a paid book face-out: it goes home, the pick comes forward.
+        .onChange(of: premium.isUnlocked) { _, unlocked in
+            if !unlocked, !premium.allows(front) { front = selection }
+        }
     }
 
     /// Pull the tapped book off the shelf and tell the owner. You stay on the
     /// shelf — picking is the whole job, there's nowhere to go next.
     private func pick(_ book: Wordbook) {
         guard !swapping, book.id != front else { return }
+        guard premium.allows(book.id) else { return refuse(book) }
         selection = book.id
         onPick(book)
         guard !reduceMotion else { front = book.id; return }
@@ -163,16 +185,48 @@ struct DictionaryShelf: View {
             swapping = false
         }
     }
+
+    /// A locked book stays on the shelf and shakes its head, with a buzz through the
+    /// trackpad (Force Touch only — elsewhere it's silent). The bar sells it.
+    private func refuse(_ book: Wordbook) {
+        NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
+        guard !reduceMotion else { return }
+        withAnimation(.linear(duration: 0.4)) { shakes[book.id, default: 0] += 1 }
+    }
+}
+
+/// The refused-tap wiggle, like a wrong password's: three quick side-to-side shakes
+/// per whole step of `taps`, back at rest on every integer.
+private struct Shake: GeometryEffect {
+    var taps: CGFloat
+    var animatableData: CGFloat {
+        get { taps }
+        set { taps = newValue }
+    }
+
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(translationX: 4 * sin(taps * .pi * 6), y: 0))
+    }
 }
 
 /// The Dictionaries pane: the shelf, bound to the app-wide pick.
 struct DictionaryPicker: View {
     @AppStorage("dictionaryID", store: AppGroup.defaults)
     private var dictionaryID = Wordbook.everydayEnglish.id
+    @Environment(PremiumViewModel.self) private var premium
 
     var body: some View {
         DictionaryShelf(selection: $dictionaryID) { _ in
             WidgetCenter.shared.reloadAllTimelines()
+        }
+        // The premium bar: a bottom inset, the way the header is a top one, so
+        // PaneGround (which ignores the safe area) paints under both.
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            if !premium.isUnlocked {
+                PremiumBar()
+                    .padding(.horizontal, 28)
+                    .padding(.bottom, 24)
+            }
         }
         .paneHeader("Dictionaries")
     }
@@ -186,6 +240,7 @@ private struct ShelfBook: View, Animatable {
     /// The cover art's height at full size; the shelf scales the whole book from there.
     let art: CGFloat
     var turn: CGFloat
+    var locked = false
 
     var animatableData: CGFloat {
         get { turn }
@@ -197,7 +252,7 @@ private struct ShelfBook: View, Animatable {
         let spine = art * DictionaryShelf.thickness
         let cover = art * DictionaryShelf.coverAspect
         ZStack(alignment: .topLeading) {
-            BookSpine(book: book, width: spine, height: art * DictionaryShelf.boardFoot)
+            BookSpine(book: book, width: spine, height: art * DictionaryShelf.boardFoot, locked: locked)
                 .brightness(-0.3 * sin(a))
                 .scaleEffect(x: cos(a), y: 1, anchor: .leading)
             // The cover hinges out from the spine's edge as the spine turns away.
@@ -223,6 +278,7 @@ private struct BookSpine: View {
     let book: Wordbook
     let width: CGFloat
     let height: CGFloat
+    var locked = false
 
     var body: some View {
         // Lettered like the art prints its titles: ink on pale linen, cream on the rest.
@@ -243,6 +299,16 @@ private struct BookSpine: View {
             }
             .overlay(alignment: .top) { bands.padding(.top, height * 0.07) }
             .overlay(alignment: .bottom) { bands.padding(.bottom, height * 0.07) }
+            // Between the foot's bands and the title, which never reaches this far down.
+            .overlay(alignment: .bottom) {
+                if locked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: min(width * 0.28, 15)))
+                        .foregroundStyle(ink.opacity(0.8))
+                        .padding(.bottom, height * 0.1)
+                        .accessibilityHidden(true)
+                }
+            }
             .overlay {
                 Text(book.shortName)
                     .font(.serif(width * 0.4, .medium))
@@ -278,4 +344,5 @@ struct BookChip: View {
 
 #Preview {
     DictionaryPicker()
+        .environment(PremiumViewModel())
 }

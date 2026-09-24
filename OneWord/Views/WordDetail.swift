@@ -33,6 +33,7 @@ struct WordDetail: View {
     @State private var showRelated = false
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
+    @Environment(PremiumViewModel.self) private var premium
 
     /// The doodle theme's hand, for the display face. `.face()` hands back the
     /// editorial serif untouched when the handwriting switch is off.
@@ -45,7 +46,9 @@ struct WordDetail: View {
             // ground, and its buttons in its own header.
             page
                 .paneBackground(Theme.of(scheme, doodle))
-                .paneHeader(back: true) { WordActions(word: word) }
+                // No bookmark on a locked word: a bookmark keeps the whole entry, and
+                // Bookmarks is free — it would hand the meaning over.
+                .paneHeader(back: true) { if !locked { WordActions(word: word) } }
         }
     }
 
@@ -72,34 +75,40 @@ struct WordDetail: View {
                             .foregroundStyle(t.muted)
                     }
 
-                    if showHindi, !word.hindi.isEmpty {
-                        Text(word.hindi)
-                            .font(.system(size: 25))
-                            .foregroundStyle(t.ink.opacity(0.5))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding(.leading, 18)
-                            .overlay(alignment: .leading) {
-                                Rectangle().fill(t.rule).frame(width: 2)
-                            }
+                    if locked {
+                        // A locked shelf's word: the headword is the teaser, the rest is Premium's.
+                        PremiumBar(book: .named(shelfID))
                             .padding(.top, 26)
+                    } else {
+                        if showHindi, !word.hindi.isEmpty {
+                            Text(word.hindi)
+                                .font(.system(size: 25))
+                                .foregroundStyle(t.ink.opacity(0.5))
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.leading, 18)
+                                .overlay(alignment: .leading) {
+                                    Rectangle().fill(t.rule).frame(width: 2)
+                                }
+                                .padding(.top, 26)
+                        }
+
+                        Text(word.definition)
+                            .font(doodle.face(22))
+                            .foregroundStyle(t.definition)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 26)
+
+                        if showExample { footer(t) }
+
+                        relatedBox(related, t)
+                            // The box fades in when the background build lands — without
+                            // this it pops. On the box, not the column: up here it sprang
+                            // every paragraph's frame each time the word changed.
+                            .animation(.default, value: related)
+                            // …and the placeholder fades out the same way, whether the
+                            // build ends with neighbours or with none.
+                            .animation(.default, value: store.isBuilding(shelfID))
                     }
-
-                    Text(word.definition)
-                        .font(doodle.face(22))
-                        .foregroundStyle(t.definition)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.top, 26)
-
-                    if showExample { footer(t) }
-
-                    relatedBox(related, t)
-                        // The box fades in when the background build lands — without
-                        // this it pops. On the box, not the column: up here it sprang
-                        // every paragraph's frame each time the word changed.
-                        .animation(.default, value: related)
-                        // …and the placeholder fades out the same way, whether the
-                        // build ends with neighbours or with none.
-                        .animation(.default, value: store.isBuilding(shelfID))
                 }
                 .frame(maxWidth: 720, alignment: .leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -115,12 +124,15 @@ struct WordDetail: View {
         .animation(.easeInOut(duration: 0.22), value: word.term)
         .scrollContentBackground(.hidden)
         // Re-fires on dictionary change and on every pop back; load is idempotent.
-        .task(id: shelfID) { store.load(shelfID) }
+        // Keyed on the lock too, so buying while you look loads the neighbours then.
+        .task(id: locked ? nil : shelfID) { if !locked { store.load(shelfID) } }
         // Every full-view route ends at THIS view — today's word, a peek, a search
         // result, a related word — so one call here marks them all learned rather
         // than each caller having to remember. `initial: true` catches the first
         // render; the term catches HomeView swapping the word underneath us.
         .onChange(of: word.term, initial: true) {
+            // A teaser isn't a word read.
+            guard !locked else { return }
             LearnedWords.record(word, in: learnedIn)
         }
     }
@@ -230,6 +242,9 @@ struct WordDetail: View {
     /// "same vein" box included, so a word opened from Medicine while Everyday
     /// English is selected draws its neighbours from Medicine.
     private var shelfID: String { shelf ?? dictionaryID }
+
+    /// A word from a shelf Premium hasn't opened — reached from search, or a Learned row.
+    private var locked: Bool { !premium.allows(shelfID) }
 
     /// The shelf this word counts towards. A just-captured word belongs to
     /// Bookmarks wherever you happen to be reading it.
