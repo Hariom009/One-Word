@@ -165,3 +165,22 @@ Which skill lands where:
   a name the book never writes on its own still slips through, so scan definition openings by hand.
   Never tell editors to stay inside their theme: they drop words they only guess a neighbour
   will write, and Classical's first pass lost 30% that way.)*
+- **Onboarding** — planned, not built.
+  [plan](02_Plan/ONBOARDING_PLAN.md) ·
+  [audit](02_Plan/Audit/ONBOARDING_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/ONBOARDING_PLAN_RESOLVED.md) →
+  [checklist](03_Checklist/ONBOARDING_CHECKLIST.md)
+  *(**tick the checklist** — it stands alone. Five DECIDE items at the top carry the resolved plan's
+  defaults; steps 1–3, the PremiumView extractions, depend on none of them and can start now.)*
+  *(every audit finding resolved — **build from the resolved plan, it stands alone**. Defaults
+  applied for the five operator calls sit in its review queue: Restore Purchase in card 5's nav plus
+  the title-bar strip taken back, Free-safe copy on cards 2 and 4, the plain crossfade, existing
+  users see it once, CLAUDE.md's gate list fixed in the PR.)*
+  *(audit: no blockers, ready to build once four majors are written in — modifier order so
+  cards don't stack in the ScrollView, a slide that reverses, a bounds check in `go`, and card 5
+  at 1000×680 where the buy button and Restore fall below the fold; five operator questions)*
+  *(five full-window first-launch cards shown before sign-in and only once: welcome with today's
+  word, the widget, the shelf, your words, then Free vs Premium through a `PlanPair` extracted
+  from PremiumView. Skippable on every card; one `onboardingSeen` flag; nothing in `Shared/`
+  changes and no new gate. Five operator forks open — placement, existing users, copy, card-5
+  height, a Hindi toggle.)*
