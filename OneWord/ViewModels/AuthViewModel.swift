@@ -2,9 +2,10 @@
 //  AuthViewModel.swift
 //  OneWord
 //
-//  Google sign-in, the whole feature. Signing in is how you get into the app at all:
-//  RootView shows the sign-in screen and nothing else until `user` is non-nil, so this
-//  type is the gate as well as the identity behind the sidebar chip and Profile pane.
+//  Sign-in, the whole feature — Apple and Google. Signing in is how you get into the
+//  app at all: RootView shows the sign-in screen and nothing else until `user` is
+//  non-nil, so this type is the gate as well as the identity behind the sidebar chip
+//  and Profile pane.
 //
 //  The widget is deliberately outside that gate — it reads the same bundled JSON and
 //  has no way to run an OAuth flow, so it keeps showing a word regardless.
@@ -16,10 +17,16 @@
 //  is inside `#if os(iOS)`, so we fetch the Google ID token ourselves via GoogleSignIn
 //  and hand it to Firebase as a credential.
 //
+//  Apple is the other way round: OAuthProvider.appleCredential isn't iOS-gated, so the
+//  system's AuthenticationServices gets the identity token and Firebase takes it
+//  directly — no extra SDK.
+//
 
 import Foundation     // UserDefaults — the debug bypass below
 import Observation
 import AppKit          // NSWindow — the SDK's presenting window, not one of our views
+import AuthenticationServices   // Sign in with Apple
+import CryptoKit       // SHA256 — the nonce Apple signs into its token
 import FirebaseCore    // FirebaseApp — for the preview guard below
 import FirebaseAuth
 import GoogleSignIn
@@ -147,8 +154,6 @@ final class AuthViewModel {
         // the listener if that ever shows up, or if a revoked session needs to
         // clear itself mid-run.
         user = Auth.auth().currentUser
-        let dbg = "user=\(user == nil ? "nil" : "present")\ntop=\(String(describing: user?.photoURL))\nproviders=\(user?.providerData.map { "\($0.providerID) | \(String(describing: $0.photoURL))" } ?? [])\n"
-        try? dbg.write(to: URL.cachesDirectory.appending(path: "photodebug.txt"), atomically: true, encoding: .utf8)
         recordJoinDate()
     }
 
@@ -184,6 +189,58 @@ final class AuthViewModel {
         } catch {
             self.error = error.localizedDescription
         }
+    }
+
+    /// Runs Sign in with Apple, then trades Apple's identity token for a Firebase session.
+    /// Same shape as the Google flow above; `window` anchors the system sheet.
+    func signInWithApple(presenting window: NSWindow) async {
+        guard !busy else { return }
+        busy = true
+        error = nil
+        defer { busy = false }
+
+        // Apple signs the hash into its token; Firebase gets the raw value and checks
+        // one against the other, so a replayed token is refused.
+        let nonce = Self.randomNonce()
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = Self.sha256(nonce)
+
+        do {
+            let credential = try await AppleAuthorization(window: window).perform(request)
+            guard let data = credential.identityToken,
+                  let idToken = String(data: data, encoding: .utf8) else {
+                error = "Apple didn't return an identity token."
+                return
+            }
+            // The name only ever arrives on the first authorization — this hands it
+            // to Firebase then, since Apple won't send it again.
+            let firebase = OAuthProvider.appleCredential(
+                withIDToken: idToken, rawNonce: nonce, fullName: credential.fullName)
+            user = try await Auth.auth().signIn(with: firebase).user
+            recordJoinDate()
+        } catch let e as ASAuthorizationError where e.code == .canceled {
+            // Same as Google: closing the sheet is a decision, not an error.
+            return
+        } catch let e as NSError where e.domain == AuthErrors.domain
+                    && e.code == AuthErrorCode.accountExistsWithDifferentCredential.rawValue {
+            // One account per email: this address already came in through Google.
+            // ponytail: a message, not account linking — nothing server-side hangs
+            // off the uid yet. Link with user.link(with:) the day something does.
+            error = "That email already signs in with Google. Use Google instead."
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    /// 32 random bytes as lowercase hex. `UInt8.random` draws from the system CSPRNG.
+    private static func randomNonce() -> String {
+        (0..<32).map { _ in String(format: "%02x", UInt8.random(in: .min ... .max)) }.joined()
+    }
+
+    /// Lowercase hex, which is what Firebase compares the token's nonce claim against.
+    private static func sha256(_ s: String) -> String {
+        SHA256.hash(data: Data(s.utf8)).map { String(format: "%02x", $0) }.joined()
     }
 
     /// Both halves, deliberately. Dropping only the Firebase session leaves
@@ -284,5 +341,58 @@ final class AuthViewModel {
         } catch {
             // Left unmarked on purpose: the next launch tries again.
         }
+    }
+}
+
+/// ASAuthorizationController only speaks delegate; this turns one run into one await.
+/// Main-actor by the target default, which is also what both protocols require
+/// (NS_SWIFT_UI_ACTOR).
+///
+/// Both delegate methods are @optional, so a misspelled name still compiles — it just
+/// never gets called, the continuation never resumes and the window stays dimmed. The
+/// build's "nearly matches optional requirement" warning is the tell.
+private final class AppleAuthorization: NSObject,
+    ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    private let window: NSWindow
+    /// Held here because the controller holds us weakly (delegate and
+    /// presentationContextProvider are both `weak`). The caller holds us across the
+    /// await, so nothing is freed mid-flow and nothing cycles.
+    private var controller: ASAuthorizationController?
+    private var continuation: CheckedContinuation<ASAuthorizationAppleIDCredential, Error>?
+
+    init(window: NSWindow) {
+        self.window = window
+    }
+
+    func perform(_ request: ASAuthorizationAppleIDRequest) async throws -> ASAuthorizationAppleIDCredential {
+        try await withCheckedThrowingContinuation { continuation in
+            self.continuation = continuation
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            self.controller = controller
+            controller.performRequests()
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            continuation?.resume(returning: credential)
+        } else {
+            continuation?.resume(throwing: ASAuthorizationError(.unknown))
+        }
+        // Nil'd after resuming, so a stray second callback is a no-op, not a crash.
+        continuation = nil
+    }
+
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithError error: Error) {
+        continuation?.resume(throwing: error)
+        continuation = nil
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        window
     }
 }
