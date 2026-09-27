@@ -6,8 +6,8 @@
 //  shows it instead of the split view, so no pane, no search, no dictionary and no
 //  saved word is reachable without signing in.
 //
-//  Deliberately bare: a wordmark and one button. There is nothing to configure and
-//  nothing to read yet, so anything else here would be furniture.
+//  Deliberately bare: a wordmark and a button per provider. There is nothing to
+//  configure and nothing to read yet, so anything else here would be furniture.
 //
 //  Dumb view: the session lives in AuthViewModel.
 //
@@ -37,7 +37,17 @@ struct SignInView: View {
                 .foregroundStyle(.primary.opacity(0.6))
             Spacer()
             VStack(spacing: 14) {
-                signInButton(t)
+                // Apple first, same size: HIG asks that it be at least as prominent as
+                // any other sign-in option.
+                VStack(spacing: 10) {
+                    signInButton(t, icon: Image(systemName: "apple.logo"),
+                                 title: "Sign in with Apple",
+                                 action: auth.signInWithApple(presenting:))
+                    signInButton(t, icon: Image("google_icon"),
+                                 title: "Sign in with Google",
+                                 action: auth.signIn(presenting:))
+                }
+                .fixedSize(horizontal: true, vertical: false)
 
                 if let error = auth.error {
                     Text(error)
@@ -63,26 +73,33 @@ struct SignInView: View {
         .paneBackground(t)
     }
 
-    private func signInButton(_ t: Theme) -> some View {
+    private func signInButton(_ t: Theme, icon: Image, title: String,
+                              action: @escaping (NSWindow) async -> Void) -> some View {
         // The one place hue is allowed in: Google's mark has to be Google's mark, and a
-        // grey person-glyph on the only button in the window reads as unfinished. The
-        // rest of the button still speaks the app's language (DESIGN_BRIEF §3).
+        // grey person-glyph on the only button in the window reads as unfinished. Apple's
+        // mark is monochrome by rule, so it takes `t.ink` like the text. The rest of the
+        // button still speaks the app's language (DESIGN_BRIEF §3).
         Button {
             // Single-window app, so the key window is always ours. A WindowAccessor
             // NSViewRepresentable is the general answer if that stops being true.
             guard let window = NSApp.keyWindow else { return }
-            Task { await auth.signIn(presenting: window) }
+            Task { await action(window) }
         } label: {
             HStack(spacing: 9) {
-                // No spinner here: RootView dims the whole window while the
-                // browser round trip runs, so the button only changes its word.
-                Image("google_icon")
+                // No spinner and no change of word: RootView dims the whole window
+                // while the round trip runs, and that overlay is the busy signal.
+                icon
                     .resizable()
                     .interpolation(.high)
+                    .scaledToFit()
                     .frame(width: 15, height: 15)
-                Text(auth.busy ? "Signing in…" : "Sign in with Google")
+                    .accessibilityHidden(true)   // the title already says which
+                Text(title)
                     .font(.system(size: 13))
             }
+            // Fills the stack's width, which is the wider of the two titles — so
+            // both buttons come out the same size.
+            .frame(maxWidth: .infinity)
             .foregroundStyle(t.ink)
             .padding(.horizontal, 18)
             .padding(.vertical, 12)

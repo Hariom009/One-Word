@@ -23,9 +23,17 @@ import GoogleSignIn
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let provider = ServiceProvider()
 
+    /// In init, not applicationDidFinishLaunching: on macOS the window's views appear
+    /// before that fires, so RootView's `auth.restore()` asked Firebase for the app
+    /// first, found none, and every launch opened on the sign-in screen with the
+    /// keychain session ignored. The adaptor builds this delegate before any scene.
+    override init() {
+        super.init()
+        configureFirebase()
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.servicesProvider = provider
-        configureFirebase()
     }
 
     /// Reads GoogleService-Info.plist from the bundle, then wires GoogleSignIn by hand.

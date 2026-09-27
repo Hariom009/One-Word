@@ -67,7 +67,7 @@ struct RootView: View {
     @State private var columns: NavigationSplitViewVisibility = .all
     /// Settings can hide the Practice row; the pane itself is unreachable then.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
-    /// Set in Profile. Empty means "keep following the Google account".
+    /// Set in Profile. Empty means "keep following the account".
     /// The picture is `AccountAvatar`'s own business, so only the name is read here.
     @AppStorage("profileName") private var profileName = ""
     /// The one-time "have a suggestion?" card. Flipped by its own close or Write
@@ -115,7 +115,15 @@ struct RootView: View {
         } detail: {
             // One stack per pane: related words and list rows still push, and a
             // pane switch drops whatever was pushed on top of the old one.
-            NavigationStack { detail }
+            // The switch alone is a hard cut between two unrelated views; the id
+            // makes the swap an insert/remove the crossfade can ride, and the
+            // animation is keyed to the pane so nothing else in the tree picks it up.
+            NavigationStack {
+                detail
+                    .transition(.opacity)
+                    .id(pane)
+                    .animation(.easeInOut(duration: 0.22), value: pane)
+            }
         }
         .environment(\.sidebar, $columns)
         // A painted appearance's own accent on the sidebar selection and every stock
@@ -198,7 +206,11 @@ struct RootView: View {
                         .accessibilityHidden(true)
                 }
             }
-        } icon: { GlyphIcon(item.glyph) }
+        } icon: {
+            // The selected row's symbol fills in, the way a tab bar's does. A doodle
+            // is an asset, not a symbol, so the variant leaves it alone.
+            GlyphIcon(item.glyph).symbolVariant(pane == item ? .fill : .none)
+        }
         .accessibilityValue(locked ? "Premium" : "")
         .accessibilityHint(locked ? "Shows how to unlock" : "")
     }

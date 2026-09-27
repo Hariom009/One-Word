@@ -30,7 +30,7 @@ struct ProfileView: View {
     // Owned by the app so the sidebar chip shows the same user. RootView restores it.
     @Environment(AuthViewModel.self) private var auth
 
-    // Yours to set. Google owns the email and the join date; these three are ours.
+    // Yours to set. The account owns the email and the join date; these three are ours.
     @AppStorage("profileName") private var name = ""
     @AppStorage("profileGender") private var gender = Gender.unspecified.rawValue
     @AppStorage("profileAvatar") private var avatar = Avatar.account.rawValue
@@ -44,7 +44,7 @@ struct ProfileView: View {
     @State private var draftGender = Gender.unspecified.rawValue
     @State private var draftAvatar = Avatar.account.rawValue
 
-    /// What to call you: your own name if you set one, else the one Google gave.
+    /// What to call you: your own name if you set one, else the one the account gave.
     private var shownName: String {
         name.isEmpty ? (auth.displayName ?? "Signed in") : name
     }
@@ -145,7 +145,7 @@ struct ProfileView: View {
     }
 
     private func save() {
-        // Blank means "go back to following the Google account", not a blank name.
+        // Blank means "go back to following the account", not a blank name.
         let trimmed = draftName.trimmingCharacters(in: .whitespacesAndNewlines)
         name = trimmed == (auth.displayName ?? "") ? "" : trimmed
         gender = draftGender

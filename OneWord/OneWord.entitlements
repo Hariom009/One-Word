@@ -21,5 +21,11 @@
 	<array>
 		<string>$(AppIdentifierPrefix)com.hariom.swift.oneword</string>
 	</array>
+	<!-- Sign in with Apple. App target only: the widget never signs in. Without it
+	     the Apple flow fails on tap with no sheet. -->
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
 </dict>
 </plist>
