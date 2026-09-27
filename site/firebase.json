@@ -2,10 +2,28 @@
   "hosting": {
     "public": "public",
     "cleanUrls": true,
-    "ignore": ["firebase.json", "**/.*"]
+    "ignore": [
+      "firebase.json",
+      "**/.*"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
   },
   "emulators": {
-    "hosting": { "port": 5050 },
-    "ui": { "enabled": false }
+    "hosting": {
+      "port": 5050
+    },
+    "ui": {
+      "enabled": false
+    }
   }
 }
