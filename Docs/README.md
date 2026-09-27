@@ -184,3 +184,18 @@ Which skill lands where:
   from PremiumView. Skippable on every card; one `onboardingSeen` flag; nothing in `Shared/`
   changes and no new gate. Five operator forks open — placement, existing users, copy, card-5
   height, a Hindi toggle.)*
+- **Website** — planned, not built.
+  [plan](02_Plan/WEBSITE_PLAN.md) ·
+  [audit](02_Plan/Audit/WEBSITE_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/WEBSITE_PLAN_RESOLVED.md) →
+  [checklist](03_Checklist/WEBSITE_CHECKLIST.md) ·
+  [checklist audit](03_Checklist/Audit/WEBSITE_CHECKLIST_AUDIT.md) →
+  [resolved checklist](03_Checklist/Resolved/WEBSITE_CHECKLIST_RESOLVED.md)
+  *(**tick the resolved checklist** — it stands alone. It deploys twice on purpose: privacy and
+  support first, the landing page after, so the App Store record never waits on design.)*
+  *(three static pages, landing + privacy + support, on Firebase Hosting in the app's own
+  project; no framework, no JS, no webfonts. Privacy and support are the App Store record's
+  required URLs, so they ship first. Forks: domain, copy, whether German is on the shelf.)*
+  *(every audit finding resolved — **build from the resolved plan, it stands alone**. Operator
+  calls: WebP covers, the in-app privacy link lands in this PR, "$9.99, once" with a US note.
+  The audit's blocker was the privacy draft missing the Google profile-photo fetch.)*
