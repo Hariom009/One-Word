@@ -99,9 +99,10 @@ final class AuthViewModel {
     }
     #endif
 
-    /// False until `restore()` has run once. The gate waits on this rather than on
-    /// `isSignedIn` alone — otherwise a returning user is briefly "signed out" and
-    /// the sign-in screen flashes before the keychain session lands.
+    /// False until Firebase has reported the keychain session, or its absence, once.
+    /// The gate waits on this rather than on `isSignedIn` alone — otherwise a
+    /// returning user is briefly "signed out" and the sign-in screen flashes before
+    /// the keychain session lands.
     private(set) var restored = false
 
     // Read off `user` rather than handed to the view directly, so ProfileView never
@@ -134,27 +135,31 @@ final class AuthViewModel {
 
     // MARK: - Session
 
-    /// Adopts whatever session Firebase already restored from the keychain.
+    /// Adopts whatever session Firebase already restored from the keychain, and keeps
+    /// `user` in step with every sign-in and sign-out after it.
     ///
     /// The guard is not defensive noise: SwiftUI previews instantiate a view without
     /// the App, so `@NSApplicationDelegateAdaptor` never runs, `FirebaseApp.configure()`
     /// never fires, and `Auth.auth()` calls `fatalError` in exactly that case
     /// (Auth.swift:150). Without it, ProfileView's #Preview crashes on render.
     func restore() {
-        // Set even when Firebase is absent (previews): "we looked" is the fact the
-        // gate needs, and a preview that never resolves would hang on a blank window.
-        defer { restored = true }
         #if DEBUG
         if UserDefaults.standard.bool(forKey: Self.bypassKey) { demo = DemoUser() }
         #endif
-        guard FirebaseApp.app() != nil else { return }
-        // ponytail: a plain read, not addStateDidChangeListener. `currentUser` is a
-        // sync hop onto Auth's serial work queue, so it waits behind the keychain
-        // load — correct, but it can hitch the main thread on the first call. Swap in
-        // the listener if that ever shows up, or if a revoked session needs to
-        // clear itself mid-run.
-        user = Auth.auth().currentUser
-        recordJoinDate()
+        // Set even when Firebase is absent (previews): "we looked" is the fact the
+        // gate needs, and a preview that never resolves would hang on a blank window.
+        guard FirebaseApp.app() != nil else { restored = true; return }
+        // A listener, not `currentUser`: that read is a sync hop onto Auth's serial
+        // work queue, so the main thread sat waiting on Firebase's default-QoS
+        // keychain load — the priority inversion Xcode flags as a Hang Risk. The
+        // listener lands on main once that load is done, so `user` and the gate move
+        // in the same frame and a returning user never sees the sign-in screen flash.
+        Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            guard let self else { return }
+            self.user = user
+            self.restored = true
+            self.recordJoinDate()
+        }
     }
 
     // MARK: - Sign in / out
@@ -179,10 +184,10 @@ final class AuthViewModel {
                 withIDToken: idToken,
                 accessToken: result.user.accessToken.tokenString
             )
-            user = try await Auth.auth().signIn(with: credential).user
-            // Right here is the only moment a brand-new account exists for the
-            // first time — restore() catches every launch after it.
-            recordJoinDate()
+            // The listener in restore() sets `user` and records the join date; Auth
+            // posts the state change before it completes this call, so both land on
+            // main before this await resumes.
+            _ = try await Auth.auth().signIn(with: credential)
         } catch let gid as GIDSignInError where gid.code == .canceled {
             // Closing the browser window is a decision, not an error worth a banner.
             return
@@ -217,8 +222,7 @@ final class AuthViewModel {
             // to Firebase then, since Apple won't send it again.
             let firebase = OAuthProvider.appleCredential(
                 withIDToken: idToken, rawNonce: nonce, fullName: credential.fullName)
-            user = try await Auth.auth().signIn(with: firebase).user
-            recordJoinDate()
+            _ = try await Auth.auth().signIn(with: firebase)   // the listener takes it from here
         } catch let e as ASAuthorizationError where e.code == .canceled {
             // Same as Google: closing the sheet is a decision, not an error.
             return
@@ -282,9 +286,9 @@ final class AuthViewModel {
     }
 
     /// Writes the account's creation date down in both places the first time we see
-    /// it: local defaults, and `users/{uid}` in Firestore. Called on every sign-in
-    /// and every restore, but both writes are first-one-wins, so from the second
-    /// launch on it costs a defaults read and stops.
+    /// it: local defaults, and `users/{uid}` in Firestore. Called from the auth
+    /// listener, so on every launch and every sign-in, but both writes are
+    /// first-one-wins, so from the second launch on it costs a defaults read and stops.
     private func recordJoinDate() {
         guard let user, let joined = user.metadata.creationDate else { return }
         let defaults = UserDefaults.standard
