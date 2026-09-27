@@ -92,9 +92,9 @@ Which skill lands where:
   [audit](02_Plan/Audit/FIREBASE_AUTH_PLAN_AUDIT.md) →
   [resolved plan](02_Plan/Resolved/FIREBASE_AUTH_PLAN_RESOLVED.md)
   *(blockers B1/B2 patched; majors M1/M2 carried forward unpatched — see its §0)*
-- **Apple sign-in** — built on `feat/apple-sign-in`; not merged. Build and all gates green;
-  Apple enabled in Firebase (S1) and an Apple sign-in confirmed by hand. The rest of the
-  manual matrix (M2–M11) is still open.
+- **Apple sign-in** — shipped (PR #8, `fb65fae`). Build and all gates green; Apple enabled
+  in Firebase (S1) and a real Apple sign-in confirmed by hand. The rest of the manual matrix
+  (M2–M11) was not run before merge — it's still open in the resolved checklist.
   [plan](02_Plan/APPLE_SIGN_IN_PLAN.md) ·
   [audit](02_Plan/Audit/APPLE_SIGN_IN_PLAN_AUDIT.md) →
   [resolved plan](02_Plan/Resolved/APPLE_SIGN_IN_PLAN_RESOLVED.md) →
