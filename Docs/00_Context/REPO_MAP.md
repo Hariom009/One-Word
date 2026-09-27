@@ -11,6 +11,7 @@ One Word/
 ├── OneWord.xcodeproj/    project file — see "Adding files" below
 ├── StoreKit/             OneWord.storekit — local purchase testing, used by the OneWord scheme's Run action (not shipped)
 ├── tools/                verification gates + word generators (not shipped)
+├── site/                 public website — landing, privacy, support; Firebase Hosting (not part of any Xcode target)
 └── Docs/                 all written docs — see Docs/README.md
 ```
 
@@ -74,9 +75,11 @@ it names the exact path. Only `00_Context/` is kept current — the rest is a po
 
 ## Adding files
 
-`OneWord/` and `OneWordWidget/` are Xcode 16 **file-system-synchronized groups**: create a
-file or folder on disk and it joins the target automatically. No `project.pbxproj` edit, no
-target-membership step.
+`OneWord/` is an Xcode 16 **file-system-synchronized group** (the one
+`PBXFileSystemSynchronizedRootGroup` in `project.pbxproj`): create a file or folder on disk
+and it joins the app target automatically. No `project.pbxproj` edit, no target-membership
+step. `OneWordWidget/` is **not** synchronized: the widget target lists its files explicitly,
+so a new widget file needs a project-file edit.
 
 One exception. `OneWord/Shared/` files are *also* referenced by explicit path in
 `project.pbxproj` so the widget target can compile them. **Moving or renaming anything in
@@ -87,6 +90,9 @@ One exception. `OneWord/Shared/` files are *also* referenced by explicit path in
 Move a file, and grep these too — they name paths as strings, so the compiler won't catch it:
 
 - `tools/check_*.sh` — compile source by path.
+- `site/public/privacy.html` — the privacy policy states what the app stores and fetches:
+  `AuthViewModel.publishJoinDate`, the use of `photoURL`, the fields in `FeedbackViewModel.send`,
+  and the Firebase products linked in `project.pbxproj`. Change any of those and re-read the page.
 - `.claude/workflows/*.js` and `.claude/commands/*.md` — tell agents which files to read.
 - `Docs/00_Context/*` — kept current.
 - `Docs/01_*` through `Docs/06_*` — **do not update.** Point-in-time records; stale paths

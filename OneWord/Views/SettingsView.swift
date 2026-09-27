@@ -214,6 +214,20 @@ struct SettingsView: View {
                             .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
+                        rule(t)
+                        // Last, after the two ways of reaching us: the policy reads as
+                        // their footnote. A Link, not a Button + openURL, so VoiceOver
+                        // announces it as a link to a web page.
+                        Link(destination: FeedbackViewModel.privacyPolicy) {
+                            row("Privacy Policy", "What the app keeps, and what it doesn't.", t) {
+                                Image(systemName: "arrow.up.right")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(t.muted)
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Open the privacy policy")
                     }
                     if mailFailed {
                         // Renders above the section's note. A transient error

@@ -11,3 +11,7 @@ xcuserdata/
 
 # Python (tools/)
 __pycache__/
+
+# Firebase CLI (site/)
+.firebase/
+firebase-debug.log

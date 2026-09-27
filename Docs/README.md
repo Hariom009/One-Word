@@ -184,7 +184,7 @@ Which skill lands where:
   from PremiumView. Skippable on every card; one `onboardingSeen` flag; nothing in `Shared/`
   changes and no new gate. Five operator forks open — placement, existing users, copy, card-5
   height, a Hindi toggle.)*
-- **Website** — planned, not built.
+- **Website** — built 2026-09-27 from the resolved checklist; live at `https://one-word-a2f3a.web.app` (uncommitted on `main`). Open: the two hero screenshots (2d), the in-app click-through (5b, 5c), App Store Connect and the consent screen (6a–6d), the badge's Apple ID (2b), the second deploy (4d).
   [plan](02_Plan/WEBSITE_PLAN.md) ·
   [audit](02_Plan/Audit/WEBSITE_PLAN_AUDIT.md) →
   [resolved plan](02_Plan/Resolved/WEBSITE_PLAN_RESOLVED.md) →

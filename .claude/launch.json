@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd site && firebase emulators:start --only hosting --project one-word-a2f3a"],
+      "port": 5050
+    }
+  ]
+}

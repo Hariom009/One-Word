@@ -66,6 +66,11 @@ struct SignInView: View {
                     .font(.system(size: 11))
                     .foregroundStyle(t.muted)
                 #endif
+                // Reachable before an account exists, as App Review reads it.
+                Link("Privacy Policy", destination: FeedbackViewModel.privacyPolicy)
+                    .buttonStyle(.plain)
+                    .font(.system(size: 12))
+                    .foregroundStyle(t.muted)
             }
         }
         .padding(.all,24)

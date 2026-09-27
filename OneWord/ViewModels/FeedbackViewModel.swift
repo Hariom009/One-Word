@@ -25,6 +25,11 @@ final class FeedbackViewModel {
     /// failure copy names the same address.
     static let address = "hi.hariom.swift@gmail.com"
 
+    /// The privacy policy, linked from Settings and the sign-in screen: App Review
+    /// wants it reachable inside the app, not only in App Store Connect. Lives beside
+    /// `address` because both are "how to reach us" facts. Changes with the domain.
+    static let privacyPolicy = URL(string: "https://one-word-a2f3a.web.app/privacy")!
+
     /// A pre-addressed draft in whatever the Mac's mail client is. Version and OS
     /// ride along because the first reply to any bug report is "which build?" —
     /// and unlike the in-app path, an email carries no metadata otherwise.

@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "public": "public",
+    "cleanUrls": true,
+    "ignore": ["firebase.json", "**/.*"]
+  },
+  "emulators": {
+    "hosting": { "port": 5050 },
+    "ui": { "enabled": false }
+  }
+}
