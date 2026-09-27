@@ -92,6 +92,21 @@ Which skill lands where:
   [audit](02_Plan/Audit/FIREBASE_AUTH_PLAN_AUDIT.md) →
   [resolved plan](02_Plan/Resolved/FIREBASE_AUTH_PLAN_RESOLVED.md)
   *(blockers B1/B2 patched; majors M1/M2 carried forward unpatched — see its §0)*
+- **Apple sign-in** — built on `feat/apple-sign-in`; not merged. Build and all gates green;
+  Apple enabled in Firebase (S1) and an Apple sign-in confirmed by hand. The rest of the
+  manual matrix (M2–M11) is still open.
+  [plan](02_Plan/APPLE_SIGN_IN_PLAN.md) ·
+  [audit](02_Plan/Audit/APPLE_SIGN_IN_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/APPLE_SIGN_IN_PLAN_RESOLVED.md) →
+  [checklist](03_Checklist/APPLE_SIGN_IN_CHECKLIST.md) ·
+  [checklist audit](03_Checklist/Audit/APPLE_SIGN_IN_CHECKLIST_AUDIT.md) →
+  [resolved checklist](03_Checklist/Resolved/APPLE_SIGN_IN_CHECKLIST_RESOLVED.md)
+  *(**tick the resolved checklist** — it stands alone; its git gates diff against the fork
+  point, so they still check after a commit.)*
+  *(every audit finding resolved — build from the resolved plan, it stands alone.
+  Operator calls: delete `apple_icon`, Apple button first, static button titles)*
+  *(second provider on the existing Firebase gate; custom button matching Google's;
+  account deletion + token revocation deferred to its own plan — fork F2)*
 - **Feedback** — planned, not built.
   [plan](02_Plan/FEEDBACK_PLAN.md) ·
   [audit](02_Plan/Audit/FEEDBACK_PLAN_AUDIT.md) →
