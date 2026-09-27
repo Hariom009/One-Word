@@ -2,7 +2,7 @@
 //  Profile.swift
 //  OneWord
 //
-//  The parts of "who you are" that Google doesn't hand us. The account owns the
+//  The parts of "who you are" that the account doesn't hand us. The account owns the
 //  email and the join date — those are read-only for good. The name you'd rather
 //  be called, your gender and which face to show are yours to set.
 //

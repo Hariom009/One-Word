@@ -67,7 +67,7 @@ struct RootView: View {
     @State private var columns: NavigationSplitViewVisibility = .all
     /// Settings can hide the Practice row; the pane itself is unreachable then.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
-    /// Set in Profile. Empty means "keep following the Google account".
+    /// Set in Profile. Empty means "keep following the account".
     /// The picture is `AccountAvatar`'s own business, so only the name is read here.
     @AppStorage("profileName") private var profileName = ""
     /// The one-time "have a suggestion?" card. Flipped by its own close or Write

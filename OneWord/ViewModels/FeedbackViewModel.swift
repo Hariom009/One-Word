@@ -139,7 +139,7 @@ final class FeedbackViewModel {
         ])
 
         do {
-            // The Firebase ID token, not the Google one: the rule matches on
+            // The Firebase ID token, not the provider's one: the rule matches on
             // request.auth.uid, which only a Firebase token carries.
             let token = try await user.getIDToken()
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
