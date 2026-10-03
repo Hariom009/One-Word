@@ -12,9 +12,17 @@
 //  Once Premium is yours there's nothing left to sell: the cards give way to what it
 //  opened — each feature as a tile, then every dictionary on the shelf.
 //
+//  On a phone the same spread stands in one column: the cards stack, the tiles stack,
+//  the shelf halves its columns, and the fan and the title come down to the width.
+//  Every number below is switched on `isPhone`; the Mac's are unchanged.
+//
 
 import SwiftUI
-import AppKit
+#if os(macOS)
+import AppKit     // NSImage — the cover bitmaps below
+#else
+import UIKit      // UIImage — same
+#endif
 import StoreKit   // Product.displayPrice — MEMBER_IMPORT_VISIBILITY needs it named
 
 struct PremiumView: View {
@@ -37,21 +45,24 @@ struct PremiumView: View {
         let t = Theme.of(scheme, doodle)
         GeometryReader { geo in
             ScrollView {
-                VStack(spacing: 34) {
+                VStack(spacing: isPhone ? 28 : 34) {
                     hero(t)
                     if premium.isUnlocked {
                         owned(t)
                     } else {
-                        // Side by side, sharing the column and the taller card's height.
-                        // ponytail: no stacked fallback for very narrow windows — ViewThatFits
+                        // Side by side, sharing the column and the taller card's height;
+                        // one under the other on a phone, Premium first — it's the one to read.
+                        // ponytail: no stacked fallback for very narrow Mac windows — ViewThatFits
                         // sized the pair to its ideal width, not the column's.
-                        HStack(alignment: .top, spacing: 24) { free(t); lifetime(t) }
-                            .fixedSize(horizontal: false, vertical: true)
+                        row(spacing: 24) {
+                            if isPhone { lifetime(t); free(t) } else { free(t); lifetime(t) }
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .frame(maxWidth: 1000)
-                .padding(.horizontal, 44)
-                .padding(.vertical, 28)
+                .padding(.horizontal, isPhone ? 20 : 44)
+                .padding(.vertical, isPhone ? 16 : 28)
                 // Centred both ways: a tall window holds the spread in its middle
                 // rather than pinning it under the header with a void beneath.
                 .frame(maxWidth: .infinity, minHeight: geo.size.height)
@@ -80,15 +91,15 @@ struct PremiumView: View {
                     .tracking(2.5)
                     .foregroundStyle(t.muted)
                 Text(premium.isUnlocked ? "Every dictionary is yours." : "One payment. Every dictionary.")
-                    .font(doodle.face(44))
-                    .tracking(doodle.tracking(44))
+                    .font(doodle.face(isPhone ? 32 : 44))
+                    .tracking(doodle.tracking(isPhone ? 32 : 44))
                     .foregroundStyle(t.ink)
                     .multilineTextAlignment(.center)
                 Text(premium.isUnlocked
                      ? "Thank you for supporting One Word. All of this is yours for good, on "
-                       + "every Mac signed in to your Apple Account."
+                       + "every device signed in to your Apple Account."
                      : "Premium is a single purchase, not a subscription. Pay once and all "
-                       + "\(Self.shelf.count) dictionaries stay unlocked, on every Mac signed in "
+                       + "\(Self.shelf.count) dictionaries stay unlocked, on every device signed in "
                        + "to your Apple Account.")
                     .font(.system(size: 15))
                     .foregroundStyle(t.muted)
@@ -104,10 +115,12 @@ struct PremiumView: View {
     /// and on top, the rest tipping away and settling lower towards the edges.
     private var fan: some View {
         let mid = CGFloat(Self.books.count - 1) / 2
-        return HStack(spacing: -20) {
+        // 100pt covers overlap 20; the phone's 72pt covers keep the same proportion.
+        let height: CGFloat = isPhone ? 72 : 100
+        return HStack(spacing: -height / 5) {
             ForEach(Array(Self.books.enumerated()), id: \.element.id) { i, book in
                 let away = CGFloat(i) - mid
-                Image(nsImage: Self.cover(book.image, height: 100, scale: displayScale))
+                Self.cover(book.image, height: height, scale: displayScale)
                     .shadow(color: .black.opacity(0.28), radius: 10, y: 6)
                     .rotationEffect(.degrees(away * 5), anchor: .bottom)
                     .offset(y: abs(away) * abs(away) * 1.8)
@@ -125,24 +138,31 @@ struct PremiumView: View {
     /// so moving the window to a Retina display draws the covers again at 2×.
     // ponytail: the shelf still lets Core Animation scale its covers; it shows them large
     // enough (~2× down) that it doesn't need this. Reuse it there if a small shelf ever does.
-    private static var covers: [String: NSImage] = [:]
+    private static var covers: [String: Image] = [:]
 
-    private static func cover(_ name: String, height: CGFloat, scale: CGFloat) -> NSImage {
+    /// The asset's bitmap, by whichever image type the platform keeps assets in.
+    private static func source(_ name: String) -> CGImage? {
+        #if os(macOS)
+        NSImage(named: name)?.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        #else
+        UIImage(named: name)?.cgImage
+        #endif
+    }
+
+    private static func cover(_ name: String, height: CGFloat, scale: CGFloat) -> Image {
         let key = "\(name)@\(height)x\(scale)"
         if let drawn = covers[key] { return drawn }
-        guard let full = NSImage(named: name)?.cgImage(forProposedRect: nil, context: nil, hints: nil),
+        guard let full = source(name),
               let space = CGColorSpace(name: CGColorSpace.sRGB),
               let context = CGContext(data: nil,
                                       width: Int((CGFloat(full.width) / CGFloat(full.height) * height * scale).rounded()),
                                       height: Int((height * scale).rounded()),
                                       bitsPerComponent: 8, bytesPerRow: 0, space: space,
                                       bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
-        else { return NSImage(named: name) ?? NSImage() }
+        else { return Image(name) }
         context.interpolationQuality = .high
         context.draw(full, in: CGRect(x: 0, y: 0, width: context.width, height: context.height))
-        let drawn = context.makeImage().map {
-            NSImage(cgImage: $0, size: NSSize(width: CGFloat(context.width) / scale, height: height))
-        } ?? NSImage(named: name) ?? NSImage()
+        let drawn = context.makeImage().map { Image(decorative: $0, scale: scale) } ?? Image(name)
         covers[key] = drawn
         return drawn
     }
@@ -156,10 +176,10 @@ struct PremiumView: View {
                 .fixedSize(horizontal: false, vertical: true)
             rule(t)
             VStack(alignment: .leading, spacing: 14) {
-                perk("A new word every day, on your desktop widget", t)
+                perk("A new word every day, on your widget", t)
                 perk("A Hindi meaning and an example with every word", t)
                 perk("Search, History and Bookmarks", t)
-                perk("Works offline \u{2014} every word is already on your Mac", t)
+                perk("Works offline \u{2014} every word is already on your device", t)
             }
             rule(t)
             label("Includes", t)
@@ -246,7 +266,7 @@ struct PremiumView: View {
             VStack(alignment: .leading, spacing: 16) {
                 label("What Premium opens", t)
                 VStack(spacing: 20) {
-                    HStack(alignment: .top, spacing: 20) {
+                    row(spacing: 20) {
                         tile("books.vertical.fill", "The whole shelf",
                              "\(Self.books.count) more dictionaries beside Everyday English. Pick "
                              + "any one from the shelf and your word of the day comes from it.", t)
@@ -258,7 +278,7 @@ struct PremiumView: View {
                              + "the answer and hear it spoken.", t)
                     }
                     .fixedSize(horizontal: false, vertical: true)
-                    HStack(alignment: .top, spacing: 20) {
+                    row(spacing: 20) {
                         tile("bookmark.fill", "Bookmark anything",
                              "Save words from every dictionary, and each one you read in full "
                              + "counts toward what you've learned.", t)
@@ -285,7 +305,7 @@ struct PremiumView: View {
                 }
                 card(t) {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 18, alignment: .leading),
-                                             count: 4),
+                                             count: isPhone ? 2 : 4),
                               alignment: .leading, spacing: 20) {
                         ForEach(Self.shelf) { bookRow($0, t) }
                     }
@@ -352,6 +372,13 @@ struct PremiumView: View {
         t.hairline.frame(height: 1)
     }
 
+    /// Things set across the column on a Mac, down it on a phone.
+    private func row<C: View>(spacing: CGFloat, @ViewBuilder _ content: () -> C) -> some View {
+        let layout = isPhone ? AnyLayout(VStackLayout(spacing: spacing))
+                             : AnyLayout(HStackLayout(alignment: .top, spacing: spacing))
+        return layout { content() }
+    }
+
     /// A check in a small disc — Premium's in the accent, Free's in quiet ink.
     private func perk(_ text: String, _ t: Theme, strong: Bool = false) -> some View {
         HStack(alignment: .top, spacing: 12) {
@@ -397,7 +424,7 @@ struct PremiumView: View {
                                @ViewBuilder _ content: () -> C) -> some View {
         let shape = RoundedRectangle(cornerRadius: t.radius(18))
         return VStack(alignment: .leading, spacing: 18) { content() }
-            .padding(padding)
+            .padding(isPhone ? min(padding, 20) : padding)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background {
                 shape.fill(t.surface)

@@ -124,7 +124,7 @@ final class PremiumViewModel {
             return "The App Store isn't reachable. Try again when you're online."
         }
         if let purchase = error as? Product.PurchaseError, case .purchaseNotAllowed = purchase {
-            return "Purchases aren't allowed on this Mac."
+            return "Purchases aren't allowed on this device."
         }
         return "That didn't go through. Try again."
     }

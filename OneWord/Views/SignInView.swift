@@ -13,7 +13,11 @@
 //
 
 import SwiftUI
+#if os(macOS)
 import AppKit
+#else
+import UIKit
+#endif
 
 struct SignInView: View {
     @Environment(\.colorScheme) private var scheme
@@ -74,15 +78,13 @@ struct SignInView: View {
     }
 
     private func signInButton(_ t: Theme, icon: Image, title: String,
-                              action: @escaping (NSWindow) async -> Void) -> some View {
+                              action: @escaping (PresentationAnchor) async -> Void) -> some View {
         // The one place hue is allowed in: Google's mark has to be Google's mark, and a
         // grey person-glyph on the only button in the window reads as unfinished. Apple's
         // mark is monochrome by rule, so it takes `t.ink` like the text. The rest of the
         // button still speaks the app's language (DESIGN_BRIEF §3).
         Button {
-            // Single-window app, so the key window is always ours. A WindowAccessor
-            // NSViewRepresentable is the general answer if that stops being true.
-            guard let window = NSApp.keyWindow else { return }
+            guard let window = Self.anchor() else { return }
             Task { await action(window) }
         } label: {
             HStack(spacing: 9) {
@@ -112,8 +114,27 @@ struct SignInView: View {
     }
 }
 
+private extension SignInView {
+    /// The window the sign-in sheet hangs off. Single-window app, so the key window is
+    /// always ours; on iPad that means the foreground-active scene, since a backgrounded
+    /// scene still counts as connected. A WindowAccessor representable is the general
+    /// answer if the app ever grows a second window.
+    static func anchor() -> PresentationAnchor? {
+        #if os(macOS)
+        NSApp.keyWindow
+        #else
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first { $0.activationState == .foregroundActive }?
+            .keyWindow
+        #endif
+    }
+}
+
 #Preview {
     SignInView()
         .environment(AuthViewModel())
+        #if os(macOS)
         .frame(width: 1000, height: 680)
+        #endif
 }

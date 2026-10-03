@@ -23,7 +23,8 @@ struct MonthCalendar: View {
     @State private var hovered: Date?
 
     private let calendar = Calendar.current
-    private static let cell = CGSize(width: 34, height: 30)
+    /// A pointer is happy with 34×30; a thumb wants 44.
+    private var cell: CGSize { isPhone ? CGSize(width: 44, height: 40) : CGSize(width: 34, height: 30) }
 
     init(selection: Binding<Date>, latest: Date = .now, onPick: @escaping (Date) -> Void) {
         _selection = selection
@@ -141,17 +142,17 @@ struct MonthCalendar: View {
                     .font(.system(size: 10, weight: .semibold))
                     .textCase(.uppercase)
                     .foregroundStyle(t.muted)
-                    .frame(width: Self.cell.width)
+                    .frame(width: cell.width)
             }
         }
         .padding(.bottom, 6)
     }
 
     private func grid(_ t: Theme) -> some View {
-        let columns = Array(repeating: GridItem(.fixed(Self.cell.width), spacing: 2), count: 7)
+        let columns = Array(repeating: GridItem(.fixed(cell.width), spacing: 2), count: 7)
         return LazyVGrid(columns: columns, spacing: 2) {
             ForEach(Array(days.enumerated()), id: \.offset) { _, day in
-                if let day { dayCell(day, t) } else { Color.clear.frame(height: Self.cell.height) }
+                if let day { dayCell(day, t) } else { Color.clear.frame(height: cell.height) }
             }
         }
     }
@@ -169,7 +170,7 @@ struct MonthCalendar: View {
             Text(date.formatted(.dateTime.day()))
                 .font(.system(size: 13, weight: isSelected || isToday ? .semibold : .regular))
                 .foregroundStyle(isSelected ? t.background : (isFuture ? t.muted.opacity(0.4) : t.ink))
-                .frame(width: Self.cell.width, height: Self.cell.height)
+                .frame(width: cell.width, height: cell.height)
                 .background {
                     let shape = RoundedRectangle(cornerRadius: t.radius(7), style: .continuous)
                     if isSelected {

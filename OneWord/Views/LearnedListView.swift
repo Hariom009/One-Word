@@ -126,12 +126,14 @@ struct LearnedListView: View {
     /// the words, the date over the part of speech. The date used to ride inside
     /// the label, which made every section a full line of tracked capitals.
     private func header(_ day: Date, _ t: Theme) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
+        // The label's column is the term's on the Mac; a phone has no columns, so
+        // the date simply follows the label.
+        HStack(alignment: .firstTextBaseline, spacing: isPhone ? 10 : Self.gutter) {
             Text(label(for: day))
                 .font(.system(size: 11, weight: .bold))
                 .textCase(.uppercase).tracking(1.6)
                 .foregroundStyle(t.ink.opacity(0.8))
-                .frame(width: Self.termWidth, alignment: .leading)
+                .frame(width: isPhone ? nil : Self.termWidth, alignment: .leading)
             if day >= LearnedWord.epoch {
                 Text(day.formatted(.dateTime.day().month(.wide).year()))
                     .font(.system(size: 11))
@@ -155,7 +157,38 @@ struct LearnedListView: View {
         return day.formatted(.dateTime.weekday(.wide))
     }
 
+    @ViewBuilder
     private func row(_ entry: LearnedWord, _ t: Theme, _ scale: CGFloat) -> some View {
+        if isPhone { phoneRow(entry, t) } else { wideRow(entry, t, scale) }
+    }
+
+    /// Two lines for a phone's width: the word with its part of speech, the
+    /// when-and-where beneath. No swell — nothing hovers.
+    private func phoneRow(_ entry: LearnedWord, _ t: Theme) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(entry.word.term)
+                    .font(doodle.face(19))
+                    .foregroundStyle(t.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(entry.word.partOfSpeech)
+                    .font(.system(size: 11).italic())
+                    .foregroundStyle(t.muted)
+                    .lineLimit(1)
+            }
+            Text(meta(of: entry))
+                .font(.system(size: 11).monospacedDigit())
+                .foregroundStyle(t.muted)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 6)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(summary(of: entry))
+    }
+
+    private func wideRow(_ entry: LearnedWord, _ t: Theme, _ scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
             // Size only, never layout — see SwellingTerm. The vertical padding
             // below leaves room for the biggest step, so nothing collides.

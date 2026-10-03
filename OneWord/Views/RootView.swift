@@ -107,8 +107,47 @@ struct RootView: View {
         .busy(auth.busy, theme: Theme.of(scheme, doodle))
     }
 
-    /// Everything behind the gate.
-    private var shell: some View {
+    /// Everything behind the gate: tabs on a phone, the sidebar everywhere else.
+    @ViewBuilder private var shell: some View {
+        if isPhone { tabs } else { split }
+    }
+
+    /// The phone's sections, in tab order. Every other pane pushes onto the tab
+    /// that asked for it: Dictionaries from Home's chip, Settings and Premium from
+    /// Profile's rows. The third tab is what you paid for: Practice once Premium is
+    /// owned (and the setting leaves it on), Bookmarks until then — Profile grows a
+    /// row for whichever of the two lost its tab.
+    private var tabOrder: [Pane] {
+        [.home, .history, premium.isUnlocked && practiceEnabled ? .practice : .bookmarks, .search, .profile]
+    }
+    /// One path per tab, so Settings pushed from Profile doesn't also sit on Home.
+    @State private var paths: [Pane: [Pane]] = [:]
+
+    private var tabs: some View {
+        let t = Theme.of(scheme, doodle)
+        // What the panes write to. A tab selects; anything else pushes on the
+        // current tab, with the same Practice gate the sidebar applies.
+        let route = Binding<Pane> { pane } set: { picked in
+            let target = picked == .practice && !premium.isUnlocked ? .premium : picked
+            if tabOrder.contains(target) { pane = target } else { paths[pane, default: []].append(target) }
+        }
+        return TabView(selection: $pane) {
+            ForEach(tabOrder) { tab in
+                NavigationStack(path: Binding { paths[tab] ?? [] } set: { paths[tab] = $0 }) {
+                    detail(tab, route: route)
+                        .navigationDestination(for: Pane.self) { detail($0, route: route) }
+                }
+                .tabItem { Label(tab.title, systemImage: tab.glyph.symbol) }
+                .tag(tab)
+            }
+        }
+        .tint(doodle.appearance.paintsPalette ? t.accent : nil)
+        // The third tab can swap under you (a purchase, the Practice switch): a
+        // selection no tab carries shows an empty window, so land on Home instead.
+        .onChange(of: tabOrder) { if !tabOrder.contains(pane) { pane = .home } }
+    }
+
+    private var split: some View {
         let t = Theme.of(scheme, doodle)
         return NavigationSplitView(columnVisibility: $columns) {
             sidebar
@@ -119,7 +158,7 @@ struct RootView: View {
             // makes the swap an insert/remove the crossfade can ride, and the
             // animation is keyed to the pane so nothing else in the tree picks it up.
             NavigationStack {
-                detail
+                detail(pane, route: $pane)
                     .transition(.opacity)
                     .id(pane)
                     .animation(.easeInOut(duration: 0.22), value: pane)
@@ -131,14 +170,16 @@ struct RootView: View {
         .tint(doodle.appearance.paintsPalette ? t.accent : nil)
     }
 
-    @ViewBuilder private var detail: some View {
+    /// `route` is what a pane writes to when it sends you somewhere: the sidebar's
+    /// selection on the Mac, the push-or-select binding on a phone.
+    @ViewBuilder private func detail(_ pane: Pane, route: Binding<Pane>) -> some View {
         switch pane {
-        case .home:         HomeView(pane: $pane)
+        case .home:         HomeView(pane: route)
         case .history:      HistoryView()
         // The gate itself, so a launch pane or a lapsed purchase can't land on it either.
         case .practice:     if premium.isUnlocked { SentenceView() } else { PremiumView() }
         case .bookmarks:    WordListView(wordbook: .saved)
-        case .profile:      ProfileView(pane: $pane)
+        case .profile:      ProfileView(pane: route)
         case .search:       WordListView()
         case .dictionaries: DictionaryPicker()
         case .settings:     SettingsView()
@@ -149,14 +190,19 @@ struct RootView: View {
     private var sidebar: some View {
         let t = Theme.of(scheme, doodle)
         // A locked Practice row still takes the click — it goes to the plans instead.
-        let selection = Binding { pane } set: { pane = $0 == .practice && !premium.isUnlocked ? .premium : $0 }
+        // Optional: iOS has no non-optional List selection, and nil (a click on the
+        // sidebar's empty space) leaves the current pane where it is.
+        let selection = Binding<Pane?> { pane } set: {
+            guard let picked = $0 else { return }
+            pane = picked == .practice && !premium.isUnlocked ? .premium : picked
+        }
         return List(selection: selection) {
             ForEach([Pane.home, .history, .practice, .bookmarks]
                         .filter { $0 != .practice || practiceEnabled }) { item in
-                row(item).tag(item)
+                row(item).tag(Optional(item))
             }
             Section("Dictionaries") {
-                row(.dictionaries).tag(Pane.dictionaries)
+                row(.dictionaries).tag(Optional(Pane.dictionaries))
             }
         }
         .safeAreaInset(edge: .top, spacing: 0) { searchField }

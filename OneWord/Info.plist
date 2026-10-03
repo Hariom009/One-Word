@@ -2,16 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Only what GENERATE_INFOPLIST_FILE can't express. The two below are arrays
-	     of dicts, so neither has an INFOPLIST_KEY_* equivalent — same reason the widget
-	     target carries its own plist for NSExtension. ATSApplicationFontsPath has no
-	     INFOPLIST_KEY_ either. -->
-	<!-- Pulpen Snowman, the doodle theme's face. "." is the Resources root: the
-	     synchronized group copies OneWord/Fonts/*.otf in flat, not into a Fonts/
-	     subfolder. AppKit registers everything it finds there at launch, so nothing
-	     in Swift has to call CTFontManagerRegisterFontsForURL. -->
 	<key>ATSApplicationFontsPath</key>
 	<string>.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.554130091393-qnbo6l4103q98ums563v0douva9d749h</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSServices</key>
 	<array>
 		<dict>
@@ -31,18 +32,12 @@
 			</array>
 		</dict>
 	</array>
-	<!-- GoogleSignIn's OAuth redirect is <REVERSED_CLIENT_ID>:/oauth2callback
-	     (GIDSignIn.m:750). It checks the registered schemes before starting the flow and
-	     raises NSInvalidArgumentException if this is missing (:588) — a crash, not an
-	     error. Value is REVERSED_CLIENT_ID from GoogleService-Info.plist, verbatim. -->
-	<key>CFBundleURLTypes</key>
+	<key>UIAppFonts</key>
 	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.554130091393-qnbo6l4103q98ums563v0douva9d749h</string>
-			</array>
-		</dict>
+		<string>PulpenSnowman-Regular.otf</string>
+		<string>PulpenSnowman-Light.otf</string>
+		<string>PlusJakartaSans-Variable.ttf</string>
+		<string>PlusJakartaSans-Italic-Variable.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -21,6 +21,8 @@ struct HistoryView: View {
     @State private var model = WordViewModel()
     @State private var date = Date()
     @State private var picking = false
+    /// Phone only: whether the month grid is unfolded under the date.
+    @State private var calendarOpen = false
     @Environment(\.colorScheme) private var scheme
 
     private let calendar = Calendar.current
@@ -33,26 +35,39 @@ struct HistoryView: View {
     @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme, doodle)
-        HStack(alignment: .top, spacing: 0) {
-            rail(t)
-            Divider().overlay(t.hairline)
-            // The book travels with the word: reading an old Medicine day must log
-            // and draw its related words there, not in whatever Home has open.
-            // Embedded: one ground and one header across rail and word, so the glow
-            // is a single light rather than one per column.
-            WordDetail(word: model.word, shelf: book.id, embedded: true)
+        Group {
+            if isPhone {
+                // No room for a rail beside the word on a phone: it lies flat as a
+                // strip over it, and the grid unfolds under the date on demand.
+                VStack(spacing: 0) {
+                    strip(t)
+                    WordDetail(word: model.word, shelf: book.id, embedded: true)
+                }
+            } else {
+                HStack(alignment: .top, spacing: 0) {
+                    rail(t)
+                    Divider().overlay(t.hairline)
+                    // The book travels with the word: reading an old Medicine day must log
+                    // and draw its related words there, not in whatever Home has open.
+                    // Embedded: one ground and one header across rail and word, so the glow
+                    // is a single light rather than one per column.
+                    WordDetail(word: model.word, shelf: book.id, embedded: true)
+                }
+            }
         }
         .paneBackground(t)
         .paneHeader("History") {
             // Bare arrows: nothing in this pane types, and walking day by day
-            // is the whole job here.
-            Button { step(-1) } label: { Label("Previous Day", systemImage: "chevron.left") }
-                .keyboardShortcut(.leftArrow, modifiers: [])
-                .help("Previous day (\u{2190})")
-            Button { step(1) } label: { Label("Next Day", systemImage: "chevron.right") }
-                .keyboardShortcut(.rightArrow, modifiers: [])
-                .help("Next day (\u{2192})")
-                .disabled(calendar.isDateInToday(date))
+            // is the whole job here. On a phone they flank the date in the strip.
+            if !isPhone {
+                Button { step(-1) } label: { Label("Previous Day", systemImage: "chevron.left") }
+                    .keyboardShortcut(.leftArrow, modifiers: [])
+                    .help("Previous day (\u{2190})")
+                Button { step(1) } label: { Label("Next Day", systemImage: "chevron.right") }
+                    .keyboardShortcut(.rightArrow, modifiers: [])
+                    .help("Next day (\u{2192})")
+                    .disabled(calendar.isDateInToday(date))
+            }
             WordActions(word: model.word)
         }
         .sheet(isPresented: $picking) { picker(t) }
@@ -139,21 +154,138 @@ struct HistoryView: View {
             // Say it out loud when the two disagree, so a stray pick here is never
             // mistaken for the app having switched.
             if strayed {
-                HStack(spacing: 6) {
-                    Text("History only")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(t.muted)
-                    Spacer(minLength: 0)
-                    Button("Match app") { localID = nil }
-                        .buttonStyle(.plain)
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(t.ink)
-                }
-                .padding(.horizontal, 14)
-                .padding(.bottom, 11)
+                strayNote(t)
+                    .padding(.horizontal, 14)
+                    .padding(.bottom, 11)
             }
         }
         .animation(.easeOut(duration: 0.18), value: strayed)
+    }
+
+    private func strayNote(_ t: Theme) -> some View {
+        HStack(spacing: 6) {
+            Text("History only")
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(t.muted)
+            Spacer(minLength: 0)
+            Button("Match app") { localID = nil }
+                .buttonStyle(.plain)
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(t.ink)
+        }
+    }
+
+    // MARK: - Phone strip
+
+    /// The rail laid flat, as a calendar page: the day set in the middle with
+    /// yesterday and tomorrow on either side, the month grid unfolding under it on
+    /// a tap, and the book as a small pill beneath. A pick folds the grid back, so
+    /// the word is never more than one tap away.
+    private func strip(_ t: Theme) -> some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                pager(-1, "chevron.left", "Previous day", t)
+                Spacer(minLength: 0)
+                Button {
+                    withAnimation(.easeOut(duration: 0.22)) { calendarOpen.toggle() }
+                } label: {
+                    VStack(spacing: 3) {
+                        Text(date.formatted(.dateTime.weekday(.wide)))
+                            .font(.system(size: 10, weight: .bold))
+                            .textCase(.uppercase).tracking(1.8)
+                            .foregroundStyle(t.muted)
+                        HStack(alignment: .firstTextBaseline, spacing: 6) {
+                            Text(dayTitle)
+                                .font(doodle.face(22))
+                                .tracking(doodle.tracking(22))
+                                .foregroundStyle(t.ink)
+                                .lineLimit(1)
+                                .contentTransition(.numericText())
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 10, weight: .semibold))
+                                .foregroundStyle(t.muted)
+                                .rotationEffect(.degrees(calendarOpen ? 180 : 0))
+                        }
+                    }
+                    .padding(.vertical, 6)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Pick a day")
+                .accessibilityValue(date.formatted(date: .long, time: .omitted))
+                .accessibilityHint(calendarOpen ? "Hides the calendar" : "Shows the calendar")
+                Spacer(minLength: 0)
+                pager(1, "chevron.right", "Next day", t)
+                    .disabled(calendar.isDateInToday(date))
+            }
+            .padding(.horizontal, 8)
+            .padding(.top, 4)
+            .animation(.easeOut(duration: 0.2), value: date)
+
+            if calendarOpen {
+                MonthCalendar(selection: $date) { _ in
+                    withAnimation(.easeOut(duration: 0.22)) { calendarOpen = false }
+                }
+                .transition(.opacity)
+            }
+
+            // The book, and a way back when History has strayed from the app's pick.
+            HStack(spacing: 10) {
+                Button { picking = true } label: {
+                    HStack(spacing: 6) {
+                        BookChip(book: book, height: 18)
+                        Text(book.shortName)
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(t.ink)
+                            .lineLimit(1)
+                        Image(systemName: "chevron.up.chevron.down")
+                            .font(.system(size: 9, weight: .semibold))
+                            .foregroundStyle(t.muted)
+                    }
+                    .padding(.leading, 6)
+                    .padding(.trailing, 10)
+                    .padding(.vertical, 5)
+                    .background(t.ink.opacity(0.06), in: Capsule())
+                    .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Reading from \(book.shortName)")
+                .accessibilityHint("Chooses the dictionary History reads")
+
+                if strayed {
+                    Button("Match app") { localID = nil }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(t.muted)
+                }
+            }
+            .padding(.top, 10)
+            .padding(.bottom, 14)
+            .animation(.easeOut(duration: 0.18), value: strayed)
+
+            Rectangle().fill(t.hairline).frame(height: 1)
+        }
+    }
+
+    /// "October 3", with the year only once it isn't this one.
+    private var dayTitle: String {
+        calendar.isDate(date, equalTo: .now, toGranularity: .year)
+            ? date.formatted(.dateTime.month(.wide).day())
+            : date.formatted(.dateTime.month(.wide).day().year())
+    }
+
+    /// One day either way. A bare chevron on a thumb-sized target, no tile: the
+    /// strip is a page, and these are its corners.
+    private func pager(_ days: Int, _ symbol: String, _ label: String, _ t: Theme) -> some View {
+        Button { step(days) } label: {
+            Image(systemName: symbol)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(t.ink)
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
     }
 
     // MARK: - Picker sheet
@@ -183,7 +315,8 @@ struct HistoryView: View {
             // the Dictionaries pane. Done (or Esc) closes it.
             DictionaryShelf(selection: selection, padding: 20)
         }
-        .frame(width: 560, height: 520)
+        // A phone's sheet sizes itself; the Mac's needs telling.
+        .frame(width: isPhone ? nil : 560, height: isPhone ? nil : 520)
         .background(t.background)
     }
 
