@@ -49,7 +49,8 @@ struct Wordbook: Identifiable, Hashable {
     }
 
     /// Every dictionary the app offers. Grow this as new word sets are added.
-    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, startup, idioms, classical, urdu, german, saved]
+    // v1 ships five shelves; classical, urdu and german stay defined (and bundled) for the next release.
+    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, startup, idioms, saved]
 
     /// Resolve a stored id back to a Wordbook (falls back to the default).
     static func named(_ id: String) -> Wordbook {

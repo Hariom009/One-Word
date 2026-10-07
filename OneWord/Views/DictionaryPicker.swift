@@ -222,7 +222,7 @@ struct DictionaryPicker: View {
         // The premium bar: a bottom inset, the way the header is a top one, so
         // PaneGround (which ignores the safe area) paints under both.
         .safeAreaInset(edge: .bottom, spacing: 0) {
-            if !premium.isUnlocked {
+            if Features.premium && !premium.isUnlocked {
                 PremiumBar()
                     .padding(.horizontal, 28)
                     .padding(.bottom, 24)

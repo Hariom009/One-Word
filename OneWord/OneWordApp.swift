@@ -42,7 +42,7 @@ struct OneWordApp: App {
                 .environment(\.doodle, DoodleTheme(icons: doodleIcons, handwriting: doodleFont,
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
-                .task { await premium.load() }
+                .task { if Features.premium { await premium.load() } }
                 // The widget reads the unlock from the App Group; tell it to look again.
                 .onChange(of: premium.isUnlocked) { WidgetCenter.shared.reloadAllTimelines() }
         }

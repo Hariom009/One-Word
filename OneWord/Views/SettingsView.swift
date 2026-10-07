@@ -52,7 +52,7 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 30) {
                 // First, because it's the one thing here that isn't a preference. The bar
                 // carries Restore Purchase, which App Review needs reachable.
-                section("Premium", t) {
+                if Features.premium { section("Premium", t) {
                     if premium.isUnlocked {
                         card(t) {
                             row("All dictionaries unlocked", "Every shelf is yours, for good.", t) {
@@ -64,7 +64,7 @@ struct SettingsView: View {
                     } else {
                         PremiumBar()
                     }
-                }
+                } }
 
                 section("Appearance", t,
                         note: "The app only \u{2014} the desktop widget follows the Mac's own light or dark.") {
@@ -129,7 +129,7 @@ struct SettingsView: View {
                     .onChange(of: showExample) { WidgetCenter.shared.reloadAllTimelines() }
                 }
 
-                section("Practice", t) {
+                if Features.practice { section("Practice", t) {
                     card(t) {
                         row("Practice mode", "Adds the Practice pane to the sidebar.", t) {
                             Toggle("Practice mode", isOn: $practiceEnabled)
@@ -158,7 +158,7 @@ struct SettingsView: View {
                         .disabled(!practiceEnabled)
                         .opacity(practiceEnabled ? 1 : 0.45)
                     }
-                }
+                } }
 
                 // Only the German shelf counts toward the goal, so it waits for German to
                 // unlock. The switch keeps its value, and comes back as you left it.

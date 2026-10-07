@@ -18,9 +18,10 @@ nonisolated enum Premium {
     /// App Store Connect's product id. Forever once shipped — Apple never lets an id be reused.
     static let productID = "com.hariom.swift.oneword.premium"
 
-    /// Everyday English, and Bookmarks — the reader's own words, never sold back to them.
-    /// "words" is spelled out the way AppGroup.dictionaryID spells it: Wordbook is app-only.
-    static let free: Set<String> = ["words", SavedWords.resource]
+    /// v1: every shelf the app lists (Features.premium is off). Bookmarks — the reader's own
+    /// words — is never sold back to them. Ids are spelled the way AppGroup.dictionaryID
+    /// spells them: Wordbook is app-only.
+    static let free: Set<String> = ["words", "emotions", "philosophy", "startup", "idioms", SavedWords.resource]
 
     private static let key = "premiumUnlocked"
 

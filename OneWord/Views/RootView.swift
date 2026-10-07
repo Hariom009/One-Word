@@ -152,7 +152,7 @@ struct RootView: View {
         let selection = Binding { pane } set: { pane = $0 == .practice && !premium.isUnlocked ? .premium : $0 }
         return List(selection: selection) {
             ForEach([Pane.home, .history, .practice, .bookmarks]
-                        .filter { $0 != .practice || practiceEnabled }) { item in
+                        .filter { $0 != .practice || (Features.practice && practiceEnabled) }) { item in
                 row(item).tag(item)
             }
             Section("Dictionaries") {
@@ -167,7 +167,7 @@ struct RootView: View {
                 if !calloutSeen { suggestionCard }
                 HStack(spacing: 0) {
                     accountChip
-                    planTag
+                    if Features.premium { planTag }
                     feedbackButton
                 }
             }
