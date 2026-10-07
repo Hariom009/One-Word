@@ -224,3 +224,10 @@ Which skill lands where:
   *(every audit finding resolved — **build from the resolved plan, it stands alone**. Operator
   calls: WebP covers, the in-app privacy link lands in this PR, "$9.99, once" with a US note.
   The audit's blocker was the privacy draft missing the Google profile-photo fetch.)*
+- **Cat UI** — planned, not built. Cat becomes the default look (light and dark pages);
+  Midnight stays as the cat-free alternative; System/Light/Dark/Umber fold into Cat.
+  [theme brief](01_Brainstorm/CAT_THEME_BRIEF.md) →
+  [plan](02_Plan/CAT_UI_PLAN.md)
+  *(design source: the "Pencil Cat Mascot" Claude Design canvas, used as inspiration, not
+  spec. Forks F1–F9 carry recommended defaults; streaks, stickers, notes, What's New and
+  the thank-you sheet are deferred to §14.)*
