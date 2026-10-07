@@ -24,11 +24,16 @@ One Word/
 | `ViewModels/` | `@Observable` classes driving those views. | `import Observation` only — **never** SwiftUI, never a view type. This is the testable seam. |
 | `Models/` | App-only data and state: `Wordbook`, `Appearance`, `LearnedWords`, `RelatedWords`, `Sentences` — and app-only data files (`sentences.json`). | No SwiftUI. Not visible to the widget. |
 | `Shared/` | `Word`, `WordProvider`, `WordSelectionStore`, `SavedWords`, `Theme`, `AppGroup`, `Premium`, and every `<book>.json`. | **Member of BOTH targets.** Anything the widget reads must live here. |
-| `Assets.xcassets/` | App icon, accent color. | |
+| `Assets.xcassets/` | App icon (Mac set plus one iOS 1024), accent color. | |
+| `OneWord.entitlements`, `OneWord-iOS.entitlements` | One per platform, picked by `CODE_SIGN_ENTITLEMENTS[sdk=…]`. The iOS one has no sandbox key and a `group.`-prefixed App Group. | Edit the iOS file by hand: Xcode's Signing editor only touches the Mac one. |
+| `PrivacyInfo.xcprivacy` | Required-reason APIs (UserDefaults) and collected data types. Required for an iOS upload. | |
 
 ## OneWordWidget/ — the widget
 
-`WordWidget`, `WordTimelineProvider`, `WordWidgetView`, `WordEntry`, `RefreshWordIntent`.
+`WordWidget`, `WordTimelineProvider`, `WordWidgetView`, `WordEntry`, `RefreshWordIntent`, plus
+`OneWordWidget.entitlements` / `OneWordWidget-iOS.entitlements` (one per platform, as the app's)
+and `PrivacyInfo.xcprivacy` (the widget is its own binary, so it declares its own). This folder is
+**not** synchronized: a new file here needs a `project.pbxproj` reference.
 
 No view models: a widget is timeline-driven, not user-event-driven, so `TimelineProvider`
 *is* its driver. It reads `OneWord/Shared/` and nothing else from the app.

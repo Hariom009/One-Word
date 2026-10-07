@@ -8,15 +8,15 @@
 //
 
 import SwiftUI
-import AppKit
 import AVFoundation
 
 /// The roll's sound, loaded once — same shape as WordDetail's file-scope speaker.
-/// `byReference: true` keeps the 15s file on disk instead of in memory: the roll
-/// only ever uses its first couple of seconds, and `stop()` cuts it there.
-@MainActor private let shuffleSound = Bundle.main
+/// The roll only ever uses the first couple of seconds of the 15s file, and `stop()`
+/// cuts it there; `prepareToPlay` so the first roll starts as fast as the rest.
+@MainActor private let shuffleSound: AVAudioPlayer? = Bundle.main
     .url(forResource: "practice_sentence_shuffle", withExtension: "wav")
-    .flatMap { NSSound(contentsOf: $0, byReference: true) }
+    .flatMap { try? AVAudioPlayer(contentsOf: $0) }
+    .map { $0.prepareToPlay(); return $0 }
 
 struct SentenceView: View {
     /// Roll shape. Every letter flickers, then locks in left to right on an
@@ -29,8 +29,12 @@ struct SentenceView: View {
     /// shapes means you read a sentence settling, not a block of noise.
     private static let alphabet = Array("abcdefghijklmnopqrstuvwxyz")
     /// Three lines at the reel's type size. Fixed, because the window has to be
-    /// a window — a reel that resizes per sentence isn't a reel.
-    private static let reelHeight: CGFloat = 150
+    /// a window — a reel that resizes per sentence isn't a reel. The corpus tops
+    /// out at 48 characters, which is three lines at the phone's face too.
+    private static let reelHeight: CGFloat = isPhone ? 136 : 150
+    /// The two faces, compact on a phone the way WordDetail's headword is.
+    private static let reelSize: CGFloat = isPhone ? 36 : 56
+    private static let answerSize: CGFloat = isPhone ? 30 : 48
 
     @State private var shown = Sentences.random()
     @State private var revealed = false
@@ -64,8 +68,8 @@ struct SentenceView: View {
             }
             .frame(maxWidth: 720)
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 56)
-            .padding(.vertical, 44)
+            .padding(.horizontal, isPhone ? 24 : 56)
+            .padding(.vertical, isPhone ? 20 : 44)
             // Centred in the pane rather than hugging the top. Measured against the
             // ScrollView, which is already sized — `maxHeight: .infinity` here has
             // no ideal height, and the window grew 835 -> 3296pt every visit.
@@ -75,7 +79,8 @@ struct SentenceView: View {
         // reaches the edges without anything claiming infinite height.
         .scrollContentBackground(.hidden)
         .paneBackground(t)
-        .overlay(alignment: .topTrailing) { hint(t) }
+        // The corner on the Mac; under the thumb on a phone, where a tap is the control.
+        .overlay(alignment: isPhone ? .bottom : .topTrailing) { hint(t) }
         .contentShape(Rectangle())
         // Space is the primary control, but a keyboard-only feature is
         // undiscoverable and unreachable — the whole pane is also a click target.
@@ -126,8 +131,8 @@ struct SentenceView: View {
     /// fixed frame is what keeps it a window when a sentence runs long.
     private func reel(_ t: Theme) -> some View {
         Text(scrambled ?? shown.en)
-            .font(doodle.face(56))
-            .tracking(doodle.tracking(56))
+            .font(doodle.face(Self.reelSize))
+            .tracking(doodle.tracking(Self.reelSize))
             .foregroundStyle(t.ink)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
@@ -141,8 +146,8 @@ struct SentenceView: View {
     /// left rule fights a centred block — colour and size carry the distinction here.
     private func german(_ t: Theme) -> some View {
         Text(shown.de)
-            .font(doodle.face(48))
-            .tracking(doodle.tracking(48))
+            .font(doodle.face(Self.answerSize))
+            .tracking(doodle.tracking(Self.answerSize))
             .foregroundStyle(t.definition)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
@@ -158,13 +163,17 @@ struct SentenceView: View {
     /// explains neither what to do with it nor that space is the control. Parked
     /// in the corner so the sentence stays the only thing in the middle.
     private func hint(_ t: Theme) -> some View {
-        Text("Tap space to see answer and go to next question")
-            .font(.system(size: 11))
+        Text(isPhone ? "Tap to reveal the German, tap again for the next sentence"
+                     : "Tap space to see answer and go to next question")
+            .font(.system(size: isPhone ? 13 : 11))
             .foregroundStyle(t.muted)
+            .multilineTextAlignment(.center)
             //.opacity(rolling ? 0 : 1)
             //.animation(.easeOut(duration: 0.15), value: rolling)
-            .padding(.top, 22)
-            .padding(.trailing, 28)
+            .padding(.top, isPhone ? 0 : 22)
+            .padding(.trailing, isPhone ? 0 : 28)
+            .padding(.horizontal, isPhone ? 32 : 0)
+            .padding(.bottom, isPhone ? 20 : 0)
             // A hint is not a target: the click belongs to the pane behind it.
             .allowsHitTesting(false)
     }

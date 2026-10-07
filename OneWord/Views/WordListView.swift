@@ -27,6 +27,10 @@ struct WordListView: View {
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @State private var model: WordListViewModel
     @State private var query = ""
+    /// The Search pane's matches, delivered by the background search below.
+    @State private var found: [WordListViewModel.Hit] = []
+    /// How many words that search covers; 0 until the books have been decoded.
+    @State private var total = 0
     @State private var hovered: String?
     @Environment(\.colorScheme) private var scheme
     /// Search spans locked books too: their words are listed as a teaser, meaning withheld.
@@ -46,7 +50,8 @@ struct WordListView: View {
     @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme, doodle)
-        let results = model.results(for: query)
+        // Bookmarks filters its few rows in place; Search is answered off main.
+        let results = everywhere ? found : model.results(for: query)
         // Matches can come from anywhere, so each one has to say where from.
         // A pinned pane needs no tag — every row is the book in the title.
         let mark = everywhere
@@ -108,9 +113,53 @@ struct WordListView: View {
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             if wordbook?.id == SavedWords.resource { model.reload() }
         }
+        // Re-runs per keystroke and cancels the one before it. The cancelled search
+        // can still resume after the newer one landed, so it checks before writing.
+        .task(id: query) {
+            guard everywhere else { return }
+            let hits = await WordListViewModel.search(query)
+            guard !Task.isCancelled else { return }
+            found = hits
+        }
+        .task { if everywhere { total = await WordListViewModel.everywhereCount() } }
     }
 
+    @ViewBuilder
     private func row(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool, scale: CGFloat) -> some View {
+        if isPhone { phoneRow(hit, t, mark: mark) } else { wideRow(hit, t, mark: mark, scale: scale) }
+    }
+
+    /// The Mac's three columns are 760pt wide; a phone has 390. Two lines instead:
+    /// the word with its part of speech, the Hindi gloss beneath, the book at the
+    /// end. No swell — there is no pointer to swell for.
+    private func phoneRow(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(hit.word.term)
+                        .font(doodle.face(19))
+                        .foregroundStyle(t.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    Text(hit.word.partOfSpeech)
+                        .font(.system(size: 11).italic())
+                        .foregroundStyle(t.muted)
+                        .lineLimit(1)
+                }
+                if showHindi && premium.allows(hit.shelf) && !hit.word.hindi.isEmpty {
+                    Text(hit.word.hindi)
+                        .font(.system(size: 13))
+                        .foregroundStyle(t.muted)
+                        .lineLimit(1)
+                }
+            }
+            Spacer(minLength: 0)
+            if mark { shelfMark(hit.shelf, t) }
+        }
+        .padding(.vertical, 6)
+    }
+
+    private func wideRow(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool, scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 64) {
             // Size only, never layout — see SwellingTerm. The vertical padding
             // below leaves room for the biggest step.
@@ -166,10 +215,13 @@ struct WordListView: View {
             emptyMark(t)
             VStack(spacing: 2) {
                 Text(headline)
-                    .font(doodle.face(30)).tracking(doodle.tracking(30)).foregroundStyle(t.ink)
+                    .font(doodle.face(isPhone ? 24 : 30)).tracking(doodle.tracking(isPhone ? 24 : 30))
+                    .foregroundStyle(t.ink)
+                    .multilineTextAlignment(.center)
                 if !query.isEmpty {
                     Text("\u{201C}\(query)\u{201D}")
-                        .font(doodle.face(30).italic()).foregroundStyle(t.ink)
+                        .font(doodle.face(isPhone ? 24 : 30).italic()).foregroundStyle(t.ink)
+                        .lineLimit(1).minimumScaleFactor(0.6)
                 }
             }
             Text(footnote)
@@ -179,7 +231,7 @@ struct WordListView: View {
                 .frame(maxWidth: 340)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(40)
+        .padding(isPhone ? 24 : 40)
     }
 
     /// The mark over an empty pane. Classic mode stamps the BOOK's own symbol —
@@ -207,7 +259,9 @@ struct WordListView: View {
 
     private var footnote: String {
         if everywhere {
-            return "\(WordListViewModel.everywhereCount.formatted()) words across \(WordListViewModel.everywhereBooks.count) dictionaries,searched together each result says which one it came from."
+            let scope = total > 0 ? "\(total.formatted()) words across \(WordListViewModel.everywhereBooks.count) dictionaries"
+                                  : "Every dictionary"
+            return "\(scope), searched together. Each result says which one it came from."
         }
         if query.isEmpty {
             return "Bookmark a word from its page, or select one in any app and choose Services \u{25B8} Save to One Word. Either way it lands here."

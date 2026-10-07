@@ -23,7 +23,15 @@ nonisolated enum AppGroup {
     // app-data check — the "would like to access data from other apps" prompt,
     // once per UserDefaults(suiteName:). Changing this id migrates nothing; the
     // old container's contents were moved across by hand.
+    //
+    // iOS is the other way round: an App Group there MUST start with `group.`, so the
+    // iPhone gets its own id. The two containers never meet — there is no sync — so
+    // a pick made on the Mac is not the pick on the phone.
+    #if os(iOS)
+    static let id = "group.com.hariom.swift.oneword"
+    #else
     static let id = "LAP54KU2SV.group.com.hariom.swift.oneword"
+    #endif
 
     /// `let`, not `var`: UserDefaults(suiteName:) builds a NEW instance — and a
     /// fresh container open — on every call, and @AppStorage re-runs its

@@ -11,6 +11,17 @@
 //
 
 import SwiftUI
+#if os(iOS)
+import UIKit
+#endif
+
+/// The one phone switch, by idiom (plan Q1): a Pro Max in landscape keeps the
+/// tabs, an iPad keeps the Mac split view. Views read it for the compact numbers.
+#if os(iOS)
+@MainActor let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+#else
+let isPhone = false
+#endif
 
 extension EnvironmentValues {
     /// The split view's columns, so a pane's header can fold the sidebar away.
@@ -26,9 +37,14 @@ extension View {
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
         safeAreaInset(edge: .top, spacing: 0) { PaneHeader(title: title, back: back, trailing: trailing()) }
             // The hidden title bar still reserves its height; the header takes it.
-            .ignoresSafeArea(.container, edges: .top)
+            // On a phone that space is the status bar, so the strip stays below it.
+            .ignoresSafeArea(.container, edges: isPhone ? [] : .top)
             // Nothing draws it any more, but the Window menu and VoiceOver read it.
             .navigationTitle(title ?? "One Word")
+            #if os(iOS)
+            // The strip IS the bar: a stock one on top would double the title and the back.
+            .toolbar(.hidden, for: .navigationBar)
+            #endif
     }
 
     func paneHeader(_ title: String? = nil, back: Bool = false) -> some View {
@@ -51,30 +67,45 @@ struct PaneHeader<Trailing: View>: View {
         let t = Theme.of(scheme, doodle)
         let folded = sidebar.wrappedValue == .detailOnly
         HStack(spacing: 6) {
-            Button {
-                withAnimation { sidebar.wrappedValue = folded ? .all : .detailOnly }
-            } label: {
-                Label(folded ? "Show Sidebar" : "Hide Sidebar", systemImage: "sidebar.left")
+            // No sidebar to fold on a phone: the tab bar is the sidebar.
+            if !isPhone {
+                Button {
+                    withAnimation { sidebar.wrappedValue = folded ? .all : .detailOnly }
+                } label: {
+                    Label(folded ? "Show Sidebar" : "Hide Sidebar", systemImage: "sidebar.left")
+                }
+                .help(folded ? "Show the sidebar" : "Hide the sidebar")
             }
-            .help(folded ? "Show the sidebar" : "Hide the sidebar")
 
             if back {
                 Button { dismiss() } label: { Label("Back", systemImage: "chevron.left") }
                     .help("Back")
             }
 
-            Text("One Word")
-                .font(doodle.face(18))
-                .tracking(doodle.tracking(18))
-                .foregroundStyle(t.ink)
-                .lineLimit(1)
-                .padding(.leading, 8)
-            if let title {
-                Rectangle().fill(t.hairline).frame(width: 1, height: 14).padding(.horizontal, 4)
-                Text(title)
-                    .font(.system(size: 13))
-                    .foregroundStyle(t.muted)
+            if isPhone {
+                // One name per strip. The tab bar already says which section this
+                // is, so the pane's title takes the wordmark's place and its face;
+                // a pane with no title of its own keeps the app's name.
+                Text(title ?? "One Word")
+                    .font(doodle.face(20))
+                    .tracking(doodle.tracking(20))
+                    .foregroundStyle(t.ink)
                     .lineLimit(1)
+                    .padding(.leading, back ? 2 : 0)
+            } else {
+                Text("One Word")
+                    .font(doodle.face(18))
+                    .tracking(doodle.tracking(18))
+                    .foregroundStyle(t.ink)
+                    .lineLimit(1)
+                    .padding(.leading, 8)
+                if let title {
+                    Rectangle().fill(t.hairline).frame(width: 1, height: 14).padding(.horizontal, 4)
+                    Text(title)
+                        .font(.system(size: 13))
+                        .foregroundStyle(t.muted)
+                        .lineLimit(1)
+                }
             }
 
             Spacer(minLength: 12)
@@ -83,7 +114,7 @@ struct PaneHeader<Trailing: View>: View {
         .labelStyle(.iconOnly)
         .buttonStyle(HeaderButtonStyle(theme: t))
         // Folded, the window's traffic lights sit over this corner instead of the sidebar.
-        .padding(.leading, folded ? 84 : 16)
+        .padding(.leading, folded && !isPhone ? 84 : 16)
         .padding(.trailing, 16)
         .frame(height: 52)
         .background { WindowDragArea() }
@@ -101,7 +132,8 @@ private struct HeaderButtonStyle: ButtonStyle {
         configuration.label
             .font(.system(size: 13, weight: .medium))
             .foregroundStyle(theme.ink)
-            .frame(minWidth: 30, minHeight: 28)
+            // A thumb needs 44pt; a pointer is happy with less.
+            .frame(minWidth: isPhone ? 40 : 30, minHeight: isPhone ? 40 : 28)
             .background(theme.ink.opacity(configuration.isPressed ? 0.14 : 0.07),
                         in: RoundedRectangle(cornerRadius: theme.radius(8)))
             .contentShape(RoundedRectangle(cornerRadius: theme.radius(8)))
@@ -114,9 +146,11 @@ private struct HeaderButtonStyle: ButtonStyle {
 /// the traffic-light strip over the sidebar. Raise the target to 15 to drop this.
 private struct WindowDragArea: View {
     var body: some View {
+        #if os(macOS)
         if #available(macOS 15, *) {
             Color.clear.contentShape(Rectangle()).gesture(WindowDragGesture())
         }
+        #endif
     }
 }
 
@@ -146,9 +180,13 @@ struct HeaderSearchField: View {
             }
         }
         .padding(.horizontal, 9)
-        .frame(width: 240, height: 28)
+        // Fixed beside the wordmark on the Mac; on a phone it takes what the strip has left.
+        .frame(width: isPhone ? nil : 240, height: isPhone ? 36 : 28)
+        .frame(maxWidth: isPhone ? .infinity : nil)
         .background(t.ink.opacity(0.07), in: RoundedRectangle(cornerRadius: t.radius(8)))
+        #if os(macOS)
         .onExitCommand { text = "" }
+        #endif
         .task { if focusOnAppear { focused = true } }
     }
 }

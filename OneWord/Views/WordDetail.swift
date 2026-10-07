@@ -63,10 +63,10 @@ struct WordDetail: View {
                 VStack(alignment: .leading, spacing: 0) {
                     //if showDate { dateLine(t) }
 
-                    HStack(alignment: .lastTextBaseline, spacing: 16) {
+                    HStack(alignment: .lastTextBaseline, spacing: isPhone ? 10 : 16) {
                         Text(word.term)
-                            .font(doodle.face(64))
-                            .tracking(doodle.tracking(64))
+                            .font(doodle.face(isPhone ? 46 : 64))
+                            .tracking(doodle.tracking(isPhone ? 46 : 64))
                             .foregroundStyle(t.ink)
                             .lineLimit(1)
                             .minimumScaleFactor(0.4)
@@ -82,7 +82,7 @@ struct WordDetail: View {
                     } else {
                         if showHindi, !word.hindi.isEmpty {
                             Text(word.hindi)
-                                .font(.system(size: 25))
+                                .font(.system(size: isPhone ? 20 : 25))
                                 .foregroundStyle(t.ink.opacity(0.5))
                                 .fixedSize(horizontal: false, vertical: true)
                                 .padding(.leading, 18)
@@ -93,7 +93,7 @@ struct WordDetail: View {
                         }
 
                         Text(word.definition)
-                            .font(doodle.face(22))
+                            .font(doodle.face(isPhone ? 19 : 22))
                             .foregroundStyle(t.definition)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 26)
@@ -112,8 +112,9 @@ struct WordDetail: View {
                 }
                 .frame(maxWidth: 720, alignment: .leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 56)
-                .padding(.vertical, 44)
+                // A desk page has margins; a phone has a gutter.
+                .padding(.horizontal, isPhone ? 20 : 56)
+                .padding(.vertical, isPhone ? 20 : 44)
                 // A day step swaps the word out from under a view that never
                 // moves; keyed on the term it cross-dissolves instead of cutting.
                 .id(word.term)
@@ -270,7 +271,7 @@ struct WordDetail: View {
                     .textCase(.uppercase).tracking(1.6)
                     .foregroundStyle(t.muted)
                 Text("\u{201C}\(word.example)\u{201D}")
-                    .font(doodle.face(20).italic())
+                    .font(doodle.face(isPhone ? 17 : 20).italic())
                     .foregroundStyle(t.example)
                     .fixedSize(horizontal: false, vertical: true)
             }

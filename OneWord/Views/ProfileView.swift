@@ -36,6 +36,8 @@ struct ProfileView: View {
     @AppStorage("profileAvatar") private var avatar = Avatar.account.rawValue
     /// Set in Settings. Off, the raw count above is the whole story.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
+    /// Settings can hide Practice; on a phone that hides its row here.
+    @AppStorage("practiceEnabled") private var practiceEnabled = true
     /// The goal counts only the German shelf, so it waits for German to unlock.
     @Environment(PremiumViewModel.self) private var premium
 
@@ -61,7 +63,7 @@ struct ProfileView: View {
     var body: some View {
         let t = Theme.of(scheme, doodle)
         ScrollView {
-            VStack(alignment: .leading, spacing: 30) {
+            VStack(alignment: .leading, spacing: isPhone ? 28 : 30) {
                 header(t)
                 if editing { picture(t) }
                 stats(t)
@@ -72,10 +74,13 @@ struct ProfileView: View {
             }
             .frame(maxWidth: 520, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(24)
+            .padding(.horizontal, isPhone ? 20 : 24)
+            .padding(.vertical, isPhone ? 12 : 24)
         }
         .paneBackground(t)
-        .paneHeader("Profile")
+        // On a phone the face and name are centred under the strip, so Edit moves
+        // up into the strip's corner where a phone keeps it.
+        .paneHeader("Profile") { if isPhone { editControls(t) } }
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             model.refresh()
         }
@@ -88,41 +93,63 @@ struct ProfileView: View {
     // MARK: - Header
 
     /// Face, name, email, and the one button that puts the pane into edit mode.
-    private func header(_ t: Theme) -> some View {
-        HStack(alignment: .center, spacing: 18) {
-            AvatarFace(avatar: shownAvatar, url: auth.photoURL, size: 76, muted: t.muted)
-                .overlay(Circle().strokeBorder(t.hairline))
-
-            VStack(alignment: .leading, spacing: 5) {
-                if editing {
-                    // The headword face, in a field — the name stays the biggest
-                    // thing on the pane whether you're reading it or typing it.
-                    TextField("Your name", text: $draftName)
-                        .textFieldStyle(.plain)
-                        .font(doodle.face(28))
-                        .foregroundStyle(t.ink)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(8)))
-                        .overlay(RoundedRectangle(cornerRadius: t.radius(8)).strokeBorder(t.hairline))
-                        .onSubmit(save)
-                } else {
-                    Text(shownName)
-                        .font(doodle.face(28))
-                        .tracking(doodle.tracking(28))
-                        .foregroundStyle(t.ink)
-                        .lineLimit(1)
-                }
-                if let email = auth.email {
-                    Text(email)
-                        .font(.system(size: 12))
-                        .foregroundStyle(t.muted)
-                        .lineLimit(1)
+    /// A phone stacks the three in the middle, with Edit up in the strip.
+    @ViewBuilder private func header(_ t: Theme) -> some View {
+        if isPhone {
+            VStack(spacing: 14) {
+                AvatarFace(avatar: shownAvatar, url: auth.photoURL, size: 92, muted: t.muted)
+                    .overlay(Circle().strokeBorder(t.hairline))
+                VStack(spacing: 4) {
+                    nameLine(t).multilineTextAlignment(.center)
+                    emailLine(t)
                 }
             }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 8)
+        } else {
+            HStack(alignment: .center, spacing: 18) {
+                AvatarFace(avatar: shownAvatar, url: auth.photoURL, size: 76, muted: t.muted)
+                    .overlay(Circle().strokeBorder(t.hairline))
 
-            Spacer(minLength: 8)
-            editControls(t)
+                VStack(alignment: .leading, spacing: 5) {
+                    nameLine(t)
+                    emailLine(t)
+                }
+
+                Spacer(minLength: 8)
+                editControls(t)
+            }
+        }
+    }
+
+    @ViewBuilder private func nameLine(_ t: Theme) -> some View {
+        if editing {
+            // The headword face, in a field — the name stays the biggest
+            // thing on the pane whether you're reading it or typing it.
+            TextField("Your name", text: $draftName)
+                .textFieldStyle(.plain)
+                .font(doodle.face(28))
+                .foregroundStyle(t.ink)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(8)))
+                .overlay(RoundedRectangle(cornerRadius: t.radius(8)).strokeBorder(t.hairline))
+                .onSubmit(save)
+        } else {
+            Text(shownName)
+                .font(doodle.face(28))
+                .tracking(doodle.tracking(28))
+                .foregroundStyle(t.ink)
+                .lineLimit(1)
+        }
+    }
+
+    @ViewBuilder private func emailLine(_ t: Theme) -> some View {
+        if let email = auth.email {
+            Text(email)
+                .font(.system(size: 12))
+                .foregroundStyle(t.muted)
+                .lineLimit(1)
         }
     }
 
@@ -172,7 +199,9 @@ struct ProfileView: View {
     // MARK: - Stats
 
     private func stats(_ t: Theme) -> some View {
-        HStack(alignment: .top, spacing: 48) {
+        // Two bare figures a hand apart on the Mac; two tiles sharing the width on
+        // a phone, where a figure with nothing around it reads as stray.
+        HStack(alignment: .top, spacing: isPhone ? 12 : 48) {
             // Bookmarks is a sidebar pane, so go *there* — the sidebar stays honest
             // about where you are. Learned isn't a pane, so it pushes, same as the
             // Learned row below.
@@ -241,20 +270,27 @@ struct ProfileView: View {
     /// which is the whole reason this is a function and not two copied blocks.
     private func stat<Icon: View>(_ t: Theme, _ count: Int, _ label: String,
                                   @ViewBuilder icon: () -> Icon) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        let size: CGFloat = isPhone ? 40 : 64
+        return VStack(alignment: .leading, spacing: 4) {
             Text("\(count)")
-                .font(doodle.face(64))
-                .tracking(doodle.tracking(64))
+                .font(doodle.face(size))
+                .tracking(doodle.tracking(size))
                 .foregroundStyle(t.ink)
                 .contentTransition(.numericText())
             HStack(spacing: 6) {
                 icon()
                 Text(label)
                     .font(.system(size: 11, weight: .bold))
-                    .textCase(.uppercase).tracking(2)
+                    .textCase(.uppercase).tracking(isPhone ? 1.4 : 2)
                     .foregroundStyle(t.muted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
         }
+        .frame(maxWidth: isPhone ? .infinity : nil, alignment: .leading)
+        .padding(isPhone ? 16 : 0)
+        .background { if isPhone { RoundedRectangle(cornerRadius: t.radius(12)).fill(t.surface) } }
+        .overlay { if isPhone { RoundedRectangle(cornerRadius: t.radius(12)).strokeBorder(t.hairline) } }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
@@ -305,10 +341,14 @@ struct ProfileView: View {
                     }
                 }
                 // Read-only for good: the email is the account, and the join date is
-                // Firebase's record of it. Neither is ours to rewrite.
-                GridRow {
-                    label("Email", t)
-                    value(auth.email ?? "\u{2014}", t)
+                // Firebase's record of it. Neither is ours to rewrite. The phone's
+                // header already shows the email under the name, so there it's not
+                // said twice.
+                if !isPhone {
+                    GridRow {
+                        label("Email", t)
+                        value(auth.email ?? "\u{2014}", t)
+                    }
                 }
                 GridRow {
                     label("Member since", t)
@@ -354,15 +394,51 @@ struct ProfileView: View {
     // MARK: - Learned, settings & sign out
 
     /// Two rows, one idiom: Learned pushes a list, Settings switches pane. Settings
-    /// is off the sidebar now, so this row is the way in.
+    /// is off the sidebar now, so this row is the way in. A phone has no sidebar
+    /// at all, so Practice and the plan tag get rows here too.
     private func rows(_ t: Theme) -> some View {
-        VStack(spacing: 8) {
+        // Separate tiles on the Mac; one card with inset rules on a phone, the way
+        // a phone groups a short list of ways onward.
+        VStack(spacing: isPhone ? 0 : 8) {
             NavigationLink {
                 LearnedListView()
             } label: {
                 row(t, "Learned") { LearnedSeal(size: 16) }
             }
             .buttonStyle(.plain)
+
+            if isPhone {
+                // The tab bar's third slot is Practice once it's owned and on, Bookmarks
+                // until then (RootView.tabOrder) — so the row here is whichever one has no tab.
+                if premium.isUnlocked && practiceEnabled {
+                    separator(t)
+                    Button { pane = .bookmarks } label: {
+                        row(t, "Bookmarks") {
+                            GlyphIcon(.bookmarks, size: 15).foregroundStyle(t.muted)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                } else if practiceEnabled {
+                    separator(t)
+                    // The shell gates it: locked, the row lands on the plans.
+                    Button { pane = .practice } label: {
+                        row(t, "Practice") {
+                            GlyphIcon(.practice, size: 15).foregroundStyle(t.muted)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityValue("Premium")
+                }
+                separator(t)
+                Button { pane = .premium } label: {
+                    row(t, premium.isUnlocked ? "Premium" : "Free plan") {
+                        GlyphIcon(.premium, size: 15).foregroundStyle(t.muted)
+                    }
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint("Shows the plans")
+                separator(t)
+            }
 
             Button { pane = .settings } label: {
                 row(t, "Settings") {
@@ -374,6 +450,13 @@ struct ProfileView: View {
             }
             .buttonStyle(.plain)
         }
+        .background { if isPhone { RoundedRectangle(cornerRadius: t.radius(12)).fill(t.surface) } }
+        .overlay { if isPhone { RoundedRectangle(cornerRadius: t.radius(12)).strokeBorder(t.hairline) } }
+    }
+
+    /// The rule between two rows of the phone's card, inset past the icon column.
+    private func separator(_ t: Theme) -> some View {
+        Rectangle().fill(t.hairline).frame(height: 1).padding(.leading, 42)
     }
 
     private func row<Icon: View>(_ t: Theme, _ title: String,
@@ -382,17 +465,17 @@ struct ProfileView: View {
             icon()
                 .frame(width: 16)
             Text(title)
-                .font(.system(size: 13))
+                .font(.system(size: isPhone ? 15 : 13))
             Spacer(minLength: 6)
             Image(systemName: "chevron.right")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(t.muted)
         }
         .foregroundStyle(t.ink)
-        .padding(.horizontal, 14)
-        .padding(.vertical, 11)
-        .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(10)))
-        .overlay(RoundedRectangle(cornerRadius: t.radius(10)).strokeBorder(t.hairline))
+        .padding(.horizontal, isPhone ? 16 : 14)
+        .padding(.vertical, isPhone ? 14 : 11)
+        .background { if !isPhone { RoundedRectangle(cornerRadius: t.radius(10)).fill(t.surface) } }
+        .overlay { if !isPhone { RoundedRectangle(cornerRadius: t.radius(10)).strokeBorder(t.hairline) } }
         .contentShape(Rectangle())
     }
 

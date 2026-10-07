@@ -12,11 +12,10 @@
 
 import SwiftUI
 import WidgetKit
-// NSWorkspace.open — MEMBER_IMPORT_VISIBILITY needs AppKit named directly. The
-// type resolves through SwiftUI; `.shared` and `.open(_:)` are members and don't.
-import AppKit
 
 struct SettingsView: View {
+    /// SwiftUI's own URL opener: LaunchServices on the Mac, UIApplication on iOS.
+    @Environment(\.openURL) private var openURL
     @AppStorage("appearance") private var appearance = Appearance.system.rawValue
     // Two switches, not one: the drawings and the handwriting are separate tastes.
     // App-only — the widget's bundle carries neither the art nor the face.
@@ -67,7 +66,7 @@ struct SettingsView: View {
                 }
 
                 section("Appearance", t,
-                        note: "The app only \u{2014} the desktop widget follows the Mac's own light or dark.") {
+                        note: "The app only \u{2014} the widget follows the system's own light or dark.") {
                     // A grid, not a row: five tiles fill this column at 96pt each, and a
                     // sixth — or a narrow window — wraps instead of clipping a name.
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 92), spacing: 10)],
@@ -113,7 +112,7 @@ struct SettingsView: View {
                     }
                 }
 
-                section("The entry", t, note: "Applies to the desktop widget too.") {
+                section("The entry", t, note: "Applies to the widget too.") {
                     card(t) {
                         row("Hindi meaning", "The Devanagari line under the word.", t) {
                             Toggle("Hindi meaning", isOn: $showHindi).labelsHidden()
@@ -218,7 +217,7 @@ struct SettingsView: View {
                     if mailFailed {
                         // Renders above the section's note. A transient error
                         // outranking a static footnote is the right way round.
-                        Text("No mail app is set up on this Mac. Write to \(FeedbackViewModel.address).")
+                        Text("No mail app is set up on this device. Write to \(FeedbackViewModel.address).")
                             .font(.system(size: 11))
                             .foregroundStyle(t.muted)
                             .textSelection(.enabled)
@@ -237,15 +236,12 @@ struct SettingsView: View {
         .sheet(isPresented: $writing) { FeedbackView(theme: t, model: feedback) }
     }
 
-    /// Hands a pre-addressed draft to whatever the Mac's mail client is. `open`
-    /// returns false when nothing is registered for mailto: — that is the only
-    /// failure worth showing, and it shows as an address rather than an alert.
+    /// Hands a pre-addressed draft to whatever the mail client is. The opener reports
+    /// `.discarded`/`.systemAction(false)` when nothing is registered for mailto: — that
+    /// is the only failure worth showing, and it shows as an address rather than an alert.
     private func openMail() {
-        guard let url = FeedbackViewModel.mailtoURL, NSWorkspace.shared.open(url) else {
-            mailFailed = true
-            return
-        }
-        mailFailed = false
+        guard let url = FeedbackViewModel.mailtoURL else { mailFailed = true; return }
+        openURL(url) { accepted in mailFailed = !accepted }
     }
 
     // MARK: - Pieces

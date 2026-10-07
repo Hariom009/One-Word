@@ -10,7 +10,7 @@
 //
 
 import Foundation
-#if canImport(CoreServices)
+#if os(macOS)
 import CoreServices
 #endif
 
@@ -131,12 +131,14 @@ enum SavedWords {
         return systemEntry(term)
     }
 
-    /// macOS's own dictionary (verified working under App Sandbox). Returns the
+    /// macOS's own dictionary (verified working under App Sandbox). macOS only: iOS
+    /// ships a CoreServices module, so an import check alone passes there, but it has no
+    /// DCSCopyTextDefinition — on iOS this returns nil. Returns the
     /// whole entry as one blob — headword, syllabification, pronunciation, every
     /// sense, derivatives and etymology run together — so `firstSense` cuts it
     /// down to something that fits on a card.
     nonisolated static func systemDefinition(_ term: String) -> String? {
-        #if canImport(CoreServices)
+        #if os(macOS)
         let range = CFRange(location: 0, length: term.utf16.count)
         guard let text = DCSCopyTextDefinition(nil, term as CFString, range)?
             .takeRetainedValue() as String? else { return nil }

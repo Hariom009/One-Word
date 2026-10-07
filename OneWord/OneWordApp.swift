@@ -7,11 +7,18 @@
 
 import SwiftUI
 import WidgetKit
+import FirebaseCore
+import GoogleSignIn
+#if os(iOS)
+import AVFoundation
+#endif
 
 @main
 struct OneWordApp: App {
+    #if os(macOS)
     // Registers the Services provider so "Save to One Word" works from any app.
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
+    #endif
     @AppStorage("appearance") private var appearance = Appearance.system.rawValue
     // The doodle theme's two switches, read HERE and nowhere else: a view that
     // asked UserDefaults directly would draw the right thing once and then never
@@ -31,6 +38,42 @@ struct OneWordApp: App {
     /// The stored string, parsed once. A missing or unknown value is System.
     private var look: Appearance { Appearance(rawValue: appearance) ?? .system }
 
+    /// Here, not in an app delegate: on macOS the window's views appear before
+    /// applicationDidFinishLaunching fires, so RootView's `auth.restore()` asked Firebase
+    /// for the app first, found none, and every launch opened on the sign-in screen with
+    /// the keychain session ignored. The App's init runs before any scene on both platforms.
+    init() {
+        Self.configureFirebase()
+        #if os(iOS)
+        // The default category, .soloAmbient, stops the user's music the moment the shelf
+        // clicks or the roll shuffles, and .ambient is muted outright by Silent mode —
+        // which the Action button toggles, so a tap on Pronounce produced nothing.
+        // Playback ignores Silent mode; mixWithOthers keeps the user's music going.
+        try? AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)
+        #endif
+    }
+
+    /// Reads GoogleService-Info.plist from the bundle, then wires GoogleSignIn by hand.
+    ///
+    /// GIDSignIn does NOT read GoogleService-Info.plist — its only self-configuration
+    /// path is a GIDClientID key in Info.plist (GIDSignIn.m:1351), and an unconfigured
+    /// interactive signIn raises NSInvalidArgumentException (:723): a crash, not an
+    /// error you can catch. Handing it the id off FirebaseApp keeps
+    /// GoogleService-Info.plist the one place the client id lives.
+    private static func configureFirebase() {
+        FirebaseApp.configure()
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            assertionFailure("No CLIENT_ID in GoogleService-Info.plist — sign-in would crash.")
+            return
+        }
+        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
+    }
+
+    private func bindPremium() {
+        guard auth.restored else { return }
+        premium.bind(account: auth.accountID)
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -43,12 +86,18 @@ struct OneWordApp: App {
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
                 .task { await premium.load() }
+                // Premium belongs to the signed-in account: hand it over once Firebase has
+                // said who that is, and again on every sign-in and sign-out.
+                .onChange(of: auth.restored) { bindPremium() }
+                .onChange(of: auth.accountID) { bindPremium() }
                 // The widget reads the unlock from the App Group; tell it to look again.
                 .onChange(of: premium.isUnlocked) { WidgetCenter.shared.reloadAllTimelines() }
         }
+        #if os(macOS)
         .defaultSize(width: 1000, height: 680)
         // Title bar hidden, traffic lights kept: every pane draws its own header,
         // and RootView switches the window's toolbar off.
         .windowStyle(.hiddenTitleBar)
+        #endif
     }
 }

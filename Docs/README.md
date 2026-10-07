@@ -184,6 +184,31 @@ Which skill lands where:
   from PremiumView. Skippable on every card; one `onboardingSeen` flag; nothing in `Shared/`
   changes and no new gate. Five operator forks open — placement, existing users, copy, card-5
   height, a Hindi toggle.)*
+- **iPhone** — planned, not built.
+  [plan](02_Plan/IPHONE_PLAN.md) ·
+  [audit](02_Plan/Audit/IPHONE_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/IPHONE_PLAN_RESOLVED.md) →
+  [checklist](03_Checklist/IPHONE_CHECKLIST.md) ·
+  [checklist audit](03_Checklist/Audit/IPHONE_CHECKLIST_AUDIT.md) →
+  [resolved checklist](03_Checklist/Resolved/IPHONE_CHECKLIST_RESOLVED.md)
+  *(**tick the resolved checklist** — it stands alone. Every audit finding is applied; the audit's three
+  questions took the recommended default and sit in its resolution log for review: iPad as a fifth
+  DECIDE item, code-changing DECIDEs settled before their step, a Program-done pointer after L5.)*
+  *(checklist audit: **fix gaps first** — every plan step is covered; the defects are two done-whens
+  that can't be ticked honestly, a circular 1.4b/1.4f and 1.5f/1.2e observing the iOS build before it
+  compiles. Line edits, not a rebuild.)*
+  *(the checklist covers Leaf 1 only, steps 1.0–1.10 plus ten iOS-rigor gates; the four DECIDE items
+  at its top carry the resolved plan's defaults and block nothing. Leaves 2–5 each get their own
+  `/plan` once Leaf 1 is green.)*
+  *(every audit finding resolved — **build Leaf 1 from the resolved plan, it stands alone**. Four
+  defaults wait in its review queue: iPhone tabs keyed on device idiom, `.ambient` audio for
+  everything, Designed-for-iPad off, platform-neutral copy for eight "Mac" strings.)*
+  *(audit: **fix blockers first** — two missed compile errors, `SavedWords.swift`'s `canImport(CoreServices)`
+  branch and `RootView`'s non-optional `List(selection:)`, plus an iOS audio-session line and a fuller
+  privacy manifest; all one-line fixes inside Leaf 1.)*
+  *(the same two targets build for iOS 17+; a `TabView` shell on compact widths, the Mac's
+  split view on iPad; capture and lock-screen widgets deferred. A spine with five leaves —
+  Leaf 1, the iOS build compiling, is fully grounded; L2–L5 each get their own `/plan` run.)*
 - **Website** — planned, not built.
   [plan](02_Plan/WEBSITE_PLAN.md) ·
   [audit](02_Plan/Audit/WEBSITE_PLAN_AUDIT.md) →
@@ -199,3 +224,10 @@ Which skill lands where:
   *(every audit finding resolved — **build from the resolved plan, it stands alone**. Operator
   calls: WebP covers, the in-app privacy link lands in this PR, "$9.99, once" with a US note.
   The audit's blocker was the privacy draft missing the Google profile-photo fetch.)*
+- **Cat UI** — planned, not built. Cat becomes the default look (light and dark pages);
+  Midnight stays as the cat-free alternative; System/Light/Dark/Umber fold into Cat.
+  [theme brief](01_Brainstorm/CAT_THEME_BRIEF.md) →
+  [plan](02_Plan/CAT_UI_PLAN.md)
+  *(design source: the "Pencil Cat Mascot" Claude Design canvas, used as inspiration, not
+  spec. Forks F1–F9 carry recommended defaults; streaks, stickers, notes, What's New and
+  the thank-you sheet are deferred to §14.)*
