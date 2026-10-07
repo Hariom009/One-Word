@@ -258,7 +258,20 @@ final class AuthViewModel {
             // to Firebase then, since Apple won't send it again.
             let firebase = OAuthProvider.appleCredential(
                 withIDToken: idToken, rawNonce: nonce, fullName: credential.fullName)
-            _ = try await Auth.auth().signIn(with: firebase)   // the listener takes it from here
+            let result = try await Auth.auth().signIn(with: firebase)   // the listener takes it from here
+            // Firebase stores that name only when it creates the account. An account made
+            // before the name came through stays nameless and the Profile pane falls back
+            // to "Signed in" — so write it ourselves whenever Apple sent one and the
+            // account hasn't got one.
+            if result.user.displayName == nil, let fullName = credential.fullName {
+                let name = PersonNameComponentsFormatter().string(from: fullName)
+                if !name.isEmpty {
+                    let change = result.user.createProfileChangeRequest()
+                    change.displayName = name
+                    try await change.commitChanges()
+                    user = result.user   // same object, re-set so the pane re-reads the name
+                }
+            }
         } catch let e as ASAuthorizationError where e.code == .canceled {
             // Same as Google: closing the sheet is a decision, not an error.
             return
