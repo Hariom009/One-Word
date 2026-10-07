@@ -127,6 +127,14 @@ final class AuthViewModel {
     // Read off `user` rather than handed to the view directly, so ProfileView never
     // has to `import FirebaseAuth` to name a type. Keeps the view dumb and the SDK
     // on this side of the seam.
+    /// What Premium is keyed by. The demo tester gets a fixed id so a sandbox purchase
+    /// in a debug run survives the next launch like a real one.
+    #if DEBUG
+    var accountID: String? { user?.uid ?? (demo == nil ? nil : "demo") }
+    #else
+    var accountID: String? { user?.uid }
+    #endif
+
     #if DEBUG
     var displayName: String? { user?.displayName ?? demo?.name }
     var email: String? { user?.email ?? demo?.email }

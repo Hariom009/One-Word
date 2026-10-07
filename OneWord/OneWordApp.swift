@@ -69,6 +69,11 @@ struct OneWordApp: App {
         GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
     }
 
+    private func bindPremium() {
+        guard auth.restored else { return }
+        premium.bind(account: auth.accountID)
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -81,6 +86,10 @@ struct OneWordApp: App {
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
                 .task { await premium.load() }
+                // Premium belongs to the signed-in account: hand it over once Firebase has
+                // said who that is, and again on every sign-in and sign-out.
+                .onChange(of: auth.restored) { bindPremium() }
+                .onChange(of: auth.accountID) { bindPremium() }
                 // The widget reads the unlock from the App Group; tell it to look again.
                 .onChange(of: premium.isUnlocked) { WidgetCenter.shared.reloadAllTimelines() }
         }

@@ -97,10 +97,10 @@ struct PremiumView: View {
                     .multilineTextAlignment(.center)
                 Text(premium.isUnlocked
                      ? "Thank you for supporting One Word. All of this is yours for good, on "
-                       + "every device signed in to your Apple Account."
+                       + "every device you sign in to with this account."
                      : "Premium is a single purchase, not a subscription. Pay once and all "
-                       + "\(Self.shelf.count) dictionaries stay unlocked, on every device signed in "
-                       + "to your Apple Account.")
+                       + "\(Self.shelf.count) dictionaries stay unlocked, on every device you sign "
+                       + "in to with this account.")
                     .font(.system(size: 15))
                     .foregroundStyle(t.muted)
                     .multilineTextAlignment(.center)
