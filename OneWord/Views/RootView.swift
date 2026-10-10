@@ -174,7 +174,7 @@ struct RootView: View {
                 HStack(spacing: 0) {
                     accountChip
                     if Features.premium { planTag }
-                    if Features.feedback { feedbackButton }
+                    if Features.feedback { feedbackButton } else { settingsButton }
                 }
             }
         }
@@ -300,6 +300,21 @@ struct RootView: View {
 
     /// The permanent way to the notepad, and what the one-time card sits above —
     /// so closing the card never hides the way back.
+    /// The gear takes the feedback button's corner while feedback is flagged off.
+    private var settingsButton: some View {
+        let t = Theme.of(scheme, doodle)
+        return Button { pane = .settings } label: {
+            GlyphIcon(.settings)
+                .foregroundStyle(t.muted)
+                .padding(6)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help("Settings")
+        .accessibilityLabel("Settings")
+        .padding(.trailing, 6)
+    }
+
     private var feedbackButton: some View {
         let t = Theme.of(scheme, doodle)
         return Button(action: write) {
