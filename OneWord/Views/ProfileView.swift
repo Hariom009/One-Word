@@ -46,7 +46,7 @@ struct ProfileView: View {
 
     /// What to call you: your own name if you set one, else the one the account gave.
     private var shownName: String {
-        name.isEmpty ? (auth.displayName ?? "Signed in") : name
+        name.isEmpty ? (auth.displayName ?? (Features.accounts ? "Signed in" : "You")) : name
     }
 
     /// The face on show — the draft while editing, so picking a tile changes the
@@ -68,7 +68,7 @@ struct ProfileView: View {
                 if fluencyGoal && premium.allows(Wordbook.german.id) { goal(t) }
                 details(t)
                 rows(t)
-                footer(t)
+                if Features.accounts { footer(t) }
             }
             .frame(maxWidth: 520, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -306,13 +306,15 @@ struct ProfileView: View {
                 }
                 // Read-only for good: the email is the account, and the join date is
                 // Firebase's record of it. Neither is ours to rewrite.
-                GridRow {
-                    label("Email", t)
-                    value(auth.email ?? "\u{2014}", t)
-                }
-                GridRow {
-                    label("Member since", t)
-                    value(auth.joined?.formatted(.dateTime.month(.wide).year()) ?? "\u{2014}", t)
+                if Features.accounts {
+                    GridRow {
+                        label("Email", t)
+                        value(auth.email ?? "\u{2014}", t)
+                    }
+                    GridRow {
+                        label("Member since", t)
+                        value(auth.joined?.formatted(.dateTime.month(.wide).year()) ?? "\u{2014}", t)
+                    }
                 }
             }
 

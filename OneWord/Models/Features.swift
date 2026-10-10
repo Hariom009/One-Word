@@ -12,4 +12,11 @@ enum Features {
     static let premium = false
     /// The Practice pane and its Settings section.
     static let practice = false
+    /// Sign-in (Apple + Google via Firebase), the Profile account rows, the in-app
+    /// feedback sheet. Off: Firebase is never configured, so the app touches no
+    /// network; the shell shows without a session and feedback goes by mail.
+    static let accounts = false
+    /// The "Send a suggestion" button, its one-time callout card, and the Feedback
+    /// section in Settings. Off: no way to write to us from inside the app.
+    static let feedback = false
 }

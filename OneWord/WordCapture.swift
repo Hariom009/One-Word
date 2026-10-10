@@ -29,7 +29,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// keychain session ignored. The adaptor builds this delegate before any scene.
     override init() {
         super.init()
-        configureFirebase()
+        if Features.accounts { configureFirebase() }
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {

@@ -186,7 +186,7 @@ struct SettingsView: View {
                     }
                 }
 
-                section("Feedback", t,
+                if Features.feedback { section("Feedback", t,
                         note: "Bugs, a wrong meaning, a word you'd like added \u{2014} "
                             + "all of it helps.") {
                     card(t) {
@@ -203,17 +203,19 @@ struct SettingsView: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityHint("Opens a new message to \(FeedbackViewModel.address)")
-                        rule(t)
-                        Button { feedback.reset(); writing = true } label: {
-                            row("Write a message",
-                                "Send it from here \u{2014} no mail app needed.", t) {
-                                Image(systemName: "square.and.pencil")
-                                    .font(.system(size: 14))
-                                    .foregroundStyle(t.muted)
+                        if Features.accounts {
+                            rule(t)
+                            Button { feedback.reset(); writing = true } label: {
+                                row("Write a message",
+                                    "Send it from here \u{2014} no mail app needed.", t) {
+                                    Image(systemName: "square.and.pencil")
+                                        .font(.system(size: 14))
+                                        .foregroundStyle(t.muted)
+                                }
+                                .contentShape(Rectangle())
                             }
-                            .contentShape(Rectangle())
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
                     if mailFailed {
                         // Renders above the section's note. A transient error
@@ -224,6 +226,7 @@ struct SettingsView: View {
                             .textSelection(.enabled)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                }
                 }
             }
             .frame(maxWidth: 520, alignment: .leading)
