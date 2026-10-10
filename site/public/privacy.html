@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <header class="wrap top">
@@ -22,6 +22,7 @@
     <nav aria-label="Site">
       <a href="privacy" aria-current="page">Privacy</a>
       <a href="support">Support</a>
+      <button class="endorse" type="button" id="endorse" aria-pressed="false" title="Endorse the idea">&#9829; <span id="endorse-count">Endorse</span></button>
     </nav>
   </header>
 
@@ -30,7 +31,7 @@
     <p class="date">One Word: Daily Vocabulary. Effective 10 October 2026.</p>
 
     <h2>The short version</h2>
-    <p>Every word in One Word ships inside the app. Nothing you read, search, bookmark or learn leaves your Mac. The app has no account, makes no network requests, and collects nothing.</p>
+    <p>Every word in One Word ships inside the app. Nothing you read, search, bookmark or learn leaves your Mac. We do not store your data in our cloud or anywhere else: it stays on your Mac, local and secure. The app has no account, makes no network requests, and collects nothing. The only reason One Word exists is to grow your vocabulary, one word a day.</p>
 
     <h2>What stays on your Mac</h2>
     <p>Your bookmarks, your reading log, your settings, your profile name and the avatar you pick, words you save from other apps, and which dictionary each widget shows. These live in the app's own storage and are never uploaded. The app has no analytics, no advertising and no crash-reporting service.</p>
@@ -42,7 +43,7 @@
     <p>No one. The app talks to no server, and we have nothing to share or sell.</p>
 
     <h2>This website</h2>
-    <p>It sets no cookies, runs no scripts and loads nothing from third parties. It is served by Firebase Hosting, which keeps ordinary server logs (IP address, page requested, time) for a limited period, as any web host does.</p>
+    <p>It sets no cookies and loads nothing from third parties. The Endorse button in the top bar adds one to a public counter when you press it; that request carries no name, email or identifier, and your browser only remembers that you already pressed it. The site is served by Firebase Hosting, which keeps ordinary server logs (IP address, page requested, time) for a limited period, as any web host does.</p>
 
     <h2>Children</h2>
     <p>One Word is not directed at children under 13 and does not knowingly collect information from them.</p>
@@ -68,5 +69,45 @@
       </nav>
     </div>
   </footer>
+
+  <script>
+  // The Endorse button: one anonymous +1 to a single Firestore document, read back
+  // as the number beside the heart. No SDK, no cookies, no identity — a plain
+  // fetch to the Firestore REST API, and localStorage remembers that this browser
+  // already tapped. The security rules only let the count move up by one.
+  (function () {
+    var key = "AIzaSyD0cAe9TmxghZJyarlBI4bX6R2wcBjo61I";
+    var base = "https://firestore.googleapis.com/v1/projects/one-word-a2f3a/databases/(default)/documents";
+    var doc = base + "/endorsements/site";
+    var btn = document.getElementById("endorse"), out = document.getElementById("endorse-count");
+    if (!btn) return;
+    var done = false;
+    try { done = localStorage.getItem("endorsed") === "1"; } catch (e) {}
+    function show(n) { out.textContent = n > 0 ? n.toLocaleString() : "Endorse"; }
+    function mark() { btn.setAttribute("aria-pressed", "true"); btn.classList.add("on"); }
+    if (done) mark();
+    fetch(doc + "?key=" + key).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d) show(+d.fields.count.integerValue); }).catch(function () {});
+    btn.addEventListener("click", function () {
+      if (done) return;
+      done = true; mark();
+      try { localStorage.setItem("endorsed", "1"); } catch (e) {}
+      var body = { writes: [{ transform: { document: doc.replace(/^https:[^]*?\/v1\//, ""),
+        fieldTransforms: [{ fieldPath: "count", increment: { integerValue: "1" } }] },
+        currentDocument: { exists: true } }] };
+      fetch(base + ":commit?key=" + key, { method: "POST", body: JSON.stringify(body) })
+        .then(function (r) {
+          if (r.ok) return r;
+          // First endorsement ever: the document doesn't exist yet, so create it at 1.
+          return fetch(base + "/endorsements?documentId=site&key=" + key,
+            { method: "POST", body: JSON.stringify({ fields: { count: { integerValue: "1" } } }) });
+        })
+        .then(function () { return fetch(doc + "?key=" + key); })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { show(+d.fields.count.integerValue); })
+        .catch(function () {});
+    });
+  })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // The website's Endorse button. One public document, one integer. Anyone may
+    // read it; a write may only move the count up by exactly one.
+    match /endorsements/site {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['count'])
+                    && request.resource.data.count == 1;
+      allow update: if request.resource.data.keys().hasOnly(['count'])
+                    && request.resource.data.count == resource.data.count + 1;
+    }
+  }
+}

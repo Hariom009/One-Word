@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <header class="wrap top">
@@ -22,6 +22,7 @@
     <nav aria-label="Site">
       <a href="privacy">Privacy</a>
       <a href="support">Support</a>
+      <button class="endorse" type="button" id="endorse" aria-pressed="false" title="Endorse the idea">&#9829; <span id="endorse-count">Endorse</span></button>
     </nav>
   </header>
 
@@ -32,7 +33,7 @@
           <h1 id="hero-title">One new word a day, on your desktop.</h1>
           <p class="lede">A widget shows a word each morning, with its Hindi meaning, a definition and an example. Nothing to keep up with.</p>
           <span class="get"><img src="badge.svg" alt="Download on the Mac App Store"></span>
-          <p class="small">Free on macOS 14 and later. Five dictionaries, all included.</p>
+          <p class="small">Version 1.0 is out on the Mac App Store. Five dictionaries, the widget, search, history and bookmarks: all of it free, and we are building more. macOS 14 and later.</p>
         </div>
         <picture>
           <source srcset="img/widget-dark.jpg" media="(prefers-color-scheme: dark)">
@@ -100,5 +101,45 @@
       </nav>
     </div>
   </footer>
+
+  <script>
+  // The Endorse button: one anonymous +1 to a single Firestore document, read back
+  // as the number beside the heart. No SDK, no cookies, no identity — a plain
+  // fetch to the Firestore REST API, and localStorage remembers that this browser
+  // already tapped. The security rules only let the count move up by one.
+  (function () {
+    var key = "AIzaSyD0cAe9TmxghZJyarlBI4bX6R2wcBjo61I";
+    var base = "https://firestore.googleapis.com/v1/projects/one-word-a2f3a/databases/(default)/documents";
+    var doc = base + "/endorsements/site";
+    var btn = document.getElementById("endorse"), out = document.getElementById("endorse-count");
+    if (!btn) return;
+    var done = false;
+    try { done = localStorage.getItem("endorsed") === "1"; } catch (e) {}
+    function show(n) { out.textContent = n > 0 ? n.toLocaleString() : "Endorse"; }
+    function mark() { btn.setAttribute("aria-pressed", "true"); btn.classList.add("on"); }
+    if (done) mark();
+    fetch(doc + "?key=" + key).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d) show(+d.fields.count.integerValue); }).catch(function () {});
+    btn.addEventListener("click", function () {
+      if (done) return;
+      done = true; mark();
+      try { localStorage.setItem("endorsed", "1"); } catch (e) {}
+      var body = { writes: [{ transform: { document: doc.replace(/^https:[^]*?\/v1\//, ""),
+        fieldTransforms: [{ fieldPath: "count", increment: { integerValue: "1" } }] },
+        currentDocument: { exists: true } }] };
+      fetch(base + ":commit?key=" + key, { method: "POST", body: JSON.stringify(body) })
+        .then(function (r) {
+          if (r.ok) return r;
+          // First endorsement ever: the document doesn't exist yet, so create it at 1.
+          return fetch(base + "/endorsements?documentId=site&key=" + key,
+            { method: "POST", body: JSON.stringify({ fields: { count: { integerValue: "1" } } }) });
+        })
+        .then(function () { return fetch(doc + "?key=" + key); })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { show(+d.fields.count.integerValue); })
+        .catch(function () {});
+    });
+  })();
+  </script>
 </body>
 </html>

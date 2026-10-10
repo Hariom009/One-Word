@@ -74,6 +74,10 @@ p a:hover, li a:hover { text-decoration-color: var(--ink); }
 .top .mark img { width: 28px; height: 28px; border-radius: 7px; }
 .top nav { display: flex; gap: 28px; font-size: 15px; color: var(--muted); }
 .top nav a:hover, .top nav a[aria-current="page"] { color: var(--ink); }
+/* Endorse: a pill in the nav. Quiet until pressed, then ink-filled, and it stays that way. */
+.endorse { font: inherit; color: var(--muted); background: none; border: 1px solid var(--hairline); border-radius: 999px; padding: 5px 12px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.endorse:hover { color: var(--ink); border-color: var(--ink); }
+.endorse.on { color: var(--bg); background: var(--ink); border-color: var(--ink); cursor: default; }
 
 /* Type */
 h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.015em; margin: 0; }
