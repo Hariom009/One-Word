@@ -51,6 +51,12 @@
             ReferencedContainer = "container:OneWord.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--reset-onboarding"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <StoreKitConfigurationFileReference
          identifier = "../../StoreKit/OneWord.storekit">
       </StoreKitConfigurationFileReference>

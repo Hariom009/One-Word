@@ -60,11 +60,13 @@ struct WelcomeView: View {
                 .disabled(name.isEmpty)
                 .opacity(name.isEmpty ? 0.5 : 1)
                 Text("Stays on this Mac. No account, nothing is sent anywhere.")
-                    .font(.system(size: 11))
+                    .font(.system(size: 10))
                     .foregroundStyle(t.muted)
                     .padding(.top, 4)
+                    .padding(.horizontal,8)
+                    .lineLimit(1)
             }
-            .frame(width: 260)
+            .frame(width: 300)
         }
         .padding(.all, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -17,7 +17,7 @@ import WidgetKit
 import AppKit
 
 struct SettingsView: View {
-    @AppStorage("appearance") private var appearance = Appearance.system.rawValue
+    @AppStorage("appearance") private var appearance = Appearance.initial.rawValue
     // Two switches, not one: the drawings and the handwriting are separate tastes.
     // App-only — the widget's bundle carries neither the art nor the face.
     @AppStorage(DoodleTheme.iconsKey) private var doodleIcons = false
