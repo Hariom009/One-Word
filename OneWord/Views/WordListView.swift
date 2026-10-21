@@ -27,7 +27,6 @@ struct WordListView: View {
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @State private var model: WordListViewModel
     @State private var query = ""
-    @State private var hovered: String?
     @Environment(\.colorScheme) private var scheme
     /// Search spans locked books too: their words are listed as a teaser, meaning withheld.
     @Environment(PremiumViewModel.self) private var premium
@@ -58,18 +57,15 @@ struct WordListView: View {
                 emptyState(t)
             } else {
                 List(results) { hit in
-                    // The shelf travels with the hit: a word found in Medicine
-                    // while Everyday English is open must not be logged — or
-                    // opened — against Everyday English.
-                    NavigationLink { WordDetail(word: hit.word, shelf: hit.shelf) } label: {
-                        row(hit, t, mark: mark, scale: hit.id == hovered ? 1.85 : 1)
-                    }
-                        // Same swell as the Learned pane. A fast pointer can deliver
-                        // the exit after the next row's enter; only clear if we're
-                        // still the hovered one.
-                        .onHover { inside in
-                            hovered = inside ? hit.id : (hovered == hit.id ? nil : hovered)
+                    // Same swell as the Learned pane, hover held by the row — see HoverSwell.
+                    HoverSwell { scale in
+                        // The shelf travels with the hit: a word found in Medicine
+                        // while Everyday English is open must not be logged — or
+                        // opened — against Everyday English.
+                        NavigationLink { WordDetail(word: hit.word, shelf: hit.shelf) } label: {
+                            row(hit, t, mark: mark, scale: scale)
                         }
+                    }
                         // Clear, so the pane's ground — Midnight's glow included —
                         // shows through the rows instead of stopping at them.
                         .listRowBackground(Color.clear)
