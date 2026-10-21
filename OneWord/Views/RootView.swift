@@ -158,7 +158,8 @@ struct RootView: View {
         let selection = Binding { pane } set: { pane = $0 == .practice && !premium.isUnlocked ? .premium : $0 }
         return List(selection: selection) {
             ForEach([Pane.home, .history, .practice, .bookmarks]
-                        .filter { $0 != .practice || (Features.practice && practiceEnabled) }) { item in
+                        .filter { $0 != .practice || (Features.practice && practiceEnabled) }
+                        .filter { $0 != .history || Features.history }) { item in
                 row(item).tag(item)
             }
             Section("Dictionaries") {

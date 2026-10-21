@@ -12,6 +12,8 @@ enum Features {
     static let premium = false
     /// The Practice pane and its Settings section.
     static let practice = false
+    /// The History pane's sidebar row. Off: past days aren't browsable; Home still shows today.
+    static let history = false
     /// Sign-in (Apple + Google via Firebase), the Profile account rows, the in-app
     /// feedback sheet. Off: Firebase is never configured, so the app touches no
     /// network; the shell shows without a session and feedback goes by mail.
