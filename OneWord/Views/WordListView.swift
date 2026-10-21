@@ -5,8 +5,9 @@
 //  A word list. Two panes use it: Search, which is dictionary-agnostic — it
 //  belongs to no book, searches every one of them at once, and tags each result
 //  with the book it came from — and Bookmarks, pinned to the saved list and
-//  browsing itself alphabetically. Editorial styling; empty state when nothing
-//  matches.
+//  browsing itself alphabetically. A bundled book gets the same pinned list,
+//  pushed when its cover is double-clicked on the shelf. Editorial styling;
+//  empty state when nothing matches.
 //
 
 import SwiftUI
@@ -79,7 +80,8 @@ struct WordListView: View {
         .paneBackground(t)
         // The field rides in the header strip — no row of its own above the list,
         // which a Bookmarks pane holding three words never needed.
-        .paneHeader(wordbook?.shortName ?? "Search") {
+        // A bundled book's list is only ever pushed, from the shelf; Bookmarks and Search are panes.
+        .paneHeader(wordbook?.shortName ?? "Search", back: wordbook != nil && wordbook != .saved) {
             // How many you've kept. Only Bookmarks — every other pane's total is
             // already in the search prompt, and it never changes while you look at it.
             if wordbook?.id == SavedWords.resource {
