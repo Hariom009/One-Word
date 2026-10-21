@@ -79,7 +79,7 @@ nonisolated struct DoodleTheme: Equatable {
     /// `Theme.of(_:_:)`, and Midnight also changes the display face to Plus Jakarta
     /// Sans. The appearance itself rather than a flag per theme, so a new one is a
     /// case the compiler walks through every switch.
-    var appearance: Appearance = .system
+    var appearance: Appearance = .initial
 
     /// The app as it has always looked, and the right default for a `#Preview`
     /// that doesn't say otherwise.
@@ -95,9 +95,9 @@ nonisolated struct DoodleTheme: Equatable {
     static var current: DoodleTheme {
         DoodleTheme(icons: UserDefaults.standard.bool(forKey: iconsKey),
                     handwriting: UserDefaults.standard.bool(forKey: handwritingKey),
-                    // A missing or unknown string is System, as it is at the app root.
+                    // A missing or unknown string is the initial appearance, as at the app root.
                     appearance: UserDefaults.standard.string(forKey: "appearance")
-                        .flatMap(Appearance.init(rawValue:)) ?? .system)
+                        .flatMap(Appearance.init(rawValue:)) ?? .initial)
     }
 
     // MARK: The face

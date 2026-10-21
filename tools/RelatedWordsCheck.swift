@@ -19,7 +19,7 @@ func load(_ id: String) -> [Word] {
 enum Check {
     static func main() {
         let books = ["words", "emotions", "philosophy", "startup",
-                     "idioms", "classical", "urdu", "german"]
+                     "idioms", "classical", "urdu", "german", "pets"]
         var indexes: [String: (words: [Word], index: RelatedWordsIndex)] = [:]
 
         // 1. Coverage ≥99% per book — a reworded definition can silently drop entries.
@@ -58,7 +58,7 @@ enum Check {
         //    Philosophy is left out on purpose: `nonmonotonic` and `quantify` have
         //    no neighbour above the floor in 138 words, so it is 136/138 by nature
         //    and an all-or-nothing bar there would only ever be a false alarm.
-        for id in ["german", "classical"] {
+        for id in ["german", "classical", "pets"] {
             let (words, index) = indexes[id]!
             let served = words.filter { !index.nearest(to: $0).isEmpty }.count
             precondition(served == words.count, "\(id): only \(served)/\(words.count) served")

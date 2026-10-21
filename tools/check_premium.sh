@@ -48,12 +48,13 @@ var picked: String? { AppGroup.defaults.string(forKey: AppGroup.dictionaryKey) }
 @main
 enum Check {
     static func main() {
-        let premium = ["emotions", "philosophy", "startup", "idioms", "classical", "urdu", "german"]
+        let premium = ["classical", "urdu", "german"]
+        let shipped = ["words", "emotions", "philosophy", "startup", "idioms", "pets"]
         AppGroup.defaults.removePersistentDomain(forName: AppGroup.id)
 
         print("Premium, locked")
         check(!Premium.isUnlocked, "a fresh install is locked")
-        check(Premium.allows("words"), "Everyday English is free")
+        check(shipped.allSatisfy { Premium.allows($0) }, "every v1 shelf is free")
         check(Premium.allows(SavedWords.resource), "Bookmarks is free")
         check(premium.allSatisfy { !Premium.allows($0) }, "every other shelf is locked")
         check(Premium.resolve("urdu") == "words", "a locked shelf resolves to Everyday English")

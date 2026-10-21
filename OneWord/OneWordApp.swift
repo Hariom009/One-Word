@@ -12,7 +12,7 @@ import WidgetKit
 struct OneWordApp: App {
     // Registers the Services provider so "Save to One Word" works from any app.
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
-    @AppStorage("appearance") private var appearance = Appearance.system.rawValue
+    @AppStorage("appearance") private var appearance = Appearance.initial.rawValue
     // The doodle theme's two switches, read HERE and nowhere else: a view that
     // asked UserDefaults directly would draw the right thing once and then never
     // hear the switch flip. Down the environment, every pane redraws together.
@@ -29,7 +29,18 @@ struct OneWordApp: App {
     @State private var premium = PremiumViewModel()
 
     /// The stored string, parsed once. A missing or unknown value is System.
-    private var look: Appearance { Appearance(rawValue: appearance) ?? .system }
+    private var look: Appearance { Appearance(rawValue: appearance) ?? .initial }
+
+    init() {
+        #if DEBUG
+        // Scheme argument: wipe the front-door flag so a debug run starts on Get
+        // Started and the button still works (a `-onboarded NO` argument would
+        // outrank the write and leave the button stuck).
+        if CommandLine.arguments.contains("--reset-onboarding") {
+            UserDefaults.standard.removeObject(forKey: WelcomeView.onboardedKey)
+        }
+        #endif
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -42,7 +53,7 @@ struct OneWordApp: App {
                 .environment(\.doodle, DoodleTheme(icons: doodleIcons, handwriting: doodleFont,
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
-                .task { await premium.load() }
+                .task { if Features.premium { await premium.load() } }
                 // The widget reads the unlock from the App Group; tell it to look again.
                 .onChange(of: premium.isUnlocked) { WidgetCenter.shared.reloadAllTimelines() }
         }

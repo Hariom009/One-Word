@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- App Store frame: render.sh opens this once per slide (?n=0..) at 1440x900 @2x = 2880x1800. -->
+<meta charset="utf-8">
+<style>
+  :root {
+    --headline-font: "Hoefler Text", Baskerville, Georgia, serif;  /* swap for any installed font */
+    --bg-top: #F2F1FC;
+    --bg-bottom: #CFCCF9;
+    --ink: #14142B;
+  }
+  html, body { margin: 0; width: 1440px; height: 900px; overflow: hidden; }
+  body {
+    background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+    font-family: var(--headline-font);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 {
+    margin: 0; padding-top: 64px; text-align: center;
+    font-size: 66px; font-weight: 600; letter-spacing: -0.5px; color: var(--ink);
+  }
+  /* MacBook lid, deliberately running off the bottom edge so the screen reads large. */
+  .lid {
+    position: absolute; top: 196px; left: 50%; width: 1180px; transform: translateX(-50%);
+    padding: 22px 22px 0; box-sizing: border-box;
+    background: #0B0B0D; border-radius: 38px 38px 0 0;
+    box-shadow: 0 0 0 3px #3A3A40, 0 40px 90px rgba(40, 30, 120, .35);
+  }
+  .lid img { display: block; width: 100%; border-radius: 10px 10px 0 0; }
+  .notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 150px; height: 28px; background: #0B0B0D; border-radius: 0 0 12px 12px;
+  }
+  .notch::after {
+    content: ""; position: absolute; top: 9px; left: 50%; width: 8px; height: 8px;
+    margin-left: -4px; border-radius: 50%; background: #1E2230;
+  }
+</style>
+<h1 id="title"></h1>
+<div class="lid"><img id="shot"><div class="notch"></div></div>
+<script>
+  // Edit headlines here; order = App Store order.
+  const SLIDES = [
+    ["v1/01_widget.png",           "A new word on your desktop"],
+    ["v1/02_home.png",             "One word a day"],
+    ["v1/04_word_detail.png",      "English words, explained in Hindi"],
+    ["v1/03_dictionaries.png",     "Five dictionaries to choose from"],
+    ["v1/alternates/04_search.png", "Search 24,000+ words"],
+  ];
+  const n = +new URLSearchParams(location.search).get("n") || 0;
+  document.getElementById("shot").src = SLIDES[n][0];
+  document.getElementById("title").textContent = SLIDES[n][1];
+</script>

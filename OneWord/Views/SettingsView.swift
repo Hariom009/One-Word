@@ -17,7 +17,7 @@ import WidgetKit
 import AppKit
 
 struct SettingsView: View {
-    @AppStorage("appearance") private var appearance = Appearance.system.rawValue
+    @AppStorage("appearance") private var appearance = Appearance.initial.rawValue
     // Two switches, not one: the drawings and the handwriting are separate tastes.
     // App-only — the widget's bundle carries neither the art nor the face.
     @AppStorage(DoodleTheme.iconsKey) private var doodleIcons = false
@@ -52,7 +52,7 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 30) {
                 // First, because it's the one thing here that isn't a preference. The bar
                 // carries Restore Purchase, which App Review needs reachable.
-                section("Premium", t) {
+                if Features.premium { section("Premium", t) {
                     if premium.isUnlocked {
                         card(t) {
                             row("All dictionaries unlocked", "Every shelf is yours, for good.", t) {
@@ -64,7 +64,7 @@ struct SettingsView: View {
                     } else {
                         PremiumBar()
                     }
-                }
+                } }
 
                 section("Appearance", t,
                         note: "The app only \u{2014} the desktop widget follows the Mac's own light or dark.") {
@@ -129,7 +129,7 @@ struct SettingsView: View {
                     .onChange(of: showExample) { WidgetCenter.shared.reloadAllTimelines() }
                 }
 
-                section("Practice", t) {
+                if Features.practice { section("Practice", t) {
                     card(t) {
                         row("Practice mode", "Adds the Practice pane to the sidebar.", t) {
                             Toggle("Practice mode", isOn: $practiceEnabled)
@@ -158,7 +158,7 @@ struct SettingsView: View {
                         .disabled(!practiceEnabled)
                         .opacity(practiceEnabled ? 1 : 0.45)
                     }
-                }
+                } }
 
                 // Only the German shelf counts toward the goal, so it waits for German to
                 // unlock. The switch keeps its value, and comes back as you left it.
@@ -186,7 +186,7 @@ struct SettingsView: View {
                     }
                 }
 
-                section("Feedback", t,
+                if Features.feedback { section("Feedback", t,
                         note: "Bugs, a wrong meaning, a word you'd like added \u{2014} "
                             + "all of it helps.") {
                     card(t) {
@@ -203,17 +203,19 @@ struct SettingsView: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityHint("Opens a new message to \(FeedbackViewModel.address)")
-                        rule(t)
-                        Button { feedback.reset(); writing = true } label: {
-                            row("Write a message",
-                                "Send it from here \u{2014} no mail app needed.", t) {
-                                Image(systemName: "square.and.pencil")
-                                    .font(.system(size: 14))
-                                    .foregroundStyle(t.muted)
+                        if Features.accounts {
+                            rule(t)
+                            Button { feedback.reset(); writing = true } label: {
+                                row("Write a message",
+                                    "Send it from here \u{2014} no mail app needed.", t) {
+                                    Image(systemName: "square.and.pencil")
+                                        .font(.system(size: 14))
+                                        .foregroundStyle(t.muted)
+                                }
+                                .contentShape(Rectangle())
                             }
-                            .contentShape(Rectangle())
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
                     if mailFailed {
                         // Renders above the section's note. A transient error
@@ -224,6 +226,7 @@ struct SettingsView: View {
                             .textSelection(.enabled)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                }
                 }
             }
             .frame(maxWidth: 520, alignment: .leading)
