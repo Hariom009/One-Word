@@ -163,6 +163,10 @@ device's iCloud account is the identity. `Models/CloudSync.swift`, app target on
 - **Bookmarks**: per term the latest event wins, a save or an un-save. Un-saves are
   tombstones (`SavedWords.removed`, written by `toggle`), kept locally and in the cloud
   payload — without them a delete on one device is resurrected by the other.
+- **The toast** (`Views/SyncToast.swift`, on RootView): a sync that PULLED anything posts
+  `CloudSync.didSync` and bumps `CloudSync.pulls`; the pill shows "Syncing…" then "Synced
+  with iCloud". Pushes stay quiet — every bookmark and new word read pushes. The launch sync
+  runs before any view listens, so the toast seeds from `pulls` and waits out the splash.
 - **Not synced:** the pick, the offset and the pin (`WordSelectionStore`) — per device.
 - Both entitlements files carry the same `ubiquity-kvstore-identifier`; differ, and the
   platforms see two stores. The app id needs the iCloud capability (Key-value storage).

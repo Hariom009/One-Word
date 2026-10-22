@@ -23,7 +23,8 @@ import AppKit   // NSHapticFeedbackManager — the Force Touch buzz
     .map { $0.prepareToPlay(); return $0 }
 
 /// One plank: the chosen book stands face-out and large on the left, the rest stand
-/// spine-out beside it in catalogue order. Tapping a spine pulls that book off the
+/// spine-out beside it in catalogue order, scrolling sideways once they outrun the
+/// width — the face-out book stays put and they slide in behind it. Tapping a spine pulls that book off the
 /// shelf — it turns to face you as it grows into the front — while the one it
 /// replaces turns back to its spine and slides home into its gap. Nothing here
 /// touches App Group storage — the owner decides how far the pick reaches.
@@ -62,8 +63,11 @@ struct DictionaryShelf: View {
     static let boardFoot: CGFloat = 0.936
     /// A spine's width as a share of its book's height — dictionaries are thick books.
     static let thickness: CGFloat = 0.17
-    /// How large the spines stand beside the face-out book, when the width allows.
+    /// How large the spines stand beside the face-out book.
     private static let spineScale: CGFloat = 0.85
+    /// The face-out cover's width as a share of the shelf's. A phone's shelf is narrow,
+    /// so its books take more of it.
+    private static let coverShare: CGFloat = isPhone ? 0.45 : 0.33
     private static let spineGap: CGFloat = 2
 
     init(selection: Binding<String>, padding: CGFloat = 28,
@@ -87,15 +91,16 @@ struct DictionaryShelf: View {
     }
 
     /// Where each book stands: the front one at the left edge, the spines packed left
-    /// to right from `start` in catalogue order, each as thick as it is tall.
-    private func positions(from start: CGFloat, spine: CGFloat) -> [String: CGFloat] {
+    /// to right from `start` in catalogue order, each as thick as it is tall — and
+    /// where the last spine ends, which is how wide the shelf scrolls.
+    private func positions(from start: CGFloat, spine: CGFloat) -> (xs: [String: CGFloat], end: CGFloat) {
         var xs: [String: CGFloat] = [front: 0]
         var x = start
         for book in Self.books where book.id != front {
             xs[book.id] = x
             x += spine * book.height + Self.spineGap
         }
-        return xs
+        return (xs, x)
     }
 
     var body: some View {
@@ -103,46 +108,66 @@ struct DictionaryShelf: View {
         return GeometryReader { g in
             let w: CGFloat = max(0, g.size.width - padding * 2)
             let h: CGFloat = max(0, g.size.height - padding * 2)
-            // The cover art's height at full size: a third of the width, or what the
+            // The cover art's height at full size: its share of the width, or what the
             // height leaves above the ribbon and caption (art + 26 in all).
-            let art: CGFloat = max(1, min(w * 0.33 / Self.coverAspect, h - 26))
+            let art: CGFloat = max(1, min(w * Self.coverShare / Self.coverAspect, h - 26))
             let floor: CGFloat = max(0, (h - art - 26) / 2) + art * Self.boardFoot
             // Air between the face-out book and the first spine: a tenth of the art, so it keeps
             // its proportion from the History sheet to a full-screen window.
             let shelfStart: CGFloat = art * (Self.coverAspect + 0.1)
-            // Shrink the spines if all of them wouldn't fit beside the front book.
-            let room: CGFloat = w - shelfStart - Self.spineGap * CGFloat(Self.books.count)
-            let tall: CGFloat = art * Self.thickness * Self.books.map(\.height).reduce(0, +)
-            let k: CGFloat = max(0, min(Self.spineScale, room / tall))
-            let xs = positions(from: shelfStart, spine: art * Self.thickness * k)
+            let k = Self.spineScale
+            let spine: CGFloat = art * Self.thickness * k
+            let (xs, end) = positions(from: shelfStart, spine: spine)
 
             ZStack(alignment: .topLeading) {
-                plank(t).offset(y: floor)
+                // Fixed, not scrolled: the books slide along it. Past the right edge
+                // when they overflow, so the shelf reads as going on.
+                plank(t)
+                    .frame(width: end > w ? g.size.width - padding : w)
+                    .offset(x: padding, y: padding + floor)
 
-                ForEach(Self.books) { book in
-                    let isFront = book.id == front
-                    let scale = (isFront ? 1 : k) * book.height
-                    let locked = !premium.allows(book.id)
-                    let opens = isFront && onOpen != nil
-                    ShelfBook(book: book, art: art, turn: isFront ? 1 : 0, locked: locked)
-                        // Gestures before the transforms, so the tap target moves and scales with the book.
-                        .contentShape(Rectangle())
-                        // A spine picks on one click; the face-out book opens on two.
-                        .onTapGesture(count: isFront ? 2 : 1) { isFront ? onOpen?(book) : pick(book) }
-                        .allowsHitTesting(!isFront || opens)
-                        .help(opens ? "Double-click to browse every word" : "")
-                        .accessibilityElement()
-                        .accessibilityLabel(book.name)
-                        .accessibilityAddTraits(isFront ? .isSelected : locked ? [] : .isButton)
-                        .accessibilityValue(locked ? "Premium" : "")
-                        .accessibilityAction { isFront ? onOpen?(book) : pick(book) }
-                        // Transforms, not layout: the flight never reflows the shelf. The board stands on the plank.
-                        .scaleEffect(scale, anchor: .topLeading)
-                        .offset(x: xs[book.id] ?? 0, y: floor - art * Self.boardFoot * scale)
-                        .modifier(Shake(taps: shakes[book.id] ?? 0))
-                        // The book coming to the front flies over the spines it crosses.
-                        .zIndex(isFront ? 1 : 0)
+                // Every book in one scroller, so the front one and a spine stay the same
+                // view through the flight. The front one is held at the left edge by
+                // offsetting it as far as the shelf has scrolled.
+                ScrollView(.horizontal) {
+                    GeometryReader { s in
+                        let scrolled: CGFloat = padding - s.frame(in: .scrollView).minX
+                        ZStack(alignment: .topLeading) {
+                            ForEach(Self.books) { book in
+                                let isFront = book.id == front
+                                let scale = (isFront ? 1 : k) * book.height
+                                let locked = !premium.allows(book.id)
+                                let opens = isFront && onOpen != nil
+                                let x = xs[book.id] ?? 0
+                                // A spine fades over its own width as it slides in behind the front book.
+                                let shown = isFront ? 1 : min(1, max(0, (x - scrolled - shelfStart) / spine + 1))
+                                ShelfBook(book: book, art: art, turn: isFront ? 1 : 0, locked: locked)
+                                    // Gestures before the transforms, so the tap target moves and scales with the book.
+                                    .contentShape(Rectangle())
+                                    // A spine picks on one click; the face-out book opens on two.
+                                    .onTapGesture(count: isFront ? 2 : 1) { isFront ? onOpen?(book) : pick(book) }
+                                    .allowsHitTesting(isFront ? opens : shown > 0)
+                                    .help(opens ? "Double-click to browse every word" : "")
+                                    .accessibilityElement()
+                                    .accessibilityLabel(book.name)
+                                    .accessibilityAddTraits(isFront ? .isSelected : locked ? [] : .isButton)
+                                    .accessibilityValue(locked ? "Premium" : "")
+                                    .accessibilityAction { isFront ? onOpen?(book) : pick(book) }
+                                    // Transforms, not layout: the flight never reflows the shelf. The board stands on the plank.
+                                    .scaleEffect(scale, anchor: .topLeading)
+                                    .offset(x: x + (isFront ? scrolled : 0), y: floor - art * Self.boardFoot * scale)
+                                    .opacity(shown)
+                                    .modifier(Shake(taps: shakes[book.id] ?? 0))
+                                    // The book coming to the front flies over the spines it crosses.
+                                    .zIndex(isFront ? 1 : 0)
+                            }
+                        }
+                    }
+                    .frame(width: max(w, end), height: h)
+                    .padding(padding)
                 }
+                .scrollIndicators(.hidden)
+                .scrollBounceBehavior(.basedOnSize, axes: .horizontal)
 
                 HStack(spacing: 6) {
                     Text("\(Wordbook.named(front).entryCount, format: .number) entries")
@@ -162,10 +187,9 @@ struct DictionaryShelf: View {
                 .font(.system(size: 12, weight: .medium))
                 .lineLimit(1)
                 // Clear of the front book's ribbon, which hangs 6.4% of its art past the plank.
-                .offset(y: floor + art * (1 - Self.boardFoot) + 10)
+                .offset(x: padding, y: padding + floor + art * (1 - Self.boardFoot) + 10)
+                .allowsHitTesting(false)
             }
-            .frame(width: w, height: h, alignment: .topLeading)
-            .padding(padding)
         }
         // The phone's buzz for a locked book. Nothing on the Mac: its buzz is the
         // NSHapticFeedbackManager call in `refuse`, and `.error` has no Mac rendering.

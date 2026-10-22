@@ -40,8 +40,6 @@ struct ProfileView: View {
     @AppStorage("profilePhoto") private var photo: Data?
     /// Set in Settings. Off, the raw count above is the whole story.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
-    /// Settings can hide Practice, which hands its tab back to Bookmarks.
-    @AppStorage("practiceEnabled") private var practiceEnabled = true
     /// The goal counts only the German shelf, so it waits for German to unlock.
     @Environment(PremiumViewModel.self) private var premium
 
@@ -549,18 +547,14 @@ struct ProfileView: View {
             }
 
             if isPhone {
-                // The tab bar's third slot is Practice once it's flagged on, owned and
-                // on, Bookmarks until then (RootView.tabOrder). Bookmarks gets a row here
-                // when Practice took its tab; Practice itself never gets one.
-                if Features.practice && premium.isUnlocked && practiceEnabled {
-                    NavigationLink { WordListView(wordbook: .saved) } label: {
-                        row(t, "Bookmarks") {
-                            GlyphIcon(.bookmarks, size: 15).foregroundStyle(t.muted)
-                        }
+                // Bookmarks has no tab on a phone (RootView.tabOrder), so it gets a row here.
+                NavigationLink { WordListView(wordbook: .saved) } label: {
+                    row(t, "Bookmarks") {
+                        GlyphIcon(.bookmarks, size: 15).foregroundStyle(t.muted)
                     }
-                    .buttonStyle(.plain)
-                    separator(t)
                 }
+                .buttonStyle(.plain)
+                separator(t)
             }
 
             Button { pane = .settings } label: {

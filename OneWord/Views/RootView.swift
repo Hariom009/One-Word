@@ -114,6 +114,8 @@ struct RootView: View {
         // Over the whole window, not the button: the browser round trip owns the
         // screen until it resolves, and nothing behind it should take a click.
         .busy(auth.busy, theme: Theme.of(scheme, doodle))
+        // Under the splash, and held until it lifts, so a sync at launch still shows.
+        .syncToast(paused: splashing)
         .overlay {
             if splashing {
                 SplashView(ground: Theme.of(scheme, doodle).background) {
@@ -130,14 +132,14 @@ struct RootView: View {
     }
 
     /// The phone's sections, in tab order. Every other pane pushes onto the tab
-    /// that asked for it: Dictionaries from Home's chip, Settings and Premium from
-    /// Profile's rows. The third tab is what you paid for: Practice once Premium is
-    /// owned (and the setting leaves it on), Bookmarks until then — Profile grows a
-    /// row for whichever of the two lost its tab. Search goes last: on iOS 26 it
-    /// detaches into its own button at the trailing edge, as in Music.
+    /// that asked for it: Bookmarks and Settings from Profile's rows, Premium from
+    /// its plan cards. The third tab is what you paid for: Practice once Premium is
+    /// owned (and the setting leaves it on), Dictionaries until then — Home's chip
+    /// reaches the shelf either way. Search goes last: on iOS 26 it detaches into
+    /// its own button at the trailing edge, as in Music.
     private var tabOrder: [Pane] {
         [.home] + (Features.history ? [.history] : [])
-            + [Features.practice && premium.isUnlocked && practiceEnabled ? .practice : .bookmarks, .profile, .search]
+            + [Features.practice && premium.isUnlocked && practiceEnabled ? .practice : .dictionaries, .profile, .search]
     }
     /// One path per tab, so Settings pushed from Profile doesn't also sit on Home.
     @State private var paths: [Pane: [Pane]] = [:]

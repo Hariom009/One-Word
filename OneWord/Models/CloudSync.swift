@@ -56,6 +56,12 @@ enum CloudSync {
 
     // MARK: - Wiring
 
+    /// Posted when a sync pulls in what the other device changed — SyncToast's cue.
+    static let didSync = Notification.Name("CloudSyncDidSync")
+    /// Syncs that pulled anything, this launch. The launch sync runs in the App's init,
+    /// before any view is listening, so the toast seeds itself from this.
+    private(set) static var pulls = 0
+
     private static let store = NSUbiquitousKeyValueStore.default
     private static let bookmarksKey = "bookmarks"
     private static let learnedKey = "learned"
@@ -91,11 +97,19 @@ enum CloudSync {
         if learned != cloudLearned { write(learned, learnedKey) }
 
         // Last, so the views — and this file's own observer — re-read both sides agreeing.
-        if bookmarks.saved != localBookmarks.saved {
+        let pulledBookmarks = bookmarks.saved != localBookmarks.saved
+        let pulledLearned = learned != localLearned
+        if pulledBookmarks {
             NotificationCenter.default.post(name: SavedWords.didChange, object: nil)
         }
-        if learned != localLearned {
+        if pulledLearned {
             NotificationCenter.default.post(name: LearnedWords.didChange, object: nil)
+        }
+        // Only what came DOWN is announced: a push follows every bookmark and every
+        // new word read, and a toast on each would be noise.
+        if pulledBookmarks || pulledLearned {
+            pulls += 1
+            NotificationCenter.default.post(name: didSync, object: nil)
         }
     }
 
