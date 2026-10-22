@@ -48,11 +48,12 @@ never overwrite an audit or the plan it challenged — only `00_Context/` is kep
 
 ```bash
 xcodebuild -project OneWord.xcodeproj -scheme OneWord -destination 'platform=macOS' build
+xcodebuild -project OneWord.xcodeproj -scheme OneWord -destination 'generic/platform=iOS Simulator' build
 ```
 
 ```bash
-for s in check_words check_related check_learned check_capture check_premium; do bash tools/$s.sh; done
+for s in check_words check_related check_learned check_capture check_sentences check_premium; do bash tools/$s.sh; done
 ```
 
-Both must be green. The gates compile Swift files by explicit path, so if you move a file,
+All three must be green. The gates compile Swift files by explicit path, so if you move a file,
 update the script that names it. Report failures with the output — never smooth over a red gate.

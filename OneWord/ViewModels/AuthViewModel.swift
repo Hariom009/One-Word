@@ -24,12 +24,25 @@
 
 import Foundation     // UserDefaults — the debug bypass below
 import Observation
+#if os(macOS)
 import AppKit          // NSWindow — the SDK's presenting window, not one of our views
+#else
+import UIKit           // UIWindow — the same anchor on iOS
+#endif
 import AuthenticationServices   // Sign in with Apple
 import CryptoKit       // SHA256 — the nonce Apple signs into its token
 import FirebaseCore    // FirebaseApp — for the preview guard below
 import FirebaseAuth
 import GoogleSignIn
+
+/// The window the sign-in sheets hang off. The same thing AuthenticationServices calls
+/// `ASPresentationAnchor`; named here so the view model and SignInView agree on it
+/// without either importing the other's framework.
+#if os(macOS)
+typealias PresentationAnchor = NSWindow
+#else
+typealias PresentationAnchor = UIWindow
+#endif
 
 @Observable
 final class AuthViewModel {
@@ -91,10 +104,16 @@ final class AuthViewModel {
     private static func demoPhotoURL() -> URL? {
         let url = URL.cachesDirectory.appending(path: "oneword-demo-avatar.png")
         guard !FileManager.default.fileExists(atPath: url.path) else { return url }
+        #if os(macOS)
         guard let tiff = NSImage(named: "male_profile_icon")?.tiffRepresentation,
               let png = NSBitmapImageRep(data: tiff)?.representation(using: .png, properties: [:]),
               (try? png.write(to: url)) != nil
         else { return nil }   // no photo is a real account state; the head covers it
+        #else
+        guard let png = UIImage(named: "male_profile_icon")?.pngData(),
+              (try? png.write(to: url)) != nil
+        else { return nil }
+        #endif
         return url
     }
     #endif
@@ -108,6 +127,14 @@ final class AuthViewModel {
     // Read off `user` rather than handed to the view directly, so ProfileView never
     // has to `import FirebaseAuth` to name a type. Keeps the view dumb and the SDK
     // on this side of the seam.
+    /// What Premium is keyed by. The demo tester gets a fixed id so a sandbox purchase
+    /// in a debug run survives the next launch like a real one.
+    #if DEBUG
+    var accountID: String? { user?.uid ?? (demo == nil ? nil : "demo") }
+    #else
+    var accountID: String? { user?.uid }
+    #endif
+
     #if DEBUG
     var displayName: String? { user?.displayName ?? demo?.name }
     var email: String? { user?.email ?? demo?.email }
@@ -166,14 +193,23 @@ final class AuthViewModel {
 
     /// Runs the Google flow, then trades the resulting ID token for a Firebase session.
     /// `window` is only ever the anchor for `ASWebAuthenticationSession`.
-    func signIn(presenting window: NSWindow) async {
+    func signIn(presenting window: PresentationAnchor) async {
         guard !busy else { return }
         busy = true
         error = nil
         defer { busy = false }
 
         do {
+            #if os(macOS)
             let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: window)
+            #else
+            // The iOS SDK presents from a view controller, not a window.
+            guard let root = window.rootViewController else {
+                error = "No window to present from."
+                return
+            }
+            let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: root)
+            #endif
             guard let idToken = result.user.idToken?.tokenString else {
                 // Documented nullable, and Firebase cannot build a credential without
                 // it — so this is a real failure, not something to paper over.
@@ -198,7 +234,7 @@ final class AuthViewModel {
 
     /// Runs Sign in with Apple, then trades Apple's identity token for a Firebase session.
     /// Same shape as the Google flow above; `window` anchors the system sheet.
-    func signInWithApple(presenting window: NSWindow) async {
+    func signInWithApple(presenting window: PresentationAnchor) async {
         guard !busy else { return }
         busy = true
         error = nil
@@ -222,7 +258,20 @@ final class AuthViewModel {
             // to Firebase then, since Apple won't send it again.
             let firebase = OAuthProvider.appleCredential(
                 withIDToken: idToken, rawNonce: nonce, fullName: credential.fullName)
-            _ = try await Auth.auth().signIn(with: firebase)   // the listener takes it from here
+            let result = try await Auth.auth().signIn(with: firebase)   // the listener takes it from here
+            // Firebase stores that name only when it creates the account. An account made
+            // before the name came through stays nameless and the Profile pane falls back
+            // to "Signed in" — so write it ourselves whenever Apple sent one and the
+            // account hasn't got one.
+            if result.user.displayName == nil, let fullName = credential.fullName {
+                let name = PersonNameComponentsFormatter().string(from: fullName)
+                if !name.isEmpty {
+                    let change = result.user.createProfileChangeRequest()
+                    change.displayName = name
+                    try await change.commitChanges()
+                    user = result.user   // same object, re-set so the pane re-reads the name
+                }
+            }
         } catch let e as ASAuthorizationError where e.code == .canceled {
             // Same as Google: closing the sheet is a decision, not an error.
             return
@@ -357,14 +406,14 @@ final class AuthViewModel {
 /// build's "nearly matches optional requirement" warning is the tell.
 private final class AppleAuthorization: NSObject,
     ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    private let window: NSWindow
+    private let window: PresentationAnchor
     /// Held here because the controller holds us weakly (delegate and
     /// presentationContextProvider are both `weak`). The caller holds us across the
     /// await, so nothing is freed mid-flow and nothing cycles.
     private var controller: ASAuthorizationController?
     private var continuation: CheckedContinuation<ASAuthorizationAppleIDCredential, Error>?
 
-    init(window: NSWindow) {
+    init(window: PresentationAnchor) {
         self.window = window
     }
 

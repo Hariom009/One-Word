@@ -157,6 +157,11 @@ final class RelatedWordsStore {
     private var settled: String?
     private var task: Task<Void, Never>?
     private var observer: (any NSObjectProtocol)?
+    /// "limit term" → its neighbours, for the index that is loaded. `related` runs inside
+    /// `body`, and a rank is 12k dot products on the main thread — fine once, not
+    /// on every re-render of the page. Ignored by observation on purpose: it is
+    /// filled during body evaluation, and a tracked write there would re-run it.
+    @ObservationIgnored private var memo: [String: [Word]] = [:]
 
     init() {
         // A capture updates the saved list in place, so `builtFor` alone would
@@ -199,6 +204,7 @@ final class RelatedWordsStore {
         // second build would report itself finished before it began.
         settled = nil
         index = nil
+        memo = [:]
         let previous = task
         previous?.cancel()
         task = Task { [weak self] in
@@ -206,6 +212,7 @@ final class RelatedWordsStore {
             guard !Task.isCancelled else { return }
             let index = await self?.build(bookID)
             guard !Task.isCancelled else { return }
+            self?.memo = [:]
             self?.index = index
             self?.settled = bookID
         }
@@ -217,9 +224,9 @@ final class RelatedWordsStore {
         builtFor == bookID && settled != bookID
     }
 
-    // ponytail: re-ranks once per body evaluation — measured 3.6ms at 12k words
-    // after precomputing the canonical terms. Memoize by term if a bigger
-    // dictionary ever lands.
+    /// Ranks once per term per index and remembers it — measured 3.6ms at 12k
+    /// words on a Mac in Release, which a Debug build on a phone turns into a
+    /// visible hitch on every re-render without the memo.
     /// `bookID` is required, not decorative: without it the store happily serves
     /// whichever index is loaded. Switching dictionaries from the browse list
     /// mounts a WordDetail whose `body` runs BEFORE its `.task` — so the first
@@ -229,8 +236,12 @@ final class RelatedWordsStore {
     /// `limit` is the graph's: it rings eight, the list shows three — the same ranking,
     /// so the list's three are always the graph's first three.
     func related(to word: Word, in bookID: String, limit: Int = 3) -> [Word] {
-        guard builtFor == bookID else { return [] }
-        return index?.nearest(to: word, limit: limit) ?? []
+        guard builtFor == bookID, let index else { return [] }
+        let key = "\(limit) \(word.term)"
+        if let known = memo[key] { return known }
+        let words = index.nearest(to: word, limit: limit)
+        memo[key] = words
+        return words
     }
 
 }

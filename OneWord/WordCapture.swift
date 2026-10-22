@@ -12,44 +12,21 @@
 //        /System/Library/CoreServices/pbs -flush   (or log out) or the menu
 //        item won't appear no matter how correct the plist is.
 //
+//  macOS only. iPhone has no Services menu; capture there would be a Share
+//  Extension, which is deferred (Docs/02_Plan/Resolved/IPHONE_PLAN_RESOLVED.md).
+//
 
+#if os(macOS)
 import SwiftUI
 import AppKit
 import WidgetKit
-import FirebaseCore
-import GoogleSignIn
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let provider = ServiceProvider()
 
-    /// In init, not applicationDidFinishLaunching: on macOS the window's views appear
-    /// before that fires, so RootView's `auth.restore()` asked Firebase for the app
-    /// first, found none, and every launch opened on the sign-in screen with the
-    /// keychain session ignored. The adaptor builds this delegate before any scene.
-    override init() {
-        super.init()
-        if Features.accounts { configureFirebase() }
-    }
-
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.servicesProvider = provider
-    }
-
-    /// Reads GoogleService-Info.plist from the bundle, then wires GoogleSignIn by hand.
-    ///
-    /// GIDSignIn does NOT read GoogleService-Info.plist — its only self-configuration
-    /// path is a GIDClientID key in Info.plist (GIDSignIn.m:1351), and an unconfigured
-    /// interactive signIn raises NSInvalidArgumentException (:723): a crash, not an
-    /// error you can catch. Handing it the id off FirebaseApp keeps
-    /// GoogleService-Info.plist the one place the client id lives.
-    private func configureFirebase() {
-        FirebaseApp.configure()
-        guard let clientID = FirebaseApp.app()?.options.clientID else {
-            assertionFailure("No CLIENT_ID in GoogleService-Info.plist — sign-in would crash.")
-            return
-        }
-        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
     }
 }
 
@@ -163,3 +140,4 @@ private struct CaptureHUDView: View {
         .fixedSize()
     }
 }
+#endif

@@ -9,9 +9,10 @@
 //  Only ever reached signed in — RootView gates the whole shell behind SignInView —
 //  so there is no signed-out branch here. Signing out drops you back to the door.
 //
-//  Editing is in place rather than in a sheet: one pane, one Edit button, and the
-//  header shows the draft as you type. Drafts only land on Save, so Cancel really
-//  cancels and the sidebar chip doesn't flicker through every keystroke.
+//  On the Mac editing is in place rather than in a sheet: one pane, one Edit button,
+//  and the header shows the draft as you type. A phone has no room to edit around
+//  the stats and rows, so there Edit pushes EditProfileView instead. Either way
+//  drafts only land on Save, so Cancel (or Back) really cancels.
 //
 //  Dumb view: the counts live in ProfileViewModel, the session in AuthViewModel,
 //  and the editable fields — your photo too — in UserDefaults (see Profile.swift).
@@ -22,8 +23,8 @@ import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY ne
 import UniformTypeIdentifiers   // UTType.image, for the photo picker
 
 struct ProfileView: View {
-    /// So the bookmark count can send you to the Bookmarks pane rather than
-    /// pushing a second copy of the same list on top of Profile.
+    /// So the bookmark count can send you to the Bookmarks pane on the Mac rather
+    /// than pushing a second copy of the same list on top of Profile.
     @Binding var pane: Pane
     @Environment(\.colorScheme) private var scheme
 
@@ -39,6 +40,8 @@ struct ProfileView: View {
     @AppStorage("profilePhoto") private var photo: Data?
     /// Set in Settings. Off, the raw count above is the whole story.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
+    /// Settings can hide Practice, which hands its tab back to Bookmarks.
+    @AppStorage("practiceEnabled") private var practiceEnabled = true
     /// The goal counts only the German shelf, so it waits for German to unlock.
     @Environment(PremiumViewModel.self) private var premium
 
@@ -67,7 +70,7 @@ struct ProfileView: View {
     var body: some View {
         let t = Theme.of(scheme, doodle)
         ScrollView {
-            VStack(alignment: .leading, spacing: 30) {
+            VStack(alignment: .leading, spacing: isPhone ? 28 : 30) {
                 header(t)
                 if editing { picture(t) }
                 stats(t)
@@ -75,13 +78,17 @@ struct ProfileView: View {
                 details(t)
                 rows(t)
                 if Features.accounts { footer(t) }
+                version(t)
             }
             .frame(maxWidth: 520, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(24)
+            .padding(.horizontal, isPhone ? 20 : 24)
+            .padding(.vertical, isPhone ? 12 : 24)
         }
         .paneBackground(t)
-        .paneHeader("Profile")
+        // On a phone the face and name are centred under the strip, so Edit moves
+        // up into the strip's corner where a phone keeps it.
+        .paneHeader("Profile") { if isPhone { editControls(t) } }
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             model.refresh()
         }
@@ -94,47 +101,74 @@ struct ProfileView: View {
     // MARK: - Header
 
     /// Face, name, email, and the one button that puts the pane into edit mode.
-    private func header(_ t: Theme) -> some View {
-        HStack(alignment: .center, spacing: 18) {
-            AvatarFace(avatar: shownAvatar, url: auth.photoURL,
-                       photo: editing ? draftPhoto : photo, size: 76, muted: t.muted)
-                .overlay(Circle().strokeBorder(t.hairline))
-
-            VStack(alignment: .leading, spacing: 5) {
-                if editing {
-                    // The headword face, in a field — the name stays the biggest
-                    // thing on the pane whether you're reading it or typing it.
-                    TextField("Your name", text: $draftName)
-                        .textFieldStyle(.plain)
-                        .font(doodle.face(28))
-                        .foregroundStyle(t.ink)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(8)))
-                        .overlay(RoundedRectangle(cornerRadius: t.radius(8)).strokeBorder(t.hairline))
-                        .onSubmit(save)
-                } else {
-                    Text(shownName)
-                        .font(doodle.face(28))
-                        .tracking(doodle.tracking(28))
-                        .foregroundStyle(t.ink)
-                        .lineLimit(1)
-                }
-                if let email = auth.email {
-                    Text(email)
-                        .font(.system(size: 12))
-                        .foregroundStyle(t.muted)
-                        .lineLimit(1)
+    /// A phone stacks the three in the middle, with Edit up in the strip.
+    @ViewBuilder private func header(_ t: Theme) -> some View {
+        if isPhone {
+            VStack(spacing: 14) {
+                AvatarFace(avatar: shownAvatar, url: auth.photoURL,
+                           photo: photo, size: 96, muted: t.muted)
+                    .overlay(Circle().strokeBorder(t.hairline))
+                VStack(spacing: 4) {
+                    nameLine(t).multilineTextAlignment(.center)
+                    emailLine(t)
                 }
             }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 4)
+        } else {
+            HStack(alignment: .center, spacing: 18) {
+                AvatarFace(avatar: shownAvatar, url: auth.photoURL,
+                           photo: editing ? draftPhoto : photo, size: 76, muted: t.muted)
+                    .overlay(Circle().strokeBorder(t.hairline))
 
-            Spacer(minLength: 8)
-            editControls(t)
+                VStack(alignment: .leading, spacing: 5) {
+                    nameLine(t)
+                    emailLine(t)
+                }
+
+                Spacer(minLength: 8)
+                editControls(t)
+            }
+        }
+    }
+
+    @ViewBuilder private func nameLine(_ t: Theme) -> some View {
+        if editing {
+            // The headword face, in a field — the name stays the biggest
+            // thing on the pane whether you're reading it or typing it.
+            TextField("Your name", text: $draftName)
+                .textFieldStyle(.plain)
+                .font(doodle.face(28))
+                .foregroundStyle(t.ink)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(8)))
+                .overlay(RoundedRectangle(cornerRadius: t.radius(8)).strokeBorder(t.hairline))
+                .onSubmit(save)
+        } else {
+            Text(shownName)
+                .font(doodle.face(28))
+                .tracking(doodle.tracking(28))
+                .foregroundStyle(t.ink)
+                .lineLimit(1)
+        }
+    }
+
+    @ViewBuilder private func emailLine(_ t: Theme) -> some View {
+        if let email = auth.email {
+            Text(email)
+                .font(.system(size: 12))
+                .foregroundStyle(t.muted)
+                .lineLimit(1)
         }
     }
 
     @ViewBuilder private func editControls(_ t: Theme) -> some View {
-        if editing {
+        if isPhone {
+            // Its own page on a phone, so the stats and Settings aren't in the way.
+            NavigationLink { EditProfileView() } label: { capsuleLabel("Edit", t, filled: false) }
+                .buttonStyle(.plain)
+        } else if editing {
             HStack(spacing: 6) {
                 capsuleButton("Cancel", t, filled: false) { editing = false }
                 capsuleButton("Save", t, filled: true, action: save)
@@ -165,34 +199,34 @@ struct ProfileView: View {
 
     private func capsuleButton(_ title: String, _ t: Theme,
                                filled: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Text(title)
-                .font(.system(size: 11, weight: .bold))
-                .textCase(.uppercase).tracking(1.5)
-                .foregroundStyle(filled ? t.background : t.muted)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 7)
-                .background(filled ? t.ink : t.surface, in: Capsule())
-                .overlay(Capsule().strokeBorder(filled ? .clear : t.hairline))
-                .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
+        Button(action: action) { capsuleLabel(title, t, filled: filled) }
+            .buttonStyle(.plain)
     }
 
     // MARK: - Stats
 
     private func stats(_ t: Theme) -> some View {
-        HStack(alignment: .top, spacing: 48) {
-            // Bookmarks is a sidebar pane, so go *there* — the sidebar stays honest
-            // about where you are. Learned isn't a pane, so it pushes, same as the
-            // Learned row below.
-            Button { pane = .bookmarks } label: {
-                stat(t, model.bookmarks, model.bookmarks == 1 ? "bookmark" : "bookmarks") {
-                    BookmarkRibbon(size: 12)
+        // Two bare figures a hand apart on the Mac; two tiles sharing the width on
+        // a phone, where a figure with nothing around it reads as stray.
+        HStack(alignment: .top, spacing: isPhone ? 0 : 48) {
+            // Bookmarks is a sidebar pane on the Mac, so go *there* — the sidebar stays
+            // honest about where you are. A phone pushes it onto Profile instead of
+            // jumping tabs, so back returns here. Learned isn't a pane, so it pushes,
+            // same as the Learned row below.
+            let bookmarks = stat(t, model.bookmarks, model.bookmarks == 1 ? "bookmark" : "bookmarks") {
+                BookmarkRibbon(size: 12)
+            }
+            Group {
+                if isPhone {
+                    NavigationLink { WordListView(wordbook: .saved) } label: { bookmarks }
+                } else {
+                    Button { pane = .bookmarks } label: { bookmarks }
                 }
             }
             .buttonStyle(.plain)
             .help("Show your bookmarks")
+
+            if isPhone { Rectangle().fill(t.hairline).frame(width: 1).padding(.vertical, 16) }
 
             NavigationLink {
                 LearnedListView()
@@ -204,6 +238,8 @@ struct ProfileView: View {
             .buttonStyle(.plain)
             .help("Show the words you've learned")
         }
+        .fixedSize(horizontal: false, vertical: true)   // so the rule spans the card
+        .background { if isPhone { ProfileCard(t: t) } }
     }
 
     /// How far through the 3,000-word mark you are, shown only if you asked for it
@@ -251,20 +287,25 @@ struct ProfileView: View {
     /// which is the whole reason this is a function and not two copied blocks.
     private func stat<Icon: View>(_ t: Theme, _ count: Int, _ label: String,
                                   @ViewBuilder icon: () -> Icon) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        let size: CGFloat = isPhone ? 36 : 64
+        return VStack(alignment: isPhone ? .center : .leading, spacing: 4) {
             Text("\(count)")
-                .font(doodle.face(64))
-                .tracking(doodle.tracking(64))
+                .font(doodle.face(size))
+                .tracking(doodle.tracking(size))
                 .foregroundStyle(t.ink)
                 .contentTransition(.numericText())
             HStack(spacing: 6) {
                 icon()
                 Text(label)
                     .font(.system(size: 11, weight: .bold))
-                    .textCase(.uppercase).tracking(2)
+                    .textCase(.uppercase).tracking(isPhone ? 1.4 : 2)
                     .foregroundStyle(t.muted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
         }
+        .frame(maxWidth: isPhone ? .infinity : nil)
+        .padding(.vertical, isPhone ? 18 : 0)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
@@ -338,7 +379,44 @@ struct ProfileView: View {
     // it, the way a dictionary sets an entry's grammar notes. A bordered card and
     // three hairlines around three short facts read louder than the facts did.
 
-    private func details(_ t: Theme) -> some View {
+    @ViewBuilder private func details(_ t: Theme) -> some View {
+        if isPhone { phoneDetails(t) } else { wideDetails(t) }
+    }
+
+    /// The same facts as rows in one card, the way a phone lists settings-like facts.
+    private func phoneDetails(_ t: Theme) -> some View {
+        section("About you", t) {
+            VStack(spacing: 0) {
+                detailRow("Gender", Gender(rawValue: gender)?.name ?? Gender.unspecified.name, t)
+                if Features.accounts {
+                    Rectangle().fill(t.hairline).frame(height: 1).padding(.leading, 16)
+                    detailRow("Member since",
+                              auth.joined?.formatted(.dateTime.month(.wide).year()) ?? "\u{2014}", t)
+                }
+            }
+            .background { ProfileCard(t: t) }
+
+            if let error = auth.error {
+                Text(error)
+                    .font(.system(size: 11))
+                    .foregroundStyle(t.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private func detailRow(_ title: String, _ value: String, _ t: Theme) -> some View {
+        HStack {
+            Text(title).foregroundStyle(t.muted)
+            Spacer(minLength: 12)
+            Text(value).foregroundStyle(t.ink).lineLimit(1)
+        }
+        .font(.system(size: 15))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+    }
+
+    private func wideDetails(_ t: Theme) -> some View {
         section("Details", t) {
             Grid(alignment: .leadingFirstTextBaseline,
                  horizontalSpacing: 24, verticalSpacing: 14) {
@@ -351,11 +429,15 @@ struct ProfileView: View {
                     }
                 }
                 // Read-only for good: the email is the account, and the join date is
-                // Firebase's record of it. Neither is ours to rewrite.
+                // Firebase's record of it. Neither is ours to rewrite. The phone's
+                // header already shows the email under the name, so there it's not
+                // said twice.
                 if Features.accounts {
-                    GridRow {
-                        label("Email", t)
-                        value(auth.email ?? "\u{2014}", t)
+                    if !isPhone {
+                        GridRow {
+                            label("Email", t)
+                            value(auth.email ?? "\u{2014}", t)
+                        }
                     }
                     GridRow {
                         label("Member since", t)
@@ -401,27 +483,51 @@ struct ProfileView: View {
 
     // MARK: - Learned, settings & sign out
 
-    /// Two rows, one idiom: Learned pushes a list, Settings switches pane. Settings
-    /// is off the sidebar now, so this row is the way in.
+    /// Learned pushes a list, Settings switches pane. Settings is off the sidebar
+    /// now, so this row is the way in. On a phone Learned lives only in the stats
+    /// above, so its row is left off here.
     private func rows(_ t: Theme) -> some View {
-        VStack(spacing: 8) {
-            NavigationLink {
-                LearnedListView()
-            } label: {
-                row(t, "Learned") { LearnedSeal(size: 16) }
+        // Separate tiles on the Mac; one card with inset rules on a phone, the way
+        // a phone groups a short list of ways onward.
+        VStack(spacing: isPhone ? 0 : 8) {
+            if !isPhone {
+                NavigationLink {
+                    LearnedListView()
+                } label: {
+                    row(t, "Learned") { LearnedSeal(size: 16) }
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
+
+            if isPhone {
+                // The tab bar's third slot is Practice once it's flagged on, owned and
+                // on, Bookmarks until then (RootView.tabOrder). Bookmarks gets a row here
+                // when Practice took its tab; Practice itself never gets one.
+                if Features.practice && premium.isUnlocked && practiceEnabled {
+                    NavigationLink { WordListView(wordbook: .saved) } label: {
+                        row(t, "Bookmarks") {
+                            GlyphIcon(.bookmarks, size: 15).foregroundStyle(t.muted)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    separator(t)
+                }
+            }
 
             Button { pane = .settings } label: {
                 row(t, "Settings") {
-                    // No hand-drawn gear in the set, so this one stays a symbol in
-                    // both themes — GlyphIcon falls back on its own.
                     GlyphIcon(.settings, size: 15)
                         .foregroundStyle(t.muted)
                 }
             }
             .buttonStyle(.plain)
         }
+        .background { if isPhone { ProfileCard(t: t) } }
+    }
+
+    /// The rule between two rows of the phone's card, inset past the icon column.
+    private func separator(_ t: Theme) -> some View {
+        Rectangle().fill(t.hairline).frame(height: 1).padding(.leading, 42)
     }
 
     private func row<Icon: View>(_ t: Theme, _ title: String,
@@ -430,27 +536,53 @@ struct ProfileView: View {
             icon()
                 .frame(width: 16)
             Text(title)
-                .font(.system(size: 13))
+                .font(.system(size: isPhone ? 15 : 13))
             Spacer(minLength: 6)
             Image(systemName: "chevron.right")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(t.muted)
         }
         .foregroundStyle(t.ink)
-        .padding(.horizontal, 14)
-        .padding(.vertical, 11)
-        .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(10)))
-        .overlay(RoundedRectangle(cornerRadius: t.radius(10)).strokeBorder(t.hairline))
+        .padding(.horizontal, isPhone ? 16 : 14)
+        .padding(.vertical, isPhone ? 14 : 11)
+        .background { if !isPhone { RoundedRectangle(cornerRadius: t.radius(10)).fill(t.surface) } }
+        .overlay { if !isPhone { RoundedRectangle(cornerRadius: t.radius(10)).strokeBorder(t.hairline) } }
         .contentShape(Rectangle())
     }
 
-    private func footer(_ t: Theme) -> some View {
-        Button("Sign out") { auth.signOut() }
+    @ViewBuilder private func footer(_ t: Theme) -> some View {
+        if isPhone {
+            // A row of its own, last, like every phone's sign-out.
+            Button { auth.signOut() } label: {
+                Text("Sign Out")
+                    .font(.system(size: 15))
+                    .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background { ProfileCard(t: t) }
+                    .contentShape(Rectangle())
+            }
             .buttonStyle(.plain)
-            .font(.system(size: 11, weight: .bold))
-            .textCase(.uppercase)
-            .tracking(1.5)
-            .foregroundStyle(.red)
+        } else {
+            Button("Sign out") { auth.signOut() }
+                .buttonStyle(.plain)
+                .font(.system(size: 11, weight: .bold))
+                .textCase(.uppercase)
+                .tracking(1.5)
+                .foregroundStyle(.red)
+                .frame(maxWidth: .infinity)
+        }
+    }
+
+    /// The app's version and build, last on the pane. Same source as the feedback
+    /// trailer, so a bug report and this line name the same build.
+    private func version(_ t: Theme) -> some View {
+        let info = Bundle.main.infoDictionary
+        let short = info?["CFBundleShortVersionString"] as? String ?? "?"
+        let build = info?["CFBundleVersion"] as? String ?? "?"
+        return Text("Version \(short) (\(build))")
+            .font(.system(size: 11))
+            .foregroundStyle(t.muted)
             .frame(maxWidth: .infinity)
     }
 
@@ -493,6 +625,28 @@ struct ProfileView: View {
     }
 }
 
+/// The Edit / Cancel / Save pill — EditProfileView's Save wears it too.
+func capsuleLabel(_ title: String, _ t: Theme, filled: Bool) -> some View {
+    Text(title)
+        .font(.system(size: 11, weight: .bold))
+        .textCase(.uppercase).tracking(1.5)
+        .foregroundStyle(filled ? t.background : t.muted)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 7)
+        .background(filled ? t.ink : t.surface, in: Capsule())
+        .overlay(Capsule().strokeBorder(filled ? .clear : t.hairline))
+        .contentShape(Capsule())
+}
+
+/// The phone's grouped card: Profile's stats, facts and rows, and Edit Profile's fields.
+struct ProfileCard: View {
+    let t: Theme
+    var body: some View {
+        RoundedRectangle(cornerRadius: t.radius(12)).fill(t.surface)
+            .overlay(RoundedRectangle(cornerRadius: t.radius(12)).strokeBorder(t.hairline))
+    }
+}
+
 // MARK: - The face
 
 /// One face at one size: the illustration you picked, or the account photo, or the
@@ -512,8 +666,8 @@ struct AvatarFace: View {
             if avatar == .photo {
                 // ponytail: decoded per render. It's a ≤512px JPEG; cache the
                 // NSImage if this ever shows up in a profile.
-                if let photo, let image = NSImage(data: photo) {
-                    Image(nsImage: image)
+                if let photo, let image = Self.image(photo) {
+                    image
                         .resizable()
                         .interpolation(.high)
                         .scaledToFill()
@@ -543,6 +697,14 @@ struct AvatarFace: View {
         .accessibilityHidden(true)   // the name beside it already says who this is
     }
 
+    private static func image(_ data: Data) -> Image? {
+        #if os(macOS)
+        NSImage(data: data).map(Image.init(nsImage:))
+        #else
+        UIImage(data: data).map(Image.init(uiImage:))
+        #endif
+    }
+
     /// The generic head, for a face with no picture behind it yet.
     private var head: some View {
         Image(systemName: "person.crop.circle")
@@ -569,7 +731,7 @@ struct AccountAvatar: View {
 /// One choice in the picture picker: the face itself, ringed in ink when it's the
 /// one you're on. No caption — the grid is read by looking, and the name rides on
 /// `.help` and the accessibility label instead.
-private struct AvatarTile: View {
+struct AvatarTile: View {
     let avatar: Avatar
     let url: URL?
     let photo: Data?
@@ -598,20 +760,12 @@ private struct AvatarTile: View {
 
 /// The learned mark: a filled green seal that carries its own colour, so nothing
 /// here tints it. Same idea as BookmarkRibbon — the glyph is the state.
-///
-/// Already an illustration rather than a symbol, so the doodle theme doesn't
-/// change its nature — only its hand, from the drawn seal to the drawn tick.
 struct LearnedSeal: View {
     var size: CGFloat = 14
-    @Environment(\.doodle) private var doodle
 
     var body: some View {
-        if doodle.icons {
-            Doodle("check_doodle", size: size)
-        } else {
-            Image("learned_icon").resizable().scaledToFit()
-                .frame(width: size, height: size)
-        }
+        Image("learned_icon").resizable().scaledToFit()
+            .frame(width: size, height: size)
     }
 }
 

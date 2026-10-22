@@ -8,14 +8,19 @@
 //
 
 import SwiftUI
-import AppKit
+import AVFoundation
 import WidgetKit
+#if os(macOS)
+import AppKit   // NSHapticFeedbackManager — the Force Touch buzz
+#endif
 
 /// The shelf's flip: a half-second book pull, one beat like the swap itself.
-/// Loaded once, same shape as SentenceView's shuffle.
-@MainActor private let flipSound = Bundle.main
+/// Loaded once, same shape as SentenceView's shuffle. `prepareToPlay` so the first
+/// pull is as instant as the rest.
+@MainActor private let flipSound: AVAudioPlayer? = Bundle.main
     .url(forResource: "book_pull", withExtension: "mp3")
-    .flatMap { NSSound(contentsOf: $0, byReference: true) }
+    .flatMap { try? AVAudioPlayer(contentsOf: $0) }
+    .map { $0.prepareToPlay(); return $0 }
 
 /// One plank: the chosen book stands face-out and large on the left, the rest stand
 /// spine-out beside it in catalogue order. Tapping a spine pulls that book off the
@@ -45,6 +50,8 @@ struct DictionaryShelf: View {
     @State private var swapping = false
     /// Refused taps per locked book; each one animates a whole `Shake`.
     @State private var shakes: [String: CGFloat] = [:]
+    /// Every refusal, Reduce Motion or not — the iOS haptic fires off this, the shake off `shakes`.
+    @State private var refusals = 0
 
     private static let books = Wordbook.all.filter { $0.id != Wordbook.saved.id }
     // ponytail: 0.69 is the widest cover art (570×827); the narrower ones fit by height.
@@ -160,6 +167,9 @@ struct DictionaryShelf: View {
             .frame(width: w, height: h, alignment: .topLeading)
             .padding(padding)
         }
+        // The phone's buzz for a locked book. Nothing on the Mac: its buzz is the
+        // NSHapticFeedbackManager call in `refuse`, and `.error` has no Mac rendering.
+        .sensoryFeedback(.error, trigger: refusals)
         .paneBackground(t)
         // Warm every book's decode off the main thread, so the first swap to a book
         // doesn't stall the flight on a multi-MB JSON parse for its entry count.
@@ -194,9 +204,13 @@ struct DictionaryShelf: View {
     }
 
     /// A locked book stays on the shelf and shakes its head, with a buzz through the
-    /// trackpad (Force Touch only — elsewhere it's silent). The bar sells it.
+    /// trackpad (Force Touch only — elsewhere it's silent) or the phone. The bar sells it.
     private func refuse(_ book: Wordbook) {
+        #if os(macOS)
         NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
+        #else
+        refusals += 1
+        #endif
         guard !reduceMotion else { return }
         withAnimation(.linear(duration: 0.4)) { shakes[book.id, default: 0] += 1 }
     }

@@ -97,6 +97,16 @@ def main() -> None:
             images.append({"filename": name, "idiom": "mac",
                            "scale": f"{scale}x", "size": f"{pt}x{pt}"})
 
+    # iOS takes one 1024 and masks its own corners; it must be opaque. The Mac master is
+    # flattened onto white so the same artwork serves both, inset and all.
+    # ponytail: the icon-mac-*.png files on disk predate this script and were not made
+    # by it — running it rewrites the whole set under new names. Mind that before a regen.
+    ios = Image.new("RGB", (CANVAS, CANVAS), "white")
+    ios.paste(master, mask=master.split()[-1])
+    ios.save(OUT / "icon_ios_1024.png")
+    images.append({"filename": "icon_ios_1024.png", "idiom": "universal",
+                   "platform": "ios", "size": "1024x1024"})
+
     (OUT / "Contents.json").write_text(
         json.dumps({"images": images, "info": {"author": "xcode", "version": 1}}, indent=2) + "\n")
     print(f"wrote {len(images)} icons to {OUT} from {src_path.name}")

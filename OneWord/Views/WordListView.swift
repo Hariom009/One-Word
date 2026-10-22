@@ -28,6 +28,14 @@ struct WordListView: View {
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @State private var model: WordListViewModel
     @State private var query = ""
+    /// The Search pane's matches, delivered by the background search below.
+    @State private var found: [WordListViewModel.Hit] = []
+    /// How many words that search covers; 0 until the books have been decoded.
+    @State private var total = 0
+    /// How far off the top of the list, 0…1 — on a phone the header blurs away with it.
+    @State private var fade: CGFloat = 0
+    /// The word a row opened, shown as a sheet over the list.
+    @State private var opened: WordListViewModel.Hit?
     @Environment(\.colorScheme) private var scheme
     /// Search spans locked books too: their words are listed as a teaser, meaning withheld.
     @Environment(PremiumViewModel.self) private var premium
@@ -46,7 +54,8 @@ struct WordListView: View {
     @Environment(\.doodle) private var doodle
     var body: some View {
         let t = Theme.of(scheme, doodle)
-        let results = model.results(for: query)
+        // Bookmarks filters its few rows in place; Search is answered off main.
+        let results = everywhere ? found : model.results(for: query)
         // Matches can come from anywhere, so each one has to say where from.
         // A pinned pane needs no tag — every row is the book in the title.
         let mark = everywhere
@@ -63,9 +72,10 @@ struct WordListView: View {
                         // The shelf travels with the hit: a word found in Medicine
                         // while Everyday English is open must not be logged — or
                         // opened — against Everyday English.
-                        NavigationLink { WordDetail(word: hit.word, shelf: hit.shelf) } label: {
+                        Button { opened = hit } label: {
                             row(hit, t, mark: mark, scale: scale)
                         }
+                        .buttonStyle(.plain)
                     }
                         // Clear, so the pane's ground — Midnight's glow included —
                         // shows through the rows instead of stopping at them.
@@ -75,16 +85,20 @@ struct WordListView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .tint(t.accent)
+                .tracksScrollFade($fade)
             }
         }
         .paneBackground(t)
         // The field rides in the header strip — no row of its own above the list,
         // which a Bookmarks pane holding three words never needed.
         // A bundled book's list is only ever pushed, from the shelf; Bookmarks and Search are panes.
-        .paneHeader(wordbook?.shortName ?? "Search", back: wordbook != nil && wordbook != .saved) {
+        .paneHeader(wordbook?.shortName ?? "Search", back: wordbook != nil && wordbook != .saved,
+                    ribbon: isPhone && wordbook?.id == SavedWords.resource,
+                    fade: isPhone && !results.isEmpty ? fade : 0) {
             // How many you've kept. Only Bookmarks — every other pane's total is
             // already in the search prompt, and it never changes while you look at it.
-            if wordbook?.id == SavedWords.resource {
+            // A phone has no room for it; the ribbon leads the title there instead.
+            if !isPhone && wordbook?.id == SavedWords.resource {
                 HStack(spacing: 6) {
                     BookmarkRibbon(size: 18)
                     Text("\(model.count)")
@@ -106,9 +120,60 @@ struct WordListView: View {
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             if wordbook?.id == SavedWords.resource { model.reload() }
         }
+        // Re-runs per keystroke and cancels the one before it. The cancelled search
+        // can still resume after the newer one landed, so it checks before writing.
+        .task(id: query) {
+            guard everywhere else { return }
+            let hits = await WordListViewModel.search(query)
+            guard !Task.isCancelled else { return }
+            found = hits
+        }
+        .task { if everywhere { total = await WordListViewModel.everywhereCount() } }
+        .sheet(item: $opened) { hit in
+            // The sheet's own stack, so a related word can still push within it.
+            NavigationStack {
+                WordDetail(word: hit.word, shelf: hit.shelf, close: { opened = nil })
+            }
+            .frame(minWidth: 520, idealWidth: 600, minHeight: 560, idealHeight: 680)
+        }
     }
 
+    @ViewBuilder
     private func row(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool, scale: CGFloat) -> some View {
+        if isPhone { phoneRow(hit, t, mark: mark) } else { wideRow(hit, t, mark: mark, scale: scale) }
+    }
+
+    /// The Mac's three columns are 760pt wide; a phone has 390. Two lines instead:
+    /// the word with its part of speech, the Hindi gloss beneath, the book at the
+    /// end. No swell — there is no pointer to swell for.
+    private func phoneRow(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(hit.word.term)
+                        .font(doodle.face(19))
+                        .foregroundStyle(t.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    Text(hit.word.partOfSpeech)
+                        .font(.system(size: 11).italic())
+                        .foregroundStyle(t.muted)
+                        .lineLimit(1)
+                }
+                if showHindi && premium.allows(hit.shelf) && !hit.word.hindi.isEmpty {
+                    Text(hit.word.hindi)
+                        .font(.system(size: 13))
+                        .foregroundStyle(t.muted)
+                        .lineLimit(1)
+                }
+            }
+            Spacer(minLength: 0)
+            if mark { shelfMark(hit.shelf, t) }
+        }
+        .padding(.vertical, 6)
+    }
+
+    private func wideRow(_ hit: WordListViewModel.Hit, _ t: Theme, mark: Bool, scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 64) {
             // Size only, never layout — see SwellingTerm. The vertical padding
             // below leaves room for the biggest step.
@@ -164,10 +229,13 @@ struct WordListView: View {
             emptyMark(t)
             VStack(spacing: 2) {
                 Text(headline)
-                    .font(doodle.face(30)).tracking(doodle.tracking(30)).foregroundStyle(t.ink)
+                    .font(doodle.face(isPhone ? 24 : 30)).tracking(doodle.tracking(isPhone ? 24 : 30))
+                    .foregroundStyle(t.ink)
+                    .multilineTextAlignment(.center)
                 if !query.isEmpty {
                     Text("\u{201C}\(query)\u{201D}")
-                        .font(doodle.face(30).italic()).foregroundStyle(t.ink)
+                        .font(doodle.face(isPhone ? 24 : 30).italic()).foregroundStyle(t.ink)
+                        .lineLimit(1).minimumScaleFactor(0.6)
                 }
             }
             Text(footnote)
@@ -177,13 +245,11 @@ struct WordListView: View {
                 .frame(maxWidth: 340)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(40)
+        .padding(isPhone ? 24 : 40)
     }
 
-    /// The mark over an empty pane. Classic mode stamps the BOOK's own symbol —
-    /// the one on its cover — which the doodle set has no per-dictionary answer
-    /// for. It gives the nearest thing it does have: the shelf, or the ribbon when
-    /// the empty pane is Bookmarks.
+    /// The mark over an empty pane: the shelf, or the ribbon when the empty pane
+    /// is Bookmarks.
     @ViewBuilder
     private func emptyMark(_ t: Theme) -> some View {
         if query.isEmpty {
@@ -191,7 +257,6 @@ struct WordListView: View {
                       size: 52, weight: .thin)
                 .foregroundStyle(t.accent.opacity(0.5))
         } else {
-            // No drawing for "nothing matched" in either set — the hexagon stands.
             Image(systemName: "hexagon")
                 .font(.system(size: 52, weight: .thin))
                 .foregroundStyle(t.accent.opacity(0.5))
@@ -205,7 +270,9 @@ struct WordListView: View {
 
     private var footnote: String {
         if everywhere {
-            return "\(WordListViewModel.everywhereCount.formatted()) words across \(WordListViewModel.everywhereBooks.count) dictionaries,searched together each result says which one it came from."
+            let scope = total > 0 ? "\(total.formatted()) words across \(WordListViewModel.everywhereBooks.count) dictionaries"
+                                  : "Every dictionary"
+            return "\(scope), searched together. Each result says which one it came from."
         }
         if query.isEmpty {
             return "Bookmark a word from its page, or select one in any app and choose Services \u{25B8} Save to One Word. Either way it lands here."

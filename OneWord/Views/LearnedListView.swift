@@ -20,6 +20,8 @@ struct LearnedListView: View {
 
     @State private var log: [LearnedWord] = []
     @State private var query = ""
+    /// The entry a row opened, shown as a sheet over the log.
+    @State private var opened: LearnedWord?
     // Cached, not computed: re-grouping the whole log on every `body` pass is
     // what made the magnification stutter.
     @State private var lines: [Line] = []
@@ -51,14 +53,13 @@ struct LearnedListView: View {
                             // swell too, Dock-style, which resized every word on screen at
                             // once and read as a glitch rather than a focus.
                             HoverSwell { scale in
-                                NavigationLink {
-                                    // The shelf travels with the entry, so re-opening a word
-                                    // from the log doesn't log it again under whatever
-                                    // dictionary happens to be selected.
-                                    WordDetail(word: entry.word, shelf: entry.shelf)
-                                } label: {
+                                // Opens as a sheet. The shelf travels with the entry, so
+                                // re-opening a word from the log doesn't log it again under
+                                // whatever dictionary happens to be selected.
+                                Button { opened = entry } label: {
                                     row(entry, t, scale)
                                 }
+                                .buttonStyle(.plain)
                             }
                             .listRowBackground(Color.clear)
                             .listRowSeparatorTint(t.hairline)
@@ -71,6 +72,13 @@ struct LearnedListView: View {
             }
         }
         .paneBackground(t)
+        .sheet(item: $opened) { entry in
+            // The sheet's own stack, so a related word can still push within it.
+            NavigationStack {
+                WordDetail(word: entry.word, shelf: entry.shelf, close: { opened = nil })
+            }
+            .frame(minWidth: 520, idealWidth: 600, minHeight: 560, idealHeight: 680)
+        }
         // Only ever pushed, from Profile.
         .paneHeader("Learned", back: true) {
             HeaderSearchField(prompt: "Search \(log.count) words", text: $query)
@@ -116,12 +124,14 @@ struct LearnedListView: View {
     /// the words, the date over the part of speech. The date used to ride inside
     /// the label, which made every section a full line of tracked capitals.
     private func header(_ day: Date, _ t: Theme) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
+        // The label's column is the term's on the Mac; a phone has no columns, so
+        // the date simply follows the label.
+        HStack(alignment: .firstTextBaseline, spacing: isPhone ? 10 : Self.gutter) {
             Text(label(for: day))
                 .font(.system(size: 11, weight: .bold))
                 .textCase(.uppercase).tracking(1.6)
                 .foregroundStyle(t.ink.opacity(0.8))
-                .frame(width: Self.termWidth, alignment: .leading)
+                .frame(width: isPhone ? nil : Self.termWidth, alignment: .leading)
             if day >= LearnedWord.epoch {
                 Text(day.formatted(.dateTime.day().month(.wide).year()))
                     .font(.system(size: 11))
@@ -145,7 +155,38 @@ struct LearnedListView: View {
         return day.formatted(.dateTime.weekday(.wide))
     }
 
+    @ViewBuilder
     private func row(_ entry: LearnedWord, _ t: Theme, _ scale: CGFloat) -> some View {
+        if isPhone { phoneRow(entry, t) } else { wideRow(entry, t, scale) }
+    }
+
+    /// Two lines for a phone's width: the word with its part of speech, the
+    /// when-and-where beneath. No swell — nothing hovers.
+    private func phoneRow(_ entry: LearnedWord, _ t: Theme) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(entry.word.term)
+                    .font(doodle.face(19))
+                    .foregroundStyle(t.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(entry.word.partOfSpeech)
+                    .font(.system(size: 11).italic())
+                    .foregroundStyle(t.muted)
+                    .lineLimit(1)
+            }
+            Text(meta(of: entry))
+                .font(.system(size: 11).monospacedDigit())
+                .foregroundStyle(t.muted)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 6)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(summary(of: entry))
+    }
+
+    private func wideRow(_ entry: LearnedWord, _ t: Theme, _ scale: CGFloat) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: Self.gutter) {
             // Size only, never layout — see SwellingTerm. The vertical padding
             // below leaves room for the biggest step, so nothing collides.

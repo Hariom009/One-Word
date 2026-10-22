@@ -2,11 +2,9 @@
 //  Appearance.swift
 //  OneWord
 //
-//  The app's appearance preference. `.system` follows the Mac; light/dark force it.
+//  The app's appearance preference. `.system` follows the device's light or dark.
 //  `.midnight` is a palette as well as a scheme: it forces dark and repaints the
-//  app with its own ground and accent (Theme.midnight). It sits beside light and
-//  dark rather than being a switch of its own because it can't be combined with
-//  either of them. `.umber` is the same kind of thing built the opposite way: warm,
+//  app with its own ground and accent (Theme.midnight). `.umber` is the same kind of thing built the opposite way: warm,
 //  flat and serif where Midnight is cool, lit and sans (Theme.umber).
 //
 
@@ -14,18 +12,25 @@ import SwiftUI
 
 /// nonisolated: a plain value, and `DoodleTheme.current` reads it off the main actor.
 nonisolated enum Appearance: String, CaseIterable, Identifiable {
-    case system, light, dark, midnight, umber
+    case system, midnight, umber
 
     /// What a fresh install, a missing key or an unknown string resolves to.
     static let initial = Appearance.midnight
 
     var id: String { rawValue }
 
+    /// The stored string, parsed. "light" and "dark" were their own appearances once;
+    /// they read as System now, which covers both, rather than jumping to Midnight.
+    static func stored(_ raw: String?) -> Appearance {
+        switch raw {
+        case "light", "dark": return .system
+        default:              return raw.flatMap(Appearance.init(rawValue:)) ?? .initial
+        }
+    }
+
     var name: String {
         switch self {
         case .system:   return "System"
-        case .light:    return "Light"
-        case .dark:     return "Dark"
         case .midnight: return "Midnight"
         case .umber:    return "Umber"
         }
@@ -34,9 +39,8 @@ nonisolated enum Appearance: String, CaseIterable, Identifiable {
     /// The scheme to force, or nil to follow the system.
     var colorScheme: ColorScheme? {
         switch self {
-        case .system:                  return nil
-        case .light:                   return .light
-        case .dark, .midnight, .umber: return .dark
+        case .system:           return nil
+        case .midnight, .umber: return .dark
         }
     }
 
@@ -46,8 +50,8 @@ nonisolated enum Appearance: String, CaseIterable, Identifiable {
     /// to answer here before it compiles.
     var paintsPalette: Bool {
         switch self {
-        case .system, .light, .dark: return false
-        case .midnight, .umber:      return true
+        case .system:           return false
+        case .midnight, .umber: return true
         }
     }
 }

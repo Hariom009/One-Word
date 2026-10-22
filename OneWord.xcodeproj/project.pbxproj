@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		09D61080727D9856F6A3588B /* WordWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E911C1375108796596E7A0B /* WordWidget.swift */; };
+		0A1F0C5E7D2B4E9A8C3D6F01 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0A1F0C5E7D2B4E9A8C3D6F00 /* PrivacyInfo.xcprivacy */; };
 		0BEA103E6CDE9885B0342894 /* pets.json in Resources */ = {isa = PBXBuildFile; fileRef = 566C433B829A765BEBF251DB /* pets.json */; };
 		0BFF165D1B1C37B579AF9882 /* emotions.json in Resources */ = {isa = PBXBuildFile; fileRef = 251E69A6F52172455BF1BF41 /* emotions.json */; };
 		223036CF8FCA794ED8CB88DB /* WordWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD252FD12B6844492A537A1 /* WordWidgetView.swift */; };
-		454D75AFB332E44669580C25 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44AE8128AEAEF5A8205EEF86 /* Cocoa.framework */; };
 		4D6488A088DDD6EF3A0E5785 /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = 55C811B3A327A36356E4F0A2 /* words.json */; };
 		51D1930D2882FFBC14111DE0 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9090519E3AF740D8B3721FE /* Word.swift */; };
 		5A17D0C3E4B8419DA07C1E22 /* startup.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B9E1F52D8408BB6A45D01 /* startup.json */; };
@@ -62,10 +62,10 @@
 /* Begin PBXFileReference section */
 		01BF4AF016573226ACF62597 /* urdu.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = urdu.json; path = OneWord/Shared/urdu.json; sourceTree = "<group>"; };
 		081C7561D3D5DCF0D2323A5A /* german.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = german.json; path = OneWord/Shared/german.json; sourceTree = "<group>"; };
+		0A1F0C5E7D2B4E9A8C3D6F00 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = OneWordWidget/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1B567267BBFDED8FB15FC6DF /* philosophy.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = philosophy.json; path = OneWord/Shared/philosophy.json; sourceTree = "<group>"; };
 		24FFB551199DA0B818E57D55 /* WordProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordProvider.swift; path = OneWord/Shared/WordProvider.swift; sourceTree = "<group>"; };
 		251E69A6F52172455BF1BF41 /* emotions.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = emotions.json; path = OneWord/Shared/emotions.json; sourceTree = "<group>"; };
-		44AE8128AEAEF5A8205EEF86 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		55C811B3A327A36356E4F0A2 /* words.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = words.json; path = OneWord/Shared/words.json; sourceTree = "<group>"; };
 		566C433B829A765BEBF251DB /* pets.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = pets.json; path = OneWord/Shared/pets.json; sourceTree = "<group>"; };
 		5AD252FD12B6844492A537A1 /* WordWidgetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordWidgetView.swift; path = OneWordWidget/WordWidgetView.swift; sourceTree = "<group>"; };
@@ -112,7 +112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				454D75AFB332E44669580C25 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,14 +128,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		190425956760B12850A6BA7E /* OS X */ = {
-			isa = PBXGroup;
-			children = (
-				44AE8128AEAEF5A8205EEF86 /* Cocoa.framework */,
-			);
-			name = "OS X";
-			sourceTree = "<group>";
-		};
 		660DA6AB7808D2D0208B1301 /* SharedRefs */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,14 +151,6 @@
 			name = SharedRefs;
 			sourceTree = "<group>";
 		};
-		77938971AE954C210D1FC7EE /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				190425956760B12850A6BA7E /* OS X */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B55108BFDE6446D4995E3CA3 /* OneWordWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +159,7 @@
 				6E911C1375108796596E7A0B /* WordWidget.swift */,
 				5AD252FD12B6844492A537A1 /* WordWidgetView.swift */,
 				983BD001F6B3181E50330BCB /* RefreshWordIntent.swift */,
+				0A1F0C5E7D2B4E9A8C3D6F00 /* PrivacyInfo.xcprivacy */,
 			);
 			name = OneWordWidget;
 			sourceTree = SOURCE_ROOT;
@@ -185,7 +169,6 @@
 			children = (
 				BFCC5B583011545500C0FE1F /* OneWord */,
 				BFCC5B573011545500C0FE1F /* Products */,
-				77938971AE954C210D1FC7EE /* Frameworks */,
 				B55108BFDE6446D4995E3CA3 /* OneWordWidget */,
 				660DA6AB7808D2D0208B1301 /* SharedRefs */,
 			);
@@ -299,6 +282,7 @@
 				DB35142D72564E138B8FA8E8 /* classical.json in Resources */,
 				F4D4B5616D7628DBC8D8FDFA /* urdu.json in Resources */,
 				88971BAE2A7B087FC0689195 /* german.json in Resources */,
+				0A1F0C5E7D2B4E9A8C3D6F01 /* PrivacyInfo.xcprivacy in Resources */,
 				0BEA103E6CDE9885B0342894 /* pets.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +339,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OneWordWidget/OneWordWidget.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = "OneWordWidget/OneWordWidget-iOS.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = "OneWordWidget/OneWordWidget-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LAP54KU2SV;
@@ -365,16 +351,21 @@
 					"$(inherited)",
 					"@executable_path/../../../../Frameworks",
 				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariom.swift.oneword.OneWordWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
-				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -382,6 +373,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OneWordWidget/OneWordWidget.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = "OneWordWidget/OneWordWidget-iOS.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = "OneWordWidget/OneWordWidget-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LAP54KU2SV;
@@ -392,16 +385,21 @@
 					"$(inherited)",
 					"@executable_path/../../../../Frameworks",
 				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariom.swift.oneword.OneWordWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
-				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -458,12 +456,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -516,11 +516,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -533,6 +535,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = all;
 				CODE_SIGN_ENTITLEMENTS = OneWord/OneWord.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = "OneWord/OneWord-iOS.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = "OneWord/OneWord-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LAP54KU2SV;
@@ -554,13 +558,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariom.swift.oneword;
 				PRODUCT_NAME = "One Word";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -571,6 +577,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = all;
 				CODE_SIGN_ENTITLEMENTS = OneWord/OneWord.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = "OneWord/OneWord-iOS.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = "OneWord/OneWord-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LAP54KU2SV;
@@ -592,13 +600,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariom.swift.oneword;
 				PRODUCT_NAME = "One Word";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

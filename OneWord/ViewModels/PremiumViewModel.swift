@@ -10,6 +10,7 @@
 //  MainActor-isolated by default isolation.
 //
 
+import CryptoKit      // SHA256 — the account's purchase token
 import Foundation
 import Observation
 import StoreKit
@@ -29,6 +30,11 @@ final class PremiumViewModel {
     @ObservationIgnored private var updates: Task<Void, Never>?
     /// Refreshes suspend while they read, so two can overlap; only the latest one applies.
     @ObservationIgnored private var generation = 0
+    /// Whose Premium this is: the signed-in account's id, nil while signed out or before
+    /// Firebase has restored the session. A purchase is stamped with it (`appAccountToken`)
+    /// and only transactions carrying the same stamp count — so one Apple ID buying once
+    /// doesn't unlock every account that signs in on this device.
+    @ObservationIgnored private var account: String?
 
     init() {
         // The cache first, so an owner never sees the shelf flash locked while StoreKit answers.
@@ -43,6 +49,26 @@ final class PremiumViewModel {
     }
 
     func allows(_ id: String) -> Bool { Premium.allows(id, unlocked: isUnlocked) }
+
+    /// Called whenever the signed-in account changes, once Firebase has reported it.
+    /// Signing out locks at once; signing in re-reads StoreKit for that account's purchase.
+    func bind(account: String?) {
+        self.account = account
+        guard account != nil else { set(false); return }
+        Task { await refresh() }
+    }
+
+    /// What the purchase sheet is told, so the receipt names who bought it.
+    var purchaseOptions: Set<Product.PurchaseOption> {
+        account.map { [.appAccountToken(Self.token(for: $0))] } ?? []
+    }
+
+    /// The uid folded into a UUID, deterministically, so a receipt can be matched to an
+    /// account on any device with no table of tokens kept anywhere.
+    private static func token(for account: String) -> UUID {
+        let hash = Array(SHA256.hash(data: Data(account.utf8)).prefix(16))
+        return hash.withUnsafeBytes { UUID(uuid: $0.load(as: uuid_t.self)) }
+    }
 
     /// What's in the way of buying, if anything — shown in place of the pitch.
     var problem: String? {
@@ -62,12 +88,17 @@ final class PremiumViewModel {
     }
 
     func refresh() async {
+        // Nobody to own it yet: leave the cache alone rather than relock an owner (and walk
+        // their pick back) in the moment before Firebase restores the session.
+        guard let account else { return }
+        let token = Self.token(for: account)
         generation += 1
         let mine = generation
         var owned = false
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
                transaction.productID == Premium.productID,
+               transaction.appAccountToken == token,
                transaction.revocationDate == nil { owned = true }
         }
         // A newer refresh started while this one read: its snapshot is the fresher one.
@@ -124,7 +155,7 @@ final class PremiumViewModel {
             return "The App Store isn't reachable. Try again when you're online."
         }
         if let purchase = error as? Product.PurchaseError, case .purchaseNotAllowed = purchase {
-            return "Purchases aren't allowed on this Mac."
+            return "Purchases aren't allowed on this device."
         }
         return "That didn't go through. Try again."
     }

@@ -32,5 +32,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>PulpenSnowman-Regular.otf</string>
+		<string>PulpenSnowman-Light.otf</string>
+		<string>PlusJakartaSans-Variable.ttf</string>
+		<string>PlusJakartaSans-Italic-Variable.ttf</string>
+	</array>
 </dict>
 </plist>

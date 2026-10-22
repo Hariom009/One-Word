@@ -12,7 +12,7 @@ just sits on the Mac's display and rotates daily.
 ## Platform & stack
 | | |
 |---|---|
-| Platform | macOS (widget target via WidgetKit) |
+| Platform | macOS 14+ and iOS/iPadOS 17+ from the same two targets (widget target via WidgetKit). iPad shows the Mac layout. |
 | UI | SwiftUI |
 | Architecture | MVVM (see [ARCHITECTURE.md](ARCHITECTURE.md)) |
 | Language | Swift 5.0 |
@@ -62,4 +62,4 @@ just sits on the Mac's display and rotates daily.
   index (e.g. day-of-epoch % count) so app and widget always agree without syncing state.
 
 ## Not doing (yet)
-Accounts, sync, notifications, an editable word list, iOS/iPadOS support. Add when asked.
+Accounts, sync, notifications, an editable word list, word capture on iPhone (a Share Extension), lock-screen widgets. Add when asked.
