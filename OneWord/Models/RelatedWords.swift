@@ -141,36 +141,6 @@ nonisolated struct RelatedWordsIndex {
     /// The similarity floor, for the check script's exclusion assertion.
     static var similarityFloor: Float { floor }
 
-    /// The graph view's two rings: the word's own neighbours, then up to `branch` of
-    /// each of theirs that the graph doesn't already hold. Inner ring is `nearest`'s
-    /// ranking, so the list's three are always the graph's first three.
-    func constellation(around word: Word, ring: Int = 6, branch: Int = 2) -> Constellation {
-        let inner = nearest(to: word, limit: ring)
-        var placed = ([word] + inner).map { Self.canon($0.term) }
-        var outer: [Word] = []
-        var parents: [Int] = []
-        for (i, w) in inner.enumerated() {
-            // Over-ask: a neighbour's neighbours are mostly the centre and its siblings.
-            let fresh = nearest(to: w, limit: branch + ring + 1).filter { candidate in
-                let c = Self.canon(candidate.term)
-                return !placed.contains { Self.sameRoot($0, c) }
-            }.prefix(branch)
-            for f in fresh {
-                outer.append(f)
-                parents.append(i)
-                placed.append(Self.canon(f.term))
-            }
-        }
-        return Constellation(inner: inner, outer: outer, parents: parents)
-    }
-}
-
-/// A word's neighbourhood, two rings deep. `parents[i]` is the index in `inner`
-/// that `outer[i]` hangs from; every inner word hangs from the centre.
-nonisolated struct Constellation: Equatable {
-    var inner: [Word] = []
-    var outer: [Word] = []
-    var parents: [Int] = []
 }
 
 /// Owns the index for the open dictionary. One instance, injected through the
@@ -256,16 +226,11 @@ final class RelatedWordsStore {
     /// render asked the previous book's index and got another dictionary's words
     /// back, with live navigation links. Mismatch now answers [] until the right
     /// index lands.
-    func related(to word: Word, in bookID: String) -> [Word] {
+    /// `limit` is the graph's: it rings eight, the list shows three — the same ranking,
+    /// so the list's three are always the graph's first three.
+    func related(to word: Word, in bookID: String, limit: Int = 3) -> [Word] {
         guard builtFor == bookID else { return [] }
-        return index?.nearest(to: word) ?? []
+        return index?.nearest(to: word, limit: limit) ?? []
     }
 
-    // ponytail: seven rankings per call — ~25ms at 12k words, and only the open
-    // graph asks. Memoize by term if the graph ever grows a third ring.
-    /// Same book guard as `related`, for the same reason.
-    func constellation(around word: Word, in bookID: String) -> Constellation {
-        guard builtFor == bookID else { return Constellation() }
-        return index?.constellation(around: word) ?? Constellation()
-    }
 }

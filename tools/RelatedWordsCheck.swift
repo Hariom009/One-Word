@@ -116,23 +116,6 @@ enum Check {
         precondition(!startupIndex.nearest(to: lowered).map(\.term).contains(mixed.term),
                      "\(lowered.term) got \(mixed.term) back as related")
 
-        // 9. The graph: its inner ring IS the list (same ranking, so the toggle
-        //    never shows two different answers), and no star appears twice or
-        //    shares a root with the centre — a ring of `wistful` and `wistfulness`.
-        for (book, term) in [("emotions", "melancholy"), ("words", everyday[0].term)] {
-            let (words, index) = indexes[book]!
-            let word = words.first { $0.term == term }!
-            let graph = index.constellation(around: word)
-            precondition(Array(graph.inner.prefix(3)) == index.nearest(to: word),
-                         "\(term): graph's inner ring disagrees with the list")
-            precondition(!graph.outer.isEmpty, "\(term): graph has no outer ring")
-            precondition(graph.parents.count == graph.outer.count
-                         && graph.parents.allSatisfy { graph.inner.indices.contains($0) },
-                         "\(term): an outer star hangs from nothing")
-            let stems = ([word] + graph.inner + graph.outer).map { String($0.term.lowercased().prefix(4)) }
-            precondition(Set(stems).count == stems.count, "\(term): graph repeats a root: \(stems)")
-        }
-
         for id in ["german", "philosophy", "classical"] {
             let (words, index) = indexes[id]!
             let sample = words.prefix(2).map { "\($0.term) → \(index.nearest(to: $0).map(\.term).joined(separator: ", "))" }

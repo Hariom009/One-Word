@@ -2,10 +2,11 @@
 //  ConstellationView.swift
 //  OneWord
 //
-//  The "same vein" box drawn as a graph: the word in the middle, its neighbours on
-//  an inner ring, theirs on an outer one, joined by hairlines. Premium's view of the
-//  same ranking the list shows. A star doesn't open a page: rest the cursor on it, or
-//  click it, for a card with its meaning; double-click to copy the word for Search.
+//  The "same vein" box drawn as a graph: the word in a pill at the centre, its
+//  nearest words on one even ring around it, a spoke to each. Every label sits on
+//  the far side of its dot from the centre, so no spoke ever crosses text. A star
+//  doesn't open a page: rest the cursor on it, or click it, for a card with its
+//  meaning; double-click to copy the word for Search.
 //
 
 import SwiftUI
@@ -13,7 +14,8 @@ import AppKit
 
 struct ConstellationView: View {
     let word: Word
-    let graph: Constellation
+    /// The neighbours, nearest first — the list's ranking, so its three lead here.
+    let ring: [Word]
     let t: Theme
     @Environment(\.doodle) private var doodle
 
@@ -26,56 +28,47 @@ struct ConstellationView: View {
     @State private var copied: String?
     @State private var toastTimer: Task<Void, Never>?
 
-    // ponytail: fixed rings, not a force layout — 6 + 12 stars never need one.
-    // Labels can brush on a long-phrase book; nudge the ring radii if they grate.
-    private let height: CGFloat = 400
-    /// The graph grows out of its centre when it opens and when the word changes.
-    @State private var shown = false
+    // ponytail: one ring, not two — a second ring of phrase-length terms can't fit a
+    // 700pt column without labels colliding. Room for a label beside a side star:
+    private let labelWidth: CGFloat = 170
+    private let height: CGFloat = 360
 
     var body: some View {
         GeometryReader { geo in
             let size = geo.size
             let centre = CGPoint(x: size.width / 2, y: size.height / 2)
-            let inner = graph.inner.indices.map { innerPoint($0, size) }
-            let outer = graph.outer.indices.map { outerPoint($0, size) }
+            // A circle, as wide as the side labels allow and as tall as the box does.
+            let radius = min(size.width / 2 - labelWidth - 24, size.height / 2 - 40)
+            let points = ring.indices.map { i in
+                CGPoint(x: centre.x + radius * cos(angle(i)), y: centre.y + radius * sin(angle(i)))
+            }
             ZStack {
-                // Lines first and end to end, centre to centre: the pills above are
-                // solid, so each line seems to start at a pill's edge, never inside text.
                 Canvas { context, _ in
-                    for (i, p) in outer.enumerated() {
-                        let lit = active == graph.outer[i] || active == graph.inner[graph.parents[i]]
-                        context.stroke(line(inner[graph.parents[i]], p),
-                                       with: .color(lit ? t.accent.opacity(0.8) : t.muted.opacity(0.28)),
-                                       lineWidth: lit ? 1.4 : 1)
-                    }
-                    for (i, p) in inner.enumerated() {
-                        let lit = active == graph.inner[i] || active == word
-                        context.stroke(line(centre, p),
-                                       with: .color(t.accent.opacity(lit ? 0.85 : 0.4)),
-                                       lineWidth: lit ? 1.6 : 1.2)
+                    for (i, p) in points.enumerated() {
+                        let lit = active == ring[i] || active == word
+                        var path = Path()
+                        path.move(to: centre)
+                        path.addLine(to: p)
+                        context.stroke(path, with: .color(lit ? t.accent.opacity(0.8) : t.muted.opacity(0.3)),
+                                       lineWidth: lit ? 1.5 : 1)
                     }
                 }
                 .accessibilityHidden(true)
 
-                ForEach(Array(graph.outer.enumerated()), id: \.element.id) { i, w in
-                    outerStar(w, above: outer[i].y < centre.y)
-                        // The dot, not the stack, lands on the point: label 15 + gap 6.
-                        .position(x: outer[i].x, y: outer[i].y + (outer[i].y < centre.y ? -10.5 : 10.5))
+                ForEach(Array(ring.enumerated()), id: \.element.id) { i, w in
+                    star(w, at: points[i], angle: angle(i))
                 }
-                ForEach(Array(graph.inner.enumerated()), id: \.element.id) { i, w in
-                    pill(w, font: doodle.face(15), lit: false)
-                        .position(inner[i])
-                }
-                pill(word, font: doodle.face(21), lit: true)
-                    .position(centre)
+                // On top of the spokes: the pill is solid, so they start at its edge.
+                centrePill.position(centre)
 
                 // Last in the stack, so the card sits over every star and line.
-                if let active, let at = point(of: active, centre, inner, outer) {
+                if let active {
+                    let at = ring.firstIndex(of: active).map { points[$0] } ?? centre
                     card(active)
                         .frame(width: 240)
                         .position(x: min(max(at.x, 124), size.width - 124), y: at.y)
-                        // Above the star when there's room, below it at the top edge.
-                        .offset(y: at.y > 110 ? -70 : 70)
+                        // Above the star when there's room, below it near the top edge.
+                        .offset(y: at.y > 110 ? -64 : 64)
                         .allowsHitTesting(false)
                         .transition(.opacity)
                 }
@@ -83,9 +76,6 @@ struct ConstellationView: View {
             .animation(.easeOut(duration: 0.15), value: active)
         }
         .frame(height: height)
-        .scaleEffect(shown ? 1 : 0.92)
-        .opacity(shown ? 1 : 0)
-        .onAppear { withAnimation(.spring(duration: 0.5, bounce: 0.2)) { shown = true } }
         .overlay(alignment: .bottom) {
             if let copied {
                 Text("Copied \u{201C}\(copied)\u{201D} \u{2014} paste it into Search")
@@ -99,61 +89,65 @@ struct ConstellationView: View {
         }
         .animation(.spring(duration: 0.3), value: copied)
         // A new word under the graph (New Word, a day step) takes any card down with
-        // it, and the new neighbourhood grows in rather than snapping.
-        .onChange(of: word.term) {
-            active = nil; pinned = false
-            shown = false
-            withAnimation(.spring(duration: 0.5, bounce: 0.2)) { shown = true }
-        }
+        // it. No entrance animation of our own: it hung visibility on `.onAppear`, which
+        // a macOS DisclosureGroup doesn't reliably send when it expands — the graph sat
+        // at opacity 0 until the next word. WordDetail already cross-fades a new word.
+        .onChange(of: word.term) { active = nil; pinned = false }
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Words connected to \(word.term)")
     }
 
-    /// The centre and the inner ring: the term in a solid pill. Solid on purpose —
-    /// the lines run underneath and stop at its edge. `lit` is the centre's: the
-    /// accent ring and its glow say which word all this hangs from.
-    private func pill(_ w: Word, font: Font, lit: Bool) -> some View {
-        let on = lit || active == w
-        return gestures(w, on: Text(w.term)
-            .font(font)
-            .tracking(doodle.tracking(lit ? 21 : 15))
+    /// Evenly round the circle, the nearest word at twelve o'clock.
+    private func angle(_ i: Int) -> Double {
+        -.pi / 2 + 2 * .pi * Double(i) / Double(max(ring.count, 1))
+    }
+
+    /// The word itself: its term in a solid pill sized to the text, ringed in accent.
+    private var centrePill: some View {
+        gestures(word, on: Text(word.term)
+            .font(doodle.face(19))
             .foregroundStyle(t.ink)
             .lineLimit(1)
-            .minimumScaleFactor(0.7)
-            .frame(maxWidth: lit ? 220 : 150)
-            .padding(.horizontal, lit ? 18 : 13)
-            .padding(.vertical, lit ? 9 : 6)
+            .fixedSize()
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
             .background {
                 Capsule().fill(t.background)
-                Capsule().fill((lit ? t.accent : t.ink).opacity(lit ? 0.16 : 0.06))
+                Capsule().fill(t.accent.opacity(0.14))
             }
-            .overlay(Capsule().strokeBorder(on ? t.accent.opacity(0.8) : t.ink.opacity(0.16),
-                                            lineWidth: lit ? 1.4 : 1))
-            .shadow(color: lit ? t.accent.opacity(0.35) : .clear, radius: 14)
-            .scaleEffect(active == w && !lit ? 1.06 : 1)
+            .overlay(Capsule().strokeBorder(t.accent.opacity(0.7), lineWidth: 1.2))
             .contentShape(Capsule()))
     }
 
-    /// The outer ring: a small dot, its label on the side away from the centre so
-    /// the line coming in from its parent never crosses the text.
-    private func outerStar(_ w: Word, above: Bool) -> some View {
+    /// A dot on the ring with its label on the outward side: right of the dot on the
+    /// right half, left of it on the left, above or below at the top and bottom.
+    private func star(_ w: Word, at p: CGPoint, angle: Double) -> some View {
         let on = active == w
+        let dx = cos(angle), dy = sin(angle)
+        let side = abs(dx) > 0.35   // beside the dot, rather than above or below it
         let label = Text(w.term)
-            .font(.system(size: 12, weight: on ? .semibold : .regular))
-            .foregroundStyle(on ? t.ink : t.muted)
+            .font(.system(size: 13, weight: on ? .semibold : .regular))
+            .foregroundStyle(on ? t.ink : t.ink.opacity(0.75))
             .lineLimit(1)
-            .minimumScaleFactor(0.7)
-            .frame(maxWidth: 130)
-            .frame(height: 15)
-        return gestures(w, on: VStack(spacing: 6) {
-            if above { label }
+            .truncationMode(.tail)
+            // The text's own box answers the cursor, not the empty width beside it.
+            .padding(.vertical, 3)
+            .contentShape(Rectangle())
+            .frame(width: side ? labelWidth : labelWidth * 1.4,
+                   alignment: side ? (dx > 0 ? .leading : .trailing) : .center)
+        let offset = side
+            ? CGSize(width: (dx > 0 ? 1 : -1) * (labelWidth / 2 + 12), height: 0)
+            : CGSize(width: 0, height: dy > 0 ? 18 : -18)
+        return gestures(w, on: ZStack {
             Circle()
-                .fill(on ? t.accent : t.muted.opacity(0.8))
-                .frame(width: 6, height: 6)
-            if !above { label }
+                .fill(on ? t.accent : t.ink.opacity(0.6))
+                .frame(width: on ? 10 : 8, height: on ? 10 : 8)
+                .frame(width: 24, height: 24)
+                .contentShape(Circle())
+            label.offset(offset)
         }
-        .padding(4)
-        .contentShape(Rectangle()))
+        .frame(width: 24, height: 24))
+        .position(p)
     }
 
     /// One set of gestures for every star. Double first: SwiftUI holds the single
@@ -178,7 +172,6 @@ struct ConstellationView: View {
                     active = nil
                 }
             }
-            .animation(.easeOut(duration: 0.15), value: active)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(w.spokenSummary)
             .accessibilityAddTraits(.isButton)
@@ -186,7 +179,7 @@ struct ConstellationView: View {
             .accessibilityAction(named: "Copy") { copy(w) }
     }
 
-    /// The meaning, short: two lines of the English definition.
+    /// The meaning, short: the term and two lines of its definition.
     /// A solid grey-white card with dark ink in every appearance — `t.surface` is
     /// see-through in Midnight, and the stars and lines behind bled into the text.
     private func card(_ w: Word) -> some View {
@@ -220,45 +213,8 @@ struct ConstellationView: View {
             copied = nil
         }
     }
-
-    /// Where a star sits, for its card. Looked up by term: the centre, then the rings.
-    private func point(of w: Word, _ centre: CGPoint, _ inner: [CGPoint], _ outer: [CGPoint]) -> CGPoint? {
-        if w == word { return centre }
-        if let i = graph.inner.firstIndex(of: w) { return inner[i] }
-        return graph.outer.firstIndex(of: w).map { outer[$0] }
-    }
-
-    private func line(_ a: CGPoint, _ b: CGPoint) -> Path {
-        Path { $0.move(to: a); $0.addLine(to: b) }
-    }
-
-    /// Inner ring: evenly round an ellipse, the first star at twelve o'clock.
-    private func innerAngle(_ i: Int) -> Double {
-        -.pi / 2 + 2 * .pi * Double(i) / Double(max(graph.inner.count, 1))
-    }
-
-    private func innerPoint(_ i: Int, _ size: CGSize) -> CGPoint {
-        clamp(point(innerAngle(i), rx: size.width * 0.27, ry: size.height * 0.25, size), size, x: 85, y: 24)
-    }
-
-    /// Outer ring: a parent's children fan either side of the parent's own bearing.
-    private func outerPoint(_ i: Int, _ size: CGSize) -> CGPoint {
-        let parent = graph.parents[i]
-        let siblings = graph.parents.indices.filter { graph.parents[$0] == parent }
-        let k = Double(siblings.firstIndex(of: i)!) - Double(siblings.count - 1) / 2
-        let p = point(innerAngle(parent) + k * 0.5, rx: size.width * 0.43, ry: size.height * 0.4, size)
-        return clamp(p, size, x: 65, y: 28)
-    }
-
-    private func point(_ angle: Double, rx: CGFloat, ry: CGFloat, _ size: CGSize) -> CGPoint {
-        CGPoint(x: size.width / 2 + rx * cos(angle), y: size.height / 2 + ry * sin(angle))
-    }
-
-    /// Keeps a star's label whole inside the box: `x` is half the widest label.
-    private func clamp(_ p: CGPoint, _ size: CGSize, x: CGFloat, y: CGFloat) -> CGPoint {
-        CGPoint(x: min(max(p.x, x), size.width - x), y: min(max(p.y, y), size.height - y))
-    }
 }
+
 extension Word {
     /// One VoiceOver utterance covering everything a related-word row shows.
     var spokenSummary: String {

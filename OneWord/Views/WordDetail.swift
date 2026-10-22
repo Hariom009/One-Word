@@ -189,8 +189,7 @@ struct WordDetail: View {
         if !words.isEmpty {
             DisclosureGroup(isExpanded: $showRelated) {
                 if relatedAsGraph {
-                    // Asked here, not up in `page`: seven rankings, only when drawn.
-                    ConstellationView(word: word, graph: store.constellation(around: word, in: shelfID), t: t)
+                    ConstellationView(word: word, ring: store.related(to: word, in: shelfID, limit: 8), t: t)
                         .padding(.top, 18)
                 } else {
                     VStack(alignment: .leading, spacing: 18) {
