@@ -16,6 +16,9 @@ import SwiftUI
 nonisolated enum Appearance: String, CaseIterable, Identifiable {
     case system, light, dark, midnight, umber
 
+    /// What a fresh install, a missing key or an unknown string resolves to.
+    static let initial = Appearance.midnight
+
     var id: String { rawValue }
 
     var name: String {

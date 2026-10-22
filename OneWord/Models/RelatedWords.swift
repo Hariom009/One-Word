@@ -140,6 +140,7 @@ nonisolated struct RelatedWordsIndex {
 
     /// The similarity floor, for the check script's exclusion assertion.
     static var similarityFloor: Float { floor }
+
 }
 
 /// Owns the index for the open dictionary. One instance, injected through the
@@ -156,7 +157,7 @@ final class RelatedWordsStore {
     private var settled: String?
     private var task: Task<Void, Never>?
     private var observer: (any NSObjectProtocol)?
-    /// term → its neighbours, for the index that is loaded. `related` runs inside
+    /// "limit term" → its neighbours, for the index that is loaded. `related` runs inside
     /// `body`, and a rank is 12k dot products on the main thread — fine once, not
     /// on every re-render of the page. Ignored by observation on purpose: it is
     /// filled during body evaluation, and a tracked write there would re-run it.
@@ -232,11 +233,15 @@ final class RelatedWordsStore {
     /// render asked the previous book's index and got another dictionary's words
     /// back, with live navigation links. Mismatch now answers [] until the right
     /// index lands.
-    func related(to word: Word, in bookID: String) -> [Word] {
+    /// `limit` is the graph's: it rings eight, the list shows three — the same ranking,
+    /// so the list's three are always the graph's first three.
+    func related(to word: Word, in bookID: String, limit: Int = 3) -> [Word] {
         guard builtFor == bookID, let index else { return [] }
-        if let known = memo[word.term] { return known }
-        let words = index.nearest(to: word)
-        memo[word.term] = words
+        let key = "\(limit) \(word.term)"
+        if let known = memo[key] { return known }
+        let words = index.nearest(to: word, limit: limit)
+        memo[key] = words
         return words
     }
+
 }

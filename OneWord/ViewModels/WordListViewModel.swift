@@ -25,8 +25,16 @@ final class WordListViewModel {
         /// words on every keystroke — and folding is what the filter always
         /// claimed to do anyway (the localized call never dropped diacritics).
         let key: String
+        /// Stored: a List reads every row's id on each diff, and building 12k
+        /// strings per keystroke for that showed.
+        let id: String
 
-        var id: String { shelf + "\u{0}" + word.term }
+        init(word: Word, shelf: String, key: String) {
+            self.word = word
+            self.shelf = shelf
+            self.key = key
+            id = shelf + "\u{0}" + word.term
+        }
     }
 
     /// The book this list is pinned to. nil = the Search pane: no book to browse,

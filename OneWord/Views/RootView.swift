@@ -9,6 +9,8 @@
 //  It is also the gate. Signed out, the whole shell is replaced by SignInView —
 //  no pane, no search, no dictionary is reachable without a session. The widget
 //  is outside this: it reads the same bundled JSON and cannot run an OAuth flow.
+//  With Features.accounts off there is no gate: the shell shows as soon as
+//  restore() has run, and every account surface is hidden.
 //
 
 import SwiftUI
@@ -70,6 +72,9 @@ struct RootView: View {
     /// Set in Profile. Empty means "keep following the account".
     /// The picture is `AccountAvatar`'s own business, so only the name is read here.
     @AppStorage("profileName") private var profileName = ""
+    /// Flipped by WelcomeView's Get Started. Its own key, not `profileName`, so
+    /// clearing the name in Profile later doesn't reopen the front door.
+    @AppStorage(WelcomeView.onboardedKey) private var onboarded = false
     /// The one-time "have a suggestion?" card. Flipped by its own close or Write
     /// button and never consulted again. An inline card rather than a popover: a
     /// macOS popover dismisses on any focus loss, so it closed itself at launch.
@@ -85,6 +90,7 @@ struct RootView: View {
     /// Midnight rides in with the doodle switches, so every palette read in the
     /// shell goes through it.
     @Environment(\.doodle) private var doodle
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         Group {
@@ -93,10 +99,11 @@ struct RootView: View {
                 // Painting the window's own background rather than a spinner means a
                 // returning user sees no flicker between launch and the shell.
                 Theme.of(scheme, doodle).background.ignoresSafeArea()
-            } else if auth.isSignedIn {
-                shell
+            } else if Features.accounts {
+                if auth.isSignedIn { shell } else { SignInView() }
             } else {
-                SignInView()
+                // No account: the front door only asks your name, once.
+                if onboarded { shell } else { WelcomeView() }
             }
         }
         // Here rather than in ProfileView: the gate needs the answer before anything
@@ -118,7 +125,8 @@ struct RootView: View {
     /// owned (and the setting leaves it on), Bookmarks until then — Profile grows a
     /// row for whichever of the two lost its tab.
     private var tabOrder: [Pane] {
-        [.home, .history, premium.isUnlocked && practiceEnabled ? .practice : .bookmarks, .search, .profile]
+        [.home] + (Features.history ? [.history] : [])
+            + [Features.practice && premium.isUnlocked && practiceEnabled ? .practice : .bookmarks, .search, .profile]
     }
     /// One path per tab, so Settings pushed from Profile doesn't also sit on Home.
     @State private var paths: [Pane: [Pane]] = [:]
@@ -198,7 +206,8 @@ struct RootView: View {
         }
         return List(selection: selection) {
             ForEach([Pane.home, .history, .practice, .bookmarks]
-                        .filter { $0 != .practice || practiceEnabled }) { item in
+                        .filter { $0 != .practice || (Features.practice && practiceEnabled) }
+                        .filter { $0 != .history || Features.history }) { item in
                 row(item).tag(Optional(item))
             }
             Section("Dictionaries") {
@@ -210,11 +219,11 @@ struct RootView: View {
             // The sidebar only exists behind the gate, so there is always a user to
             // show here — the corner is who you are, and the way in to Profile.
             VStack(spacing: 0) {
-                if !calloutSeen { suggestionCard }
+                if Features.feedback && !calloutSeen { suggestionCard }
                 HStack(spacing: 0) {
                     accountChip
-                    planTag
-                    feedbackButton
+                    if Features.premium { planTag }
+                    if Features.feedback { feedbackButton } else { settingsButton }
                 }
             }
         }
@@ -297,7 +306,7 @@ struct RootView: View {
         return Button { pane = .profile } label: {
             HStack(spacing: 8) {
                 AccountAvatar(url: auth.photoURL, size: 20, muted: t.muted)
-                Text(profileName.isEmpty ? (auth.displayName ?? "Signed in") : profileName)
+                Text(profileName.isEmpty ? (auth.displayName ?? (Features.accounts ? "Signed in" : "You")) : profileName)
                     .font(.system(size: 13))
                     .foregroundStyle(t.ink)
                     .lineLimit(1)
@@ -329,12 +338,32 @@ struct RootView: View {
 
     private func write() {
         calloutSeen = true
+        // The sheet files under your account; with accounts off, mail is the way.
+        guard Features.accounts else {
+            if let url = FeedbackViewModel.mailtoURL { openURL(url) }
+            return
+        }
         feedback.reset()
         writing = true
     }
 
     /// The permanent way to the notepad, and what the one-time card sits above —
     /// so closing the card never hides the way back.
+    /// The gear takes the feedback button's corner while feedback is flagged off.
+    private var settingsButton: some View {
+        let t = Theme.of(scheme, doodle)
+        return Button { pane = .settings } label: {
+            GlyphIcon(.settings)
+                .foregroundStyle(t.muted)
+                .padding(6)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help("Settings")
+        .accessibilityLabel("Settings")
+        .padding(.trailing, 6)
+    }
+
     private var feedbackButton: some View {
         let t = Theme.of(scheme, doodle)
         return Button(action: write) {

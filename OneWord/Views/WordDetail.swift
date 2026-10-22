@@ -15,6 +15,9 @@ import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY ne
 // synths would talk over each other when you leave a word mid-sentence for Practice.
 // Module-wide on purpose: SentenceView's Pronounce button speaks through this one.
 @MainActor let speaker = AVSpeechSynthesizer()
+/// The word's own recording, when it has one. Held here for the same reason as
+/// `speaker`: a player that goes out of scope stops mid-sound.
+@MainActor var clip: AVAudioPlayer?
 
 struct WordDetail: View {
     let word: Word
@@ -31,6 +34,8 @@ struct WordDetail: View {
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @State private var showRelated = false
+    /// The box's right-hand toggle: the neighbours as a graph instead of a list.
+    @AppStorage("relatedAsGraph") private var relatedAsGraph = false
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
     @Environment(PremiumViewModel.self) private var premium
@@ -70,6 +75,31 @@ struct WordDetail: View {
                             .foregroundStyle(t.ink)
                             .lineLimit(1)
                             .minimumScaleFactor(0.4)
+                        // A sound book's entry IS the sound: the recording sits right
+                        // beside its name. Pronounce, up in the header, still says the word.
+                        if let sound = word.sound, !locked {
+                            Button {
+                                speaker.stopSpeaking(at: .immediate)
+                                clip?.stop()   // a second click restarts, never layers
+                                clip = Bundle.main.url(forResource: sound, withExtension: "m4a")
+                                    .flatMap { try? AVAudioPlayer(contentsOf: $0) }
+                                clip?.play()
+                            } label: {
+                                Image(systemName: "play.fill")
+                                    .font(.system(size: 19, weight: .semibold))
+                                    .foregroundStyle(t.background)
+                                    .offset(x: 2)   // a triangle's weight sits left of its box
+                                    .frame(width: 46, height: 46)
+                                    .background(t.accent, in: Circle())
+                                    .contentShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                            // Bottom on the headword's baseline, so it stands as tall as its
+                            // ascenders. Left alone, the glyph's own baseline would sink it.
+                            .alignmentGuide(.lastTextBaseline) { $0[.bottom] }
+                            .help("Play the \(word.term)")
+                            .accessibilityLabel("Play the sound: \(word.term)")
+                        }
                         Text(word.partOfSpeech)
                             .font(doodle.face(16).italic())
                             .foregroundStyle(t.muted)
@@ -159,29 +189,38 @@ struct WordDetail: View {
     private func relatedBox(_ words: [Word], _ t: Theme) -> some View {
         if !words.isEmpty {
             DisclosureGroup(isExpanded: $showRelated) {
-                VStack(alignment: .leading, spacing: 18) {
-                    ForEach(words) { w in
-                        NavigationLink {
-                            // The pushed screen reads the same environment store,
-                            // so it renders its own box — that is the chain.
-                            WordDetail(word: w, shelf: shelf)
-                        } label: {
-                            relatedRow(w, t)
+                if relatedAsGraph {
+                    ConstellationView(word: word, ring: store.related(to: word, in: shelfID, limit: 8), t: t)
+                        .padding(.top, 18)
+                } else {
+                    VStack(alignment: .leading, spacing: 18) {
+                        ForEach(words) { w in
+                            NavigationLink {
+                                // The pushed screen reads the same environment store,
+                                // so it renders its own box — that is the chain.
+                                WordDetail(word: w, shelf: shelf)
+                            } label: {
+                                relatedRow(w, t)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(w.spokenSummary)
                         }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(accessibilitySummary(of: w))
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 18)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 18)
             } label: {
-                Text("In the same vein \u{00B7} Synonyms")
-                    .font(.system(size: 10, weight: .bold))
-                    .textCase(.uppercase).tracking(1.6)
-                    .foregroundStyle(t.muted)
-                    // The chevron toggles itself; the label is inert until asked.
-                    .contentShape(Rectangle())
-                    .onTapGesture { withAnimation { showRelated.toggle() } }
+                HStack(spacing: 12) {
+                    Text("In the same vein \u{00B7} Synonyms")
+                        .font(.system(size: 10, weight: .bold))
+                        .textCase(.uppercase).tracking(1.6)
+                        .foregroundStyle(t.muted)
+                        // The chevron toggles itself; the label is inert until asked.
+                        .contentShape(Rectangle())
+                        .onTapGesture { withAnimation { showRelated.toggle() } }
+                    Spacer(minLength: 0)
+                    viewToggle(t)
+                }
             }
             .tint(t.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -189,6 +228,37 @@ struct WordDetail: View {
         } else if store.isBuilding(shelfID) {
             buildingBox(t)
         }
+    }
+
+    /// List on the left, graph on the right. Two plain buttons rather than a segmented
+    /// Picker, so the toggle takes the theme's ink and radius like the header's buttons.
+    private func viewToggle(_ t: Theme) -> some View {
+        HStack(spacing: 2) {
+            toggleSide("list.bullet", "List", graph: false, t)
+            toggleSide("point.3.connected.trianglepath.dotted", "Graph", graph: true, t)
+        }
+        .padding(2)
+        .background(t.ink.opacity(0.06), in: RoundedRectangle(cornerRadius: t.radius(7)))
+    }
+
+    private func toggleSide(_ symbol: String, _ name: String, graph: Bool, _ t: Theme) -> some View {
+        let on = relatedAsGraph == graph
+        return Button {
+            relatedAsGraph = graph
+            // Picking a view is asking to see it.
+            withAnimation { showRelated = true }
+        } label: {
+            Image(systemName: symbol)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(on ? t.ink : t.muted)
+                .frame(width: 26, height: 20)
+                .background(on ? t.ink.opacity(0.14) : .clear, in: RoundedRectangle(cornerRadius: t.radius(5)))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help("Show as a \(name.lowercased())")
+        .accessibilityLabel(name)
+        .accessibilityAddTraits(on ? .isSelected : [])
     }
 
     /// The box's heading with the wait beside it, held on the same rule and the
@@ -254,13 +324,6 @@ struct WordDetail: View {
         return shelfID
     }
 
-    /// One VoiceOver utterance per row, covering every field the row displays.
-    private func accessibilitySummary(of w: Word) -> String {
-        var parts = [w.term]
-        if !w.partOfSpeech.isEmpty { parts.append(w.partOfSpeech) }
-        parts.append(w.definition)
-        return parts.joined(separator: ". ")
-    }
 
     @ViewBuilder
     private func footer(_ t: Theme) -> some View {
@@ -319,6 +382,7 @@ struct WordActions: View {
 
             Button {
                 speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
+                clip?.stop()
                 let utterance = AVSpeechUtterance(string: word.term)
                 // Urdu headwords are Devanagari — an en-US voice reads them as silence.
                 // Derived from the term, not the book, so any future script lands too.

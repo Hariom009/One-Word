@@ -20,9 +20,8 @@ struct LearnedListView: View {
 
     @State private var log: [LearnedWord] = []
     @State private var query = ""
-    @State private var hovered: Int?
-    // Cached, not computed. Hovering re-runs `body` on every pointer move, and
-    // re-grouping the whole log each time is what made the magnification stutter.
+    // Cached, not computed: re-grouping the whole log on every `body` pass is
+    // what made the magnification stutter.
     @State private var lines: [Line] = []
     @Environment(\.colorScheme) private var scheme
 
@@ -39,7 +38,7 @@ struct LearnedListView: View {
                 emptyState(t)
             } else {
                 List {
-                    ForEach(Array(lines.enumerated()), id: \.element.id) { index, line in
+                    ForEach(lines) { line in
                         switch line {
                         case .day(let day):
                             header(day, t)
@@ -48,18 +47,18 @@ struct LearnedListView: View {
                                 .listRowBackground(Color.clear)
                                 .listRowSeparator(.hidden)
                         case .word(let entry):
-                            NavigationLink {
-                                // The shelf travels with the entry, so re-opening a word
-                                // from the log doesn't log it again under whatever
-                                // dictionary happens to be selected.
-                                WordDetail(word: entry.word, shelf: entry.shelf)
-                            } label: {
-                                row(entry, t, magnification(index))
-                            }
-                            .onHover { inside in
-                                // A fast pointer can deliver the exit after the next
-                                // row's enter; only clear if we're still the hovered one.
-                                hovered = inside ? index : (hovered == index ? nil : hovered)
+                            // Only the row under the pointer swells. The neighbours used to
+                            // swell too, Dock-style, which resized every word on screen at
+                            // once and read as a glitch rather than a focus.
+                            HoverSwell { scale in
+                                NavigationLink {
+                                    // The shelf travels with the entry, so re-opening a word
+                                    // from the log doesn't log it again under whatever
+                                    // dictionary happens to be selected.
+                                    WordDetail(word: entry.word, shelf: entry.shelf)
+                                } label: {
+                                    row(entry, t, scale)
+                                }
                             }
                             .listRowBackground(Color.clear)
                             .listRowSeparatorTint(t.hairline)
@@ -84,14 +83,6 @@ struct LearnedListView: View {
             rebuild()
         }
         .onChange(of: query) { _, _ in rebuild() }
-    }
-
-    /// Only the row under the pointer swells. The neighbours used to swell too and
-    /// everything past them shrank, Dock-style — which meant one pointer move
-    /// resized every word on screen at once, and read as a glitch rather than a
-    /// focus.
-    private func magnification(_ index: Int) -> CGFloat {
-        index == hovered ? 1.85 : 1
     }
 
     /// One line of the list. A `Section` header pins itself to the top of a plain
@@ -119,7 +110,6 @@ struct LearnedListView: View {
             .map { (day: $0.key, words: $0.value) }
             .sorted { $0.day > $1.day }
             .flatMap { [Line.day($0.day)] + $0.words.map(Line.word) }
-        hovered = nil   // the rows just moved out from under the pointer
     }
 
     /// Two-part day header on the same columns as the rows: the short label over
@@ -263,6 +253,23 @@ struct LearnedListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(40)
+    }
+}
+
+/// A list row that swells under the pointer, holding its own hover. Held by the
+/// list instead, every row a scroll slid under the pointer re-ran the pane's body
+/// and re-diffed every row — 12k of them in Everyday English — which is what made
+/// scrolling lag. Per row, an exit landing after the next row's enter can't clear
+/// the wrong one either.
+struct HoverSwell<Content: View>: View {
+    @ViewBuilder let content: (CGFloat) -> Content
+    @State private var hovered = false
+
+    var body: some View {
+        content(hovered ? 1.85 : 1)
+            .onHover { hovered = $0 }
+            // A row recycled off-screen mid-swell may never hear its exit.
+            .onDisappear { hovered = false }
     }
 }
 

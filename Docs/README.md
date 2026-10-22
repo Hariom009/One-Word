@@ -231,3 +231,10 @@ Which skill lands where:
   *(design source: the "Pencil Cat Mascot" Claude Design canvas, used as inspiration, not
   spec. Forks F1–F9 carry recommended defaults; streaks, stickers, notes, What's New and
   the thank-you sheet are deferred to §14.)*
+- **Cats & Dogs dictionary** (`pets`) — built on `release/1.0`. Build and all gates green.
+  [strategy](01_Brainstorm/PETS_DICTIONARY_STRATEGY.md) →
+  [resolved plan](02_Plan/Resolved/PETS_DICTIONARY_PLAN_RESOLVED.md)
+  *(Sound-first: 33 cat and dog vocalisations, each playing a real CC0 recording from
+  `OneWord/Sounds/` ([sources](06_Misc/PETS_SOUND_CANDIDATES.md); body language and terms were cut). App-only:
+  not in the widget, whose Follow App Settings falls back to Everyday English. **Release is
+  gated** on the painted cover: it borrows the Idioms art until `Dictionary_of_CatsAndDogs` lands.)*

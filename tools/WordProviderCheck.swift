@@ -8,7 +8,7 @@
 
 import Foundation
 
-let books = ["words", "emotions", "philosophy", "startup", "idioms", "classical", "urdu", "german"]
+let books = ["words", "emotions", "philosophy", "startup", "idioms", "classical", "urdu", "german", "pets"]
 let dir = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
     .deletingLastPathComponent().appendingPathComponent("OneWord/Shared")
 let cal = Calendar(identifier: .gregorian)
@@ -59,6 +59,20 @@ enum Check {
         for (id, p) in providers {
             precondition(load(id).word(for: today).term == p.word(for: today).term, "\(id): not deterministic")
         }
+
+        // 5. Every sound names a clip that ships. A missing file doesn't crash: the
+        //    button quietly reads the term aloud instead, which nobody would notice.
+        let clips = dir.deletingLastPathComponent().appendingPathComponent("Sounds")
+        for (id, p) in providers {
+            for w in p.allWords {
+                guard let s = w.sound else { continue }
+                precondition(FileManager.default.fileExists(atPath: clips.appendingPathComponent("\(s).m4a").path),
+                             "\(id): \(w.term) has no OneWord/Sounds/\(s).m4a")
+            }
+        }
+
+        // 6. Cats & Dogs is a book of sounds: an entry without a recording has no point.
+        precondition(load("pets").allWords.allSatisfy { $0.sound != nil }, "pets: an entry has no sound")
 
         for (id, p) in providers {
             let terms = (0..<3).map { p.word(for: cal.date(byAdding: .day, value: $0, to: today)!).term }

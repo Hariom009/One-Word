@@ -19,7 +19,7 @@ struct OneWordApp: App {
     // Registers the Services provider so "Save to One Word" works from any app.
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     #endif
-    @AppStorage("appearance") private var appearance = Appearance.system.rawValue
+    @AppStorage("appearance") private var appearance = Appearance.initial.rawValue
     // The doodle theme's two switches, read HERE and nowhere else: a view that
     // asked UserDefaults directly would draw the right thing once and then never
     // hear the switch flip. Down the environment, every pane redraws together.
@@ -36,14 +36,22 @@ struct OneWordApp: App {
     @State private var premium = PremiumViewModel()
 
     /// The stored string, parsed once. A missing or unknown value is System.
-    private var look: Appearance { Appearance(rawValue: appearance) ?? .system }
+    private var look: Appearance { Appearance(rawValue: appearance) ?? .initial }
 
-    /// Here, not in an app delegate: on macOS the window's views appear before
+    /// Firebase here, not in an app delegate: on macOS the window's views appear before
     /// applicationDidFinishLaunching fires, so RootView's `auth.restore()` asked Firebase
     /// for the app first, found none, and every launch opened on the sign-in screen with
     /// the keychain session ignored. The App's init runs before any scene on both platforms.
     init() {
-        Self.configureFirebase()
+        #if DEBUG
+        // Scheme argument: wipe the front-door flag so a debug run starts on Get
+        // Started and the button still works (a `-onboarded NO` argument would
+        // outrank the write and leave the button stuck).
+        if CommandLine.arguments.contains("--reset-onboarding") {
+            UserDefaults.standard.removeObject(forKey: WelcomeView.onboardedKey)
+        }
+        #endif
+        if Features.accounts { Self.configureFirebase() }
         #if os(iOS)
         // The default category, .soloAmbient, stops the user's music the moment the shelf
         // clicks or the roll shuffles, and .ambient is muted outright by Silent mode —
@@ -70,7 +78,7 @@ struct OneWordApp: App {
     }
 
     private func bindPremium() {
-        guard auth.restored else { return }
+        guard Features.premium, auth.restored else { return }
         premium.bind(account: auth.accountID)
     }
 
@@ -85,7 +93,7 @@ struct OneWordApp: App {
                 .environment(\.doodle, DoodleTheme(icons: doodleIcons, handwriting: doodleFont,
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
-                .task { await premium.load() }
+                .task { if Features.premium { await premium.load() } }
                 // Premium belongs to the signed-in account: hand it over once Firebase has
                 // said who that is, and again on every sign-in and sign-out.
                 .onChange(of: auth.restored) { bindPremium() }

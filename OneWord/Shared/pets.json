@@ -1,0 +1,266 @@
+[
+  {
+    "term": "alarm bark",
+    "partOfSpeech": "dog sound",
+    "hindi": "चेतावनी का भौंकना — अक्सर किसी अनजानी चीज़ पर कुत्ते की तेज़, दोहराई गई आवाज़",
+    "definition": "often a sharp, rapid, repeated bark that dogs give toward something unfamiliar, typically paired with stiffened posture and fixed attention",
+    "example": "A bin bag left by the gate earned a volley of alarm barks, as if to say ‘that was not there yesterday’.",
+    "sound": "pets-alarm-bark"
+  },
+  {
+    "term": "bark",
+    "partOfSpeech": "dog sound",
+    "hindi": "भौंकना — कुत्ते की आमतौर पर छोटी, तेज़ आवाज़ जिसका अर्थ संदर्भ से बदलता है",
+    "definition": "usually a short, explosive vocal burst from dogs whose pitch, rhythm and context carry the message, ranging across alert, play, frustration and greeting",
+    "example": "One bark at the postman meant ‘noted’; the seventh bark was a different conversation entirely.",
+    "sound": "pets-bark"
+  },
+  {
+    "term": "bay",
+    "partOfSpeech": "dog sound",
+    "hindi": "गूँजती भौंक — अक्सर गंध का पीछा करते कुत्ते की गहरी, लहराती, लंबी भौंक",
+    "definition": "often a deep, prolonged, bell-like cry somewhere between barking and howling that scent-following dogs give while tracking, usually rhythmic and carrying",
+    "example": "The beagle’s bay rolled out of the woods, loosely translated as ‘found it, come and look’.",
+    "sound": "pets-bay"
+  },
+  {
+    "term": "caterwaul",
+    "partOfSpeech": "cat sound",
+    "hindi": "मिलन की पुकार — मद के मौसम में बिल्लियों की ऊँची, रोने जैसी लंबी आवाज़ें",
+    "definition": "loud, wailing, often eerie calls that cats usually make when in heat or competing for a mate, typically at night",
+    "example": "The caterwaul from the garden wall at two in the morning was a love song, though nobody on the street enjoyed it.",
+    "sound": "pets-caterwaul"
+  },
+  {
+    "term": "chattering",
+    "partOfSpeech": "cat sound",
+    "hindi": "दाँत किटकिटाना — शिकार दिखने पर तेज़ जबड़े की किटकिट, अक्सर उत्तेजना या झुंझलाहट में",
+    "definition": "a rapid jaw-clicking stutter that cats often make while watching unreachable prey through a window, possibly reflecting frustration or excitement",
+    "example": "Pigeons on the sill set off a burst of chattering, the sound of a hunter who cannot reach her lunch.",
+    "sound": "pets-chattering"
+  },
+  {
+    "term": "demand bark",
+    "partOfSpeech": "dog sound",
+    "hindi": "माँगने वाला भौंकना — अक्सर किसी चीज़ की चाह में कुत्ते का एक-एक करके बार-बार भौंकना",
+    "definition": "often a single, evenly spaced bark that dogs aim directly at a person, typically repeating until food, attention or a door arrives",
+    "example": "At six sharp came the demand bark, best translated as ‘the bowl remains tragically empty’.",
+    "sound": "pets-demand-bark"
+  },
+  {
+    "term": "groan",
+    "partOfSpeech": "dog sound",
+    "hindi": "कराहना — आमतौर पर लेटते या आराम करते कुत्ते की गहरी, लंबी आवाज़",
+    "definition": "usually a deep, drawn-out vocal exhale that dogs give when stretching or settling; it can also accompany discomfort or pain when lying down",
+    "example": "Sinking into the good spot on his bed, he let out a groan of pure satisfaction.",
+    "sound": "pets-groan"
+  },
+  {
+    "term": "growl",
+    "partOfSpeech": "cat & dog",
+    "hindi": "गुर्राना — कुत्तों और बिल्लियों की गले से निकली धीमी आवाज़, अक्सर दूरी बनाने की चेतावनी",
+    "definition": "a low rumbling throat sound that dogs and cats often use as a warning to increase distance, though dogs can also growl during rough play",
+    "example": "The terrier gave a soft growl over his chew, which is a request for space, not a reason to scold him.",
+    "sound": "pets-growl"
+  },
+  {
+    "term": "grumble",
+    "partOfSpeech": "dog sound",
+    "hindi": "बड़बड़ाना — अक्सर हल्की नाराज़गी में कुत्ते की धीमी, गले से निकली भुनभुनाहट",
+    "definition": "often a low, rolling throat noise softer than growling that dogs make when mildly put out, such as being moved off a sofa",
+    "example": "Asked to shift off the cushion, he moved with a grumble that meant ‘fine, under protest’.",
+    "sound": "pets-grumble"
+  },
+  {
+    "term": "guarding growl",
+    "partOfSpeech": "dog sound",
+    "hindi": "रखवाली की गुर्राहट — खाने या खिलौने के पास कोई आए तो कुत्ते की चेतावनी भरी गुर्राहट",
+    "definition": "a low, steady growl that dogs usually give over food, a toy or a resting spot when someone comes near, which other dogs seem to read differently from a play growl",
+    "example": "Reach for the bowl mid-dinner and you’ll hear the guarding growl, which in dog means ‘that’s mine, give me room’.",
+    "sound": "pets-guarding-growl"
+  },
+  {
+    "term": "hiss",
+    "partOfSpeech": "cat sound",
+    "hindi": "फुफकारना — मुँह खोलकर तेज़ साँस छोड़ना, आमतौर पर डरी या घिरी बिल्ली की चेतावनी",
+    "definition": "a sharp exhalation through an open mouth that cats usually make defensively when frightened or cornered, warning another animal away",
+    "example": "The kitten gave the vacuum a tiny hiss, bravely telling a monster ten times her size to stay back.",
+    "sound": "pets-hiss"
+  },
+  {
+    "term": "howl",
+    "partOfSpeech": "dog sound",
+    "hindi": "हुआँ-हुआँ करना — आमतौर पर कुत्ते की लंबी, खिंची हुई, दूर तक जाने वाली आवाज़",
+    "definition": "usually a long, sustained, carrying vocalisation that dogs use toward distant sounds or absent companions, often triggered by sirens or other howling",
+    "example": "The ambulance siren set off a howl from three gardens at once.",
+    "sound": "pets-howl"
+  },
+  {
+    "term": "huff",
+    "partOfSpeech": "dog sound",
+    "hindi": "नाक से छोटी तेज़ साँस — अक्सर हल्की झुंझलाहट, उत्साह या बैठते समय कुत्ते का नाक या मुँह से झटके से साँस छोड़ना",
+    "definition": "often a short, forceful breath expelled through the nose or mouth that dogs give in mild frustration, excitement, or while settling down",
+    "example": "She dropped onto the rug with a huff, clearly of the view that the walk had been too short.",
+    "sound": "pets-huff"
+  },
+  {
+    "term": "isolation bark",
+    "partOfSpeech": "dog sound",
+    "hindi": "अकेलेपन का भौंकना — आमतौर पर अकेले छोड़े जाने पर कुत्ते का लंबा, एकसुर भौंकना",
+    "definition": "usually a monotonous, long-running bark that some dogs give when left alone, often higher pitched and spaced with whines or howls",
+    "example": "The neighbours heard his isolation bark all afternoon, the same lonely note on repeat.",
+    "sound": "pets-isolation-bark"
+  },
+  {
+    "term": "meow",
+    "partOfSpeech": "cat sound",
+    "hindi": "म्याऊँ — बिल्ली की खुले मुँह वाली पुकार, अक्सर इंसानों से ध्यान, खाना या रास्ता माँगने के लिए",
+    "definition": "an open-mouthed vowel call that adult cats mostly direct at humans rather than other felines, often to request attention, food or access",
+    "example": "She gave one sharp meow at the closed door, which in cat means ‘you know what to do’.",
+    "sound": "pets-meow"
+  },
+  {
+    "term": "mew",
+    "partOfSpeech": "cat sound",
+    "hindi": "महीन म्याऊँ — बिल्ली के बच्चों की पतली, ऊँची पुकार, आमतौर पर माँ को बुलाने के लिए",
+    "definition": "a thin high-pitched call that kittens usually make to attract their mother, sometimes kept by adult cats as a soft request",
+    "example": "A tiny mew from the laundry basket led us straight to the kitten.",
+    "sound": "pets-mew"
+  },
+  {
+    "term": "murmur",
+    "partOfSpeech": "cat sound",
+    "hindi": "धीमी गुनगुनाहट — बंद मुँह की हल्की आवाज़, अक्सर सहलाने या बैठते समय",
+    "definition": "a soft closed-mouth sound that cats often make when settling, greeting or being stroked, quieter and less inflected than a trill",
+    "example": "Each stroke drew a contented murmur, so I kept going.",
+    "sound": "pets-murmur"
+  },
+  {
+    "term": "play bark",
+    "partOfSpeech": "dog sound",
+    "hindi": "खेल का भौंकना — आमतौर पर खेलते समय कुत्ते की ऊँची, उछलती आवाज़",
+    "definition": "usually a higher, bouncier bark that dogs give during games, often mixed with play bows, loose bodies and pauses inviting a partner back",
+    "example": "Every play bark at the frisbee seemed to say ‘again, and throw it properly this time!’",
+    "sound": "pets-play-bark"
+  },
+  {
+    "term": "play growl",
+    "partOfSpeech": "dog sound",
+    "hindi": "खेल की गुर्राहट — आमतौर पर खेलते समय कुत्ते का नाटकीय गुर्राना, ढीले शरीर के साथ",
+    "definition": "usually a noisy, theatrical growl that dogs make during tug or wrestling, typically paired with loose bodies, bouncy movement and frequent role swaps",
+    "example": "Her play growl over the rope toy was all noise and wagging, and she never once let go.",
+    "sound": "pets-play-growl"
+  },
+  {
+    "term": "play pant",
+    "partOfSpeech": "dog sound",
+    "hindi": "खेल की हाँफ — आमतौर पर खेल के बीच कुत्ते की तेज़, साँस भरी हाँफ जैसी आवाज़",
+    "definition": "usually a breathy, forced, almost laughing exhalation that dogs make while inviting or continuing play, distinct from panting from heat",
+    "example": "The play pant beside the ball sounded so much like laughter that the other dog joined in.",
+    "sound": "pets-play-pant"
+  },
+  {
+    "term": "play sneeze",
+    "partOfSpeech": "dog sound",
+    "hindi": "खेल की छींक — खेलते या उत्साहित होने पर कुत्ते की छोटी, बनावटी-सी छींक",
+    "definition": "a short, snorty sneeze that dogs often give while playing or excited, which many trainers read as a sign that the roughhousing is friendly",
+    "example": "Mid-wrestle the terrier let out a play sneeze, as if to say ‘still just a game, promise’.",
+    "sound": "pets-play-sneeze"
+  },
+  {
+    "term": "purr",
+    "partOfSpeech": "cat sound",
+    "hindi": "घुरघुराना — बिल्ली की लगातार धीमी कंपन वाली आवाज़, अक्सर सुकून में, पर दर्द या तनाव में भी",
+    "definition": "a continuous low vibration that cats often produce when content, though it can also accompany pain, stress, giving birth or recovery",
+    "example": "A purr usually means contentment, but cats purr at the vet too, so read the rest of the cat.",
+    "sound": "pets-purr"
+  },
+  {
+    "term": "shriek",
+    "partOfSpeech": "cat sound",
+    "hindi": "तीखी चीख़ — दर्द, चौंकने या हमले पर बिल्ली की अचानक तेज़ चीख़, आमतौर पर लड़ाई रोकने वाली",
+    "definition": "a sudden piercing scream that cats usually release when hurt, startled or attacked, often ending a fight or rough play abruptly",
+    "example": "I trod on her tail and got a shriek that sent the whole household running.",
+    "sound": "pets-shriek"
+  },
+  {
+    "term": "sigh",
+    "partOfSpeech": "dog sound",
+    "hindi": "आह भरना — अक्सर कुत्ते की लंबी साँस, आँखों की हालत से अर्थ बदलता है",
+    "definition": "often a long exhalation that dogs give when lying down; with half-closed eyes usually contentment, with open eyes more often disappointment",
+    "example": "When the lead went back on its hook, his sigh said ‘so no walk, then’.",
+    "sound": "pets-sigh"
+  },
+  {
+    "term": "snarl",
+    "partOfSpeech": "cat sound",
+    "hindi": "दाँत दिखाकर गुर्राना — बिल्ली की कर्कश आवाज़, आमतौर पर तीखे टकराव में, साधारण गुर्राहट से ज़्यादा गंभीर",
+    "definition": "a harsh open-mouthed sound with bared teeth that cats usually produce in intense confrontation, more urgent than a growl",
+    "example": "Cornered by the terrier, the tom let out a snarl that ended the discussion.",
+    "sound": "pets-snarl"
+  },
+  {
+    "term": "snort",
+    "partOfSpeech": "dog sound",
+    "hindi": "नाक से फुरफुराना — अक्सर नाक से निकली कुत्ते की तेज़, भरी हुई साँस",
+    "definition": "often a sharp, noisy nasal exhalation that dogs make to clear scent, mark excitement, or, during games, as a loose playful aside",
+    "example": "A snort into the flowerbed cleared his nose for the next, far more interesting smell.",
+    "sound": "pets-snort"
+  },
+  {
+    "term": "solicitation purr",
+    "partOfSpeech": "cat sound",
+    "hindi": "माँगने वाली घुरघुराहट — घुरघुराहट में मिली ऊँची रोती-सी आवाज़, अक्सर खाना माँगते समय",
+    "definition": "a purr laced with a high-pitched cry-like note that cats often use when soliciting food, which listeners usually find harder to ignore",
+    "example": "At five in the morning came the solicitation purr by my ear, impossible to sleep through.",
+    "sound": "pets-solicitation-purr"
+  },
+  {
+    "term": "trill",
+    "partOfSpeech": "cat sound",
+    "hindi": "लहराती गुनगुनी पुकार — बंद होंठों से निकला छोटा स्वर, अक्सर दोस्ताना स्वागत या साथ चलने का न्योता",
+    "definition": "a short rolling closed-mouth sound, often rising in pitch, that cats commonly use in friendly greeting or to invite following",
+    "example": "She met him on the stairs with a trill, which loosely translates as ‘there you are, come on’.",
+    "sound": "pets-trill"
+  },
+  {
+    "term": "whimper",
+    "partOfSpeech": "dog sound",
+    "hindi": "सिसकना — आमतौर पर कुत्ते की धीमी, टूटी-टूटी कराहती आवाज़",
+    "definition": "usually a soft, broken, low-volume whine that dogs and puppies give when uneasy, appeasing, or dreaming; it can also accompany pain",
+    "example": "The puppy’s sleepy whimper from the crate on the first night was hard to ignore.",
+    "sound": "pets-whimper"
+  },
+  {
+    "term": "whine",
+    "partOfSpeech": "dog sound",
+    "hindi": "कूँ-कूँ करना — अक्सर चाह, बेचैनी या तनाव में कुत्ते की ऊँची, पतली आवाज़",
+    "definition": "often a high, nasal, drawn-out sound that dogs make when wanting something, anticipating, or stressed; it can also accompany pain",
+    "example": "A steady whine by the lead hook meant we both knew exactly what time it was.",
+    "sound": "pets-whine"
+  },
+  {
+    "term": "yelp",
+    "partOfSpeech": "dog sound",
+    "hindi": "केंकियाना — आमतौर पर अचानक दर्द या चौंकने पर कुत्ते की एक तीखी चीख़",
+    "definition": "usually a single, sudden, high-pitched cry that dogs give when startled or hurt, and during play often signalling that a bite went too hard",
+    "example": "One yelp in the middle of the wrestling match, a pause, and the game carried on more gently.",
+    "sound": "pets-yelp"
+  },
+  {
+    "term": "yip",
+    "partOfSpeech": "dog sound",
+    "hindi": "किकियाना — अक्सर उत्साह में कुत्ते या पिल्ले की छोटी, ऊँची आवाज़",
+    "definition": "often a short, high, light bark that puppies and smaller dogs give when excited, usually in quick bursts during greetings or play",
+    "example": "Each excited yip at the door greeted an owner who had been gone for all of nine minutes.",
+    "sound": "pets-yip"
+  },
+  {
+    "term": "yowl",
+    "partOfSpeech": "cat sound",
+    "hindi": "लंबी कराहती पुकार — बिल्ली की खिंची हुई आवाज़, अक्सर इलाक़े की तनातनी या संभोग काल में",
+    "definition": "a long drawn-out moaning call that cats often give during territorial standoffs, mating or disorientation, and which can also signal discomfort",
+    "example": "A low yowl rose from the fence top, which in cat means ‘this wall is mine, not yours’.",
+    "sound": "pets-yowl"
+  }
+]

@@ -23,6 +23,7 @@ One Word/
 | `Views/` | SwiftUI `View`s only. | **No data loading, no persistence, no JSON.** |
 | `ViewModels/` | `@Observable` classes driving those views. | `import Observation` only — **never** SwiftUI, never a view type. This is the testable seam. |
 | `Models/` | App-only data and state: `Wordbook`, `Appearance`, `LearnedWords`, `RelatedWords`, `Sentences` — and app-only data files (`sentences.json`). | No SwiftUI. Not visible to the widget. |
+| `Sounds/` | Real recordings a sound book plays, `<book>-<term>.m4a` (Cats & Dogs: `pets-trill.m4a`), named by each entry's `sound` field. CC0; provenance in `Docs/06_Misc/PETS_SOUND_CANDIDATES.md`. | App-only, not visible to the widget. `check_words` fails if a `sound` has no file here. |
 | `Shared/` | `Word`, `WordProvider`, `WordSelectionStore`, `SavedWords`, `Theme`, `AppGroup`, `Premium`, and every `<book>.json`. | **Member of BOTH targets.** Anything the widget reads must live here. |
 | `Assets.xcassets/` | App icon (Mac set plus one iOS 1024), accent color. | |
 | `OneWord.entitlements`, `OneWord-iOS.entitlements` | One per platform, picked by `CODE_SIGN_ENTITLEMENTS[sdk=…]`. The iOS one has no sandbox key and a `group.`-prefixed App Group. | Edit the iOS file by hand: Xcode's Signing editor only touches the Mac one. |

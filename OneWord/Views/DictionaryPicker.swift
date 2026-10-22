@@ -32,6 +32,8 @@ struct DictionaryShelf: View {
     @Binding var selection: String
     var padding: CGFloat = 28
     var onPick: (Wordbook) -> Void = { _ in }
+    /// Double-clicking the face-out book opens it. nil (History's sheet) leaves it inert.
+    var onOpen: ((Wordbook) -> Void)?
 
     @Environment(\.colorScheme) private var scheme
     /// For Midnight's palette behind the shelf.
@@ -64,10 +66,12 @@ struct DictionaryShelf: View {
     private static let spineScale: CGFloat = 0.85
     private static let spineGap: CGFloat = 2
 
-    init(selection: Binding<String>, padding: CGFloat = 28, onPick: @escaping (Wordbook) -> Void = { _ in }) {
+    init(selection: Binding<String>, padding: CGFloat = 28,
+         onPick: @escaping (Wordbook) -> Void = { _ in }, onOpen: ((Wordbook) -> Void)? = nil) {
         _selection = selection
         self.padding = padding
         self.onPick = onPick
+        self.onOpen = onOpen
         let id = selection.wrappedValue
         _front = State(initialValue: Self.books.contains { $0.id == id } ? id : Self.books[0].id)
     }
@@ -119,16 +123,19 @@ struct DictionaryShelf: View {
                     let isFront = book.id == front
                     let scale = (isFront ? 1 : k) * book.height
                     let locked = !premium.allows(book.id)
+                    let opens = isFront && onOpen != nil
                     ShelfBook(book: book, art: art, turn: isFront ? 1 : 0, locked: locked)
                         // Gestures before the transforms, so the tap target moves and scales with the book.
                         .contentShape(Rectangle())
-                        .onTapGesture { pick(book) }
-                        .allowsHitTesting(!isFront)
+                        // A spine picks on one click; the face-out book opens on two.
+                        .onTapGesture(count: isFront ? 2 : 1) { isFront ? onOpen?(book) : pick(book) }
+                        .allowsHitTesting(!isFront || opens)
+                        .help(opens ? "Double-click to browse every word" : "")
                         .accessibilityElement()
                         .accessibilityLabel(book.name)
                         .accessibilityAddTraits(isFront ? .isSelected : locked ? [] : .isButton)
                         .accessibilityValue(locked ? "Premium" : "")
-                        .accessibilityAction { pick(book) }
+                        .accessibilityAction { isFront ? onOpen?(book) : pick(book) }
                         // Transforms, not layout: the flight never reflows the shelf. The board stands on the plank.
                         .scaleEffect(scale, anchor: .topLeading)
                         .offset(x: xs[book.id] ?? 0, y: floor - art * Self.boardFoot * scale)
@@ -228,15 +235,18 @@ struct DictionaryPicker: View {
     @AppStorage("dictionaryID", store: AppGroup.defaults)
     private var dictionaryID = Wordbook.everydayEnglish.id
     @Environment(PremiumViewModel.self) private var premium
+    /// The book double-clicked open, pushed as its word list.
+    @State private var opened: Wordbook?
 
     var body: some View {
-        DictionaryShelf(selection: $dictionaryID) { _ in
+        DictionaryShelf(selection: $dictionaryID, onPick: { _ in
             WidgetCenter.shared.reloadAllTimelines()
-        }
+        }, onOpen: { opened = $0 })
+        .navigationDestination(item: $opened) { WordListView(wordbook: $0) }
         // The premium bar: a bottom inset, the way the header is a top one, so
         // PaneGround (which ignores the safe area) paints under both.
         .safeAreaInset(edge: .bottom, spacing: 0) {
-            if !premium.isUnlocked {
+            if Features.premium && !premium.isUnlocked {
                 PremiumBar()
                     .padding(.horizontal, 28)
                     .padding(.bottom, 24)

@@ -41,6 +41,9 @@ extension View {
             .ignoresSafeArea(.container, edges: isPhone ? [] : .top)
             // Nothing draws it any more, but the Window menu and VoiceOver read it.
             .navigationTitle(title ?? "One Word")
+            // A push adds the stack's own Back to the window toolbar, which brings the
+            // toolbar back — a black strip over this header in full screen. Ours replaces it.
+            .navigationBarBackButtonHidden(back)
             #if os(iOS)
             // The strip IS the bar: a stock one on top would double the title and the back.
             .toolbar(.hidden, for: .navigationBar)
