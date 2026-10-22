@@ -51,14 +51,14 @@ extension View {
     /// header hides it by painting the pane's own ground — same top, same width, so
     /// Midnight's glow runs through the seam instead of starting again below it.
     func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
-                                    fade: CGFloat = 0, titleAction: (() -> Void)? = nil,
+                                    bare: Bool = false, fade: CGFloat = 0, titleAction: (() -> Void)? = nil,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
         safeAreaInset(edge: .top, spacing: 0) {
             // Scrolled down on a phone the strip blurs away; its space stays, so the
             // list shows through rather than jumping up — which would re-fire the scroll.
             // `fade` follows the finger (0 at the top, 1 a header's height down), so
             // there's no timed animation to fight the scroll.
-            PaneHeader(title: title, back: back, ribbon: ribbon, titleAction: titleAction,
+            PaneHeader(title: title, back: back, ribbon: ribbon, bare: bare, titleAction: titleAction,
                        trailing: trailing())
                 .blur(radius: fade * 12)
                 .opacity(1 - fade)
@@ -109,6 +109,9 @@ struct PaneHeader<Trailing: View>: View {
     let back: Bool
     /// Bookmarks on a phone: the ribbon leads the title instead of a count trailing it.
     var ribbon = false
+    /// A sheet's strip: no sidebar toggle and no app name, just the back button and
+    /// the trailing buttons. The sheet is a window of its own, not a pane.
+    var bare = false
     /// Phone only: makes the title a button — Home's day picker.
     var titleAction: (() -> Void)?
     let trailing: Trailing
@@ -125,7 +128,7 @@ struct PaneHeader<Trailing: View>: View {
         let folded = sidebar.wrappedValue == .detailOnly
         HStack(spacing: 6) {
             // No sidebar to fold on a phone: the tab bar is the sidebar.
-            if !isPhone {
+            if !isPhone && !bare {
                 Button {
                     withAnimation { sidebar.wrappedValue = folded ? .all : .detailOnly }
                 } label: {
@@ -137,36 +140,46 @@ struct PaneHeader<Trailing: View>: View {
             if showsBack {
                 Button { dismiss() } label: { Label("Back", systemImage: "chevron.left") }
                     .help("Back")
+                    // Esc closes a word's sheet, as it does the app's other sheets.
+                    // Not on every pane: Esc there belongs to the search field.
+                    .keyboardShortcut(bare ? .cancelAction : nil)
             }
 
             if isPhone {
                 if ribbon { BookmarkRibbon(size: 18) }
                 // One name per strip. The tab bar already says which section this
                 // is, so the pane's title takes the wordmark's place and its face;
-                // a pane with no title of its own keeps the app's name.
-                let name = Text(title ?? "One Word")
-                    .font(doodle.face(20))
-                    .tracking(doodle.tracking(20))
-                    .foregroundStyle(t.ink)
-                    .lineLimit(1)
-                if let titleAction {
-                    Button(action: titleAction) {
-                        name.contentShape(Rectangle())
+                // a pane with no title of its own keeps the app's name. A bare
+                // strip has neither.
+                if !bare {
+                    let name = Text(title ?? "One Word")
+                        .font(doodle.face(20))
+                        .tracking(doodle.tracking(20))
+                        .foregroundStyle(t.ink)
+                        .lineLimit(1)
+                    if let titleAction {
+                        Button(action: titleAction) {
+                            name.contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.leading, showsBack ? 2 : 0)
+                    } else {
+                        name.padding(.leading, showsBack ? 2 : 0)
                     }
-                    .buttonStyle(.plain)
-                    .padding(.leading, showsBack ? 2 : 0)
-                } else {
-                    name.padding(.leading, showsBack ? 2 : 0)
                 }
             } else {
-                Text("One Word")
-                    .font(doodle.face(18))
-                    .tracking(doodle.tracking(18))
-                    .foregroundStyle(t.ink)
-                    .lineLimit(1)
-                    .padding(.leading, 8)
+                if !bare {
+                    Text("One Word")
+                        .font(doodle.face(18))
+                        .tracking(doodle.tracking(18))
+                        .foregroundStyle(t.ink)
+                        .lineLimit(1)
+                        .padding(.leading, 8)
+                }
                 if let title {
-                    Rectangle().fill(t.hairline).frame(width: 1, height: 14).padding(.horizontal, 4)
+                    if !bare {
+                        Rectangle().fill(t.hairline).frame(width: 1, height: 14).padding(.horizontal, 4)
+                    }
                     Text(title)
                         .font(.system(size: 13))
                         .foregroundStyle(t.muted)
@@ -180,7 +193,7 @@ struct PaneHeader<Trailing: View>: View {
         .labelStyle(.iconOnly)
         .buttonStyle(HeaderButtonStyle(theme: t))
         // Folded, the window's traffic lights sit over this corner instead of the sidebar.
-        .padding(.leading, folded && !isPhone ? 84 : 16)
+        .padding(.leading, folded && !isPhone && !bare ? 84 : 16)
         .padding(.trailing, 16)
         .frame(height: 52)
         .background { WindowDragArea() }

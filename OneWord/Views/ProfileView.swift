@@ -78,6 +78,7 @@ struct ProfileView: View {
                 details(t)
                 rows(t)
                 if Features.accounts { footer(t) }
+                version(t)
             }
             .frame(maxWidth: 520, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -482,33 +483,35 @@ struct ProfileView: View {
 
     // MARK: - Learned, settings & sign out
 
-    /// Two rows, one idiom: Learned pushes a list, Settings switches pane. Settings
-    /// is off the sidebar now, so this row is the way in.
+    /// Learned pushes a list, Settings switches pane. Settings is off the sidebar
+    /// now, so this row is the way in. On a phone Learned lives only in the stats
+    /// above, so its row is left off here.
     private func rows(_ t: Theme) -> some View {
         // Separate tiles on the Mac; one card with inset rules on a phone, the way
         // a phone groups a short list of ways onward.
         VStack(spacing: isPhone ? 0 : 8) {
-            NavigationLink {
-                LearnedListView()
-            } label: {
-                row(t, "Learned") { LearnedSeal(size: 16) }
+            if !isPhone {
+                NavigationLink {
+                    LearnedListView()
+                } label: {
+                    row(t, "Learned") { LearnedSeal(size: 16) }
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
 
             if isPhone {
                 // The tab bar's third slot is Practice once it's flagged on, owned and
                 // on, Bookmarks until then (RootView.tabOrder). Bookmarks gets a row here
                 // when Practice took its tab; Practice itself never gets one.
                 if Features.practice && premium.isUnlocked && practiceEnabled {
-                    separator(t)
                     NavigationLink { WordListView(wordbook: .saved) } label: {
                         row(t, "Bookmarks") {
                             GlyphIcon(.bookmarks, size: 15).foregroundStyle(t.muted)
                         }
                     }
                     .buttonStyle(.plain)
+                    separator(t)
                 }
-                separator(t)
             }
 
             Button { pane = .settings } label: {
@@ -569,6 +572,18 @@ struct ProfileView: View {
                 .foregroundStyle(.red)
                 .frame(maxWidth: .infinity)
         }
+    }
+
+    /// The app's version and build, last on the pane. Same source as the feedback
+    /// trailer, so a bug report and this line name the same build.
+    private func version(_ t: Theme) -> some View {
+        let info = Bundle.main.infoDictionary
+        let short = info?["CFBundleShortVersionString"] as? String ?? "?"
+        let build = info?["CFBundleVersion"] as? String ?? "?"
+        return Text("Version \(short) (\(build))")
+            .font(.system(size: 11))
+            .foregroundStyle(t.muted)
+            .frame(maxWidth: .infinity)
     }
 
     // MARK: - Pieces

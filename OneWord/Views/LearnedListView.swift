@@ -20,6 +20,8 @@ struct LearnedListView: View {
 
     @State private var log: [LearnedWord] = []
     @State private var query = ""
+    /// The entry a row opened, shown as a sheet over the log.
+    @State private var opened: LearnedWord?
     // Cached, not computed: re-grouping the whole log on every `body` pass is
     // what made the magnification stutter.
     @State private var lines: [Line] = []
@@ -51,14 +53,13 @@ struct LearnedListView: View {
                             // swell too, Dock-style, which resized every word on screen at
                             // once and read as a glitch rather than a focus.
                             HoverSwell { scale in
-                                NavigationLink {
-                                    // The shelf travels with the entry, so re-opening a word
-                                    // from the log doesn't log it again under whatever
-                                    // dictionary happens to be selected.
-                                    WordDetail(word: entry.word, shelf: entry.shelf)
-                                } label: {
+                                // Opens as a sheet. The shelf travels with the entry, so
+                                // re-opening a word from the log doesn't log it again under
+                                // whatever dictionary happens to be selected.
+                                Button { opened = entry } label: {
                                     row(entry, t, scale)
                                 }
+                                .buttonStyle(.plain)
                             }
                             .listRowBackground(Color.clear)
                             .listRowSeparatorTint(t.hairline)
@@ -71,6 +72,18 @@ struct LearnedListView: View {
             }
         }
         .paneBackground(t)
+        .sheet(item: $opened) { entry in
+            // The sheet's own stack, so a related word can still push within it.
+            NavigationStack {
+                WordDetail(word: entry.word, shelf: entry.shelf)
+            }
+            .frame(minWidth: 520, idealWidth: 600, minHeight: 560, idealHeight: 680)
+            #if os(macOS)
+            // A sheet has no traffic lights to lose: drop its toolbar, which painted the
+            // app's name over the header and hid its Back (dismiss) and actions.
+            .toolbar(.hidden, for: .windowToolbar)
+            #endif
+        }
         // Only ever pushed, from Profile.
         .paneHeader("Learned", back: true) {
             HeaderSearchField(prompt: "Search \(log.count) words", text: $query)

@@ -79,8 +79,8 @@ struct AlphaMark: Shape {
     func path(in rect: CGRect) -> Path {
         let bowl = Path(ellipseIn: CGRect(x: 125, y: 105, width: 540, height: 790))
         let stem = Path(roundedRect: CGRect(x: 645, y: 80, width: 160, height: 800), cornerRadius: 80)
-        let heel = Path(CGRect(x: 760, y: 733, width: 85, height: 144))
-        let foot = Path(ellipseIn: CGRect(x: 773, y: 733, width: 144, height: 144))
+        let heel = Path(CGRect(x: 725, y: 736, width: 120, height: 144))
+        let foot = Path(ellipseIn: CGRect(x: 773, y: 736, width: 144, height: 144))
         var mark = bowl.union(stem).union(heel).union(foot)
         if withCounter {
             mark = mark.subtracting(Path(ellipseIn: CGRect(x: 305, y: 305, width: 280, height: 400)))

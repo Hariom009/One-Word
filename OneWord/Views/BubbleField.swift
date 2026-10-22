@@ -2,7 +2,7 @@
 //  BubbleField.swift
 //  OneWord
 //
-//  The "same vein" graph on a phone: the word and its nearest words as a honeycomb
+//  The "same vein" graph: the word and its nearest words as a honeycomb
 //  of bubbles you drag around. A bubble swells as it passes the middle and shrinks
 //  toward the rim, so the field reads as a dome under the glass, and whichever sits
 //  in the middle has its meaning spelled out beneath. The word itself is the
@@ -12,7 +12,7 @@
 //
 //  Nearest sits nearest: the first ring is the six closest words, the second the
 //  next twelve, each ring starting at twelve o'clock. Colour says the same thing —
-//  warm close in, cooler further out. The Mac keeps ConstellationView.
+//  warm close in, cooler further out.
 //
 
 import SwiftUI
@@ -301,5 +301,12 @@ private struct Scallop: Shape {
         }
         path.closeSubpath()
         return path
+    }
+}
+
+extension Word {
+    /// One VoiceOver utterance covering everything a related-word row shows.
+    var spokenSummary: String {
+        [term, partOfSpeech, definition].filter { !$0.isEmpty }.joined(separator: ". ")
     }
 }

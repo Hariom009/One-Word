@@ -48,13 +48,13 @@ struct WordDetail: View {
         if embedded {
             page
         } else {
-            // A screen of its own, pushed from a list or a related word: its own
-            // ground, and its buttons in its own header.
+            // A screen of its own, opened as a sheet from a list or pushed from a related
+            // word: its own ground, and its buttons in a bare header (no app name).
             page
                 .paneBackground(Theme.of(scheme, doodle))
                 // No bookmark on a locked word: a bookmark keeps the whole entry, and
                 // Bookmarks is free — it would hand the meaning over.
-                .paneHeader(back: true) { if !locked { WordActions(word: word) } }
+                .paneHeader(back: true, bare: true) { if !locked { WordActions(word: word) } }
         }
     }
 
@@ -198,12 +198,9 @@ struct WordDetail: View {
     private func relatedBox(_ words: [Word], _ t: Theme) -> some View {
         if !words.isEmpty {
             DisclosureGroup(isExpanded: $showRelated) {
-                if relatedAsGraph && isPhone {
+                if relatedAsGraph {
                     // Two rings of the honeycomb: the six nearest, then the next twelve.
                     BubbleField(word: word, neighbours: store.related(to: word, in: shelfID, limit: 18), t: t)
-                        .padding(.top, 18)
-                } else if relatedAsGraph {
-                    ConstellationView(word: word, ring: store.related(to: word, in: shelfID, limit: 8), t: t)
                         .padding(.top, 18)
                 } else {
                     VStack(alignment: .leading, spacing: 18) {

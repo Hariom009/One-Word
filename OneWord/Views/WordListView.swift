@@ -34,6 +34,8 @@ struct WordListView: View {
     @State private var total = 0
     /// How far off the top of the list, 0…1 — on a phone the header blurs away with it.
     @State private var fade: CGFloat = 0
+    /// The word a row opened, shown as a sheet over the list.
+    @State private var opened: WordListViewModel.Hit?
     @Environment(\.colorScheme) private var scheme
     /// Search spans locked books too: their words are listed as a teaser, meaning withheld.
     @Environment(PremiumViewModel.self) private var premium
@@ -70,9 +72,10 @@ struct WordListView: View {
                         // The shelf travels with the hit: a word found in Medicine
                         // while Everyday English is open must not be logged — or
                         // opened — against Everyday English.
-                        NavigationLink { WordDetail(word: hit.word, shelf: hit.shelf) } label: {
+                        Button { opened = hit } label: {
                             row(hit, t, mark: mark, scale: scale)
                         }
+                        .buttonStyle(.plain)
                     }
                         // Clear, so the pane's ground — Midnight's glow included —
                         // shows through the rows instead of stopping at them.
@@ -126,6 +129,18 @@ struct WordListView: View {
             found = hits
         }
         .task { if everywhere { total = await WordListViewModel.everywhereCount() } }
+        .sheet(item: $opened) { hit in
+            // The sheet's own stack, so a related word can still push within it.
+            NavigationStack {
+                WordDetail(word: hit.word, shelf: hit.shelf)
+            }
+            .frame(minWidth: 520, idealWidth: 600, minHeight: 560, idealHeight: 680)
+            #if os(macOS)
+            // A sheet has no traffic lights to lose: drop its toolbar, which painted the
+            // app's name over the header and hid its Back (dismiss) and actions.
+            .toolbar(.hidden, for: .windowToolbar)
+            #endif
+        }
     }
 
     @ViewBuilder
