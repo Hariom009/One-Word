@@ -1,982 +1,266 @@
 [
   {
-    "term": "adult meow",
-    "partOfSpeech": "cat sound",
-    "hindi": "बड़ी बिल्ली की म्याऊँ — आमतौर पर दूसरी बिल्लियों से नहीं, इंसानों से बात करने के लिए की जाने वाली म्याऊँ",
-    "definition": "usually a vocalisation that grown cats direct mostly at humans rather than other felines, often shaped through daily household experience",
-    "example": "Her adult meow at the door meant, roughly, ‘staff, the service here has slipped’."
-  },
-  {
-    "term": "aeroplane ears",
-    "partOfSpeech": "cat signal",
-    "hindi": "बगल की ओर फैले कान — अक्सर बेचैन बिल्ली के कान बाहर की ओर घूमे हुए",
-    "definition": "often ears rotated outward and lowered sideways like wings, which cats show when uneasy, irritated, or unsure, short of fully flattening",
-    "example": "Aeroplane ears at the carrier said, roughly, ‘I have seen this box before and I remember.’."
-  },
-  {
-    "term": "affiliative",
-    "partOfSpeech": "ethology",
-    "hindi": "मेल-जोल वाला — आमतौर पर रिश्ता बनाए रखने वाला व्यवहार, जैसे एक-दूसरे को चाटना या सटकर आराम करना",
-    "definition": "usually describing friendly, bond-keeping behaviour such as mutual grooming, rubbing or resting together, seen among cats, dogs and their people",
-    "example": "Mutual grooming on the sofa counts as affiliative, roughly, ‘we are on the same side’."
-  },
-  {
-    "term": "agonistic",
-    "partOfSpeech": "ethology",
-    "hindi": "संघर्ष-संबंधी — आमतौर पर धमकी, हमला, मनाना और पीछे हटना, टकराव का हर व्यवहार",
-    "definition": "usually covering all conflict behaviour, from threat and attack to appeasement and retreat, observed when cats or dogs compete over something",
-    "example": "The hallway standoff was agonistic but bloodless, roughly, ‘this corridor has one lane’."
-  },
-  {
-    "term": "air snap",
-    "partOfSpeech": "dog signal",
-    "hindi": "हवा में दाँत चटकाना — बिना छुए झटके से मुँह बंद करना; आमतौर पर कुत्ते की साफ़ चेतावनी",
-    "definition": "a snap at the air stopping short of contact, usually a clear warning that dogs give when earlier, quieter signals have been ignored",
-    "example": "The air snap came only after the stiffening, roughly, ‘last polite warning’."
-  },
-  {
     "term": "alarm bark",
     "partOfSpeech": "dog sound",
     "hindi": "चेतावनी का भौंकना — अक्सर किसी अनजानी चीज़ पर कुत्ते की तेज़, दोहराई गई आवाज़",
     "definition": "often a sharp, rapid, repeated bark that dogs give toward something unfamiliar, typically paired with stiffened posture and fixed attention",
-    "example": "The alarm bark at the bin bag meant, roughly, ‘something has changed and I disapprove.’."
-  },
-  {
-    "term": "allogrooming",
-    "partOfSpeech": "cat & dog",
-    "hindi": "एक-दूसरे को चाटना-सँवारना — साथी जानवर के सिर, गर्दन या चेहरे को चाटना; आमतौर पर पक्के रिश्ते का संकेत",
-    "definition": "usually a sign of an established bond: companion cats lick each other’s heads and necks, while dogs more often nibble or lick faces and ears",
-    "example": "The puppy and the old tom shared allogrooming on the rug, roughly, ‘family, apparently’."
-  },
-  {
-    "term": "allorubbing",
-    "partOfSpeech": "cat signal",
-    "hindi": "आपस में रगड़ना — साथी बिल्लियों का एक-दूसरे से सिर, बगल और पूँछ रगड़ना; आमतौर पर मेलजोल और साझा गंध का संकेत",
-    "definition": "usually a bonding behaviour between familiar felines: cats rub heads, flanks and tails against each other, mixing their scents",
-    "example": "The two sisters passed in the hall with quick allorubbing, roughly, ‘still us’."
-  },
-  {
-    "term": "anthropomorphism",
-    "partOfSpeech": "ethology",
-    "hindi": "मानवीकरण — आमतौर पर जानवरों के व्यवहार में इंसानी इरादे पढ़ने की आदत",
-    "definition": "usually the habit of reading human motives into animal behaviour, which can mislead observers trying to interpret what cats or dogs signal",
-    "example": "Calling the shredded cushion revenge is anthropomorphism, roughly, ‘the cushion was simply there’."
-  },
-  {
-    "term": "appeasement",
-    "partOfSpeech": "ethology",
-    "hindi": "मनाने वाला व्यवहार — शरीर झुकाना या थूथन चाटना, जिससे जानवर अक्सर सामने वाले का ग़ुस्सा शांत करने की कोशिश करता है",
-    "definition": "behaviour that often aims to reduce another animal's threat, such as lowering the body, licking the muzzle or rolling partly over, seen in dogs and cats",
-    "example": "The young dog's appeasement, low and wriggling, told the old one, roughly, ‘no threat here’."
-  },
-  {
-    "term": "arched back",
-    "partOfSpeech": "cat signal",
-    "hindi": "धनुषाकार पीठ — अक्सर बिल्ली का पीठ ऊपर उठाकर खुद को बड़ा दिखाना",
-    "definition": "often a high, rounded spine that cats show sideways with bristling fur when threatened, though cats also arch casually while stretching",
-    "example": "The arched back at the new puppy said, roughly, ‘I am much larger than I look.’."
-  },
-  {
-    "term": "arousal",
-    "partOfSpeech": "ethology",
-    "hindi": "उत्तेजना का स्तर — अक्सर शरीर और मन की सक्रियता, जो खुशी, डर या खीज से बढ़ सकती है",
-    "definition": "often the overall level of physical and mental activation, which can rise with excitement, fear or frustration and colour how cats and dogs signal",
-    "example": "Arousal was climbing fast at the park gate, roughly, ‘everything is happening, all at once’."
-  },
-  {
-    "term": "attention seeking",
-    "partOfSpeech": "cat & dog",
-    "hindi": "ध्यान माँगना — आमतौर पर ऐसा व्यवहार जो इंसान की प्रतिक्रिया मिलते रहने से जारी रहता है",
-    "definition": "usually behaviour such as pawing, vocalising or sitting on papers that tends to continue because people respond to it, kindly or crossly, in cats and dogs",
-    "example": "Knocking pens off the desk is classic attention seeking, roughly, ‘look up from the laptop’."
-  },
-  {
-    "term": "averted gaze",
-    "partOfSpeech": "cat & dog",
-    "hindi": "नज़र फेरना — आँखें या सिर दूसरी ओर करना, अक्सर टकराव टालने या तनाव घटाने के लिए",
-    "definition": "a deliberate turning away of the eyes or head that dogs and cats often use to avoid confrontation or lower tension during encounters",
-    "example": "The new puppy offered an averted gaze to the old tom, roughly, ‘no trouble from me’."
-  },
-  {
-    "term": "bared teeth",
-    "partOfSpeech": "dog signal",
-    "hindi": "दाँत उघाड़ना — होंठ ऊपर उठाकर दाँत खोल देना; आमतौर पर स्पष्ट चेतावनी, मेल-मिलाप वाली मुस्कान से अलग",
-    "definition": "usually a warning: dogs lift the lips vertically to expose the teeth, often with a stiff body and wrinkled nose",
-    "example": "The bared teeth over the food bowl meant, roughly, ‘eat somewhere else’."
+    "example": "A bin bag left by the gate earned a volley of alarm barks, as if to say ‘that was not there yesterday’.",
+    "sound": "pets-alarm-bark"
   },
   {
     "term": "bark",
     "partOfSpeech": "dog sound",
     "hindi": "भौंकना — कुत्ते की आमतौर पर छोटी, तेज़ आवाज़ जिसका अर्थ संदर्भ से बदलता है",
     "definition": "usually a short, explosive vocal burst from dogs whose pitch, rhythm and context carry the message, ranging across alert, play, frustration and greeting",
-    "example": "One bark at the postman was, roughly, ‘noted’; the seventh was a different conversation."
-  },
-  {
-    "term": "baseline",
-    "partOfSpeech": "ethology",
-    "hindi": "सामान्य स्थिति — आमतौर पर किसी जानवर का रोज़ का सहज व्यवहार, जिससे तुलना करके बदलाव पहचाने जाते हैं",
-    "definition": "usually an individual animal's normal resting behaviour, posture and sound, which observers compare against to notice meaningful changes in cats or dogs",
-    "example": "Knowing his baseline helped, roughly, ‘he always sighs, that one means nothing’."
+    "example": "One bark at the postman meant ‘noted’; the seventh bark was a different conversation entirely.",
+    "sound": "pets-bark"
   },
   {
     "term": "bay",
     "partOfSpeech": "dog sound",
     "hindi": "गूँजती भौंक — अक्सर गंध का पीछा करते कुत्ते की गहरी, लहराती, लंबी भौंक",
     "definition": "often a deep, prolonged, bell-like cry somewhere between barking and howling that scent-following dogs give while tracking, usually rhythmic and carrying",
-    "example": "The bay from the woods meant, roughly, ‘found it, whatever it is, come and look.’."
+    "example": "The beagle’s bay rolled out of the woods, loosely translated as ‘found it, come and look’.",
+    "sound": "pets-bay"
   },
   {
-    "term": "belly-up",
-    "partOfSpeech": "cat & dog",
-    "hindi": "पीठ के बल लोटना — पेट दिखाती मुद्रा, अक्सर सहजता या मेल का संकेत, छूने का न्योता ज़रूरी नहीं",
-    "definition": "a rolled posture exposing the belly that dogs and cats often show when relaxed or appeasing, and which is not reliably an invitation to touch",
-    "example": "The tabby went belly-up on the rug, roughly, ‘I trust you, but hands off’."
-  },
-  {
-    "term": "bite inhibition",
-    "partOfSpeech": "ethology",
-    "hindi": "काटने पर संयम — दाँतों का दबाव क़ाबू में रखने की सीख, जो आमतौर पर बचपन में भाई-बहनों के साथ खेलकर आती है",
-    "definition": "learned control over jaw pressure, usually acquired as puppies and kittens play with littermates who yelp or withdraw when bitten too hard",
-    "example": "Good bite inhibition meant his grab at the ball felt, roughly, ‘a handshake with teeth’."
-  },
-  {
-    "term": "bottlebrush tail",
-    "partOfSpeech": "cat signal",
-    "hindi": "फूली पूँछ — अक्सर डर या चौंकने पर बिल्ली की पूँछ के बाल खड़े हो जाना",
-    "definition": "often a suddenly puffed, fully bristled tail from piloerection that cats show when startled or frightened, making them look larger",
-    "example": "The hoover gave her a bottlebrush tail that said, roughly, ‘absolutely not, not today.’."
-  },
-  {
-    "term": "bunny kick",
-    "partOfSpeech": "cat signal",
-    "hindi": "पिछली टाँगों की ताबड़तोड़ लातें — अगले पंजों में पकड़ी चीज़ पर बिल्ली का दोनों पिछले पैरों से बार-बार मारना; आमतौर पर खेल में, कभी-कभी सचमुच बचाव में भी",
-    "definition": "rapid alternating kicks of both hind legs against something clutched in the forepaws, usually seen in feline play and also in earnest defence",
-    "example": "The bunny kick hit my wrist in a flurry that meant, roughly, ‘you offered the arm’."
-  },
-  {
-    "term": "butt wiggle",
-    "partOfSpeech": "cat signal",
-    "hindi": "पिछला हिस्सा मटकाना — झपटने से ठीक पहले बिल्ली का कूल्हे दाएँ-बाएँ हिलाना, अक्सर छलाँग की तैयारी",
-    "definition": "a side-to-side shimmy of the hindquarters that cats usually perform just before pouncing, often read as settling the back feet for launch",
-    "example": "The butt wiggle went on so long the toy mouse had, roughly, ‘time to write a will’."
-  },
-  {
-    "term": "calming signal",
-    "partOfSpeech": "dog signal",
-    "hindi": "शांत करने वाला संकेत — प्रशिक्षकों की धारणा, पक्का विज्ञान नहीं; कुत्ते के छोटे इशारे जो अक्सर तनाव घटाते माने जाते हैं",
-    "definition": "a practitioner concept, often used by trainers but not settled science, for small canine gestures like lip licking or slow turning that may ease social tension",
-    "example": "The slow sniff of the pavement looked like a calming signal, roughly, ‘no trouble from me’."
+    "term": "caterwaul",
+    "partOfSpeech": "cat sound",
+    "hindi": "मिलन की पुकार — मद के मौसम में बिल्लियों की ऊँची, रोने जैसी लंबी आवाज़ें",
+    "definition": "loud, wailing, often eerie calls that cats usually make when in heat or competing for a mate, typically at night",
+    "example": "The caterwaul from the garden wall at two in the morning was a love song, though nobody on the street enjoyed it.",
+    "sound": "pets-caterwaul"
   },
   {
     "term": "chattering",
     "partOfSpeech": "cat sound",
     "hindi": "दाँत किटकिटाना — शिकार दिखने पर तेज़ जबड़े की किटकिट, अक्सर उत्तेजना या झुंझलाहट में",
     "definition": "a rapid jaw-clicking stutter that cats often make while watching unreachable prey through a window, possibly reflecting frustration or excitement",
-    "example": "Pigeons on the sill set off a burst of chattering, roughly, ‘if only this glass were gone’."
-  },
-  {
-    "term": "closed mouth",
-    "partOfSpeech": "dog signal",
-    "hindi": "अचानक बंद मुँह — ढीले मुँह का एकाएक कसकर बंद होना; अक्सर ध्यान या बढ़ते तनाव का संकेत",
-    "definition": "often a sign of sudden focus or rising tension: dogs close a previously relaxed mouth, pressing the lips together and going still",
-    "example": "When the stranger reached over, her closed mouth said, roughly, ‘I’m reassessing you’."
-  },
-  {
-    "term": "crouch",
-    "partOfSpeech": "cat signal",
-    "hindi": "दुबककर झुकना — अक्सर बिल्ली का शरीर नीचे सटाकर सिमटना",
-    "definition": "often a low, tense posture with weight drawn back and body close to the ground that cats use when fearful, or when stalking prey",
-    "example": "Her crouch behind the curtain meant, roughly, ‘the string has no idea what is coming.’."
-  },
-  {
-    "term": "cue",
-    "partOfSpeech": "ethology",
-    "hindi": "सुराग — अक्सर कोई ऐसी विशेषता जिसे दूसरा जीव पढ़ ले, पर जो संवाद के लिए विकसित नहीं हुई",
-    "definition": "often any feature another animal can read, such as body size or scent, that was not shaped specifically to communicate, though cats and dogs still notice it",
-    "example": "The rustle of the treat bag is a cue, not a signal, roughly, ‘nobody meant to tell you’."
-  },
-  {
-    "term": "curved approach",
-    "partOfSpeech": "dog signal",
-    "hindi": "घुमावदार ढंग से पास आना — सीधे नहीं, चाप बनाकर दूसरे के पास जाना; आमतौर पर विनम्र, शांत मुलाक़ात का तरीका",
-    "definition": "usually a polite way to meet: dogs approach another animal in an arc rather than head-on, avoiding a direct confrontation",
-    "example": "The older dog took a curved approach, roughly, ‘I come in peace, no rush’."
+    "example": "Pigeons on the sill set off a burst of chattering, the sound of a hunter who cannot reach her lunch.",
+    "sound": "pets-chattering"
   },
   {
     "term": "demand bark",
     "partOfSpeech": "dog sound",
     "hindi": "माँगने वाला भौंकना — अक्सर किसी चीज़ की चाह में कुत्ते का एक-एक करके बार-बार भौंकना",
     "definition": "often a single, evenly spaced bark that dogs aim directly at a person, typically repeating until food, attention or a door arrives",
-    "example": "The demand bark at dinner time translated, roughly, to ‘the bowl remains tragically empty.’."
-  },
-  {
-    "term": "dilated pupils",
-    "partOfSpeech": "cat signal",
-    "hindi": "फैली पुतलियाँ — अक्सर उत्तेजना, डर या कम रोशनी में बिल्ली की बड़ी, गोल पुतलियाँ",
-    "definition": "often widened, rounded pupils in cats that can reflect excitement, fear or play arousal, though dim lighting alone also enlarges them",
-    "example": "Dilated pupils behind the sofa meant, roughly, ‘the ankle hunt begins in three seconds.’."
-  },
-  {
-    "term": "displacement behaviour",
-    "partOfSpeech": "ethology",
-    "hindi": "विस्थापन व्यवहार — दुविधा या तनाव में अक्सर बेमौका खुजलाना, ख़ुद को चाटना या ज़मीन सूँघना",
-    "definition": "a normal action performed out of context, often scratching, grooming or sniffing, which dogs and cats usually show when torn between conflicting impulses",
-    "example": "Mid-standoff she paused to groom a shoulder, displacement behaviour for, roughly, ‘I'm thinking’."
-  },
-  {
-    "term": "ethogram",
-    "partOfSpeech": "ethology",
-    "hindi": "व्यवहार-सूची — आमतौर पर किसी प्रजाति के व्यवहारों की सटीक रूप से वर्णित सूची",
-    "definition": "usually a working catalogue of a species' behaviours, each described precisely enough that different observers of cats or dogs score them alike",
-    "example": "Our ethogram listed slow blinks separately, roughly, ‘no, a squint is not a nap’."
-  },
-  {
-    "term": "flattened ears",
-    "partOfSpeech": "cat & dog",
-    "hindi": "कान पीछे दबाना — कान सिर से चिपकाना, अक्सर डर, बचाव या मनाने का संकेत",
-    "definition": "ears pressed back or sideways against the head, which dogs and cats often show when fearful, defensive or appeasing, though context changes the reading",
-    "example": "With flattened ears the tabby backed under the bed, roughly, ‘I want no part of this’."
-  },
-  {
-    "term": "flehmen response",
-    "partOfSpeech": "cat signal",
-    "hindi": "गंध परखने की मुद्रा — अक्सर बिल्ली का मुँह थोड़ा खोलकर होंठ ऊपर खींचना",
-    "definition": "often a brief open-mouthed grimace with curled upper lip that cats make to draw scent toward a special organ in the palate",
-    "example": "After sniffing my shoe she gave a flehmen response, roughly, ‘where exactly have you been?’."
-  },
-  {
-    "term": "food solicitation",
-    "partOfSpeech": "cat & dog",
-    "hindi": "खाना माँगना — आमतौर पर खाने के समय घूरना, म्याऊँ करना, कूँ-कूँ करना या रसोई के पास मंडराना",
-    "definition": "usually a set of signals such as staring, meowing, whining or hovering near the kitchen, which cats and dogs aim at people around feeding times",
-    "example": "Food solicitation began at five sharp, roughly, ‘the clock says dinner, and so do I’."
-  },
-  {
-    "term": "forward whiskers",
-    "partOfSpeech": "cat signal",
-    "hindi": "आगे झुकी मूँछें — अक्सर किसी चीज़ में रुचि लेती बिल्ली की आगे फैली मूँछें",
-    "definition": "often whiskers fanned and pushed toward the muzzle front, which cats show when curious, hunting, or investigating something close by",
-    "example": "Forward whiskers over the shopping bag meant, roughly, ‘this is now my investigation.’."
-  },
-  {
-    "term": "freeze",
-    "partOfSpeech": "cat & dog",
-    "hindi": "जम जाना — अचानक पूरी तरह स्थिर हो जाना, अक्सर असमंजस, ख़तरे या झपटने से पहले",
-    "definition": "a sudden stillness that dogs and cats often adopt when uncertain, threatened or about to act, frequently preceding retreat, a warning or a pounce",
-    "example": "Mid-sniff the beagle went into a freeze, roughly, ‘wait, what was that’."
-  },
-  {
-    "term": "furrowed brow",
-    "partOfSpeech": "dog signal",
-    "hindi": "सिकुड़ा माथा — आँखों के ऊपर की खाल में तनाव की लकीरें; अक्सर चिंता या उलझन का संकेत",
-    "definition": "often a sign of worry or concentration: dogs tense the muscles above the eyes, creasing the forehead into visible ridges",
-    "example": "Left at the kennel door, he wore a furrowed brow, roughly, ‘this was not discussed’."
-  },
-  {
-    "term": "gaze alternation",
-    "partOfSpeech": "cat & dog",
-    "hindi": "नज़र बारी-बारी घुमाना — अक्सर इंसान और किसी चीज़ के बीच देखकर ध्यान खींचना",
-    "definition": "usually a look switching between a person and an object, such as a closed door or empty bowl, which dogs and cats can use to direct attention",
-    "example": "His gaze alternation between me and the treat jar said, roughly, ‘the jar, the human, the jar’."
-  },
-  {
-    "term": "gift bringing",
-    "partOfSpeech": "cat signal",
-    "hindi": "शिकार घर लाना — पकड़ा हुआ जीव या खिलौना लोगों के पास छोड़ना; अक्सर शिकार की आदत, सोची-समझी भेंट नहीं",
-    "definition": "often prey carried home to a safe place rather than a deliberate present: cats deliver caught animals or toys near people",
-    "example": "Gift bringing at dawn left a sock on the pillow, roughly, ‘you’re welcome’."
-  },
-  {
-    "term": "greeting ritual",
-    "partOfSpeech": "cat & dog",
-    "hindi": "स्वागत का क्रम — अक्सर घर लौटे परिचित इंसान के पास आकर सूँघने, रगड़ने या मटकने का दोहराया जाने वाला सिलसिला",
-    "definition": "often a repeated sequence of approaching, sniffing, rubbing or wiggling that dogs and cats perform when a familiar person returns home",
-    "example": "Every evening the greeting ritual ran its course, roughly, ‘sniff the shoes, then report on the day’."
-  },
-  {
-    "term": "greeting stretch",
-    "partOfSpeech": "cat & dog",
-    "hindi": "अभिवादन वाली अँगड़ाई — परिचित को देखकर ली गई अँगड़ाई, आमतौर पर सहज स्वागत का संकेत",
-    "definition": "a forward or backward stretch that dogs and cats often perform on approaching a familiar person, usually after resting, read as relaxed acknowledgement",
-    "example": "He got home to a slow greeting stretch from the greyhound, roughly, ‘oh, it’s you, hello’."
+    "example": "At six sharp came the demand bark, best translated as ‘the bowl remains tragically empty’.",
+    "sound": "pets-demand-bark"
   },
   {
     "term": "groan",
     "partOfSpeech": "dog sound",
     "hindi": "कराहना — आमतौर पर लेटते या आराम करते कुत्ते की गहरी, लंबी आवाज़",
     "definition": "usually a deep, drawn-out vocal exhale that dogs give when stretching or settling; it can also accompany discomfort or pain when lying down",
-    "example": "Sinking into his bed, he let out a groan that said, roughly, ‘at last, the good spot.’."
-  },
-  {
-    "term": "ground scratching",
-    "partOfSpeech": "dog signal",
-    "hindi": "ज़मीन खुरचना — शौच के बाद पिछली टाँगों से ज़ोर से मिट्टी उछालना; अक्सर दिखने और सूँघने लायक निशान छोड़ना",
-    "definition": "often a form of marking after toileting: dogs kick and scrape the ground with the hind feet, adding scent and visible scuffs",
-    "example": "His ground scratching sent grass flying, roughly, ‘read it and weep’."
+    "example": "Sinking into the good spot on his bed, he let out a groan of pure satisfaction.",
+    "sound": "pets-groan"
   },
   {
     "term": "growl",
     "partOfSpeech": "cat & dog",
     "hindi": "गुर्राना — कुत्तों और बिल्लियों की गले से निकली धीमी आवाज़, अक्सर दूरी बनाने की चेतावनी",
     "definition": "a low rumbling throat sound that dogs and cats often use as a warning to increase distance, though dogs can also growl during rough play",
-    "example": "The terrier gave a soft growl over his chew, roughly, ‘give me some room here’."
+    "example": "The terrier gave a soft growl over his chew, which is a request for space, not a reason to scold him.",
+    "sound": "pets-growl"
   },
   {
     "term": "grumble",
     "partOfSpeech": "dog sound",
     "hindi": "बड़बड़ाना — अक्सर हल्की नाराज़गी में कुत्ते की धीमी, गले से निकली भुनभुनाहट",
     "definition": "often a low, rolling throat noise softer than growling that dogs make when mildly put out, such as being moved off a sofa",
-    "example": "Asked to shift off the cushion, he gave a grumble that meant, roughly, ‘fine, under protest.’."
+    "example": "Asked to shift off the cushion, he moved with a grumble that meant ‘fine, under protest’.",
+    "sound": "pets-grumble"
   },
   {
-    "term": "guilty look",
-    "partOfSpeech": "dog signal",
-    "hindi": "'दोषी' दिखना — आमतौर पर मालिक की डाँट के संकेतों पर झुका सिर और नीची नज़र, अपराधबोध का प्रमाण नहीं",
-    "definition": "usually a lowered head, averted eyes and hunched posture that dogs show in response to an owner's scolding cues, not evidence of feeling guilt",
-    "example": "I gasped and the guilty look arrived, roughly, ‘your face says trouble, so mine does too’."
-  },
-  {
-    "term": "half-closed eyes",
-    "partOfSpeech": "cat signal",
-    "hindi": "अधखुली आँखें — अक्सर निश्चिंत बिल्ली की आधी झुकी पलकें",
-    "definition": "often drooping, partly lowered eyelids that cats show when calm and comfortable, usually read as relaxed trust; it can also accompany pain",
-    "example": "Half-closed eyes on my lap said, roughly, ‘you are acceptable furniture today.’."
-  },
-  {
-    "term": "hard stare",
-    "partOfSpeech": "cat & dog",
-    "hindi": "घूरना — बिना पलक झपकाए टकटकी, अक्सर तनाव या चुनौती से पहले का संकेत",
-    "definition": "a fixed unblinking look that dogs and cats often direct at a rival or intruder, usually signalling tension and sometimes preceding a challenge",
-    "example": "She gave the neighbour’s tom a hard stare through the glass, roughly, ‘this garden’s taken’."
-  },
-  {
-    "term": "head bunt",
-    "partOfSpeech": "cat signal",
-    "hindi": "सिर से सटाना — अक्सर बिल्ली का सिर या माथा किसी से रगड़कर गंध छोड़ना",
-    "definition": "often a firm push or rub of the forehead against people or objects, which cats use to deposit scent and usually as social bonding",
-    "example": "A head bunt against my chin meant, roughly, ‘you belong to this household now.’."
-  },
-  {
-    "term": "head tilt",
-    "partOfSpeech": "dog signal",
-    "hindi": "सिर टेढ़ा करना — किसी आवाज़ पर सिर एक ओर झुकाना; अक्सर ध्यान से सुनने या समझने की कोशिश",
-    "definition": "often a sign of attentive listening: dogs cock the head to one side in response to an interesting sound or familiar word",
-    "example": "Whisper ‘walk’ and you get a head tilt, roughly, ‘did you just say what I think?’."
-  },
-  {
-    "term": "helicopter tail",
-    "partOfSpeech": "dog signal",
-    "hindi": "गोल घूमती पूँछ — दुम का पूरे चक्कर में घूमना; अक्सर खुशी भरे, ढीले-ढाले स्वागत का संकेत",
-    "definition": "often seen in loose, happy greetings: dogs swing the tail in full circles, usually paired with a wiggling rear end",
-    "example": "Her owner walked in and the helicopter tail started, roughly, ‘you’re home, you’re home’."
-  },
-  {
-    "term": "high tail carriage",
-    "partOfSpeech": "dog signal",
-    "hindi": "ऊँची उठी पूँछ — पूँछ को पीठ की रेखा से ऊपर रखना; अक्सर सतर्कता या आत्मविश्वास का संकेत",
-    "definition": "often a sign of alertness, confidence or rising arousal: dogs carry the tail above the line of the back, judged against their usual resting position",
-    "example": "Spotting the squirrel, she trotted off in high tail carriage, roughly, ‘this is my moment’."
-  },
-  {
-    "term": "hip nudge",
-    "partOfSpeech": "dog signal",
-    "hindi": "कूल्हे से धक्का — बगल में आकर पिछला हिस्सा किसी से सटाना; अक्सर भरोसे और सहलाए जाने की माँग का संकेत",
-    "definition": "often a trusting bid for contact: dogs swing the hindquarters into a person or companion, turning the face away",
-    "example": "Mid-greeting she gave a hip nudge, roughly, ‘scratch here, just above the tail’."
+    "term": "guarding growl",
+    "partOfSpeech": "dog sound",
+    "hindi": "रखवाली की गुर्राहट — खाने या खिलौने के पास कोई आए तो कुत्ते की चेतावनी भरी गुर्राहट",
+    "definition": "a low, steady growl that dogs usually give over food, a toy or a resting spot when someone comes near, which other dogs seem to read differently from a play growl",
+    "example": "Reach for the bowl mid-dinner and you’ll hear the guarding growl, which in dog means ‘that’s mine, give me room’.",
+    "sound": "pets-guarding-growl"
   },
   {
     "term": "hiss",
     "partOfSpeech": "cat sound",
     "hindi": "फुफकारना — मुँह खोलकर तेज़ साँस छोड़ना, आमतौर पर डरी या घिरी बिल्ली की चेतावनी",
     "definition": "a sharp exhalation through an open mouth that cats usually make defensively when frightened or cornered, warning another animal away",
-    "example": "The kitten gave the vacuum a tiny hiss, roughly, ‘stay back, monster’."
-  },
-  {
-    "term": "honest signal",
-    "partOfSpeech": "ethology",
-    "hindi": "सच्चा संकेत — आमतौर पर ऐसा संकेत जिसकी नकल करना महँगा या कठिन हो, इसलिए उस पर भरोसा किया जा सके",
-    "definition": "usually a signal that is costly or hard to fake, so receivers can trust it, as with the depth of a large canine voice",
-    "example": "A deep bark from a big dog is an honest signal, roughly, ‘yes, all of this is real’."
+    "example": "The kitten gave the vacuum a tiny hiss, bravely telling a monster ten times her size to stay back.",
+    "sound": "pets-hiss"
   },
   {
     "term": "howl",
     "partOfSpeech": "dog sound",
     "hindi": "हुआँ-हुआँ करना — आमतौर पर कुत्ते की लंबी, खिंची हुई, दूर तक जाने वाली आवाज़",
     "definition": "usually a long, sustained, carrying vocalisation that dogs use toward distant sounds or absent companions, often triggered by sirens or other howling",
-    "example": "The siren set off a howl that meant, roughly, ‘yes, we are also here.’."
+    "example": "The ambulance siren set off a howl from three gardens at once.",
+    "sound": "pets-howl"
   },
   {
     "term": "huff",
     "partOfSpeech": "dog sound",
     "hindi": "नाक से छोटी तेज़ साँस — अक्सर हल्की झुंझलाहट, उत्साह या बैठते समय कुत्ते का नाक या मुँह से झटके से साँस छोड़ना",
     "definition": "often a short, forceful breath expelled through the nose or mouth that dogs give in mild frustration, excitement, or while settling down",
-    "example": "A huff as she dropped onto the rug said, roughly, ‘that walk was simply too short.’."
-  },
-  {
-    "term": "intention movement",
-    "partOfSpeech": "ethology",
-    "hindi": "इरादे की झलक — आमतौर पर किसी क्रिया की शुरुआती अधूरी हरकत, जैसे छलाँग से पहले झुकना",
-    "definition": "usually the first incomplete part of an action, such as crouching before a leap, which cats and dogs show and others can read ahead",
-    "example": "Her haunches wiggled, an intention movement, roughly, ‘launching in three, two...’."
+    "example": "She dropped onto the rug with a huff, clearly of the view that the walk had been too short.",
+    "sound": "pets-huff"
   },
   {
     "term": "isolation bark",
     "partOfSpeech": "dog sound",
     "hindi": "अकेलेपन का भौंकना — आमतौर पर अकेले छोड़े जाने पर कुत्ते का लंबा, एकसुर भौंकना",
     "definition": "usually a monotonous, long-running bark that some dogs give when left alone, often higher pitched and spaced with whines or howls",
-    "example": "The neighbours heard the isolation bark all afternoon, roughly, ‘is anyone coming back?’."
-  },
-  {
-    "term": "kneading",
-    "partOfSpeech": "cat signal",
-    "hindi": "पंजों से गूँधना — अक्सर बिल्ली का नरम सतह पर बारी-बारी से पंजे दबाना",
-    "definition": "often rhythmic alternating pressing of the front paws into soft surfaces, carried over from kittens nursing and usually seen when cats settle",
-    "example": "Her kneading on the blanket meant, roughly, ‘this spot is being prepared, please hold still.’."
-  },
-  {
-    "term": "ladder of aggression",
-    "partOfSpeech": "ethology",
-    "hindi": "आक्रामकता की सीढ़ी — चेतावनियों का बढ़ता क्रम, आमतौर पर नज़र फेरने से अकड़ने, गुर्राने और काटने तक",
-    "definition": "a model of escalating canine warnings, usually drawn from subtle signals like looking away, through stiffening and growling, up to a snap or bite",
-    "example": "He looked away, stiffened, then growled: the ladder of aggression climbing, roughly, ‘please notice me’."
-  },
-  {
-    "term": "lashing tail",
-    "partOfSpeech": "cat signal",
-    "hindi": "झटकती पूँछ — आमतौर पर बेचैन या ज़्यादा उत्तेजित बिल्ली की पूँछ का तेज़ी से इधर-उधर झटकना",
-    "definition": "usually a fast, wide, whipping side-to-side tail movement that cats show when agitated or overstimulated, often a cue to give space",
-    "example": "Mid-stroke, a lashing tail told me, roughly, ‘that is enough petting for one lifetime.’."
-  },
-  {
-    "term": "leaning",
-    "partOfSpeech": "dog signal",
-    "hindi": "टिककर सहारा लेना — अपना वज़न किसी व्यक्ति की टाँगों पर डालना; अक्सर अपनापन, कभी-कभी घबराहट में सहारा",
-    "definition": "often a bid for closeness or reassurance: dogs rest their weight against a person’s legs, sometimes more heavily when anxious",
-    "example": "During the fireworks he kept leaning on her shins, roughly, ‘stay right there’."
-  },
-  {
-    "term": "leg-lift marking",
-    "partOfSpeech": "dog signal",
-    "hindi": "टाँग उठाकर निशान — ऊँची चीज़ पर थोड़ा-सा पेशाब छोड़ना; आमतौर पर दूसरों के लिए गंध का संदेश",
-    "definition": "usually scent messaging rather than emptying the bladder: dogs raise a hind leg and leave small amounts of urine on upright objects",
-    "example": "Every lamppost got leg-lift marking on the walk, roughly, ‘also here, also me’."
-  },
-  {
-    "term": "lip lick",
-    "partOfSpeech": "dog signal",
-    "hindi": "होंठ चाटना — बिना खाने के जीभ से होंठ या नाक पर फेरना; अक्सर तनाव या असहजता का संकेत",
-    "definition": "often a sign of mild stress or appeasement when no food is around: dogs sweep the tongue over the lips or nose",
-    "example": "At the vet’s door he did a quick lip lick, roughly, ‘I would rather be anywhere else’."
-  },
-  {
-    "term": "loaf",
-    "partOfSpeech": "cat signal",
-    "hindi": "सिमटकर बैठना — आमतौर पर बिल्ली का पंजे भीतर मोड़कर गठरी-सा बैठना",
-    "definition": "usually a compact resting posture where cats sit upright with paws and tail folded underneath, often signalling settled, low-alert calm",
-    "example": "She sat in a perfect loaf by the radiator, roughly, ‘no plans, no visitors, thank you.’."
+    "example": "The neighbours heard his isolation bark all afternoon, the same lonely note on repeat.",
+    "sound": "pets-isolation-bark"
   },
   {
     "term": "meow",
     "partOfSpeech": "cat sound",
     "hindi": "म्याऊँ — बिल्ली की खुले मुँह वाली पुकार, अक्सर इंसानों से ध्यान, खाना या रास्ता माँगने के लिए",
     "definition": "an open-mouthed vowel call that adult cats mostly direct at humans rather than other felines, often to request attention, food or access",
-    "example": "She gave one sharp meow at the closed door, roughly, ‘you know what to do’."
-  },
-  {
-    "term": "metasignal",
-    "partOfSpeech": "ethology",
-    "hindi": "संकेत के बारे में संकेत — आमतौर पर बताता है कि आगे का व्यवहार किस तरह समझा जाए",
-    "definition": "usually a signal about other signals, such as a play bow telling dogs that the rough chasing which follows remains playful",
-    "example": "The play bow worked as a metasignal, roughly, ‘the biting next is pretend’."
+    "example": "She gave one sharp meow at the closed door, which in cat means ‘you know what to do’.",
+    "sound": "pets-meow"
   },
   {
     "term": "mew",
     "partOfSpeech": "cat sound",
     "hindi": "महीन म्याऊँ — बिल्ली के बच्चों की पतली, ऊँची पुकार, आमतौर पर माँ को बुलाने के लिए",
     "definition": "a thin high-pitched call that kittens usually make to attract their mother, sometimes kept by adult cats as a soft request",
-    "example": "A tiny mew came from the laundry basket, roughly, ‘Mum, over here’."
-  },
-  {
-    "term": "mouthing",
-    "partOfSpeech": "dog signal",
-    "hindi": "मुँह में लेना — कुत्ते का हाथ, आस्तीन या खिलौना बिना दबाव दाँतों में पकड़ना; अक्सर खेल का न्योता",
-    "definition": "often a play invitation in puppies, the gentle holding or gumming of a hand, sleeve or toy without real biting pressure, though it can also signal overexcitement",
-    "example": "The puppy's mouthing of my sleeve was, roughly, ‘come on, play with me’."
+    "example": "A tiny mew from the laundry basket led us straight to the kitten.",
+    "sound": "pets-mew"
   },
   {
     "term": "murmur",
     "partOfSpeech": "cat sound",
     "hindi": "धीमी गुनगुनाहट — बंद मुँह की हल्की आवाज़, अक्सर सहलाने या बैठते समय",
     "definition": "a soft closed-mouth sound that cats often make when settling, greeting or being stroked, quieter and less inflected than a trill",
-    "example": "Each stroke drew a contented murmur, roughly, ‘yes, that spot, carry on’."
-  },
-  {
-    "term": "nose touch",
-    "partOfSpeech": "cat & dog",
-    "hindi": "नाक से नाक छूना — परिचित साथी से मिलने पर आमतौर पर हल्का, शांत अभिवादन",
-    "definition": "a brief nose-to-nose contact that cats and dogs often make on meeting familiar animals, usually read as a calm, low-key greeting",
-    "example": "The kittens traded a quick nose touch at the bowl, roughly, ‘oh, it’s only you’."
-  },
-  {
-    "term": "paw lift",
-    "partOfSpeech": "dog signal",
-    "hindi": "एक पंजा उठाना — अगला पंजा मोड़कर हवा में रखना; अक्सर अनिश्चितता या एकाग्रता का इशारा",
-    "definition": "usually a moment of uncertainty or intent focus: dogs hold one front paw raised, its meaning resting on the surrounding body language",
-    "example": "Facing the hissing cat, the puppy froze in a paw lift, roughly, ‘I have no plan for this’."
-  },
-  {
-    "term": "pawing",
-    "partOfSpeech": "dog signal",
-    "hindi": "पंजे से छूना — किसी व्यक्ति को अगले पंजे से थपथपाना; अक्सर ध्यान माँगने का तरीका",
-    "definition": "usually a request for attention or continued contact: dogs tap or drag a front paw against a person’s arm or knee",
-    "example": "Stop stroking for a second and the pawing starts, roughly, ‘I didn’t say stop’."
-  },
-  {
-    "term": "petting-induced aggression",
-    "partOfSpeech": "cat signal",
-    "hindi": "सहलाने पर भड़कना — सहलाते-सहलाते बिल्ली का अचानक काटना या पंजा मारना, अक्सर पूँछ फड़कने के बाद",
-    "definition": "a sudden bite or swat during stroking, often preceded by tail flicking, skin twitching or a turned head, that many cats show once touch passes their tolerance",
-    "example": "Ten strokes in came petting-induced aggression, a nip meaning, roughly, ‘that was plenty’."
-  },
-  {
-    "term": "pinned whiskers",
-    "partOfSpeech": "cat signal",
-    "hindi": "चिपकी मूँछें — अक्सर डरी या तनाव में बिल्ली की गालों से सटी मूँछें",
-    "definition": "often whiskers drawn back and pressed flat against the cheeks, which cats usually show when fearful, defensive, or wanting distance",
-    "example": "At the vet, pinned whiskers said, roughly, ‘I would like to go home, immediately.’."
+    "example": "Each stroke drew a contented murmur, so I kept going.",
+    "sound": "pets-murmur"
   },
   {
     "term": "play bark",
     "partOfSpeech": "dog sound",
     "hindi": "खेल का भौंकना — आमतौर पर खेलते समय कुत्ते की ऊँची, उछलती आवाज़",
     "definition": "usually a higher, bouncier bark that dogs give during games, often mixed with play bows, loose bodies and pauses inviting a partner back",
-    "example": "Every play bark at the frisbee said, roughly, ‘again, and this time throw it properly.’."
-  },
-  {
-    "term": "play bite",
-    "partOfSpeech": "cat & dog",
-    "hindi": "खेल का हल्का काटना — खेलते समय बिना ज़ोर लगाए दाँत गड़ाना, आमतौर पर ढीली और उछलती मुद्रा के साथ",
-    "definition": "a gentle, inhibited nip during play, usually without real pressure, which dogs and cats often pair with loose, bouncy body language",
-    "example": "The kitten's play bite landed on my thumb with all the menace of, roughly, ‘gotcha’."
-  },
-  {
-    "term": "play bow",
-    "partOfSpeech": "dog signal",
-    "hindi": "खेल-आमंत्रण मुद्रा — अगली टाँगें नीचे, पिछला हिस्सा ऊपर; अक्सर खेल शुरू करने का इशारा",
-    "definition": "usually an invitation to play: canine front legs stretched low with the rear raised, often followed by a bounce or chase",
-    "example": "The terrier dropped into a play bow, roughly, ‘chase me, I promise it’s a game’."
+    "example": "Every play bark at the frisbee seemed to say ‘again, and throw it properly this time!’",
+    "sound": "pets-play-bark"
   },
   {
     "term": "play growl",
     "partOfSpeech": "dog sound",
     "hindi": "खेल की गुर्राहट — आमतौर पर खेलते समय कुत्ते का नाटकीय गुर्राना, ढीले शरीर के साथ",
     "definition": "usually a noisy, theatrical growl that dogs make during tug or wrestling, typically paired with loose bodies, bouncy movement and frequent role swaps",
-    "example": "Her play growl over the rope toy meant, roughly, ‘mine, but please keep pulling.’."
+    "example": "Her play growl over the rope toy was all noise and wagging, and she never once let go.",
+    "sound": "pets-play-growl"
   },
   {
     "term": "play pant",
     "partOfSpeech": "dog sound",
     "hindi": "खेल की हाँफ — आमतौर पर खेल के बीच कुत्ते की तेज़, साँस भरी हाँफ जैसी आवाज़",
     "definition": "usually a breathy, forced, almost laughing exhalation that dogs make while inviting or continuing play, distinct from panting from heat",
-    "example": "The play pant beside the ball said, roughly, ‘ha, ha, ha, now chase me.’."
+    "example": "The play pant beside the ball sounded so much like laughter that the other dog joined in.",
+    "sound": "pets-play-pant"
   },
   {
-    "term": "pounce",
-    "partOfSpeech": "cat & dog",
-    "hindi": "झपट्टा — लक्ष्य पर अगले पंजों के बल कूदना; बिल्लियों के शिकार में आम, कुत्ते भी खेल में अक्सर ऐसा करते हैं",
-    "definition": "a leap landing forepaws-first on a target, usually the climax of a feline stalk and often seen in canine play as a high, arching mouse-pounce",
-    "example": "Her pounce landed a full inch short, which she handled with, roughly, ‘that was intentional’."
-  },
-  {
-    "term": "predatory sequence",
-    "partOfSpeech": "ethology",
-    "hindi": "शिकार का क्रम — ताकना, दबे पाँव बढ़ना, पीछा, पकड़ और काटना; खेल में अक्सर अधूरा ही दोहराया जाता है",
-    "definition": "the chain of hunting actions, usually listed as orient, stalk, chase, grab, kill bite and consume, which dogs and cats often perform only partly in play",
-    "example": "The collie runs the predatory sequence up to the chase and stops, roughly, ‘herding, not dinner’."
-  },
-  {
-    "term": "prey toss",
-    "partOfSpeech": "cat signal",
-    "hindi": "शिकार उछालना — बिल्ली का खिलौने या पकड़े जीव को पंजे या मुँह से हवा में उछाल देना; अक्सर शिकार से पहले या अकेले खेलते समय",
-    "definition": "a flick sending a toy or catch into the air, often seen when cats bat small prey before the kill and also during solitary object play",
-    "example": "The prey toss sent the felt mouse over the bookcase with a look of, roughly, ‘oops, again’."
-  },
-  {
-    "term": "pricked ears",
-    "partOfSpeech": "dog signal",
-    "hindi": "खड़े कान — कान आगे की ओर तने हुए; अक्सर सतर्कता या किसी चीज़ में गहरी रुचि का संकेत",
-    "definition": "often a sign of alert interest: dogs raise the ears and swivel them forward toward a sound, sight or approaching animal",
-    "example": "A rustle in the hedge, and up went pricked ears, roughly, ‘what was that?’."
-  },
-  {
-    "term": "puppy-dog eyes",
-    "partOfSpeech": "dog signal",
-    "hindi": "भौंहें उठाकर ताकना — कुत्ता अक्सर भीतरी भौंह उठाकर आँखें बड़ी दिखाता है",
-    "definition": "often a brief raise of the inner eyebrow that makes canine eyes look larger, seen more when dogs are being watched by people",
-    "example": "The puppy-dog eyes appeared the moment I opened the fridge, roughly, ‘you and me, we share things’."
+    "term": "play sneeze",
+    "partOfSpeech": "dog sound",
+    "hindi": "खेल की छींक — खेलते या उत्साहित होने पर कुत्ते की छोटी, बनावटी-सी छींक",
+    "definition": "a short, snorty sneeze that dogs often give while playing or excited, which many trainers read as a sign that the roughhousing is friendly",
+    "example": "Mid-wrestle the terrier let out a play sneeze, as if to say ‘still just a game, promise’.",
+    "sound": "pets-play-sneeze"
   },
   {
     "term": "purr",
     "partOfSpeech": "cat sound",
     "hindi": "घुरघुराना — बिल्ली की लगातार धीमी कंपन वाली आवाज़, अक्सर सुकून में, पर दर्द या तनाव में भी",
     "definition": "a continuous low vibration that cats often produce when content, though it can also accompany pain, stress, giving birth or recovery",
-    "example": "Curled on my lap, the old tom kept up a steady purr, roughly, ‘stay exactly here’."
-  },
-  {
-    "term": "question-mark tail",
-    "partOfSpeech": "cat signal",
-    "hindi": "सवालिया पूँछ — आमतौर पर बिल्ली की सीधी उठी पूँछ जिसका सिरा मुड़ा हो",
-    "definition": "usually an upright tail with a hooked tip that cats carry when approaching curiously, often read as friendly interest rather than certainty",
-    "example": "He trotted over with a question-mark tail, roughly, ‘who are you, and do you have ham?’."
-  },
-  {
-    "term": "raised hackles",
-    "partOfSpeech": "cat & dog",
-    "hindi": "बाल खड़े होना — कंधों, पीठ या पूँछ के बाल उठ जाना, आमतौर पर उत्तेजना, डर या चौकन्नेपन का अनैच्छिक संकेत",
-    "definition": "piloerection along the shoulders, spine or tail, usually an involuntary arousal response in dogs and cats that can accompany fear, excitement or defensiveness",
-    "example": "The puppy met the hoover with raised hackles, roughly, ‘what on earth is that’."
-  },
-  {
-    "term": "redirected aggression",
-    "partOfSpeech": "cat & dog",
-    "hindi": "भटका हुआ ग़ुस्सा — किसी एक चीज़ से भड़ककर आमतौर पर पास मौजूद किसी और पर हमला कर देना",
-    "definition": "aggression usually triggered by one thing but aimed at another within reach, common when indoor cats spot an outdoor rival or leashed dogs grow frustrated",
-    "example": "Seeing the tom outside, she swatted her sister: redirected aggression, roughly, ‘someone pays’."
-  },
-  {
-    "term": "relaxed open mouth",
-    "partOfSpeech": "dog signal",
-    "hindi": "ढीला खुला मुँह — जबड़ा ढीला, जीभ हल्की बाहर; आमतौर पर सुकून और सहजता का संकेत",
-    "definition": "usually a sign of comfort: dogs let the jaw hang loose with the tongue resting over the lower teeth, no tension at the corners",
-    "example": "Back from the park, he lay with a relaxed open mouth, roughly, ‘life is good’."
-  },
-  {
-    "term": "resource guarding",
-    "partOfSpeech": "cat & dog",
-    "hindi": "चीज़ों की चौकसी — खाना, खिलौना या आराम की जगह बचाना; आमतौर पर अकड़कर, जल्दी खाकर या गुर्राकर",
-    "definition": "defending valued things such as food, toys, resting spots or people, usually by stiffening, eating faster, growling or blocking, in dogs and cats alike",
-    "example": "Resource guarding over the chew meant a hard sideways glance, roughly, ‘mine, move along’."
-  },
-  {
-    "term": "ritualisation",
-    "partOfSpeech": "ethology",
-    "hindi": "रस्मीकरण — आमतौर पर वह विकास-प्रक्रिया जिसमें साधारण क्रियाएँ बढ़ा-चढ़ाकर पक्के संकेत बन जाती हैं",
-    "definition": "usually the evolutionary process by which ordinary actions, such as stretching or sniffing, become exaggerated, stereotyped signals in cats and dogs",
-    "example": "The play bow may owe something to ritualisation, roughly, ‘a stretch that learned to talk’."
-  },
-  {
-    "term": "role reversal",
-    "partOfSpeech": "ethology",
-    "hindi": "भूमिका की अदला-बदली — खेल में अक्सर पीछा करने वाला और भागने वाला बारी-बारी से जगह बदलते हैं",
-    "definition": "a turn-taking pattern in which play partners often swap chaser and chased or top and bottom, keeping canine and feline play balanced and mutual",
-    "example": "After a minute of role reversal the chaser became the chased, roughly, ‘your turn, my turn’."
-  },
-  {
-    "term": "scent rolling",
-    "partOfSpeech": "cat & dog",
-    "hindi": "गंध में लोटना — तेज़ गंध पर सिर-गर्दन रगड़कर लोटना, अक्सर कुत्तों में, कारण अब भी अस्पष्ट",
-    "definition": "a roll that dogs often, and cats sometimes, perform on a strong odour, rubbing head, neck and shoulders into it for reasons still debated",
-    "example": "The spaniel found a fox patch and went scent rolling, roughly, ‘new perfume, darling’."
-  },
-  {
-    "term": "scratch marking",
-    "partOfSpeech": "cat signal",
-    "hindi": "खरोंच से निशान — पंजों से सतह खुरचकर दिखने वाले निशान और गंध छोड़ना; अक्सर अपनी जगह जताने का तरीका",
-    "definition": "usually a way of claiming space: cats rake their claws down prominent surfaces, leaving visible marks and scent from paw glands",
-    "example": "The new sofa got scratch marking on day one, roughly, ‘I live here too’."
-  },
-  {
-    "term": "self-handicapping",
-    "partOfSpeech": "ethology",
-    "hindi": "जान-बूझकर कमज़ोर पड़ना — खेल में बड़ा जानवर अक्सर अपनी ताक़त रोककर छोटे साथी को जीतने देता है",
-    "definition": "a play strategy in which a stronger animal often deliberately holds back, falling over or letting itself be pinned, so puppies and kittens keep playing",
-    "example": "The mastiff's self-handicapping meant flopping over for the terrier, roughly, ‘you win, again’."
-  },
-  {
-    "term": "shake off",
-    "partOfSpeech": "dog signal",
-    "hindi": "पूरा शरीर झटकना — सूखे शरीर पर भी झुरझुरी लेना; अक्सर तनाव के बाद खुद को सहज करने का तरीका",
-    "definition": "often a reset after tension or excitement: dogs give a whole-body shake while completely dry, then move on to something new",
-    "example": "After the scuffle at the gate, both dogs did a shake off, roughly, ‘right, that’s behind us’."
-  },
-  {
-    "term": "showing behaviour",
-    "partOfSpeech": "dog signal",
-    "hindi": "दिखाकर मदद माँगना — कुत्ता अक्सर इंसान और पहुँच से बाहर की चीज़ के बीच आ-जाकर मदद माँगता है",
-    "definition": "often a mix of gazing, vocalising and moving between a person and an out-of-reach toy or food, which dogs can use to recruit human help",
-    "example": "Her showing behaviour at the sofa said, roughly, ‘ball underneath, your arm is longer’."
+    "example": "A purr usually means contentment, but cats purr at the vet too, so read the rest of the cat.",
+    "sound": "pets-purr"
   },
   {
     "term": "shriek",
     "partOfSpeech": "cat sound",
     "hindi": "तीखी चीख़ — दर्द, चौंकने या हमले पर बिल्ली की अचानक तेज़ चीख़, आमतौर पर लड़ाई रोकने वाली",
     "definition": "a sudden piercing scream that cats usually release when hurt, startled or attacked, often ending a fight or rough play abruptly",
-    "example": "I trod on her tail and got a shriek, roughly, ‘watch where you’re walking’."
+    "example": "I trod on her tail and got a shriek that sent the whole household running.",
+    "sound": "pets-shriek"
   },
   {
     "term": "sigh",
     "partOfSpeech": "dog sound",
     "hindi": "आह भरना — अक्सर कुत्ते की लंबी साँस, आँखों की हालत से अर्थ बदलता है",
     "definition": "often a long exhalation that dogs give when lying down; with half-closed eyes usually contentment, with open eyes more often disappointment",
-    "example": "When the lead went back on its hook, his sigh meant, roughly, ‘so no walk, then.’."
-  },
-  {
-    "term": "signal",
-    "partOfSpeech": "ethology",
-    "hindi": "संकेत — आमतौर पर ऐसा व्यवहार, आवाज़ या मुद्रा जो दूसरे जीव का व्यवहार बदलने के लिए विकसित हुई",
-    "definition": "usually a behaviour, sound or posture shaped by evolution to change what another animal does, as when dogs bow or cats raise their tails",
-    "example": "A raised tail is often a signal, roughly, ‘friendly approach, no surprises here’."
-  },
-  {
-    "term": "silent meow",
-    "partOfSpeech": "cat sound",
-    "hindi": "बेआवाज़ म्याऊँ — मुँह खुलता है पर आवाज़ लगभग नहीं, अक्सर परिचितों से हल्की-सी माँग",
-    "definition": "an open-mouthed meow with little or no audible sound that cats often direct at familiar people, usually as a gentle low-key request",
-    "example": "From the windowsill she offered a silent meow, roughly, ‘if it’s no trouble’."
-  },
-  {
-    "term": "sleeping in contact",
-    "partOfSpeech": "cat & dog",
-    "hindi": "सटकर सोना — साथी से शरीर मिलाकर सोना; आमतौर पर भरोसे और नज़दीकी का संकेत",
-    "definition": "usually a sign of trust between companions: cats and dogs choose to sleep pressed together, sharing warmth while most vulnerable",
-    "example": "Sleeping in contact on one cushion, the pair said, roughly, ‘we’re a unit’."
-  },
-  {
-    "term": "slow blink",
-    "partOfSpeech": "cat signal",
-    "hindi": "धीमी पलक — अक्सर बिल्ली का भरोसे से आँखें धीरे-धीरे बंद करके खोलना",
-    "definition": "often a deliberate, unhurried half-closing and reopening of the eyes that cats give toward trusted companions, usually read as relaxed, non-threatening contact",
-    "example": "She returned my slow blink from the windowsill, which meant, roughly, ‘you may stay.’."
+    "example": "When the lead went back on its hook, his sigh said ‘so no walk, then’.",
+    "sound": "pets-sigh"
   },
   {
     "term": "snarl",
     "partOfSpeech": "cat sound",
     "hindi": "दाँत दिखाकर गुर्राना — बिल्ली की कर्कश आवाज़, आमतौर पर तीखे टकराव में, साधारण गुर्राहट से ज़्यादा गंभीर",
     "definition": "a harsh open-mouthed sound with bared teeth that cats usually produce in intense confrontation, more urgent than a growl",
-    "example": "Cornered by the terrier, the tom let out a snarl, roughly, ‘last warning’."
-  },
-  {
-    "term": "sniff greeting",
-    "partOfSpeech": "cat & dog",
-    "hindi": "सूँघकर मिलना — मिलते समय चेहरा या पीछे का हिस्सा सूँघना, आमतौर पर गंध से परिचय लेना",
-    "definition": "a meeting ritual that dogs and cats usually perform by smelling the face, flank or rear, gathering scent information before deciding how to proceed",
-    "example": "The two collies began with a polite sniff greeting, roughly, ‘and who are you, then’."
+    "example": "Cornered by the terrier, the tom let out a snarl that ended the discussion.",
+    "sound": "pets-snarl"
   },
   {
     "term": "snort",
     "partOfSpeech": "dog sound",
     "hindi": "नाक से फुरफुराना — अक्सर नाक से निकली कुत्ते की तेज़, भरी हुई साँस",
     "definition": "often a sharp, noisy nasal exhalation that dogs make to clear scent, mark excitement, or, during games, as a loose playful aside",
-    "example": "A snort into the flowerbed meant, roughly, ‘interesting, but I have smelt better.’."
-  },
-  {
-    "term": "social referencing",
-    "partOfSpeech": "cat & dog",
-    "hindi": "इंसान से इशारा लेना — अक्सर किसी अनजानी चीज़ पर प्रतिक्रिया से पहले परिचित इंसान का चेहरा देखना",
-    "definition": "often the act of checking a familiar person's face and voice before reacting to something new, seen in both dogs and cats facing uncertain situations",
-    "example": "The vacuum came out and social referencing kicked in, roughly, ‘are we panicking, or not?’."
-  },
-  {
-    "term": "soft eyes",
-    "partOfSpeech": "dog signal",
-    "hindi": "नरम नज़र — ढीली पलकें और शांत आँखें; आमतौर पर सहज, निश्चिंत मन का संकेत",
-    "definition": "usually a sign of relaxation: dogs show loose lids, a gentle or slightly squinting gaze and no tension around the brow",
-    "example": "Curled on the sofa, he gave her soft eyes, roughly, ‘all is well in here’."
+    "example": "A snort into the flowerbed cleared his nose for the next, far more interesting smell.",
+    "sound": "pets-snort"
   },
   {
     "term": "solicitation purr",
     "partOfSpeech": "cat sound",
     "hindi": "माँगने वाली घुरघुराहट — घुरघुराहट में मिली ऊँची रोती-सी आवाज़, अक्सर खाना माँगते समय",
     "definition": "a purr laced with a high-pitched cry-like note that cats often use when soliciting food, which listeners usually find harder to ignore",
-    "example": "At 5 a.m. came the solicitation purr by my ear, roughly, ‘breakfast, and it’s urgent’."
-  },
-  {
-    "term": "spit",
-    "partOfSpeech": "cat sound",
-    "hindi": "झटकेदार फुफकार — अचानक तेज़ विस्फोटक आवाज़, अक्सर डरी बिल्ली की नज़दीकी चेतावनी",
-    "definition": "an abrupt explosive burst, often paired with a hiss or lunge, that frightened cats use as a forceful close-range defensive warning",
-    "example": "The stray answered my hand with a spit, roughly, ‘one more inch and you’ll regret it’."
-  },
-  {
-    "term": "stalk",
-    "partOfSpeech": "cat signal",
-    "hindi": "दबे पाँव पीछा — झुककर, नज़र गड़ाए, धीरे-धीरे लक्ष्य की ओर बढ़ना; अक्सर खेल में भी दोहराया जाता है",
-    "definition": "a low, slow, crouched approach with eyes fixed on a target, usually the opening move of feline hunting and often rehearsed during play",
-    "example": "The stalk across the rug took four minutes and said, roughly, ‘that sock does not know yet’."
-  },
-  {
-    "term": "stiff wag",
-    "partOfSpeech": "dog signal",
-    "hindi": "अकड़ी दुम का हिलना — ऊँची, सख़्त पूँछ का छोटा, तेज़ हिलना; अक्सर तनाव या चेतावनी का संकेत",
-    "definition": "often a sign of tension or high arousal: dogs hold the tail high and rigid, moving only the tip in short, fast strokes",
-    "example": "The stiff wag at the fence meant, roughly, ‘come closer and see what happens’."
-  },
-  {
-    "term": "stress panting",
-    "partOfSpeech": "dog signal",
-    "hindi": "तनाव की हाँफ — ठंडे माहौल में भी कुत्ते का तेज़, उथली साँसें लेना; अक्सर घबराहट का संकेत, दर्द में भी हो सकता है",
-    "definition": "rapid, shallow open-mouthed breathing with a tight, drawn-back mouth, which dogs often show in cool settings when anxious and which can also accompany pain",
-    "example": "At the vet his stress panting started in a cold room, roughly, ‘get me out of here’."
-  },
-  {
-    "term": "submissive grin",
-    "partOfSpeech": "dog signal",
-    "hindi": "मनाने वाली मुस्कान — होंठ पीछे खींचकर आगे के दाँत दिखाना; आमतौर पर मेल-मिलाप का इशारा, धमकी नहीं",
-    "definition": "usually an appeasing greeting rather than a threat: dogs draw the lips back to show the front teeth, with a soft, wriggly body",
-    "example": "Visitors flinch at her submissive grin, which says, roughly, ‘hello, please like me’."
-  },
-  {
-    "term": "sweeping wag",
-    "partOfSpeech": "dog signal",
-    "hindi": "चौड़ा ढीला हिलना — बीच की ऊँचाई पर पूँछ का बड़ा, ढीला झूलना; आमतौर पर दोस्ताना सहजता का संकेत",
-    "definition": "usually a sign of friendly ease: dogs move the tail in wide, loose arcs at mid height, often swaying the hips too",
-    "example": "A sweeping wag met the new neighbour, roughly, ‘you seem fine to me’."
-  },
-  {
-    "term": "swivelling ears",
-    "partOfSpeech": "cat signal",
-    "hindi": "घूमते कान — आमतौर पर आवाज़ की ओर अलग-अलग मुड़ते बिल्ली के कान",
-    "definition": "usually ears rotating independently toward sounds, which cats show when monitoring their surroundings, often alert rather than worried",
-    "example": "Swivelling ears during the nap meant, roughly, ‘asleep, but I heard the fridge open.’."
-  },
-  {
-    "term": "tail twining",
-    "partOfSpeech": "cat signal",
-    "hindi": "पूँछ लपेटना — चलते-चलते पूँछ किसी की टाँग या साथी की पूँछ से लिपटाना; आमतौर पर दोस्ताना अभिवादन",
-    "definition": "usually a friendly greeting gesture: cats wrap the tail around a person’s leg or a companion’s tail while passing close",
-    "example": "Tail twining round my ankles at six meant, roughly, ‘breakfast, now’."
-  },
-  {
-    "term": "tail wag",
-    "partOfSpeech": "dog signal",
-    "hindi": "पूँछ हिलाना — दुम का हिलना; अक्सर उत्तेजना या मेलजोल की तैयारी, हमेशा दोस्ती नहीं",
-    "definition": "usually a sign of arousal and readiness to interact rather than friendliness alone: canine tail movement whose speed, height and stiffness all matter",
-    "example": "His tail wag said, roughly, ‘I’m interested’, which is not the same as ‘pet me’."
-  },
-  {
-    "term": "thumping tail",
-    "partOfSpeech": "cat signal",
-    "hindi": "पटकती पूँछ — आमतौर पर लेटी बिल्ली का पूँछ बार-बार ज़मीन पर मारना",
-    "definition": "usually a heavy, rhythmic tail beating against the floor that cats show while lying down, often signalling irritation or mounting tension",
-    "example": "The thumping tail on the duvet meant, roughly, ‘one more poke and we have a problem.’."
-  },
-  {
-    "term": "tongue flick",
-    "partOfSpeech": "dog signal",
-    "hindi": "जीभ की झलक — पल भर के लिए जीभ की नोक बाहर निकालना; अक्सर हल्की बेचैनी का इशारा",
-    "definition": "often a brief flash of mild unease: dogs dart just the tip of the tongue forward and back, sometimes too fast to notice",
-    "example": "When the camera came close she gave a tiny tongue flick, roughly, ‘that’s near enough’."
-  },
-  {
-    "term": "trigger stacking",
-    "partOfSpeech": "ethology",
-    "hindi": "तनावों का ढेर — कई परेशानियाँ पास-पास जुड़ने से जानवर अक्सर किसी मामूली बात पर भी भड़क उठता है",
-    "definition": "the build-up of several stressors close together, which often leaves dogs or cats reacting strongly to something they would usually tolerate",
-    "example": "Vet, thunder, then a doorbell: trigger stacking made the last one, roughly, ‘that's it’."
+    "example": "At five in the morning came the solicitation purr by my ear, impossible to sleep through.",
+    "sound": "pets-solicitation-purr"
   },
   {
     "term": "trill",
     "partOfSpeech": "cat sound",
     "hindi": "लहराती गुनगुनी पुकार — बंद होंठों से निकला छोटा स्वर, अक्सर दोस्ताना स्वागत या साथ चलने का न्योता",
     "definition": "a short rolling closed-mouth sound, often rising in pitch, that cats commonly use in friendly greeting or to invite following",
-    "example": "She met him on the stairs with a trill, roughly, ‘there you are, come on’."
-  },
-  {
-    "term": "tucked tail",
-    "partOfSpeech": "dog signal",
-    "hindi": "टाँगों में दबी पूँछ — पूँछ पेट के नीचे खींच लेना; आमतौर पर डर या घबराहट का संकेत",
-    "definition": "usually a sign of fear or anxiety: dogs clamp the tail low or between the hind legs, often with a lowered body",
-    "example": "Thunder rolled and the collie crept past, tucked tail, roughly, ‘is it over yet?’."
-  },
-  {
-    "term": "turning away",
-    "partOfSpeech": "dog signal",
-    "hindi": "मुँह फेर लेना — कुत्ते का सिर या पूरा शरीर दूसरी ओर मोड़ना, अक्सर टकराव टालने या जगह माँगने के लिए",
-    "definition": "turning the head or whole body aside, which dogs often use to avoid conflict or ask an overbearing person or animal for more space",
-    "example": "As the toddler leant in, turning away was the spaniel's way of saying, roughly, ‘a bit much’."
-  },
-  {
-    "term": "upright tail",
-    "partOfSpeech": "cat signal",
-    "hindi": "उठी हुई पूँछ — अक्सर पास आती बिल्ली की सीधी खड़ी पूँछ",
-    "definition": "often a vertically raised tail that cats carry when approaching another animal or person, usually read as a greeting or friendly intent",
-    "example": "She met me at the door with an upright tail, roughly, ‘hello, also, dinner.’."
-  },
-  {
-    "term": "urine spraying",
-    "partOfSpeech": "cat signal",
-    "hindi": "पेशाब की फुहार — खड़े होकर, काँपती पूँछ के साथ दीवार पर पेशाब छिड़कना; आमतौर पर गंध से संदेश, शौच नहीं",
-    "definition": "usually scent messaging rather than toileting: cats back up to a vertical surface, tail quivering, and spray a small amount of urine",
-    "example": "A strange cat at the window set off urine spraying, roughly, ‘this house is taken’."
-  },
-  {
-    "term": "whale eye",
-    "partOfSpeech": "dog signal",
-    "hindi": "आँख का सफ़ेद हिस्सा दिखना — सिर फेरे बिना तिरछा देखना; आमतौर पर बेचैनी का संकेत",
-    "definition": "usually a sign of unease: dogs keep the head still but turn the eyes, showing a crescent of white at the edge",
-    "example": "Hugged by the toddler, the spaniel gave pure whale eye, roughly, ‘someone please notice this’."
+    "example": "She met him on the stairs with a trill, which loosely translates as ‘there you are, come on’.",
+    "sound": "pets-trill"
   },
   {
     "term": "whimper",
     "partOfSpeech": "dog sound",
     "hindi": "सिसकना — आमतौर पर कुत्ते की धीमी, टूटी-टूटी कराहती आवाज़",
     "definition": "usually a soft, broken, low-volume whine that dogs and puppies give when uneasy, appeasing, or dreaming; it can also accompany pain",
-    "example": "The puppy's sleepy whimper in its crate meant, roughly, ‘the new house is very large.’."
+    "example": "The puppy’s sleepy whimper from the crate on the first night was hard to ignore.",
+    "sound": "pets-whimper"
   },
   {
     "term": "whine",
     "partOfSpeech": "dog sound",
     "hindi": "कूँ-कूँ करना — अक्सर चाह, बेचैनी या तनाव में कुत्ते की ऊँची, पतली आवाज़",
     "definition": "often a high, nasal, drawn-out sound that dogs make when wanting something, anticipating, or stressed; it can also accompany pain",
-    "example": "A steady whine by the lead hook meant, roughly, ‘we both know what time it is.’."
-  },
-  {
-    "term": "wrapped tail",
-    "partOfSpeech": "cat signal",
-    "hindi": "लिपटी पूँछ — आमतौर पर बैठी बिल्ली की पूँछ शरीर के चारों ओर मुड़ी हुई",
-    "definition": "usually a tail curled snugly around the body or paws while sitting, which cats often show when calm, cold, or quietly reserved",
-    "example": "She watched the party with a wrapped tail, roughly, ‘observing, not participating.’."
-  },
-  {
-    "term": "wrinkled muzzle",
-    "partOfSpeech": "dog signal",
-    "hindi": "सिकुड़ी थूथन — नाक के ऊपर की खाल में सिलवटें; आमतौर पर साफ़ चेतावनी, पीछे हटने का इशारा",
-    "definition": "usually a clear warning: dogs bunch the skin along the top of the nose into folds, often just before the lips lift",
-    "example": "The bone was his, and the wrinkled muzzle said, roughly, ‘that is final’."
-  },
-  {
-    "term": "yawn",
-    "partOfSpeech": "cat & dog",
-    "hindi": "जम्हाई — आमतौर पर नींद का संकेत, पर कुत्तों-बिल्लियों में तनाव या असमंजस में भी",
-    "definition": "an exaggerated open-mouthed gape that dogs and cats often produce when sleepy, though it can also appear during tension, uncertainty or excited anticipation",
-    "example": "At the vet’s door the spaniel let out a huge yawn, roughly, ‘I’m not sure about this’."
+    "example": "A steady whine by the lead hook meant we both knew exactly what time it was.",
+    "sound": "pets-whine"
   },
   {
     "term": "yelp",
     "partOfSpeech": "dog sound",
     "hindi": "केंकियाना — आमतौर पर अचानक दर्द या चौंकने पर कुत्ते की एक तीखी चीख़",
     "definition": "usually a single, sudden, high-pitched cry that dogs give when startled or hurt, and during play often signalling that a bite went too hard",
-    "example": "One yelp during the wrestling match said, roughly, ‘ouch, gentler,’ and the game resumed."
+    "example": "One yelp in the middle of the wrestling match, a pause, and the game carried on more gently.",
+    "sound": "pets-yelp"
   },
   {
     "term": "yip",
     "partOfSpeech": "dog sound",
     "hindi": "किकियाना — अक्सर उत्साह में कुत्ते या पिल्ले की छोटी, ऊँची आवाज़",
     "definition": "often a short, high, light bark that puppies and smaller dogs give when excited, usually in quick bursts during greetings or play",
-    "example": "Each yip at the door was, roughly, ‘you were gone for nine minutes and I counted.’."
+    "example": "Each excited yip at the door greeted an owner who had been gone for all of nine minutes.",
+    "sound": "pets-yip"
   },
   {
     "term": "yowl",
     "partOfSpeech": "cat sound",
     "hindi": "लंबी कराहती पुकार — बिल्ली की खिंची हुई आवाज़, अक्सर इलाक़े की तनातनी या संभोग काल में",
     "definition": "a long drawn-out moaning call that cats often give during territorial standoffs, mating or disorientation, and which can also signal discomfort",
-    "example": "A low yowl rose from the fence top, roughly, ‘this is my wall, not yours’."
-  },
-  {
-    "term": "zoomies",
-    "partOfSpeech": "cat & dog",
-    "hindi": "अचानक बेतहाशा दौड़ — कुछ पलों का तेज़ भागना, घूमना और उछलना, जो कुत्तों और बिल्लियों में अक्सर थोड़ी देर ही चलता है",
-    "definition": "sudden, usually brief bursts of high-speed running, spinning and leaping that ethologists call frenetic random activity periods in both dogs and cats",
-    "example": "Right after the bath came the zoomies, three laps of the sofa announcing, roughly, ‘free at last’."
+    "example": "A low yowl rose from the fence top, which in cat means ‘this wall is mine, not yours’.",
+    "sound": "pets-yowl"
   }
 ]

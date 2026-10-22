@@ -15,6 +15,9 @@ import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY ne
 // synths would talk over each other when you leave a word mid-sentence for Practice.
 // Module-wide on purpose: SentenceView's Pronounce button speaks through this one.
 @MainActor let speaker = AVSpeechSynthesizer()
+/// The word's own recording, when it has one. Held here for the same reason as
+/// `speaker`: a player that goes out of scope stops mid-sound.
+@MainActor var clip: AVAudioPlayer?
 
 struct WordDetail: View {
     let word: Word
@@ -70,6 +73,31 @@ struct WordDetail: View {
                             .foregroundStyle(t.ink)
                             .lineLimit(1)
                             .minimumScaleFactor(0.4)
+                        // A sound book's entry IS the sound: the recording sits right
+                        // beside its name. Pronounce, up in the header, still says the word.
+                        if let sound = word.sound, !locked {
+                            Button {
+                                speaker.stopSpeaking(at: .immediate)
+                                clip?.stop()   // a second click restarts, never layers
+                                clip = Bundle.main.url(forResource: sound, withExtension: "m4a")
+                                    .flatMap { try? AVAudioPlayer(contentsOf: $0) }
+                                clip?.play()
+                            } label: {
+                                Image(systemName: "play.fill")
+                                    .font(.system(size: 19, weight: .semibold))
+                                    .foregroundStyle(t.background)
+                                    .offset(x: 2)   // a triangle's weight sits left of its box
+                                    .frame(width: 46, height: 46)
+                                    .background(t.accent, in: Circle())
+                                    .contentShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                            // Bottom on the headword's baseline, so it stands as tall as its
+                            // ascenders. Left alone, the glyph's own baseline would sink it.
+                            .alignmentGuide(.lastTextBaseline) { $0[.bottom] }
+                            .help("Play the \(word.term)")
+                            .accessibilityLabel("Play the sound: \(word.term)")
+                        }
                         Text(word.partOfSpeech)
                             .font(doodle.face(16).italic())
                             .foregroundStyle(t.muted)
@@ -318,6 +346,7 @@ struct WordActions: View {
 
             Button {
                 speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
+                clip?.stop()
                 let utterance = AVSpeechUtterance(string: word.term)
                 // Urdu headwords are Devanagari — an en-US voice reads them as silence.
                 // Derived from the term, not the book, so any future script lands too.

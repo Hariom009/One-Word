@@ -199,3 +199,10 @@ Which skill lands where:
   *(every audit finding resolved — **build from the resolved plan, it stands alone**. Operator
   calls: WebP covers, the in-app privacy link lands in this PR, "$9.99, once" with a US note.
   The audit's blocker was the privacy draft missing the Google profile-photo fetch.)*
+- **Cats & Dogs dictionary** (`pets`) — built on `release/1.0`. Build and all gates green.
+  [strategy](01_Brainstorm/PETS_DICTIONARY_STRATEGY.md) →
+  [resolved plan](02_Plan/Resolved/PETS_DICTIONARY_PLAN_RESOLVED.md)
+  *(Sound-first: 33 cat and dog vocalisations, each playing a real CC0 recording from
+  `OneWord/Sounds/` ([sources](06_Misc/PETS_SOUND_CANDIDATES.md); body language and terms were cut). App-only:
+  not in the widget, whose Follow App Settings falls back to Everyday English. **Release is
+  gated** on the painted cover: it borrows the Idioms art until `Dictionary_of_CatsAndDogs` lands.)*

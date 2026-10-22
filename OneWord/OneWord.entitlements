@@ -8,6 +8,10 @@
 	<array>
 		<string>LAP54KU2SV.group.com.hariom.swift.oneword</string>
 	</array>
+	<!-- The Profile pane's photo picker: read-only, and only the file you chose.
+	     Without it the sandbox refuses to show the open panel at all. -->
+	<key>com.apple.security.files.user-selected.read-only</key>
+	<true/>
 	<!-- Firebase Auth and the ASWebAuthenticationSession that GoogleSignIn opens both
 	     reach the network. Without this the sandbox blocks every request and sign-in
 	     hangs with no error. Outbound only — the OAuth browser runs out of process. -->

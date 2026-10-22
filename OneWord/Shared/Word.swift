@@ -12,6 +12,9 @@ struct Word: Codable, Identifiable, Hashable {
     let hindi: String
     let definition: String
     let example: String
+    /// A bundled recording, `OneWord/Sounds/<sound>.m4a`, for books whose entries are
+    /// sounds (Cats & Dogs). Absent from every other json, so it decodes as nil.
+    var sound: String? = nil
 
     /// Stable id — the term is unique in `words.json`.
     var id: String { term }
