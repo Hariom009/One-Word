@@ -85,10 +85,26 @@ enum Check {
         model.shuffle(for: day)
         check(model.word.term != first, "peeking again moves on again")
         check(WordSelectionStore.offset == 0, "a peek never touches the shared offset the widget reads")
+        // Swiping peeks by the dozen: walking the day order would spoil the coming days.
+        let book = WordProvider(resource: "words")
+        let peeked = (1...5).map { _ in model.shuffle(for: day); return model.word.term }
+        let ahead = (1...5).map { book.word(for: day.addingTimeInterval(86_400 * Double($0))).term }
+        check(peeked != ahead, "peeks are random, not the coming days' words")
 
         try? await Task.sleep(for: WordViewModel.peekDuration + .seconds(1))
         check(model.word.term == today, "the day's word comes back on its own")
         check(!model.isPeeking, "and the peek flag clears")
+
+        // Home's cover flow: the word peeking in on the right is the one a swipe
+        // brings in, and a swipe right walks back.
+        let waiting = model.upcoming.term
+        model.shuffle(for: day)
+        check(model.word.term == waiting, "a swipe brings in the word that was peeking in")
+        check(model.previous?.term == today, "with the day's word one back")
+        check(![today, waiting].contains(model.upcoming.term), "and a fresh word waiting behind it")
+        model.back(for: day)
+        check(model.word.term == today && model.upcoming.term == waiting, "back returns, the word left now waiting")
+        check(!model.isPeeking && model.previous == nil, "and at the day's word there's nothing to return from")
 
         // The bug this guards: a peek left running while the reader moves to
         // another day used to fire late and yank the old day's word back.
@@ -128,6 +144,11 @@ enum Check {
         SavedWords.toggle(b)
         check(WordSelectionStore.pinnedTerm == nil, "un-bookmarking the pinned word clears the pin")
         check(SavedWords.pinned == nil, "so today's word falls back to the dictionary's")
+
+        model.refresh(for: day)
+        model.bookmark()
+        model.bookmark()
+        check(SavedWords.contains(model.word), "a double tap bookmarks, and a second never un-bookmarks")
 
         print("\ntimestamps")
         AppGroup.defaults.removePersistentDomain(forName: AppGroup.id)

@@ -33,6 +33,9 @@ struct WordDetail: View {
     /// The sheet's own close, passed only to the word a sheet opens on. Pushed
     /// related words leave it nil, so their Back pops back to that word.
     var close: (() -> Void)? = nil
+    /// False for a word only glimpsed: Home's cover flow draws its neighbours as whole
+    /// pages, and one counts as read once it's the card in front.
+    var learns = true
     @Environment(\.colorScheme) private var scheme
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
@@ -63,7 +66,9 @@ struct WordDetail: View {
 
     private var page: some View {
         let t = Theme.of(scheme, doodle)
-        let related = store.related(to: word, in: shelfID)
+        // Only the word in front ranks: a glimpsed neighbour would cost a 12k-word rank on
+        // the main thread for a box nobody can open. Home prefetches the next one off-main.
+        let related = learns ? store.related(to: word, in: shelfID) : []
         return ScrollViewReader { proxy in
             ScrollView {
                 // ponytail: ZStack, so the outgoing word overlaps the incoming one.
@@ -162,10 +167,11 @@ struct WordDetail: View {
             // Every full-view route ends at THIS view — today's word, a peek, a search
             // result, a related word — so one call here marks them all learned rather
             // than each caller having to remember. `initial: true` catches the first
-            // render; the term catches HomeView swapping the word underneath us.
-            .onChange(of: word.term, initial: true) {
+            // render; the term catches HomeView swapping the word underneath us, and
+            // `learns` a cover-flow card sliding to the front.
+            .onChange(of: learns ? word.term : nil, initial: true) { _, term in
                 // A teaser isn't a word read.
-                guard !locked else { return }
+                guard term != nil, !locked else { return }
                 LearnedWords.record(word, in: learnedIn)
             }
             // Opening the box is asking to read it: bring its bottom into view,
