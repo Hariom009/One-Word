@@ -142,9 +142,6 @@ struct HomeView: View {
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(t.ink)
                         .lineLimit(1)
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 9, weight: .semibold))
-                        .foregroundStyle(t.muted)
                 }
                 .padding(.vertical, 6)
                 .contentShape(Rectangle())
