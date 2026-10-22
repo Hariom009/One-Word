@@ -49,7 +49,7 @@ var picked: String? { AppGroup.defaults.string(forKey: AppGroup.dictionaryKey) }
 enum Check {
     static func main() {
         let premium = ["classical", "urdu", "german"]
-        let shipped = ["words", "emotions", "philosophy", "startup", "idioms", "pets"]
+        let shipped = ["words", "emotions", "philosophy", "startup", "idioms", "pets", "sanskrit"]
         AppGroup.defaults.removePersistentDomain(forName: AppGroup.id)
 
         print("Premium, locked")

@@ -1,0 +1,1514 @@
+[
+  {
+    "term": "अ-",
+    "partOfSpeech": "prefix",
+    "hindi": "न, बिना — शब्द को उलटने वाला निषेध (अज्ञान, अनंत)",
+    "definition": "a negating prefix, written अन् before vowels, which turns knowledge into ignorance and end into endless; a cousin of English un- and the Greek a- in atom",
+    "example": "अज्ञानम् इति पदे अ- ज्ञानस्य अभावं सूचयति। — In ajñānam, a- signals the lack of knowledge."
+  },
+  {
+    "term": "अंक",
+    "partOfSpeech": "noun",
+    "hindi": "हिस्सा — नाटक का अंक; हिंदी में नंबर और गोद भी",
+    "definition": "a mark, sign or numeral, the lap, and an act of a play, which is why Hindi अंक means both marks on a test and an act on stage (masculine)",
+    "example": "प्रथमे अंके नायकः वनम् गच्छति। — In the first act, the hero goes to the forest."
+  },
+  {
+    "term": "अक्षि",
+    "partOfSpeech": "noun",
+    "hindi": "आँख — देखने की इंद्रिय",
+    "definition": "the eye, a neuter noun whose kṣ cluster Hindi turned into kh, giving आँख; Latin oculus and English eye are cousins (neuter i-stem)",
+    "example": "बालकस्य अक्षि रक्तम् अस्ति। — The boy's eye is red."
+  },
+  {
+    "term": "अग्नि",
+    "partOfSpeech": "noun",
+    "hindi": "आग — जलने की लपट और ताप",
+    "definition": "fire, the everyday blaze of hearth and lamp, which Hindi wore down to आग; Latin ignis and English ignite are its cousins (masculine i-stem)",
+    "example": "अग्निः गृहे ज्वलति। — The fire burns in the house."
+  },
+  {
+    "term": "अतिथि",
+    "partOfSpeech": "noun",
+    "hindi": "मेहमान — घर आया हुआ आगंतुक",
+    "definition": "a guest, traditionally explained as one whose visit keeps no fixed date (अ-, without, + तिथि, lunar day); India's tourism slogan अतिथिदेवो भव asks that the guest be treated as a god",
+    "example": "अतिथिः गृहम् आगच्छति, माता जलम् आनयति। — A guest comes to the house and mother brings water."
+  },
+  {
+    "term": "अतिथिदेवो भव",
+    "partOfSpeech": "phrase",
+    "hindi": "मेहमान भगवान जैसा है — पर्यटन मंत्रालय का अभियान",
+    "definition": "the Ministry of Tourism campaign asking Indians to treat visitors well, literally be one whose god is the guest; अतिथि is traditionally parsed as someone arriving without a fixed date (अ-, without + तिथि, lunar date; भव, be)",
+    "example": "होटले अतिथिदेवो भव इति लिखितम्। — At the hotel is written: treat the guest as god."
+  },
+  {
+    "term": "अंधकार",
+    "partOfSpeech": "noun",
+    "hindi": "अँधेरा — रोशनी का न होना",
+    "definition": "darkness, literally the making of blindness, which Hindi wore down to अँधेरा, the familiar word for an unlit room (masculine a-stem)",
+    "example": "रात्रौ अंधकारः भवति। — At night there is darkness."
+  },
+  {
+    "term": "अधि-",
+    "partOfSpeech": "prefix",
+    "hindi": "ऊपर — ऊपर होने या अधिकार का भाव (अधिकार, अधिकारी)",
+    "definition": "a prefix meaning over or above, sitting inside the Hindi words for right, officer and session, all things that stand over others",
+    "example": "अधिकारी इति पदे अधि- उपरि स्थितिं दर्शयति। — In adhikārī, adhi- shows a position above others."
+  },
+  {
+    "term": "अध्यक्ष",
+    "partOfSpeech": "noun",
+    "hindi": "निरीक्षक — आँखों देखा गवाह, देख-रेख करने वाला; हिंदी में अब सभापति",
+    "definition": "an eyewitness or overseer, literally one over the eye, a superintendent of treasury or stores, whom Hindi promoted to chairman and president (masculine noun, from अधि- and अक्ष, eye)",
+    "example": "कोशस्य अध्यक्षः धनं गणयति — The superintendent of the treasury counts the money."
+  },
+  {
+    "term": "अनु-",
+    "partOfSpeech": "prefix",
+    "hindi": "पीछे-पीछे — बाद में या अनुसार चलने का भाव (अनुवाद, अनुसार)",
+    "definition": "a prefix meaning after or following along, which is why the Hindi word for translation, anuvād, literally means speaking again after another",
+    "example": "अनुवादः इति पदे अनु- पश्चात् वदनं सूचयति। — In anuvāda, anu- signals speaking after someone."
+  },
+  {
+    "term": "अप-",
+    "partOfSpeech": "prefix",
+    "hindi": "दूर, उलटा — हटने या बिगड़ने का भाव (अपमान, अपशब्द)",
+    "definition": "a prefix meaning away or down, which in Hindi mostly sours a word, turning honour into insult and speech into abuse; a cousin of Greek apo and English off",
+    "example": "अपमानः इति पदे अप- मानं दूरं नयति। — In the word apamāna, apa- takes honour away."
+  },
+  {
+    "term": "अभि-",
+    "partOfSpeech": "prefix",
+    "hindi": "की ओर — सामने या किसी की तरफ़ बढ़ने का भाव (अभिनय, अभिवादन)",
+    "definition": "a prefix meaning toward or facing, found in the Hindi words for acting, campaign and greeting, each a movement aimed at someone",
+    "example": "अभिमुखः इति पदे अभि- सम्मुखं गमनं दर्शयति। — In abhimukha, abhi- shows turning to face something."
+  },
+  {
+    "term": "अमावस्या",
+    "partOfSpeech": "noun",
+    "hindi": "अमावस — बिना चाँद की अंधेरी रात",
+    "definition": "the night of the new moon, literally the dwelling-together, when sun and moon were pictured sharing one house in the sky (from अमा, together, and √वस्, to dwell; feminine)",
+    "example": "अमावस्या रात्रौ चंद्रः न दृश्यते। — On the new-moon night the moon is not seen."
+  },
+  {
+    "term": "अलंकार",
+    "partOfSpeech": "noun",
+    "hindi": "गहना — शरीर का आभूषण भी, भाषा की सजावट भी",
+    "definition": "an ornament or piece of jewellery, and by extension a figure of speech that decorates a sentence, such as simile or pun (masculine, from अलम् + √कृ, to make sufficient)",
+    "example": "उपमा कवीनाम् प्रियः अलंकारः अस्ति। — Simile is the poets' favourite ornament."
+  },
+  {
+    "term": "अव-",
+    "partOfSpeech": "prefix",
+    "hindi": "नीचे — उतरने या घटने का भाव (अवतार, अवगुण)",
+    "definition": "a prefix meaning down or away, so an avatar is literally a crossing down and a vice is a quality brought low (अवतार from √तॄ, to cross)",
+    "example": "अवतारः इति पदे अव- अधः आगमनं सूचयति। — In avatāra, ava- signals a coming down."
+  },
+  {
+    "term": "अवकाश",
+    "partOfSpeech": "noun",
+    "hindi": "जगह — खाली स्थान, मौका या अंतराल; हिंदी में अब छुट्टी",
+    "definition": "space or room, an opening or interval, and so an opportunity, which Hindi narrowed to a holiday or leave from work (masculine noun)",
+    "example": "वृक्षयोः मध्ये अवकाशः नास्ति — There is no space between the two trees."
+  },
+  {
+    "term": "अव्यय",
+    "partOfSpeech": "noun",
+    "hindi": "अविकारी शब्द — जो कभी रूप नहीं बदलता (च, अपि, इति)",
+    "definition": "an indeclinable word that never changes form for case, number or gender, literally unspent, from the same stock as the Hindi word for expense",
+    "example": "च अपि इति इत्यादि शब्दाः अव्यय भवन्ति। — Words like ca, api and iti are indeclinables."
+  },
+  {
+    "term": "अश्रु",
+    "partOfSpeech": "noun",
+    "hindi": "आँसू — आँख से गिरती बूँद",
+    "definition": "a tear, which Hindi nasalised into आँसू; English tear and Greek dakru are usually counted as distant cousins (neuter u-stem)",
+    "example": "बालिकायाः अश्रु पतति। — The girl's tear falls."
+  },
+  {
+    "term": "अश्व",
+    "partOfSpeech": "noun",
+    "hindi": "घोड़ा — सवारी का पशु",
+    "definition": "horse; a cousin of Latin equus and Greek hippos, so English equine, equestrian and hippopotamus, the river horse, all belong to its family",
+    "example": "अश्वः वेगेन धावति — The horse runs fast."
+  },
+  {
+    "term": "अष्ट",
+    "partOfSpeech": "adjective",
+    "hindi": "आठ — सात और एक",
+    "definition": "eight; a cousin of English eight and Latin octo, hiding inside October, octave and the eight-armed octopus (stem अष्टन्)",
+    "example": "अष्ट बालकाः क्रीडन्ति — Eight boys are playing."
+  },
+  {
+    "term": "अहर्निशं सेवामहे",
+    "partOfSpeech": "phrase",
+    "hindi": "दिन-रात सेवा में — भारतीय डाक का आदर्श वाक्य",
+    "definition": "the motto of India Post, meaning we serve day and night; अहर्निशम् fuses अहः, day, with निशा, night, the word behind Hindi निशा and निशाचर (सेवामहे, we serve, from √सेव्)",
+    "example": "डाकघरे अहर्निशं सेवामहे इति लिखितम्। — At the post office is written: we serve day and night."
+  },
+  {
+    "term": "आदर्श",
+    "partOfSpeech": "noun",
+    "hindi": "दर्पण — आईना और पांडुलिपि की प्रति; हिंदी में अब नैतिक आदर्श",
+    "definition": "a mirror, and also a model copy of a manuscript, the image one looks into, which Hindi lifted into a moral ideal (masculine noun, from आ- and √दृश्, to see)",
+    "example": "सा आदर्शे मुखं पश्यति — She looks at her face in the mirror."
+  },
+  {
+    "term": "आंदोलन",
+    "partOfSpeech": "noun",
+    "hindi": "झूलना — इधर-उधर हिलना, डोलना; हिंदी में अब जन-आंदोलन",
+    "definition": "swinging or oscillating to and fro, a trembling motion like a swing, which Hindi made the political movement and public agitation (neuter noun, cousins with दोला, swing)",
+    "example": "बालः दोलायाम् आंदोलनं करोति — The child swings to and fro on the swing."
+  },
+  {
+    "term": "आरात्रिक",
+    "partOfSpeech": "noun",
+    "hindi": "आरती — दीप घुमाकर की जाने वाली उपासना",
+    "definition": "in Hindu worship, the waving of lamps in circles before a deity, tied by name to night (रात्रि); Hindi wore आरात्रिक down to आरती",
+    "example": "संध्याकाले भक्ताः आरात्रिकम् कुर्वन्ति। — In the evening the devotees perform the lamp-waving."
+  },
+  {
+    "term": "आर्द्रक",
+    "partOfSpeech": "noun",
+    "hindi": "अदरक — तीखी गंध वाली जड़",
+    "definition": "fresh ginger, literally the wet one as against dried ginger, which Hindi wore down to अदरक (neuter a-stem; from आर्द्र, wet)",
+    "example": "माता भोजने आर्द्रकं योजयति। — Mother adds ginger to the food."
+  },
+  {
+    "term": "इति",
+    "partOfSpeech": "adverb",
+    "hindi": "ऐसा — उद्धरण का चिह्न; हिंदी में इति का अर्थ अब समाप्ति",
+    "definition": "thus, so, the particle that closes quoted speech or thought like a quotation mark, which Hindi read at the end of texts and took to mean the end",
+    "example": "सः अहं गच्छामि इति वदति — He says, 'I am going.'"
+  },
+  {
+    "term": "उत्तरायण",
+    "partOfSpeech": "noun",
+    "hindi": "सूर्य का उत्तर-गमन — जाड़े के बाद सूर्य की उत्तर की ओर यात्रा",
+    "definition": "the sun's apparent northward course after the winter solstice, from उत्तर, north, and अयन, path; Gujarat names its January kite festival after it (neuter)",
+    "example": "उत्तरायण काले दिनानि दीर्घाणि भवन्ति। — During the northward course the days grow long."
+  },
+  {
+    "term": "उत्पात",
+    "partOfSpeech": "noun",
+    "hindi": "अपशकुन — उछाल, अचानक अनोखी घटना; हिंदी में अब ऊधम",
+    "definition": "flying up or a sudden leap, and any startling unusual event taken as a portent, which Hindi turned into mischief and havoc (masculine noun, from उद्- and √पत्, to fly)",
+    "example": "आकाशे उत्पाताः दृश्यन्ते — Strange portents are seen in the sky."
+  },
+  {
+    "term": "उद्घाटन",
+    "partOfSpeech": "noun",
+    "hindi": "खोलना — ताला या ढक्कन खोलना; हिंदी में अब फीता काटकर शुभारंभ",
+    "definition": "opening, unlocking or uncovering something shut, an everyday household action that Hindi turned into a ribbon-cutting inauguration ceremony (neuter noun, from उद्- and √घट्)",
+    "example": "सेवकः द्वारस्य उद्घाटनं करोति — The servant unlocks the door."
+  },
+  {
+    "term": "उद्योग",
+    "partOfSpeech": "noun",
+    "hindi": "परिश्रम — कमर कसकर जुटना, प्रयास; हिंदी में अब इंडस्ट्री",
+    "definition": "exertion, active effort or setting oneself to a task, which Hindi borrowed to name manufacturing and industry (masculine noun, from उद्- and √युज्)",
+    "example": "कृषकः क्षेत्रे महान्तम् उद्योगं करोति — The farmer puts great effort into the field."
+  },
+  {
+    "term": "उप-",
+    "partOfSpeech": "prefix",
+    "hindi": "पास, छोटा — निकट या एक दर्जा नीचे होने का भाव (उपवन, उपमंत्री)",
+    "definition": "a prefix meaning near or under, which makes a grove a lesser forest and a deputy minister one rank below; a cousin of Greek hypo",
+    "example": "उपवनम् इति पदे उप- लघुं वनं सूचयति। — In upavanam, upa- marks a small garden-forest."
+  },
+  {
+    "term": "उपन्यास",
+    "partOfSpeech": "noun",
+    "hindi": "प्रस्ताव — पास रखना, सुझाव या भूमिका; हिंदी में अब नॉवेल",
+    "definition": "placing something near, hence a statement, proposal, suggestion or introductory remark; the modern sense of a novel is a nineteenth-century coinage (masculine noun, from उप- and √अस्, to throw)",
+    "example": "मंत्री राज्ञः पुरतः उपन्यासं करोति — The minister lays a proposal before the king."
+  },
+  {
+    "term": "उपमा",
+    "partOfSpeech": "noun",
+    "hindi": "तुलना — किसी को किसी जैसा बताना; अनुपम यानी बेजोड़",
+    "definition": "a simile, a comparison that sets one thing beside another to measure it, the same measuring root found in Hindi अनुपम and a cousin of English measure (feminine, from उप + √मा, to measure)",
+    "example": "मुखम् चंद्रः इव इति एषा उपमा। — 'A face like the moon' is a simile."
+  },
+  {
+    "term": "उपसर्ग",
+    "partOfSpeech": "noun",
+    "hindi": "शब्द-पूर्व अंश — धातु के आगे जुड़कर अर्थ मोड़ने वाला टुकड़ा",
+    "definition": "a prefix placed before a verbal root to bend its meaning, so a single root can yield the words for victory, defeat and triumph (from उप- + √सृज्, to release)",
+    "example": "विजयः इति पदे वि इति उपसर्ग अस्ति। — The word vijaya, victory, carries the prefix vi."
+  },
+  {
+    "term": "उपाध्याय",
+    "partOfSpeech": "noun",
+    "hindi": "ओझा — झाड़-फूँक करने वाला",
+    "definition": "a teacher, one beside whom the student studies; Hindi wore it down to ओझा, now an exorcist, and to the surname झा (masculine a-stem)",
+    "example": "उपाध्यायः छात्रान् पाठयति। — The teacher teaches the students."
+  },
+  {
+    "term": "उष्ट्र",
+    "partOfSpeech": "noun",
+    "hindi": "ऊँट — रेगिस्तान का लंबी गर्दन वाला पशु",
+    "definition": "the camel, whose heavy ṣṭr cluster Hindi flattened into a nasal vowel and ṭ, giving ऊँट (masculine a-stem)",
+    "example": "उष्ट्रः मरुस्थले चलति। — The camel walks in the desert."
+  },
+  {
+    "term": "ऋतु",
+    "partOfSpeech": "noun",
+    "hindi": "रुत — मौसम, साल के छह हिस्सों में से एक",
+    "definition": "a season, one of the six two-month divisions of the Indian year; Hindi keeps the learned ऋतु beside the folk form रुत, heard in songs about the rains (masculine)",
+    "example": "वसंतः प्रथमः ऋतुः अस्ति। — Spring is the first season."
+  },
+  {
+    "term": "कज्जल",
+    "partOfSpeech": "noun",
+    "hindi": "काजल — आँखों में लगाने का काला लेप",
+    "definition": "lampblack used as eye cosmetic, whose double consonant Hindi relaxed into काजल, the kohl lining many Indian eyes (neuter a-stem)",
+    "example": "बालिका कज्जलं धारयति। — The girl wears kohl."
+  },
+  {
+    "term": "कथा",
+    "partOfSpeech": "noun",
+    "hindi": "कहानी — कहने से बनी; कथावाचक आज भी सुनाते हैं",
+    "definition": "a story or tale told aloud, from the root meaning to tell, the line that runs through Prakrit into Hindi कहना and कहानी (feminine, from √कथ्, to tell)",
+    "example": "पितामही रात्रौ कथाम् कथयति। — Grandmother tells a story at night."
+  },
+  {
+    "term": "कपर्दिका",
+    "partOfSpeech": "noun",
+    "hindi": "कौड़ी — छोटी सीप जो कभी पैसा थी",
+    "definition": "a cowrie shell once used as small change, which Hindi wore down to कौड़ी, surviving in phrases about worthless things (feminine ā-stem)",
+    "example": "वणिक् कपर्दिकां गणयति। — The merchant counts the cowrie shells."
+  },
+  {
+    "term": "कर्ण",
+    "partOfSpeech": "noun",
+    "hindi": "कान — सुनने की इंद्रिय",
+    "definition": "the ear, the organ of hearing, which survives in Hindi speech as कान and in geometry as कर्ण, the hypotenuse (masculine a-stem)",
+    "example": "कर्णः शब्दं शृणोति। — The ear hears the sound."
+  },
+  {
+    "term": "कर्पास",
+    "partOfSpeech": "noun",
+    "hindi": "कपास — रुई देने वाला पौधा",
+    "definition": "the cotton plant and its fibre, which Hindi turned into कपास; ancient Greek borrowed the same word as karpasos for fine linen (masculine a-stem)",
+    "example": "कर्पासात् वस्त्रं निर्मीयते। — Cloth is made from cotton."
+  },
+  {
+    "term": "कर्म",
+    "partOfSpeech": "noun",
+    "hindi": "काम — किया जाने वाला कार्य",
+    "definition": "an act, deed or piece of work in the ordinary sense, which Hindi wore down to काम, the plain word for a job (neuter; stem कर्मन्, from √कृ, to do)",
+    "example": "अद्य कर्म बहु अस्ति। — Today there is a lot of work."
+  },
+  {
+    "term": "कवि",
+    "partOfSpeech": "noun",
+    "hindi": "शायर — कविता रचने वाला; पुराने अर्थ में ज्ञानी ऋषि",
+    "definition": "in Vedic usage a wise seer who perceives hidden truths, and only in later classical usage a poet who composes verse (masculine i-stem)",
+    "example": "अयम् कविः मधुरम् काव्यम् रचयति। — This poet composes sweet poetry."
+  },
+  {
+    "term": "काव्य",
+    "partOfSpeech": "noun",
+    "hindi": "कविता — कवि की रचना, चाहे गद्य हो या पद्य",
+    "definition": "literary art as a whole, the work of a poet, which classical critics extended even to ornate prose romances like Kadambari (neuter, from कवि, poet)",
+    "example": "बाणस्य कादंबरी गद्यम् अपि काव्यम् अस्ति। — Bana's Kadambari is prose, yet it is still poetry."
+  },
+  {
+    "term": "कुंभकार",
+    "partOfSpeech": "noun",
+    "hindi": "कुम्हार — मिट्टी के बर्तन बनाने वाला",
+    "definition": "a potter, literally the pot-maker, whose compound Hindi wore down to कुम्हार, still the common name for the craft (masculine a-stem)",
+    "example": "कुंभकारः चक्रेण घटं करोति। — The potter makes a pot with the wheel."
+  },
+  {
+    "term": "कुशल",
+    "partOfSpeech": "adjective",
+    "hindi": "सकुशल — भला-चंगा, और काम में निपुण",
+    "definition": "both well and skilful, traditionally explained as 'one who cuts कुश grass' without getting cut; Hindi keeps both senses, in कुशल-मंगल for health and कुशल कारीगर for skill",
+    "example": "मित्र, गृहे सर्वे कुशलाः सन्ति वा? — Friend, is everyone at home well?"
+  },
+  {
+    "term": "क्षेत्र",
+    "partOfSpeech": "noun",
+    "hindi": "खेत — फ़सल उगाने की ज़मीन",
+    "definition": "a field or tract of land, which Hindi wore down to खेत for farmland while keeping क्षेत्र for an abstract area or region (neuter a-stem)",
+    "example": "कृषकः क्षेत्रे कार्यं करोति। — The farmer works in the field."
+  },
+  {
+    "term": "गवेषणा",
+    "partOfSpeech": "noun",
+    "hindi": "खोज — शब्दशः गायों की तलाश; हिंदी में अब अकादमिक शोध",
+    "definition": "search or inquiry, built from गो, cow, and एषणा, seeking, so the scholar's research began as herders hunting for strayed cattle (feminine noun)",
+    "example": "बालः नष्टस्य वत्सस्य गवेषणां करोति — The boy searches for the lost calf."
+  },
+  {
+    "term": "गृह",
+    "partOfSpeech": "noun",
+    "hindi": "घर — रहने की जगह",
+    "definition": "a house or dwelling, whose ṛ vowel and initial sound Hindi reshaped until it became घर, the most ordinary word for home (neuter a-stem)",
+    "example": "मम गृहं ग्रामे अस्ति। — My house is in the village."
+  },
+  {
+    "term": "गोधूम",
+    "partOfSpeech": "noun",
+    "hindi": "गेहूँ — रोटी का मुख्य अनाज",
+    "definition": "wheat, a grain whose four syllables Hindi slowly shrank and nasalised until only गेहूँ was left (masculine a-stem)",
+    "example": "कृषकः गोधूमं वपति। — The farmer sows wheat."
+  },
+  {
+    "term": "गोष्ठी",
+    "partOfSpeech": "noun",
+    "hindi": "सभा — मिल-बैठकर बातचीत, गोष्ठ यानी गौशाला से; हिंदी में अब सेमिनार",
+    "definition": "a gathering or assembly for conversation, built on गोष्ठ, the cow-pen where herders met, which Hindi dressed up as the academic seminar (feminine noun)",
+    "example": "सायं ग्रामे गोष्ठी भवति — In the evening there is a gathering in the village."
+  },
+  {
+    "term": "गौ",
+    "partOfSpeech": "noun",
+    "hindi": "गाय — दूध देने वाला पशु",
+    "definition": "cow, and by extension cattle or earth; a cousin of English cow and Latin bos, behind bovine and beef (stem गो)",
+    "example": "गौः क्षेत्रे तृणं खादति — The cow eats grass in the field."
+  },
+  {
+    "term": "ग्राम",
+    "partOfSpeech": "noun",
+    "hindi": "गाँव — छोटी बस्ती",
+    "definition": "a village or settlement of families, whose nasal and long vowel Hindi kept while dropping the cluster, leaving गाँव (masculine a-stem)",
+    "example": "ग्रामः नद्याः तीरे अस्ति। — The village is on the bank of the river."
+  },
+  {
+    "term": "ग्रीष्म",
+    "partOfSpeech": "noun",
+    "hindi": "गर्मी — जेठ-आषाढ़ की तपती ऋतु; स्कूल का ग्रीष्मावकाश इसी से",
+    "definition": "the hot season of Jyeshtha and Ashadha before the rains arrive; in Hindi it lives on mostly in formal compounds such as ग्रीष्मावकाश, the school summer vacation (masculine)",
+    "example": "ग्रीष्म काले सूर्यः तीव्रः भवति। — In summer the sun becomes fierce."
+  },
+  {
+    "term": "घृत",
+    "partOfSpeech": "noun",
+    "hindi": "घी — तपाकर साफ़ किया मक्खन",
+    "definition": "clarified butter, literally that which has been sprinkled, which Hindi wore down to the two-letter घी (neuter a-stem)",
+    "example": "माता भोजने घृतं योजयति। — Mother adds ghee to the food."
+  },
+  {
+    "term": "चक्र",
+    "partOfSpeech": "noun",
+    "hindi": "चाक — कुम्हार का घूमता पहिया",
+    "definition": "a wheel or disc, which Hindi wore down to चाक, the potter's wheel; Greek kyklos, behind English cycle, is a cousin (neuter a-stem)",
+    "example": "रथस्य चक्रं भ्रमति। — The chariot's wheel turns."
+  },
+  {
+    "term": "चंद्र",
+    "partOfSpeech": "noun",
+    "hindi": "चाँद — रात का चमकता उपग्रह",
+    "definition": "the moon, literally the shining one, which Hindi softened into चाँद, keeping the nasal as a nasalised vowel (masculine a-stem)",
+    "example": "चंद्रः रात्रौ प्रकाशते। — The moon shines at night."
+  },
+  {
+    "term": "चमत्कार",
+    "partOfSpeech": "noun",
+    "hindi": "विस्मय — कविता का आनंददायक, चकित करने वाला सौंदर्य; हिंदी में अब करिश्मा",
+    "definition": "astonishment and delight, the striking charm critics prized in poetry, which Hindi turned into a supernatural miracle or magic trick (masculine noun)",
+    "example": "काव्यस्य चमत्कारः सहृदयान् मोदयति — A poem's charm delights sensitive readers."
+  },
+  {
+    "term": "छंद",
+    "partOfSpeech": "noun",
+    "hindi": "लय — कविता की नपी हुई चाल; स्वच्छंद यानी मनमाना",
+    "definition": "the metre of a verse, counted in syllables or beats, from a root meaning to please that survives in Hindi स्वच्छंद, free to follow one's own will (छंदस्, neuter)",
+    "example": "अस्य पद्यस्य छंदः अनुष्टुप् अस्ति। — The metre of this verse is anushtubh."
+  },
+  {
+    "term": "जिह्वा",
+    "partOfSpeech": "noun",
+    "hindi": "जीभ — स्वाद लेने वाला अंग",
+    "definition": "the tongue, whose awkward hv cluster Hindi simplified until only जीभ remained, a word every child knows (feminine ā-stem)",
+    "example": "जिह्वा मधुरं रसं जानाति। — The tongue knows a sweet taste."
+  },
+  {
+    "term": "ज्ञानं परमं ध्येयम्",
+    "partOfSpeech": "phrase",
+    "hindi": "ज्ञान ही परम लक्ष्य है — आईआईटी बॉम्बे का आदर्श वाक्य",
+    "definition": "the motto of IIT Bombay, meaning knowledge is the supreme goal; ध्येयम् is literally what should be meditated upon, which Hindi keeps as ध्येय, aim (from √ध्यै, to contemplate, the root of ध्यान)",
+    "example": "विद्यालये ज्ञानं परमं ध्येयम् इति वदन्ति। — At the institute they say: knowledge is the supreme goal."
+  },
+  {
+    "term": "तथास्तु",
+    "partOfSpeech": "phrase",
+    "hindi": "ऐसा ही हो — वरदान देते समय का वाक्य",
+    "definition": "'so be it', the formula spoken when granting a wish or blessing; its अस्तु is a cousin of English is (तथा, thus, + अस्तु, let it be, from √अस्, to be)",
+    "example": "गुरुः शिष्यस्य प्रार्थनाम् श्रुत्वा तथास्तु इति वदति। — Hearing the pupil's request, the teacher says so be it."
+  },
+  {
+    "term": "तिथि",
+    "partOfSpeech": "noun",
+    "hindi": "तारीख — पंचांग का चंद्र-दिन, किसी भी काम की तय तिथि",
+    "definition": "a lunar day, one thirtieth of the moon's monthly cycle, which can begin at any hour of the solar day; Hindi uses it for any date, and अतिथि, guest, is traditionally explained as one who arrives without a fixed date (feminine)",
+    "example": "अद्य का तिथिः अस्ति? — Which lunar day is it today?"
+  },
+  {
+    "term": "तीर्थ",
+    "partOfSpeech": "noun",
+    "hindi": "घाट — नदी पार करने या उतरने की जगह; हिंदी में अब तीर्थस्थान",
+    "definition": "a ford or crossing place, a landing or bathing spot on a river, before it became the pilgrimage site Hindi knows (neuter noun, from √तॄ, to cross)",
+    "example": "जनाः नद्याः तीर्थे स्नान्ति — People bathe at the river's ford."
+  },
+  {
+    "term": "तैल",
+    "partOfSpeech": "noun",
+    "hindi": "तेल — चिकना तरल पदार्थ",
+    "definition": "oil, literally the stuff of sesame, from तिल; Hindi wore it to तेल and now uses it for any oil, even petrol (neuter a-stem)",
+    "example": "दीपे तैलम् अस्ति। — There is oil in the lamp."
+  },
+  {
+    "term": "त्रि",
+    "partOfSpeech": "adjective",
+    "hindi": "तीन — दो और एक",
+    "definition": "three, the form used inside compounds like त्रिकोण and त्रिशूल; a cousin of English three, Latin tres and trio (stem; nominative masculine त्रयः)",
+    "example": "त्रिकोणे त्रयः कोणाः सन्ति — A triangle has three angles."
+  },
+  {
+    "term": "दक्षिणा",
+    "partOfSpeech": "noun",
+    "hindi": "पंडित की भेंट — पूजा के बाद पुरोहित को दिया शुल्क",
+    "definition": "in Hindu ritual, the fee given to the officiating priest, in Vedic times often a cow; related to दक्षिण, right-hand and south, a cousin of Latin dexter and English dexterity",
+    "example": "यजमानः पुरोहिताय दक्षिणाम् ददाति। — The patron gives the priest his fee."
+  },
+  {
+    "term": "दंत",
+    "partOfSpeech": "noun",
+    "hindi": "दाँत — भोजन चबाने वाला मुँह का अंग",
+    "definition": "a tooth, which Hindi turned into दाँत; Latin dens, whence English dental, is a cousin (masculine a-stem)",
+    "example": "बालकस्य दंतः श्वेतः अस्ति। — The child's tooth is white."
+  },
+  {
+    "term": "दश",
+    "partOfSpeech": "adjective",
+    "hindi": "दस — नौ और एक",
+    "definition": "ten; a cousin of English ten and Latin decem, the root of decimal, decade and December, once the tenth month (stem दशन्)",
+    "example": "मम हस्तयोः दश अंगुलयः सन्ति — My hands have ten fingers."
+  },
+  {
+    "term": "दान",
+    "partOfSpeech": "noun",
+    "hindi": "भेंट — धर्म-भाव से दिया गया धन या वस्तु",
+    "definition": "the act of giving, especially a gift made without expecting return (from √दा, to give); a cousin of Latin donum, which gave English donate and donor",
+    "example": "धनिकः निर्धनाय अन्नस्य दानम् ददाति। — The rich man gives a gift of food to the poor man."
+  },
+  {
+    "term": "दिवस",
+    "partOfSpeech": "noun",
+    "hindi": "दिन — सूर्योदय से सूर्यास्त तक का समय",
+    "definition": "a day, the bright span from sunrise to sunset; Hindi reserves it for named days such as स्वतंत्रता दिवस, and it is a cousin of Latin dies, day (masculine)",
+    "example": "दिवसे सूर्यः प्रकाशते, रात्रौ चंद्रः। — By day the sun shines, by night the moon."
+  },
+  {
+    "term": "दीक्षा",
+    "partOfSpeech": "noun",
+    "hindi": "दीक्षांत — पढ़ाई पूरी होने का उपाधि-समारोह",
+    "definition": "in Hindu ritual, consecration or initiation into a vow or a teacher's line (from √दीक्ष्, to consecrate); Indian universities call graduation day दीक्षांत, the end of initiation",
+    "example": "शिष्यः गुरोः दीक्षाम् गृह्णाति। — The pupil receives initiation from the teacher."
+  },
+  {
+    "term": "दुग्ध",
+    "partOfSpeech": "noun",
+    "hindi": "दूध — गाय-भैंस का पेय",
+    "definition": "milk, literally that which has been milked, a past participle that Hindi shortened to the plain household word दूध (from √दुह्, to milk)",
+    "example": "माता बालाय दुग्धं ददाति। — The mother gives milk to the child."
+  },
+  {
+    "term": "दुर्-",
+    "partOfSpeech": "prefix",
+    "hindi": "बुरा, कठिन — बिगड़े या मुश्किल होने का भाव (दुर्घटना, दुर्लभ)",
+    "definition": "a prefix meaning bad or hard, which makes an accident a bad happening and a rarity something hard to get; a cousin of the Greek dys in dysfunction",
+    "example": "दुर्लभः इति पदे दुर्- काठिन्यं सूचयति। — In durlabha, dur- signals difficulty: hard to obtain."
+  },
+  {
+    "term": "दुहिता",
+    "partOfSpeech": "noun",
+    "hindi": "बेटी — पुत्री, लड़की",
+    "definition": "daughter; a close cousin of English daughter, German Tochter and Greek thugatēr, one of the clearest family matches across languages (stem दुहितृ)",
+    "example": "राज्ञः दुहिता उद्याने क्रीडति — The king's daughter plays in the garden."
+  },
+  {
+    "term": "द्वादश",
+    "partOfSpeech": "adjective",
+    "hindi": "बारह — ग्यारह के बाद की संख्या",
+    "definition": "twelve, literally two and ten, which Hindi wore down to बारह; Latin duodecim, behind English dozen, is a cousin",
+    "example": "वर्षे द्वादश मासाः भवन्ति। — There are twelve months in a year."
+  },
+  {
+    "term": "द्वार",
+    "partOfSpeech": "noun",
+    "hindi": "दरवाज़ा — घर का प्रवेश",
+    "definition": "door or gateway; a cousin of English door and Greek thura, and Persian dar, which gave Hindi दरवाज़ा",
+    "example": "गृहस्य द्वारम् उद्घाटय — Open the door of the house."
+  },
+  {
+    "term": "धन्य",
+    "partOfSpeech": "adjective",
+    "hindi": "धनवान — धन लाने वाला, समृद्ध; हिंदी में अब कृतार्थ, धन्यवाद में",
+    "definition": "wealthy or bringing wealth, built on धन, riches, before fortunate and blessed took over, the sense Hindi keeps in धन्यवाद, thanks",
+    "example": "धन्यः वणिक् बहु दानं ददाति — The wealthy merchant gives much in charity."
+  },
+  {
+    "term": "धन्यवाद",
+    "partOfSpeech": "noun",
+    "hindi": "शुक्रिया — किसी के प्रति आभार के शब्द",
+    "definition": "older Sanskrit used it for praise or applause, literally 'calling someone fortunate' (धन्य, blessed, + वाद, speech); modern Hindi narrowed it to plain thanks",
+    "example": "साहाय्याय भवते धन्यवादः। — Thank you for your help."
+  },
+  {
+    "term": "धर्मो रक्षति रक्षितः",
+    "partOfSpeech": "phrase",
+    "hindi": "जो धर्म की रक्षा करे, धर्म उसकी रक्षा करता है — रॉ का आदर्श वाक्य",
+    "definition": "the motto of R&AW, India's external intelligence agency, meaning dharma protects those who protect it; one root appears twice, active रक्षति protects and passive रक्षितः protected (from √रक्ष्, to protect)",
+    "example": "गुप्तचराः धर्मो रक्षति रक्षितः इति स्मरन्ति। — The agents remember: dharma protects its protectors."
+  },
+  {
+    "term": "धातु",
+    "partOfSpeech": "noun",
+    "hindi": "मूल — क्रिया का मूल रूप; हिंदी में यही शब्द लोहा-ताँबा जैसी धातु के लिए",
+    "definition": "a verbal root from which nouns and verbs grow, first meaning a basic element of the body or earth, which is how Hindi came to use it for metal (from √धा, to put)",
+    "example": "गच्छति इति पदस्य धातु गम् अस्ति। — The root of gacchati, 'goes', is gam."
+  },
+  {
+    "term": "धूम",
+    "partOfSpeech": "noun",
+    "hindi": "धुआँ — आग जलने पर उठने वाली गैस",
+    "definition": "smoke or vapour; a cousin of Latin fumus, which gives English fume and fumigate, and the direct ancestor of Hindi धुआँ",
+    "example": "रसोईगृहात् धूमः उत्तिष्ठति — Smoke rises from the kitchen."
+  },
+  {
+    "term": "नक्षत्र",
+    "partOfSpeech": "noun",
+    "hindi": "तारा — रात का तारा; पंचांग में चंद्रमा का पड़ाव",
+    "definition": "a star, and specifically one of the twenty-seven star groups the moon passes through in a month, long used as markers on the calendar; folk songs wear it down to नखत (neuter)",
+    "example": "आकाशे बहूनि नक्षत्राणि दृश्यन्ते। — Many stars are seen in the sky."
+  },
+  {
+    "term": "नग्न",
+    "partOfSpeech": "adjective",
+    "hindi": "नंगा — बिना कपड़ों का",
+    "definition": "naked or bare; a cousin of English naked and Latin nudus, which gives nude, and the source of Hindi नंगा",
+    "example": "शिशुः नग्नः जले क्रीडति — The baby plays naked in the water."
+  },
+  {
+    "term": "नभः स्पृशं दीप्तम्",
+    "partOfSpeech": "phrase",
+    "hindi": "आकाश को शान से छुओ — भारतीय वायुसेना का आदर्श वाक्य",
+    "definition": "the motto of the Indian Air Force, rendered touch the sky with glory; नभः is the sky of Hindi नभ and नभचर, and स्पृशम् touching shares its root with Hindi स्पर्श (from √स्पृश्, to touch; दीप्तम्, blazing)",
+    "example": "वायुसेनायाः ध्येयवाक्यं नभः स्पृशं दीप्तम् अस्ति। — The air force's motto is 'touch the sky with glory'."
+  },
+  {
+    "term": "नमस्ते",
+    "partOfSpeech": "phrase",
+    "hindi": "नमस्कार — हाथ जोड़कर किया जाने वाला अभिवादन",
+    "definition": "the everyday greeting of joined palms, literally 'a bow to you' (नमस्, a bow, + ते, to you); that little ते is a cousin of English thee",
+    "example": "अतिथिम् दृष्ट्वा बालः नमस्ते इति वदति। — Seeing the guest, the boy says namaste."
+  },
+  {
+    "term": "नव",
+    "partOfSpeech": "adjective",
+    "hindi": "नया — नूतन, ताज़ा",
+    "definition": "new or fresh; a cousin of English new and Latin novus, which gives novel, novice and renovate; the same form also means nine",
+    "example": "नववर्षे वयं मिष्टान्नं खादामः — At the new year we eat sweets."
+  },
+  {
+    "term": "नाटक",
+    "partOfSpeech": "noun",
+    "hindi": "रंगमंच का खेल — मंच पर अभिनय; बोलचाल में दिखावा",
+    "definition": "a play acted on stage, the work of the नट, the dancer-actor, and in everyday Hindi also a fuss or pretence, as in 'stop this drama' (neuter)",
+    "example": "वयम् श्वः नाटकम् द्रक्ष्यामः। — We shall watch a play tomorrow."
+  },
+  {
+    "term": "नायिका",
+    "partOfSpeech": "noun",
+    "hindi": "मुख्य स्त्री पात्र — कथा की नायक-प्रेमिका; नेता इसी धातु से",
+    "definition": "the heroine, literally a woman who leads, feminine of नायक, from the same leading root that gives Hindi नेता and नेतृत्व (from √नी, to lead)",
+    "example": "शकुंतला अस्य नाटकस्य नायिका अस्ति। — Shakuntala is the heroine of this play."
+  },
+  {
+    "term": "नासा",
+    "partOfSpeech": "noun",
+    "hindi": "नाक — सूँघने का अंग",
+    "definition": "nose or nostril; a cousin of English nose and Latin nasus, which gives nasal, so नासिका and nostril are relatives",
+    "example": "गजस्य नासा दीर्घा अस्ति — The elephant's nose is long."
+  },
+  {
+    "term": "नासिका",
+    "partOfSpeech": "noun",
+    "hindi": "नाक — साँस लेने और सूँघने का अंग",
+    "definition": "the nose, which Hindi clipped to नाक; Latin nasus and English nose and nasal are cousins (feminine ā-stem)",
+    "example": "नासिका गंधं जिघ्रति। — The nose smells the scent."
+  },
+  {
+    "term": "निद्रा",
+    "partOfSpeech": "noun",
+    "hindi": "नींद — सोने की अवस्था",
+    "definition": "sleep, whose dr cluster Hindi dissolved into a nasal vowel, leaving नींद, while निद्रा itself stays in formal Hindi (feminine ā-stem)",
+    "example": "रात्रौ निद्रा आगच्छति। — Sleep comes at night."
+  },
+  {
+    "term": "निबंध",
+    "partOfSpeech": "noun",
+    "hindi": "बंधन — बाँधना, जकड़ना; हिंदी में अब लेख",
+    "definition": "binding, fastening or tying down, and then a written composition bound together, which school Hindi turned into the student essay (masculine noun, from नि- and √बंध्)",
+    "example": "पशोः रज्ज्वा निबंधः क्रियते — The animal is tied with a rope."
+  },
+  {
+    "term": "निर्-",
+    "partOfSpeech": "prefix",
+    "hindi": "बिना — किसी चीज़ से रहित होने का भाव (निर्दोष, निर्मल)",
+    "definition": "a prefix meaning out of or without, which builds the Hindi words for blameless, spotless and fearless by stripping away the noun that follows (also निस्, reshaped by sandhi)",
+    "example": "निर्मलम् इति पदे निर्- मलस्य अभावं दर्शयति। — In nirmalam, nir- shows the absence of dirt."
+  },
+  {
+    "term": "नेपथ्य",
+    "partOfSpeech": "noun",
+    "hindi": "परदे के पीछे — मंच के पीछे सजने की जगह; वेशभूषा",
+    "definition": "costume and decoration, and the tiring room behind the curtain where actors dress and from which offstage voices speak (neuter)",
+    "example": "नेपथ्ये कोलाहलः श्रूयते। — A clamour is heard from behind the curtain."
+  },
+  {
+    "term": "नौ",
+    "partOfSpeech": "noun",
+    "hindi": "नाव — पानी पर चलने वाली नौका",
+    "definition": "boat or ship; a cousin of Latin navis and Greek naus, the family behind navy, navigate and nautical",
+    "example": "नौः नद्यां तरति — The boat floats on the river."
+  },
+  {
+    "term": "नौका",
+    "partOfSpeech": "noun",
+    "hindi": "नाव — पानी पर चलने वाली सवारी",
+    "definition": "a small boat, a diminutive of नौ, the ship; Hindi kept the plain stem as नाव, and Latin navis, behind English navy, is a cousin (feminine ā-stem)",
+    "example": "नद्यां नौका चलति। — A boat moves on the river."
+  },
+  {
+    "term": "पक्व",
+    "partOfSpeech": "adjective",
+    "hindi": "पक्का — पूरा तैयार, मज़बूत",
+    "definition": "cooked or ripe, which Hindi wore down to पक्का and widened to firm or certain, reaching English as pukka (past participle of √पच्, to cook)",
+    "example": "वृक्षे पक्वं फलम् अस्ति। — There is a ripe fruit on the tree."
+  },
+  {
+    "term": "पक्ष",
+    "partOfSpeech": "noun",
+    "hindi": "पखवाड़ा — चाँद के बढ़ने या घटने के पंद्रह दिन",
+    "definition": "literally a wing or side, hence each half of the lunar month, the bright शुक्ल and the dark कृष्ण; the same word gives Hindi पक्ष and विपक्ष, side and opposition, and the worn-down पखवाड़ा (masculine)",
+    "example": "शुक्ल पक्षे चंद्रः प्रतिदिनं वर्धते। — In the bright fortnight the moon grows every day."
+  },
+  {
+    "term": "पत्र",
+    "partOfSpeech": "noun",
+    "hindi": "पत्ता — पेड़ का पत्ता या पक्षी का पंख; हिंदी में अब चिट्ठी",
+    "definition": "a leaf of a tree or the wing feather of a bird, and later the palm leaf written on, which is how Hindi got its letter (neuter noun)",
+    "example": "वृक्षस्य पत्राणि पतन्ति — The tree's leaves are falling."
+  },
+  {
+    "term": "पद्य",
+    "partOfSpeech": "noun",
+    "hindi": "छंदबद्ध रचना — गद्य के उलट; पद यानी पाँव",
+    "definition": "verse as opposed to prose, literally something having feet, from पद, a foot or quarter of a verse, a cousin of English foot and pedal (neuter)",
+    "example": "इदम् पद्यम्, तत् गद्यम्। — This is verse, that is prose."
+  },
+  {
+    "term": "परि-",
+    "partOfSpeech": "prefix",
+    "hindi": "चारों ओर — घेरने या पूरा होने का भाव (परिवार, परिक्रमा)",
+    "definition": "a prefix meaning around or all over, so a family is the circle that surrounds you and a circuit is walking around; a cousin of the Greek peri in perimeter",
+    "example": "परिक्रमा इति पदे परि- चतुर्दिक् गमनं सूचयति। — In parikramā, pari- signals walking all the way around."
+  },
+  {
+    "term": "पर्ण",
+    "partOfSpeech": "noun",
+    "hindi": "पान — चबाने वाला सुगंधित पत्ता",
+    "definition": "a leaf or feather, which Hindi wore down to पान, now the betel leaf in particular; English fern is a cousin (neuter a-stem)",
+    "example": "वृक्षात् पर्णं पतति। — A leaf falls from the tree."
+  },
+  {
+    "term": "पर्यंक",
+    "partOfSpeech": "noun",
+    "hindi": "पलंग — सोने की बड़ी चारपाई",
+    "definition": "a bed or couch, which Hindi wore down to पलंग; a related form reached English through Portuguese as palanquin (masculine a-stem)",
+    "example": "पर्यंके राजा शेते। — The king sleeps on the couch."
+  },
+  {
+    "term": "पात्र",
+    "partOfSpeech": "noun",
+    "hindi": "बर्तन — पहला अर्थ; नाटक या कहानी में किरदार",
+    "definition": "a cup, bowl or vessel, then a worthy recipient, and in drama an actor or character, the stage sense Hindi uses for any character in a story (neuter)",
+    "example": "अस्मिन् नाटके दश पात्राणि संति। — There are ten characters in this play."
+  },
+  {
+    "term": "पाद",
+    "partOfSpeech": "noun",
+    "hindi": "पाँव — पैर, चरण",
+    "definition": "foot, also a quarter or a verse line; a cousin of English foot and Latin pes, behind pedal and pedestrian",
+    "example": "सः पादेन कंदुकं ताडयति — He kicks the ball with his foot."
+  },
+  {
+    "term": "पाषंड",
+    "partOfSpeech": "noun",
+    "hindi": "संप्रदाय — किसी भी पंथ का अनुयायी; हिंदी पाखंड में अब केवल ढोंग",
+    "definition": "a religious sect or its follower, used neutrally in Ashoka's edicts for every faith, later a heretic outside the Vedic fold, and in Hindi पाखंड mere hypocrisy (masculine noun)",
+    "example": "नगरे नाना पाषंडाः वसन्ति — Followers of many different sects live in the city."
+  },
+  {
+    "term": "पिता",
+    "partOfSpeech": "noun",
+    "hindi": "पितर — स्वर्गीय पुरखे, पूर्वज",
+    "definition": "father; a cousin of English father and Latin pater, which gives paternal and patron; Hindi पितर kept the word for departed ancestors (stem पितृ)",
+    "example": "पिता क्षेत्रं गच्छति — Father goes to the field."
+  },
+  {
+    "term": "पिपासा",
+    "partOfSpeech": "noun",
+    "hindi": "प्यास — पानी पीने की इच्छा",
+    "definition": "thirst, literally the wish to drink, a desiderative noun that Hindi collapsed into प्यास (feminine; from √पा, to drink)",
+    "example": "ग्रीष्मे पिपासा अधिका भवति। — In summer, thirst grows stronger."
+  },
+  {
+    "term": "पूर्ण",
+    "partOfSpeech": "adjective",
+    "hindi": "पूरा — भरा हुआ, समूचा",
+    "definition": "full, filled or complete; a cousin of English full and Latin plenus, the family behind plenty and plenary",
+    "example": "घटः जलेन पूर्णः अस्ति — The pot is full of water."
+  },
+  {
+    "term": "पूर्णिमा",
+    "partOfSpeech": "noun",
+    "hindi": "पूनम — पूरे चाँद की रात",
+    "definition": "the night of the full moon, which closes the bright fortnight; built on पूर्ण, full, and worn down in everyday Hindi to पूनम, while festivals like गुरु पूर्णिमा keep the long form (feminine)",
+    "example": "पूर्णिमा रात्रौ चंद्रः पूर्णः दृश्यते। — On the full-moon night the moon appears whole."
+  },
+  {
+    "term": "पृष्ठ",
+    "partOfSpeech": "noun",
+    "hindi": "पीठ — शरीर का पिछला भाग",
+    "definition": "the back, and also the surface or page of a leaf; Hindi wore the body sense down to पीठ but kept पृष्ठ for a book page (neuter a-stem)",
+    "example": "अश्वस्य पृष्ठे बालकः उपविशति। — The boy sits on the horse's back."
+  },
+  {
+    "term": "प्र-",
+    "partOfSpeech": "prefix",
+    "hindi": "आगे — शब्द से पहले लगकर बढ़ने का भाव (प्रगति, प्रचार)",
+    "definition": "a prefix meaning forward or onward, lending motion and force to the word it leads, as in progress and publicity; a cousin of Latin pro and English fore",
+    "example": "प्रगतिः इति पदे प्र- अग्रगमनं सूचयति। — In the word pragati, pra- signals going forward."
+  },
+  {
+    "term": "प्रति-",
+    "partOfSpeech": "prefix",
+    "hindi": "हर, बदले में — हर एक या सामने का भाव (प्रतिदिन, प्रतिशत)",
+    "definition": "a prefix meaning toward, against or each, which gives Hindi its words for daily, per cent, reflection and rival; a cousin of Greek pros",
+    "example": "प्रतिदिनम् इति पदे प्रति- प्रत्येकं दिनं सूचयति। — In pratidinam, prati- means each and every day."
+  },
+  {
+    "term": "प्रत्यय",
+    "partOfSpeech": "noun",
+    "hindi": "शब्दांत — धातु या शब्द के पीछे जुड़ने वाला अंश; मूल अर्थ भरोसा",
+    "definition": "a suffix attached after a root or stem to make a new word, though in everyday Sanskrit the same word means trust or firm belief (from प्रति- + √इ, to go)",
+    "example": "पाठकः इति पदे अक इति प्रत्यय अस्ति। — The word pāṭhaka, reader, ends in the suffix aka."
+  },
+  {
+    "term": "प्रपंच",
+    "partOfSpeech": "noun",
+    "hindi": "विस्तार — फैलाव और लंबा-चौड़ा वर्णन; हिंदी में अब छल-कपट",
+    "definition": "expansion, development and diversity, and so wordy elaboration, which drifted towards deceit and became the scheming intrigue of Hindi (masculine noun)",
+    "example": "अलं प्रपंचेन, संक्षेपेण वद — Enough elaboration, say it briefly."
+  },
+  {
+    "term": "प्रबंध",
+    "partOfSpeech": "noun",
+    "hindi": "रचना — लगातार जुड़ी हुई काव्य-कृति; हिंदी में अब इंतज़ाम या मैनेजमेंट",
+    "definition": "an unbroken connection or continuous series, and so a sustained literary composition, before Hindi made it arrangement and business management (masculine noun, from प्र- and √बंध्, to bind)",
+    "example": "कविः नवं प्रबंधं रचयति — The poet composes a new literary work."
+  },
+  {
+    "term": "प्रसाद",
+    "partOfSpeech": "noun",
+    "hindi": "निर्मलता — स्वच्छता, शांति और कृपा; हिंदी में अब मंदिर का भोग",
+    "definition": "clearness, brightness and calm, as of autumn water or a pleased mind, hence favour and grace; in Hindu ritual, food returned as a blessing (masculine noun, from प्र- and √सद्)",
+    "example": "शरदि नदीजलस्य प्रसादः भवति — In autumn river water grows clear."
+  },
+  {
+    "term": "प्रस्तर",
+    "partOfSpeech": "noun",
+    "hindi": "पत्थर — कठोर चट्टान का टुकड़ा",
+    "definition": "a stone or flat slab, literally something spread out, which Hindi wore down to पत्थर, the common word for any rock (masculine a-stem)",
+    "example": "मार्गे प्रस्तरः अस्ति। — There is a stone on the path."
+  },
+  {
+    "term": "प्रहसन",
+    "partOfSpeech": "noun",
+    "hindi": "हँसी-नाटक — व्यंग्य भरा छोटा नाटक; हँसना इसी धातु से",
+    "definition": "a one-act farce mocking rogues, false ascetics and courtesans, from the root of laughter that also gives Hindi हँसना and हँसी (neuter, from प्र + √हस्, to laugh)",
+    "example": "प्रहसनम् दृष्ट्वा सर्वे हसंति। — Everyone laughs on seeing the farce."
+  },
+  {
+    "term": "प्रातःकाल",
+    "partOfSpeech": "noun",
+    "hindi": "सुबह — दिन का पहला पहर, सूर्योदय के आसपास",
+    "definition": "early morning, the first part of the day around sunrise; Hindi keeps it in formal speech and in the school's प्रातःकालीन सभा, the morning assembly (from प्रातर्, at dawn, and काल, time; masculine)",
+    "example": "प्रातःकाले पक्षिणः मधुरं गायन्ति। — In the early morning the birds sing sweetly."
+  },
+  {
+    "term": "प्रार्थना",
+    "partOfSpeech": "noun",
+    "hindi": "याचना — माँगना, अनुरोध करना; हिंदी में अब ईश्वर-स्तुति",
+    "definition": "asking, requesting or petitioning anyone for something, a beggar's plea as much as a suitor's, which Hindi narrowed to prayer (feminine noun, from प्र- and √अर्थ्)",
+    "example": "याचकः धनस्य प्रार्थनां करोति — The beggar makes a request for money."
+  },
+  {
+    "term": "बलस्य मूलं विज्ञानम्",
+    "partOfSpeech": "phrase",
+    "hindi": "शक्ति की जड़ विज्ञान है — डीआरडीओ का आदर्श वाक्य",
+    "definition": "the motto of DRDO, India's defence research organisation, meaning science is the root of strength; मूलम् is the root behind Hindi मूल and मूली, and विज्ञान meant discerning knowledge long before it meant laboratory science",
+    "example": "प्रयोगशालायां बलस्य मूलं विज्ञानम् इति पठामः। — In the laboratory we read: science is the root of strength."
+  },
+  {
+    "term": "बहुजनहिताय बहुजनसुखाय",
+    "partOfSpeech": "phrase",
+    "hindi": "बहुतों के हित और सुख के लिए — आकाशवाणी का आदर्श वाक्य",
+    "definition": "the motto of All India Radio, meaning for the welfare and happiness of the many; the ending -आय is the dative case meaning for, which Hindi now expresses with के लिए (बहु, many + जन, people + हित, good)",
+    "example": "आकाशवाणी बहुजनहिताय बहुजनसुखाय प्रसारयति। — All India Radio broadcasts for the good and happiness of the many."
+  },
+  {
+    "term": "बुभुक्षा",
+    "partOfSpeech": "noun",
+    "hindi": "भूख — खाने की इच्छा",
+    "definition": "hunger, literally the wish to eat, a desiderative noun that Hindi squeezed down to the short word भूख (feminine; from √भुज्, to eat)",
+    "example": "बालकस्य बुभुक्षा अस्ति। — The boy is hungry."
+  },
+  {
+    "term": "भगिनी",
+    "partOfSpeech": "noun",
+    "hindi": "बहन — एक ही माता-पिता की बेटी",
+    "definition": "a sister, which Hindi wore down through spoken forms into बहन, the everyday word for a sister (feminine ī-stem)",
+    "example": "मम भगिनी गीतं गायति। — My sister sings a song."
+  },
+  {
+    "term": "भिक्षा",
+    "partOfSpeech": "noun",
+    "hindi": "भीख — माँगकर मिली चीज़",
+    "definition": "alms, food given to one who asks, which Hindi wore down to भीख and coloured with the sense of begging (feminine; from √भिक्ष्, to ask)",
+    "example": "साधुः भिक्षां याचते। — The ascetic asks for alms."
+  },
+  {
+    "term": "भ्राता",
+    "partOfSpeech": "noun",
+    "hindi": "भाई — एक ही माता-पिता का बेटा",
+    "definition": "a brother, which Hindi wore down to भाई; English brother and Latin frater are cousins (masculine; stem भ्रातृ)",
+    "example": "मम भ्राता विद्यालयं गच्छति। — My brother goes to school."
+  },
+  {
+    "term": "भ्रू",
+    "partOfSpeech": "noun",
+    "hindi": "भौं — आँख के ऊपर के बाल",
+    "definition": "eyebrow; a cousin of English brow and Greek ophrys, one of the oldest body words shared across the family",
+    "example": "तस्याः भ्रूः वक्रा अस्ति — Her brow is arched."
+  },
+  {
+    "term": "मधु",
+    "partOfSpeech": "noun",
+    "hindi": "शहद — मधुमक्खी का बनाया रस",
+    "definition": "honey or anything sweet; a cousin of English mead, the old honey wine, and Greek methu, meaning wine",
+    "example": "मधुमक्षिकाः मधु संचिन्वन्ति — Bees gather honey."
+  },
+  {
+    "term": "मध्य",
+    "partOfSpeech": "adjective",
+    "hindi": "मँझला — बीच वाला (भाई या बच्चा)",
+    "definition": "middle or central; a cousin of English mid and middle and Latin medius, behind medium and Mediterranean",
+    "example": "ग्रामस्य मध्ये एकः कूपः अस्ति — There is a well in the middle of the village."
+  },
+  {
+    "term": "मयूर",
+    "partOfSpeech": "noun",
+    "hindi": "मोर — रंगीन पंखों वाला पक्षी",
+    "definition": "the peacock, whose middle syllable Hindi swallowed, so that three syllables shrank to the single breath मोर (masculine a-stem)",
+    "example": "मयूरः वर्षाकाले नृत्यति। — The peacock dances in the rainy season."
+  },
+  {
+    "term": "मरिच",
+    "partOfSpeech": "noun",
+    "hindi": "मिर्च — तीखा मसाला",
+    "definition": "black pepper; Hindi wore it down to मिर्च and moved the name to the American chilli when it arrived in India (neuter a-stem)",
+    "example": "मरिचं तीक्ष्णं भवति। — Pepper is pungent."
+  },
+  {
+    "term": "माता",
+    "partOfSpeech": "noun",
+    "hindi": "माँ — जन्म देने वाली स्त्री",
+    "definition": "mother; a cousin of English mother, Latin mater and Greek mētēr, all sharing one ancient family word (stem मातृ)",
+    "example": "मम माता गृहे अस्ति — My mother is at home."
+  },
+  {
+    "term": "मातृष्वसा",
+    "partOfSpeech": "noun",
+    "hindi": "मौसी — माँ की बहन",
+    "definition": "a mother's sister, literally mother-sister, a long compound that Hindi wore down to the affectionate two-syllable मौसी (feminine; stem मातृष्वसृ)",
+    "example": "मम मातृष्वसा नगरे वसति। — My mother's sister lives in the city."
+  },
+  {
+    "term": "मास",
+    "partOfSpeech": "noun",
+    "hindi": "महीना — एक चाँद से अगले चाँद तक का समय",
+    "definition": "a month, measured from one new or full moon to the next; a cousin of English moon and month, and in older Sanskrit it can mean the moon itself (masculine)",
+    "example": "चैत्र मासे वसंतः आरभते। — Spring begins in the month of Chaitra."
+  },
+  {
+    "term": "मुद्रा",
+    "partOfSpeech": "noun",
+    "hindi": "मुहर — मोहर वाली अँगूठी, छाप; हिंदी में अब करेंसी या भाव-भंगिमा",
+    "definition": "a seal or signet ring and the impression it stamps, then a stamped coin, from which Hindi drew both currency and posture (feminine noun)",
+    "example": "राजा पत्रे मुद्रां ददाति — The king sets his seal on the letter."
+  },
+  {
+    "term": "मुहूर्त",
+    "partOfSpeech": "noun",
+    "hindi": "पल — एक क्षण या अड़तालीस मिनट; हिंदी में अब शुभ घड़ी",
+    "definition": "a moment, and also a fixed unit of time, one thirtieth of a day or forty-eight minutes, which Hindi narrowed to an auspicious hour (masculine or neuter noun)",
+    "example": "मुहूर्तं तिष्ठ, अहम् आगच्छामि — Wait a moment, I am coming."
+  },
+  {
+    "term": "मृग",
+    "partOfSpeech": "noun",
+    "hindi": "जंगली पशु — कोई भी वन्य जीव; हिंदी में केवल हिरन, पर मृगराज यानी सिंह",
+    "definition": "any wild forest animal or game beast, which is why the lion is called मृगराज, king of beasts, though Hindi narrowed it to deer (masculine noun)",
+    "example": "वने बहवः मृगाः चरन्ति, सिंहः अपि — Many wild beasts roam the forest, the lion too."
+  },
+  {
+    "term": "यजमान",
+    "partOfSpeech": "noun",
+    "hindi": "जजमान — पुरोहित से पूजा करवाने वाला परिवार",
+    "definition": "the patron who sponsors a sacrifice and pays the priests (from √यज्, to worship); worn down in Hindi to जजमान, the household a priest or barber traditionally serves",
+    "example": "यजमानः पुरोहितम् गृहम् आह्वयति। — The patron invites the priest to his house."
+  },
+  {
+    "term": "यज्ञोपवीत",
+    "partOfSpeech": "noun",
+    "hindi": "जनेऊ — कंधे से पहना जाने वाला पवित्र धागा",
+    "definition": "in Hindu ritual, the sacred cord worn over the left shoulder after the thread ceremony, literally 'the sacrificial covering'; everyday Hindi wore the long word down to जनेऊ",
+    "example": "बालः अद्य प्रथमम् यज्ञोपवीतम् धारयति। — Today the boy wears the sacred thread for the first time."
+  },
+  {
+    "term": "यतो धर्मस्ततो जयः",
+    "partOfSpeech": "phrase",
+    "hindi": "जहाँ धर्म, वहाँ जीत — सर्वोच्च न्यायालय का आदर्श वाक्य",
+    "definition": "the motto of the Supreme Court of India, meaning where righteousness stands, victory follows; sandhi hides four separate words, यतः where, धर्मः, ततः there, and जयः victory (यतः + धर्मः + ततः + जयः)",
+    "example": "न्यायालये यतो धर्मस्ततो जयः इति पठामः। — In the court we read: where there is dharma, there is victory."
+  },
+  {
+    "term": "युग",
+    "partOfSpeech": "noun",
+    "hindi": "जुआ — बैलों के कंधे पर रखी लकड़ी",
+    "definition": "yoke for a pair of draught animals, later a pair or an age of the world; a cousin of English yoke and Latin iugum (from √युज्, to join)",
+    "example": "कृषकः वृषभयोः युगं स्थापयति — The farmer puts the yoke on the two bulls."
+  },
+  {
+    "term": "योगः कर्मसु कौशलम्",
+    "partOfSpeech": "phrase",
+    "hindi": "कर्म में कुशलता ही योग है — आईआईटी खड़गपुर का आदर्श वाक्य",
+    "definition": "the motto of IIT Kharagpur, meaning yoga is skill in action; here योग means disciplined method rather than physical postures, and कौशलम्, skill, is built from कुशल, skilful, and survives in Hindi as कौशल (कर्मसु, in actions, locative plural of कर्मन्)",
+    "example": "छात्राः योगः कर्मसु कौशलम् इति पठन्ति। — The students read: yoga is skill in action."
+  },
+  {
+    "term": "योगक्षेमं वहाम्यहम्",
+    "partOfSpeech": "phrase",
+    "hindi": "तुम्हारा भरण-पोषण मैं उठाता हूँ — एलआईसी का आदर्श वाक्य",
+    "definition": "the motto of the Life Insurance Corporation of India, meaning I carry your welfare; योगक्षेम pairs gaining what you lack with keeping what you already have, a neat description of insurance (वहामि, I carry, from √वह् + अहम्, I)",
+    "example": "बीमापत्रे योगक्षेमं वहाम्यहम् इति मुद्रितम्। — 'I carry your welfare' is printed on the insurance policy."
+  },
+  {
+    "term": "रंग",
+    "partOfSpeech": "noun",
+    "hindi": "मंच — रंगमंच और रंगकर्मी में बचा पुराना अर्थ; आज रंग यानी वर्ण",
+    "definition": "colour or dye, and also a stage, theatre or arena, the sense surviving in Hindi रंगमंच and रंगकर्मी while everyday रंग kept only colour (masculine)",
+    "example": "नटाः रंगम् प्रविशंति। — The actors walk onto the stage."
+  },
+  {
+    "term": "रस",
+    "partOfSpeech": "noun",
+    "hindi": "स्वाद — रसिक और नीरस इसी से; नाटक में दर्शक का भाव-आनंद",
+    "definition": "sap, juice or taste, and in the theory of drama the distilled emotional flavour, such as love or heroism, that an audience savours (masculine)",
+    "example": "अस्मिन् नाटके करुणः रसः प्रधानः अस्ति। — Pathos is the dominant flavour in this play."
+  },
+  {
+    "term": "रात्रि",
+    "partOfSpeech": "noun",
+    "hindi": "रात — सूर्यास्त से सूर्योदय तक का अंधेरा",
+    "definition": "night, the span from sunset to sunrise; Hindi shortened it to रात, yet festivals still count by the full form, as in नवरात्रि, the nine nights (feminine)",
+    "example": "रात्रि काले चंद्रः शोभते। — At night the moon looks lovely."
+  },
+  {
+    "term": "वचन",
+    "partOfSpeech": "noun",
+    "hindi": "संख्या — एक, दो या अनेक; हिंदी में 'वचन देना' यानी वादा करना",
+    "definition": "grammatical number, which Sanskrit counts three ways as singular, dual and plural; first meaning speech, it survives in Hindi as a promise (from √वच्, to speak; a cousin of English voice)",
+    "example": "नेत्रे इति पदं द्वि वचन रूपम् अस्ति। — Netre, 'the two eyes', is a dual-number form."
+  },
+  {
+    "term": "वधू",
+    "partOfSpeech": "noun",
+    "hindi": "बहू — बेटे की पत्नी",
+    "definition": "a bride or young wife, which Hindi wore down to बहू, narrowing the sense to a son's wife in the household (feminine ū-stem)",
+    "example": "वधूः गृहं प्रविशति। — The bride enters the house."
+  },
+  {
+    "term": "वयं रक्षामः",
+    "partOfSpeech": "phrase",
+    "hindi": "हम रक्षा करते हैं — भारतीय तटरक्षक बल का आदर्श वाक्य",
+    "definition": "the motto of the Indian Coast Guard, meaning simply we protect; रक्षामः is the plain present tense of the verb whose root gives Hindi रक्षा, रक्षक and राखी (वयम्, we; from √रक्ष्, to protect)",
+    "example": "तटरक्षकाः वदन्ति वयं रक्षामः इति। — The coast guards say, 'we protect'."
+  },
+  {
+    "term": "वर्तिका",
+    "partOfSpeech": "noun",
+    "hindi": "बत्ती — दीये की जलती डोरी",
+    "definition": "the wick of a lamp, literally a little twisted thing, which Hindi wore down to बत्ती and stretched to any light or bulb (feminine ā-stem)",
+    "example": "दीपे वर्तिका ज्वलति। — The wick burns in the lamp."
+  },
+  {
+    "term": "वर्षा",
+    "partOfSpeech": "noun",
+    "hindi": "बरसात — सावन-भादों की बारिश वाली ऋतु",
+    "definition": "rain, and the rainy season of Shravana and Bhadrapada; the same root gave वर्ष, year, because years were once counted in monsoons, and Hindi बरसना and बरसात descend from it (feminine)",
+    "example": "वर्षा ऋतौ मयूराः नृत्यन्ति। — In the rainy season peacocks dance."
+  },
+  {
+    "term": "वसंत",
+    "partOfSpeech": "noun",
+    "hindi": "बसंत — चैत-बैसाख का फूलों वाला मौसम",
+    "definition": "spring, the season of Chaitra and Vaishakha when mango trees flower and the koel sings; Hindi softened the opening sound to give बसंत, as in बसंत पंचमी (masculine)",
+    "example": "वसंत ऋतौ कोकिलः मधुरं गायति। — In spring the cuckoo sings sweetly."
+  },
+  {
+    "term": "वसुधैव कुटुंबकम्",
+    "partOfSpeech": "phrase",
+    "hindi": "सारी धरती एक परिवार है — जी20 भारत 2023 का विषय-वाक्य",
+    "definition": "the theme of India's 2023 G20 presidency, rendered One Earth, One Family, One Future; वसुधा is the earth as holder of wealth, and कुटुंबकम् is the family, the word Hindi keeps as कुटुंब (वसुधा + एव, indeed)",
+    "example": "सम्मेलने वसुधैव कुटुंबकम् इति घोषः आसीत्। — At the summit the slogan was 'the whole world is one family'."
+  },
+  {
+    "term": "वार्ता",
+    "partOfSpeech": "noun",
+    "hindi": "खबर — समाचार और आजीविका; हिंदी में अब बातचीत या समझौता-वार्ता",
+    "definition": "news or tidings, and also livelihood through farming, cattle and trade, the old science of economics, before Hindi made it formal talks (feminine noun)",
+    "example": "भो मित्र, ग्रामे का वार्ता — Friend, what news from the village?"
+  },
+  {
+    "term": "वि-",
+    "partOfSpeech": "prefix",
+    "hindi": "अलग — अलगाव या विशेषता का भाव (वियोग, विदेश)",
+    "definition": "a prefix meaning apart or away, which can split a word's sense, as in separation and foreign land, or sharpen it, as in special and science",
+    "example": "वियोगः इति पदे वि- योगस्य विपरीतं करोति। — In viyoga, vi- turns union into separation."
+  },
+  {
+    "term": "विचित्र",
+    "partOfSpeech": "adjective",
+    "hindi": "रंग-बिरंगा — चितकबरा, अनेक प्रकार का; हिंदी में अब अजीब",
+    "definition": "variegated, spotted or many-coloured, and so manifold and diverse, before Hindi settled on strange and bizarre (from वि- and चित्र, bright)",
+    "example": "मयूरस्य पक्षाः विचित्राः — The peacock's feathers are many-coloured."
+  },
+  {
+    "term": "विदूषक",
+    "partOfSpeech": "noun",
+    "hindi": "मसखरा — नाटक का हँसोड़, पेटू ब्राह्मण साथी",
+    "definition": "the jester of Sanskrit drama, the hero's greedy Brahmin friend who speaks Prakrit rather than Sanskrit, literally one who spoils or defiles (masculine, from वि + √दुष्)",
+    "example": "विदूषकः मोदकम् खादति, सर्वे हसंति। — The jester eats a sweet, and everyone laughs."
+  },
+  {
+    "term": "विद्युत्",
+    "partOfSpeech": "noun",
+    "hindi": "बिजली — आकाश की चमक या करंट",
+    "definition": "lightning, literally that which flashes forth, which Hindi wore down to बिजली and then stretched to mean electric power (feminine consonant stem)",
+    "example": "आकाशे विद्युत् द्योतते। — Lightning flashes in the sky."
+  },
+  {
+    "term": "विभक्ति",
+    "partOfSpeech": "noun",
+    "hindi": "कारक-चिह्न — नाम के अंत का बदलता रूप, जिसकी जगह हिंदी में ने, को, से आए",
+    "definition": "a case ending added to a noun to show its role in the sentence, the work Hindi now hands to separate little words such as को and से (from वि- + √भज्, to divide)",
+    "example": "रामेण इति पदे तृतीया विभक्ति अस्ति। — The form rāmeṇa, 'by Rama', carries the third case ending."
+  },
+  {
+    "term": "विलास",
+    "partOfSpeech": "noun",
+    "hindi": "क्रीड़ा — खेल, लीला और लावण्य; हिंदी में अब ऐशो-आराम",
+    "definition": "play, sport and graceful movement, the charm of a gesture or glance, which Hindi turned into luxury and self-indulgence (masculine noun)",
+    "example": "बालानां विलासः मनोहरः — The children's play is charming."
+  },
+  {
+    "term": "वेदना",
+    "partOfSpeech": "noun",
+    "hindi": "अनुभूति — सुख-दुख का कोई भी अहसास; हिंदी में केवल पीड़ा",
+    "definition": "perception or sensation of any kind, pleasant as well as painful, from √विद्, to know, which Hindi narrowed to pain and anguish (feminine noun)",
+    "example": "सुखस्य अपि वेदना भवति — There is a feeling of pleasure too."
+  },
+  {
+    "term": "व्यवहार",
+    "partOfSpeech": "noun",
+    "hindi": "मुकदमा — कानूनी कार्यवाही और लेन-देन; हिंदी में अब बर्ताव",
+    "definition": "dealings between people, especially trade and legal procedure, so that law books call a lawsuit व्यवहार, where Hindi hears mostly personal behaviour (masculine noun)",
+    "example": "वणिक् न्यायसभायां व्यवहारं करोति — The merchant brings a lawsuit before the court."
+  },
+  {
+    "term": "व्याकरण",
+    "partOfSpeech": "noun",
+    "hindi": "भाषा-नियम — शब्दों और वाक्यों की बनावट समझाने वाला शास्त्र",
+    "definition": "the study of how words are formed and joined, literally a taking apart, since grammarians split each word into root, prefix and ending (from वि- + आ- + √कृ, to make)",
+    "example": "पाणिनिः व्याकरण शास्त्रस्य महान् आचार्यः आसीत्। — Pāṇini was the great master of grammar."
+  },
+  {
+    "term": "व्याघ्र",
+    "partOfSpeech": "noun",
+    "hindi": "बाघ — धारीदार बड़ी बिल्ली",
+    "definition": "the tiger, whose heavy initial cluster Hindi dropped, leaving only बाघ, the everyday name for the striped animal (masculine a-stem)",
+    "example": "व्याघ्रः वने गर्जति। — The tiger roars in the forest."
+  },
+  {
+    "term": "व्रत",
+    "partOfSpeech": "noun",
+    "hindi": "उपवास — नियम से रखा गया धार्मिक अनशन",
+    "definition": "in early Sanskrit a will, rule or solemn vow of any kind; in Hindu practice it narrowed to a religious observance, and in everyday Hindi usually means a fast",
+    "example": "माता सोमवासरे व्रतम् करोति। — Mother keeps a fast on Mondays."
+  },
+  {
+    "term": "शं नो वरुणः",
+    "partOfSpeech": "phrase",
+    "hindi": "वरुण हमारे लिए मंगलकारी हों — भारतीय नौसेना का आदर्श वाक्य",
+    "definition": "the motto of the Indian Navy, a short prayer that Varuna, lord of the waters, be gracious to us; शम् means welfare, the same word hidden inside Hindi शंकर, giver of good (शम्, welfare + नः, to us + वरुणः)",
+    "example": "नौकायां शं नो वरुणः इति लिखितम्। — On the ship is written: may Varuna be kind to us."
+  },
+  {
+    "term": "शत",
+    "partOfSpeech": "noun",
+    "hindi": "सौ — दस का दस गुना",
+    "definition": "a hundred; a cousin of Latin centum and English hundred, so cent, century and percent all belong to the same family",
+    "example": "ग्रामे शतं गृहाणि सन्ति — The village has a hundred houses."
+  },
+  {
+    "term": "शरद्",
+    "partOfSpeech": "noun",
+    "hindi": "शरद — क्वार-कार्तिक की साफ़ आसमान वाली ऋतु, शरद पूर्णिमा वाली",
+    "definition": "autumn, the clear-skied season of Ashvina and Kartika that follows the rains; old Sanskrit counted a lifetime in autumns, wishing someone a hundred of them (feminine consonant stem)",
+    "example": "शरद् ऋतौ आकाशः निर्मलः भवति। — In autumn the sky becomes clear."
+  },
+  {
+    "term": "शर्करा",
+    "partOfSpeech": "noun",
+    "hindi": "शक्कर — मीठे दाने वाली चीज़",
+    "definition": "grit or gravel first, then crystalline sugar; Hindi wore it to शक्कर, and the same word travelled through Persian and Arabic to become English sugar (feminine ā-stem)",
+    "example": "दुग्धे शर्करा मिश्रिता अस्ति। — Sugar is mixed in the milk."
+  },
+  {
+    "term": "शिशिर",
+    "partOfSpeech": "noun",
+    "hindi": "कड़ाके की सर्दी — माघ-फागुन की ठिठुरन और ओस वाली ऋतु",
+    "definition": "late winter, the dewy season of Magha and Phalguna; as an adjective it also means cool, which is why the moon could be called शिशिरकर, the cool-rayed one (masculine)",
+    "example": "शिशिर ऋतौ वृक्षाणां पत्राणि पतन्ति। — In late winter the leaves of the trees fall."
+  },
+  {
+    "term": "शिष्य",
+    "partOfSpeech": "noun",
+    "hindi": "सिख — सिख पंथ का अनुयायी",
+    "definition": "a pupil or disciple, one to be taught; through Punjabi it was worn down to सिख, the name of the faith's followers (masculine a-stem)",
+    "example": "शिष्यः गुरुं नमति। — The pupil bows to the teacher."
+  },
+  {
+    "term": "शुभ",
+    "partOfSpeech": "adjective",
+    "hindi": "अच्छा — मंगलकारी, सौभाग्य लाने वाला",
+    "definition": "auspicious or fortunate, though its older sense was bright and handsome (from √शुभ्, to shine); the same root gives Hindi शोभा, beauty, and lives on in शुभकामना",
+    "example": "अद्य शुभम् दिनम् अस्ति, अतः वयम् यात्राम् आरभामहे। — Today is an auspicious day, so we begin the journey."
+  },
+  {
+    "term": "शोध",
+    "partOfSpeech": "noun",
+    "hindi": "शुद्धि — साफ़ करना, सुधारना; हिंदी में अब रिसर्च",
+    "definition": "purification or cleansing, correcting an error and paying off a debt, which Hindi turned into academic research (masculine noun, from √शुध्, to be pure)",
+    "example": "सुवर्णस्य शोधः अग्निना भवति — Gold is purified by fire."
+  },
+  {
+    "term": "श्री",
+    "partOfSpeech": "noun",
+    "hindi": "श्रीमान — नाम से पहले लगने वाला आदरसूचक",
+    "definition": "radiance, beauty and prosperity, personified as the goddess of fortune; placed before names it became the Hindi courtesy title behind श्रीमान and श्रीमती",
+    "example": "यत्र परिश्रमः अस्ति तत्र गृहे श्रीः वसति। — Prosperity lives in the house where there is hard work."
+  },
+  {
+    "term": "श्लोक",
+    "partOfSpeech": "noun",
+    "hindi": "पद्य — दो पंक्तियों का छंद; वैदिक अर्थ में कीर्ति",
+    "definition": "a couplet in the common epic metre of four eight-syllable quarters, though older Vedic usage meant sound, call and especially fame (masculine)",
+    "example": "अयम् श्लोकः सरलः अस्ति। — This verse is simple."
+  },
+  {
+    "term": "श्वशुर",
+    "partOfSpeech": "noun",
+    "hindi": "ससुर — पति या पत्नी के पिता",
+    "definition": "a father-in-law, which Hindi wore down to ससुर; Latin socer and old German swehur are cousins (masculine a-stem)",
+    "example": "श्वशुरः गृहे आगच्छति। — The father-in-law comes home."
+  },
+  {
+    "term": "श्वश्रू",
+    "partOfSpeech": "noun",
+    "hindi": "सास — पति या पत्नी की माँ",
+    "definition": "a mother-in-law, which Hindi wore down to सास; Latin socrus, of the same meaning, is a cousin (feminine ū-stem)",
+    "example": "श्वश्रूः वध्वा सह वसति। — The mother-in-law lives with the daughter-in-law."
+  },
+  {
+    "term": "संकल्प",
+    "partOfSpeech": "noun",
+    "hindi": "प्रण — मन में ठाना हुआ पक्का इरादा",
+    "definition": "in Hindu ritual, the spoken statement of intent made before a rite begins, naming time, place and purpose; Hindi stretched it to any firm resolution (from सम्, together, + √क्लृप्, to arrange)",
+    "example": "सः प्रतिदिनम् पठितुम् संकल्पम् करोति। — He resolves to study every day."
+  },
+  {
+    "term": "संक्रांति",
+    "partOfSpeech": "noun",
+    "hindi": "सकरात — सूर्य का एक राशि से अगली में जाना; मकर संक्रांति का लोक-नाम",
+    "definition": "the sun's passage from one zodiac sign into the next, literally a going-across; मकर संक्रांति marks the January crossing and is among the few Hindu festivals fixed by the sun rather than the moon (from सम् + √क्रम्, to step; feminine)",
+    "example": "संक्रांति दिने जनाः तिलान् खादन्ति। — On sankranti day people eat sesame."
+  },
+  {
+    "term": "सत्य",
+    "partOfSpeech": "noun",
+    "hindi": "सच — जो वास्तव में है",
+    "definition": "truth, the quality of what really is, which Hindi wore down to सच in speech while keeping सत्य for formal use (neuter a-stem)",
+    "example": "सः सदा सत्यं वदति। — He always speaks the truth."
+  },
+  {
+    "term": "सत्यं शिवं सुंदरम्",
+    "partOfSpeech": "phrase",
+    "hindi": "सत्य, कल्याणकारी और सुंदर — दूरदर्शन का आदर्श वाक्य",
+    "definition": "the motto of Doordarshan, India's public television broadcaster, naming truth, goodness and beauty; शिवम् here is the ordinary adjective auspicious rather than the god's name, while सुंदरम् passed almost unchanged into Hindi सुंदर",
+    "example": "दूरदर्शने सत्यं शिवं सुंदरम् इति दृश्यते। — On Doordarshan one sees 'truth, goodness, beauty'."
+  },
+  {
+    "term": "सत्यमेव जयते",
+    "partOfSpeech": "phrase",
+    "hindi": "सच की ही जीत होती है — भारत का राष्ट्रीय आदर्श वाक्य",
+    "definition": "the national motto of India, printed beneath the lion capital on banknotes, coins and passports, meaning truth alone conquers; जयते shares its root with Hindi जय and जीत (सत्यम्, truth + एव, alone; जयते from √जि, to conquer)",
+    "example": "मुद्रायां सत्यमेव जयते इति लिखितम् अस्ति। — On the currency is written: truth alone triumphs."
+  },
+  {
+    "term": "संधि",
+    "partOfSpeech": "noun",
+    "hindi": "मेल — ध्वनियों का जुड़ना; हिंदी में देशों का समझौता भी",
+    "definition": "the joining of sounds where two words meet, so that final and initial sounds blend or change; in Hindi the same word also names a treaty between nations (from सम्- + √धा, to put)",
+    "example": "संधि इति नियमात् देव आलयः इति पदं देवालयः भवति। — Through the rule called sandhi, deva ālaya becomes devālaya."
+  },
+  {
+    "term": "संध्या",
+    "partOfSpeech": "noun",
+    "hindi": "साँझ — दिन ढलने का समय",
+    "definition": "twilight, the joining of day and night, which Hindi wore down to साँझ for evening; in Hindu ritual it also names the evening prayer (feminine ā-stem)",
+    "example": "संध्यायां पक्षिणः नीडं गच्छन्ति। — At dusk, birds go to the nest."
+  },
+  {
+    "term": "संपादक",
+    "partOfSpeech": "noun",
+    "hindi": "साधक — काम पूरा करने वाला; हिंदी में अब अख़बार का मुखिया",
+    "definition": "one who accomplishes, procures or brings something about, a fixer of tasks, whom Hindi made the newspaper editor (masculine noun, from सम्- and √पद्)",
+    "example": "सः कार्यस्य संपादकः अस्ति — He is the one who gets the work done."
+  },
+  {
+    "term": "सप्त",
+    "partOfSpeech": "adjective",
+    "hindi": "सात — छह और एक",
+    "definition": "seven; a cousin of English seven and Latin septem, which named September when it was still the seventh Roman month (stem सप्तन्)",
+    "example": "सप्ताहे सप्त दिनानि सन्ति — A week has seven days."
+  },
+  {
+    "term": "सभ्य",
+    "partOfSpeech": "adjective",
+    "hindi": "सभासद — सभा के योग्य, शिष्ट; हिंदी में अब सुसंस्कृत",
+    "definition": "fit for an assembly, courteous in company, and as a noun a member of the assembly, built on सभा, the sense Hindi widened to civilized",
+    "example": "सभायां सभ्याः उपविशन्ति — The members of the assembly sit in the hall."
+  },
+  {
+    "term": "समाचार",
+    "partOfSpeech": "noun",
+    "hindi": "आचरण — चाल-चलन और रीति; हिंदी में अब खबर",
+    "definition": "conduct, behaviour and customary practice, how someone carries on, which slid into an account of their doings and so Hindi news (masculine noun, from सम्-, आ- and √चर्)",
+    "example": "सज्जनानां समाचारः अनुकरणीयः — The conduct of good people is worth following."
+  },
+  {
+    "term": "समास",
+    "partOfSpeech": "noun",
+    "hindi": "जोड़ा शब्द — कई शब्दों को मिलाकर बना एक शब्द (राजपुत्र, नीलकमल)",
+    "definition": "the joining of two or more words into one compound, dropping the endings between them, as king and son make prince (from सम्- + √अस्, to throw)",
+    "example": "राज्ञः पुत्रः, समास इति विधिना, राजपुत्रः भवति। — The king's son, by compounding, becomes rājaputra."
+  },
+  {
+    "term": "सम्-",
+    "partOfSpeech": "prefix",
+    "hindi": "साथ, पूरा — मिलकर या भली-भाँति का भाव (संगम, संपूर्ण)",
+    "definition": "a prefix meaning together or completely, written as anusvara before most consonants, as in confluence and complete; a cousin of English same",
+    "example": "संगमः इति पदे सम्- नद्योः मिलनं दर्शयति। — In the word saṅgama, sam- shows two rivers meeting."
+  },
+  {
+    "term": "सर्प",
+    "partOfSpeech": "noun",
+    "hindi": "साँप — रेंगने वाला ज़हरीला जीव",
+    "definition": "a snake, literally the creeping one, which Hindi turned into साँप; Latin serpens and English serpent are cousins (masculine; from √सृप्, to creep)",
+    "example": "सर्पः वने चलति। — The snake moves in the forest."
+  },
+  {
+    "term": "सर्षप",
+    "partOfSpeech": "noun",
+    "hindi": "सरसों — तेल देने वाले पीले फूलों का दाना",
+    "definition": "mustard seed, whose final syllable Hindi softened and nasalised into सरसों, the yellow crop of northern winters (masculine a-stem)",
+    "example": "क्षेत्रे सर्षपः पुष्पितः अस्ति। — The mustard is in flower in the field."
+  },
+  {
+    "term": "संवत्सर",
+    "partOfSpeech": "noun",
+    "hindi": "संवत — एक पूरा वर्ष; विक्रम संवत इसी का छोटा रूप",
+    "definition": "a full year, one complete round of the seasons; the संवत printed on Hindi wedding cards and calendars, as in Vikram Samvat, is this word cut short (masculine)",
+    "example": "एकस्मिन् संवत्सरे द्वादश मासाः भवन्ति। — In one year there are twelve months."
+  },
+  {
+    "term": "संस्कार",
+    "partOfSpeech": "noun",
+    "hindi": "परिष्कार — चमकाना, शुद्ध करना; हिंदी में अब परवरिश के मूल्य",
+    "definition": "refining, polishing and perfecting, as of gems or speech, the same idea that names संस्कृत itself, later a lasting impression and a rite (masculine noun, from सम्- and √कृ)",
+    "example": "मणेः संस्कारः शिल्पिना क्रियते — The gem's polishing is done by the craftsman."
+  },
+  {
+    "term": "साहस",
+    "partOfSpeech": "noun",
+    "hindi": "दुस्साहस — मूल में उतावली हिंसा या डकैती; हिंदी में अब केवल हिम्मत",
+    "definition": "a rash or violent deed, including robbery and assault in the law books, and the fine imposed for it, where Hindi now hears only courage (neuter noun)",
+    "example": "चौरः रात्रौ साहसम् अकरोत् — The thief committed a violent robbery at night."
+  },
+  {
+    "term": "सु-",
+    "partOfSpeech": "prefix",
+    "hindi": "अच्छा — भलाई या आसानी का भाव (सुगंध, सुलभ)",
+    "definition": "a prefix meaning good, well or easy, which gives Hindi its words for fragrance, good fortune and easy to reach; a cousin of the Greek eu in euphoria",
+    "example": "सुगंधः इति पदे सु- शोभनं गन्धं दर्शयति। — In sugandha, su- marks a pleasant smell."
+  },
+  {
+    "term": "सुभाषित",
+    "partOfSpeech": "noun",
+    "hindi": "सूक्ति — अच्छी तरह कही गई सीख-भरी बात",
+    "definition": "a well-turned saying, a single witty or wise verse quoted on its own, from सु, well, and भाषित, spoken, the same root as Hindi भाषा (neuter)",
+    "example": "गुरुः प्रतिदिनम् एकम् सुभाषितम् पठति। — Every day the teacher recites one wise verse."
+  },
+  {
+    "term": "सुवर्ण",
+    "partOfSpeech": "noun",
+    "hindi": "सोना — पीली क़ीमती धातु",
+    "definition": "gold, literally the one of good colour, a compound that Hindi wore down to सोना, the common word for the metal (neuter a-stem)",
+    "example": "राज्ञः मुकुटं सुवर्णस्य अस्ति। — The king's crown is of gold."
+  },
+  {
+    "term": "सुवर्णकार",
+    "partOfSpeech": "noun",
+    "hindi": "सुनार — सोने के गहने बनाने वाला",
+    "definition": "a goldsmith, literally the gold-maker, a compound that Hindi wore down to सुनार, the jeweller of every bazaar (masculine a-stem)",
+    "example": "सुवर्णकारः कंकणं करोति। — The goldsmith makes a bangle."
+  },
+  {
+    "term": "सूत्र",
+    "partOfSpeech": "noun",
+    "hindi": "सूत — कपास का धागा",
+    "definition": "a thread or string, which Hindi wore down to सूत for cotton yarn, keeping सूत्र for a formula or rule (neuter a-stem; from √सिव्, to sew)",
+    "example": "सूत्रेण माला ग्रथ्यते। — A garland is strung on a thread."
+  },
+  {
+    "term": "सूत्रधार",
+    "partOfSpeech": "noun",
+    "hindi": "मंच-संचालक — नाटक का आरंभ करने वाला; हिंदी में अब पर्दे के पीछे का कर्ताधर्ता",
+    "definition": "literally thread-holder, the stage manager who opens a Sanskrit play and introduces it, whom Hindi recast as the hidden mastermind behind events (masculine noun)",
+    "example": "सूत्रधारः नाटकस्य आरंभं करोति — The stage manager opens the play."
+  },
+  {
+    "term": "सूर्य",
+    "partOfSpeech": "noun",
+    "hindi": "सूरज — दिन का तारा",
+    "definition": "the sun, whose final cluster Hindi broke apart and rounded off, producing the everyday word सूरज (masculine a-stem)",
+    "example": "सूर्यः प्रातः उदेति। — The sun rises in the morning."
+  },
+  {
+    "term": "स्थान",
+    "partOfSpeech": "noun",
+    "hindi": "थाना — पुलिस चौकी, मूल अर्थ ठहरने की जगह",
+    "definition": "place or standing ground; a cousin of English stand, station and state, and of Persian -stan as in Hindustan (from √स्था, to stand)",
+    "example": "इदं स्थानं रमणीयम् अस्ति — This place is lovely."
+  },
+  {
+    "term": "स्नेह",
+    "partOfSpeech": "noun",
+    "hindi": "तेल — चिकनाई, घी; हिंदी में अब केवल प्यार-दुलार",
+    "definition": "oil, grease or any unctuous fat, the stickiness that binds, and only figuratively affection, which is all Hindi kept (masculine noun, from √स्निह्, to be sticky)",
+    "example": "दीपे स्नेहः नास्ति — There is no oil in the lamp."
+  },
+  {
+    "term": "स्वप्न",
+    "partOfSpeech": "noun",
+    "hindi": "सपना — सोते समय दिखने वाला दृश्य",
+    "definition": "a dream or sleep, which Hindi opened up with an extra vowel into सपना; Greek hypnos and Latin somnus are cousins (masculine a-stem)",
+    "example": "रात्रौ मया स्वप्नः दृष्टः। — I saw a dream at night."
+  },
+  {
+    "term": "स्वसा",
+    "partOfSpeech": "noun",
+    "hindi": "बहन — सगी बहिन",
+    "definition": "sister; a cousin of English sister and Latin soror, the source of sorority, though everyday Hindi switched to बहन (stem स्वसृ)",
+    "example": "मम स्वसा गीतं गायति — My sister sings a song."
+  },
+  {
+    "term": "स्वस्ति",
+    "partOfSpeech": "noun",
+    "hindi": "कल्याण — 'भला हो' कहने वाली शुभकामना",
+    "definition": "well-being or good fortune, also spoken as a blessing meaning 'may it be well' (from सु, well, + अस्ति, it is); the lucky mark स्वस्तिक is named after it",
+    "example": "राजा प्रजाभ्यः स्वस्ति इति कामयते। — The king wishes well-being to his people."
+  },
+  {
+    "term": "स्वागत",
+    "partOfSpeech": "noun",
+    "hindi": "अभिनंदन — आने वाले का आदर से सत्कार",
+    "definition": "a welcome, built exactly like English 'well-come': सु, well, plus आगत, having come; Hindi keeps it whole in स्वागत है and स्वागत-कक्ष",
+    "example": "आचार्यः नूतनान् छात्रान् स्वागतम् इति वदति। — The teacher says welcome to the new students."
+  },
+  {
+    "term": "स्वाहा",
+    "partOfSpeech": "phrase",
+    "hindi": "भस्म हो जाना — सब कुछ खत्म या बर्बाद होना",
+    "definition": "in Hindu ritual, the call spoken as each offering is poured into the fire; Hindi turned it into an idiom, सब स्वाहा, for money or goods burnt up and gone",
+    "example": "पुरोहितः अग्नौ घृतम् जुहोति, स्वाहा इति च वदति। — The priest pours ghee into the fire and says svaha."
+  },
+  {
+    "term": "हरिद्रा",
+    "partOfSpeech": "noun",
+    "hindi": "हल्दी — पीला मसाला",
+    "definition": "turmeric, the yellow root, which Hindi wore down to हल्दी, the spice in almost every Indian curry (feminine ā-stem)",
+    "example": "भोजने हरिद्रा मिश्रिता अस्ति। — Turmeric is mixed in the food."
+  },
+  {
+    "term": "हस्त",
+    "partOfSpeech": "noun",
+    "hindi": "हाथ — बाँह का आगे का भाग",
+    "definition": "the hand, which Hindi rubbed down to हाथ while keeping हस्त for formal words like हस्ताक्षर, a signature, literally a hand-letter (masculine a-stem)",
+    "example": "बालकः हस्तम् उन्नमयति। — The boy raises his hand."
+  },
+  {
+    "term": "हृदय",
+    "partOfSpeech": "noun",
+    "hindi": "हिया — दिल, मन (कविता और गीतों में)",
+    "definition": "heart, the organ and the seat of feeling; a cousin of English heart and Greek kardia, source of cardiac (built on हृद्)",
+    "example": "मातुः हृदयं कोमलम् अस्ति — A mother's heart is tender."
+  },
+  {
+    "term": "हेमंत",
+    "partOfSpeech": "noun",
+    "hindi": "जाड़ा — अगहन-पूस की, ठंड की शुरुआत वाली ऋतु",
+    "definition": "early winter, the season of Margashirsha and Pausha when the first cold sets in; its हेम- is a cousin of हिम, snow, and of Latin hiems, winter (masculine)",
+    "example": "हेमंत ऋतौ क्षेत्रेषु धान्यं पच्यते। — In early winter the grain ripens in the fields."
+  }
+]

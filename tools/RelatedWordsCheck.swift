@@ -19,7 +19,7 @@ func load(_ id: String) -> [Word] {
 enum Check {
     static func main() {
         let books = ["words", "emotions", "philosophy", "startup",
-                     "idioms", "classical", "urdu", "german", "pets"]
+                     "idioms", "classical", "urdu", "german", "pets", "sanskrit"]
         var indexes: [String: (words: [Word], index: RelatedWordsIndex)] = [:]
 
         // 1. Coverage ≥99% per book — a reworded definition can silently drop entries.
