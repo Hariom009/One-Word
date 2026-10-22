@@ -34,7 +34,8 @@ struct WordDetail: View {
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @State private var showRelated = false
-    /// The box's right-hand toggle: the neighbours as a graph instead of a list.
+    /// The neighbours as a graph instead of a list. The Mac flips it from the box's
+    /// right-hand toggle; a phone's box has no room for it, so it lives in Settings.
     @AppStorage("relatedAsGraph") private var relatedAsGraph = false
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
@@ -60,111 +61,119 @@ struct WordDetail: View {
     private var page: some View {
         let t = Theme.of(scheme, doodle)
         let related = store.related(to: word, in: shelfID)
-        return ScrollView {
-            // ponytail: ZStack, so the outgoing word overlaps the incoming one.
-            // In the ScrollView's own stack the fading copy keeps its slot and
-            // shunts the new word down the page on its way out.
-            ZStack(alignment: .topLeading) {
-                VStack(alignment: .leading, spacing: 0) {
-                    //if showDate { dateLine(t) }
+        return ScrollViewReader { proxy in
+            ScrollView {
+                // ponytail: ZStack, so the outgoing word overlaps the incoming one.
+                // In the ScrollView's own stack the fading copy keeps its slot and
+                // shunts the new word down the page on its way out.
+                ZStack(alignment: .topLeading) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        //if showDate { dateLine(t) }
 
-                    HStack(alignment: .lastTextBaseline, spacing: isPhone ? 10 : 16) {
-                        Text(word.term)
-                            .font(doodle.face(isPhone ? 46 : 64))
-                            .tracking(doodle.tracking(isPhone ? 46 : 64))
-                            .foregroundStyle(t.ink)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.4)
-                        // A sound book's entry IS the sound: the recording sits right
-                        // beside its name. Pronounce, up in the header, still says the word.
-                        if let sound = word.sound, !locked {
-                            Button {
-                                speaker.stopSpeaking(at: .immediate)
-                                clip?.stop()   // a second click restarts, never layers
-                                clip = Bundle.main.url(forResource: sound, withExtension: "m4a")
-                                    .flatMap { try? AVAudioPlayer(contentsOf: $0) }
-                                clip?.play()
-                            } label: {
-                                Image(systemName: "play.fill")
-                                    .font(.system(size: 19, weight: .semibold))
-                                    .foregroundStyle(t.background)
-                                    .offset(x: 2)   // a triangle's weight sits left of its box
-                                    .frame(width: 46, height: 46)
-                                    .background(t.accent, in: Circle())
-                                    .contentShape(Circle())
-                            }
-                            .buttonStyle(.plain)
-                            // Bottom on the headword's baseline, so it stands as tall as its
-                            // ascenders. Left alone, the glyph's own baseline would sink it.
-                            .alignmentGuide(.lastTextBaseline) { $0[.bottom] }
-                            .help("Play the \(word.term)")
-                            .accessibilityLabel("Play the sound: \(word.term)")
-                        }
-                        Text(word.partOfSpeech)
-                            .font(doodle.face(16).italic())
-                            .foregroundStyle(t.muted)
-                    }
-
-                    if locked {
-                        // A locked shelf's word: the headword is the teaser, the rest is Premium's.
-                        PremiumBar(book: .named(shelfID))
-                            .padding(.top, 26)
-                    } else {
-                        if showHindi, !word.hindi.isEmpty {
-                            Text(word.hindi)
-                                .font(.system(size: isPhone ? 20 : 25))
-                                .foregroundStyle(t.ink.opacity(0.5))
-                                .fixedSize(horizontal: false, vertical: true)
-                                .padding(.leading, 18)
-                                .overlay(alignment: .leading) {
-                                    Rectangle().fill(t.rule).frame(width: 2)
+                        HStack(alignment: .lastTextBaseline, spacing: isPhone ? 10 : 16) {
+                            Text(word.term)
+                                .font(doodle.face(isPhone ? 46 : 64))
+                                .tracking(doodle.tracking(isPhone ? 46 : 64))
+                                .foregroundStyle(t.ink)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.4)
+                            // A sound book's entry IS the sound: the recording sits right
+                            // beside its name. Pronounce, up in the header, still says the word.
+                            if let sound = word.sound, !locked {
+                                Button {
+                                    speaker.stopSpeaking(at: .immediate)
+                                    clip?.stop()   // a second click restarts, never layers
+                                    clip = Bundle.main.url(forResource: sound, withExtension: "m4a")
+                                        .flatMap { try? AVAudioPlayer(contentsOf: $0) }
+                                    clip?.play()
+                                } label: {
+                                    Image(systemName: "play.fill")
+                                        .font(.system(size: 19, weight: .semibold))
+                                        .foregroundStyle(t.background)
+                                        .offset(x: 2)   // a triangle's weight sits left of its box
+                                        .frame(width: 46, height: 46)
+                                        .background(t.accent, in: Circle())
+                                        .contentShape(Circle())
                                 }
-                                .padding(.top, 26)
+                                .buttonStyle(.plain)
+                                // Bottom on the headword's baseline, so it stands as tall as its
+                                // ascenders. Left alone, the glyph's own baseline would sink it.
+                                .alignmentGuide(.lastTextBaseline) { $0[.bottom] }
+                                .help("Play the \(word.term)")
+                                .accessibilityLabel("Play the sound: \(word.term)")
+                            }
+                            Text(word.partOfSpeech)
+                                .font(doodle.face(16).italic())
+                                .foregroundStyle(t.muted)
                         }
 
-                        Text(word.definition)
-                            .font(doodle.face(isPhone ? 19 : 22))
-                            .foregroundStyle(t.definition)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding(.top, 26)
+                        if locked {
+                            // A locked shelf's word: the headword is the teaser, the rest is Premium's.
+                            PremiumBar(book: .named(shelfID))
+                                .padding(.top, 26)
+                        } else {
+                            if showHindi, !word.hindi.isEmpty {
+                                Text(word.hindi)
+                                    .font(.system(size: isPhone ? 20 : 25))
+                                    .foregroundStyle(t.ink.opacity(0.5))
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .padding(.leading, 18)
+                                    .overlay(alignment: .leading) {
+                                        Rectangle().fill(t.rule).frame(width: 2)
+                                    }
+                                    .padding(.top, 26)
+                            }
 
-                        if showExample { footer(t) }
+                            Text(word.definition)
+                                .font(doodle.face(isPhone ? 19 : 22))
+                                .foregroundStyle(t.definition)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.top, 26)
 
-                        relatedBox(related, t)
-                            // The box fades in when the background build lands — without
-                            // this it pops. On the box, not the column: up here it sprang
-                            // every paragraph's frame each time the word changed.
-                            .animation(.default, value: related)
-                            // …and the placeholder fades out the same way, whether the
-                            // build ends with neighbours or with none.
-                            .animation(.default, value: store.isBuilding(shelfID))
+                            if showExample { footer(t) }
+
+                            relatedBox(related, t)
+                                .id("vein")
+                                // The box fades in when the background build lands — without
+                                // this it pops. On the box, not the column: up here it sprang
+                                // every paragraph's frame each time the word changed.
+                                .animation(.default, value: related)
+                                // …and the placeholder fades out the same way, whether the
+                                // build ends with neighbours or with none.
+                                .animation(.default, value: store.isBuilding(shelfID))
+                        }
                     }
+                    .frame(maxWidth: 720, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    // A desk page has margins; a phone has a gutter.
+                    .padding(.horizontal, isPhone ? 20 : 56)
+                    .padding(.vertical, isPhone ? 20 : 44)
+                    // A day step swaps the word out from under a view that never
+                    // moves; keyed on the term it cross-dissolves instead of cutting.
+                    .id(word.term)
+                    .transition(.opacity)
                 }
-                .frame(maxWidth: 720, alignment: .leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                // A desk page has margins; a phone has a gutter.
-                .padding(.horizontal, isPhone ? 20 : 56)
-                .padding(.vertical, isPhone ? 20 : 44)
-                // A day step swaps the word out from under a view that never
-                // moves; keyed on the term it cross-dissolves instead of cutting.
-                .id(word.term)
-                .transition(.opacity)
+                .onChange(of: word.term) { showRelated = false }
             }
-            .onChange(of: word.term) { showRelated = false }
-        }
-        .animation(.easeInOut(duration: 0.22), value: word.term)
-        .scrollContentBackground(.hidden)
-        // Re-fires on dictionary change and on every pop back; load is idempotent.
-        // Keyed on the lock too, so buying while you look loads the neighbours then.
-        .task(id: locked ? nil : shelfID) { if !locked { store.load(shelfID) } }
-        // Every full-view route ends at THIS view — today's word, a peek, a search
-        // result, a related word — so one call here marks them all learned rather
-        // than each caller having to remember. `initial: true` catches the first
-        // render; the term catches HomeView swapping the word underneath us.
-        .onChange(of: word.term, initial: true) {
-            // A teaser isn't a word read.
-            guard !locked else { return }
-            LearnedWords.record(word, in: learnedIn)
+            .animation(.easeInOut(duration: 0.22), value: word.term)
+            .scrollContentBackground(.hidden)
+            // Re-fires on dictionary change and on every pop back; load is idempotent.
+            // Keyed on the lock too, so buying while you look loads the neighbours then.
+            .task(id: locked ? nil : shelfID) { if !locked { store.load(shelfID) } }
+            // Every full-view route ends at THIS view — today's word, a peek, a search
+            // result, a related word — so one call here marks them all learned rather
+            // than each caller having to remember. `initial: true` catches the first
+            // render; the term catches HomeView swapping the word underneath us.
+            .onChange(of: word.term, initial: true) {
+                // A teaser isn't a word read.
+                guard !locked else { return }
+                LearnedWords.record(word, in: learnedIn)
+            }
+            // Opening the box is asking to read it: bring its bottom into view,
+            // or on a phone the list unfolds below the fold and nothing seems to happen.
+            .onChange(of: showRelated) {
+                if showRelated { withAnimation { proxy.scrollTo("vein", anchor: .bottom) } }
+            }
         }
     }
 
@@ -223,7 +232,7 @@ struct WordDetail: View {
                         .contentShape(Rectangle())
                         .onTapGesture { withAnimation { showRelated.toggle() } }
                     Spacer(minLength: 0)
-                    viewToggle(t)
+                    if !isPhone { viewToggle(t) }
                 }
             }
             .tint(t.muted)

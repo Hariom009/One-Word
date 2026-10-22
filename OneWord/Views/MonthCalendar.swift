@@ -14,6 +14,10 @@ struct MonthCalendar: View {
     @Binding var selection: Date
     /// Days after this render dimmed and aren't selectable.
     var latest: Date = .now
+    /// Days before this render dimmed too. nil = back to day zero.
+    var earliest: Date?
+    /// Shown behind an ⓘ beside the month title — why the dimmed days are dimmed.
+    var info: String?
     var onPick: (Date) -> Void
 
     @Environment(\.colorScheme) private var scheme
@@ -21,15 +25,19 @@ struct MonthCalendar: View {
     @Environment(\.doodle) private var doodle
     @State private var month: Date
     @State private var hovered: Date?
+    @State private var showingInfo = false
 
     private let calendar = Calendar.current
     /// A pointer is happy with 34×30; a thumb wants 44.
     private var cell: CGSize { isPhone ? CGSize(width: 44, height: 40) : CGSize(width: 34, height: 30) }
 
-    init(selection: Binding<Date>, latest: Date = .now, onPick: @escaping (Date) -> Void) {
+    init(selection: Binding<Date>, latest: Date = .now, earliest: Date? = nil, info: String? = nil,
+         onPick: @escaping (Date) -> Void) {
         _selection = selection
         _month = State(initialValue: selection.wrappedValue)
         self.latest = latest
+        self.earliest = earliest
+        self.info = info
         self.onPick = onPick
     }
 
@@ -81,6 +89,18 @@ struct MonthCalendar: View {
             .menuStyle(.borderlessButton)
             .fixedSize()
             .help("Jump to a month or year")
+            if let info {
+                Button { showingInfo = true } label: {
+                    Image(systemName: "info.circle")
+                        .font(.system(size: 13))
+                        .foregroundStyle(t.muted)
+                        .frame(width: 24, height: 24)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Which days can I pick?")
+                .alert("Which days can I pick?", isPresented: $showingInfo) {} message: { Text(info) }
+            }
             Spacer(minLength: 8)
             step("chevron.left", by: -1, t)
             step("chevron.right", by: 1, t)
@@ -98,8 +118,8 @@ struct MonthCalendar: View {
                 set: { jump(month: calendar.component(.month, from: month), year: $0) })
     }
 
-    /// Land on that month, or on `latest`'s when the pick is in the future — the
-    /// grid never browses past the newest allowed day, whichever way you got there.
+    /// Land on that month, clamped between `earliest`'s and `latest`'s — the grid
+    /// never browses past the allowed days, whichever way you got there.
     private func jump(month wanted: Int, year: Int) {
         var parts = DateComponents()
         parts.year = year
@@ -107,14 +127,16 @@ struct MonthCalendar: View {
         parts.day = 1
         guard let target = calendar.date(from: parts),
               let newest = calendar.dateInterval(of: .month, for: latest)?.start else { return }
-        withAnimation(.easeOut(duration: 0.18)) { month = min(target, newest) }
+        let oldest = earliest.flatMap { calendar.dateInterval(of: .month, for: $0)?.start } ?? target
+        withAnimation(.easeOut(duration: 0.18)) { month = max(oldest, min(target, newest)) }
     }
 
     /// 2001 is the floor because the word rotation counts days from the reference
     /// date — there is no history before day zero.
     private var years: [Int] {
         let newest = calendar.component(.year, from: latest)
-        return Array((2001...max(2001, newest)).reversed())
+        let oldest = max(2001, earliest.map { calendar.component(.year, from: $0) } ?? 2001)
+        return Array((oldest...max(oldest, newest)).reversed())
     }
 
     private func step(_ symbol: String, by delta: Int, _ t: Theme) -> some View {
@@ -129,8 +151,9 @@ struct MonthCalendar: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        // Nothing to browse past the newest allowed month.
-        .disabled(delta > 0 && calendar.isDate(month, equalTo: latest, toGranularity: .month))
+        // Nothing to browse past the newest or oldest allowed month.
+        .disabled(delta > 0 ? calendar.isDate(month, equalTo: latest, toGranularity: .month)
+                            : earliest.map { calendar.isDate(month, equalTo: $0, toGranularity: .month) } ?? false)
     }
 
     // MARK: - Grid
@@ -160,7 +183,9 @@ struct MonthCalendar: View {
     private func dayCell(_ date: Date, _ t: Theme) -> some View {
         let isSelected = calendar.isDate(date, inSameDayAs: selection)
         let isToday = calendar.isDateInToday(date)
-        let isFuture = calendar.startOfDay(for: date) > calendar.startOfDay(for: latest)
+        let day = calendar.startOfDay(for: date)
+        let isFuture = day > calendar.startOfDay(for: latest)
+            || earliest.map { day < calendar.startOfDay(for: $0) } ?? false   // out of range either way
         let isHovered = hovered.map { calendar.isDate($0, inSameDayAs: date) } ?? false
 
         return Button {

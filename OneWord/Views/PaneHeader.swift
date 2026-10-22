@@ -51,16 +51,20 @@ extension View {
     /// header hides it by painting the pane's own ground — same top, same width, so
     /// Midnight's glow runs through the seam instead of starting again below it.
     func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
-                                    hidden: Bool = false,
+                                    fade: CGFloat = 0, titleAction: (() -> Void)? = nil,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
         safeAreaInset(edge: .top, spacing: 0) {
             // Scrolled down on a phone the strip blurs away; its space stays, so the
             // list shows through rather than jumping up — which would re-fire the scroll.
-            PaneHeader(title: title, back: back, ribbon: ribbon, trailing: trailing())
-                .blur(radius: hidden ? 10 : 0)
-                .opacity(hidden ? 0 : 1)
-                .allowsHitTesting(!hidden)
-                .animation(.easeInOut(duration: 0.25), value: hidden)
+            // `fade` follows the finger (0 at the top, 1 a header's height down), so
+            // there's no timed animation to fight the scroll.
+            PaneHeader(title: title, back: back, ribbon: ribbon, titleAction: titleAction,
+                       trailing: trailing())
+                .blur(radius: fade * 12)
+                .opacity(1 - fade)
+                .scaleEffect(1 - fade * 0.04, anchor: .top)
+                .offset(y: -fade * 10)
+                .allowsHitTesting(fade < 0.5)
         }
             // The hidden title bar still reserves its height; the header takes it.
             // On a phone that space is the status bar, so the strip stays below it.
@@ -80,14 +84,16 @@ extension View {
         paneHeader(title, back: back) { EmptyView() }
     }
 
-    /// Sets `scrolled` once this scroll view leaves its top — what `paneHeader(hidden:)` reads.
+    /// How far this scroll view has left its top, 0…1 over one header's height —
+    /// what `paneHeader(fade:)` reads.
     /// ponytail: iOS 18 / macOS 15 only; on 17 the header just stays put.
     @ViewBuilder
-    func tracksScrolledDown(_ scrolled: Binding<Bool>) -> some View {
+    func tracksScrollFade(_ fade: Binding<CGFloat>) -> some View {
         if #available(iOS 18, macOS 15, *) {
-            onScrollGeometryChange(for: Bool.self) { $0.contentOffset.y + $0.contentInsets.top > 8 } action: {
-                scrolled.wrappedValue = $1
-            }
+            onScrollGeometryChange(for: CGFloat.self) { g in
+                let p = min(max((g.contentOffset.y + g.contentInsets.top) / 52, 0), 1)
+                return (p * 50).rounded() / 50   // 2% steps: no redraw per sub-point
+            } action: { fade.wrappedValue = $1 }
         } else {
             self
         }
@@ -103,6 +109,8 @@ struct PaneHeader<Trailing: View>: View {
     let back: Bool
     /// Bookmarks on a phone: the ribbon leads the title instead of a count trailing it.
     var ribbon = false
+    /// Phone only: makes the title a button — Home's day picker.
+    var titleAction: (() -> Void)?
     let trailing: Trailing
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
@@ -136,12 +144,20 @@ struct PaneHeader<Trailing: View>: View {
                 // One name per strip. The tab bar already says which section this
                 // is, so the pane's title takes the wordmark's place and its face;
                 // a pane with no title of its own keeps the app's name.
-                Text(title ?? "One Word")
+                let name = Text(title ?? "One Word")
                     .font(doodle.face(20))
                     .tracking(doodle.tracking(20))
                     .foregroundStyle(t.ink)
                     .lineLimit(1)
+                if let titleAction {
+                    Button(action: titleAction) {
+                        name.contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
                     .padding(.leading, showsBack ? 2 : 0)
+                } else {
+                    name.padding(.leading, showsBack ? 2 : 0)
+                }
             } else {
                 Text("One Word")
                     .font(doodle.face(18))

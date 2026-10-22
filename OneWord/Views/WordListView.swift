@@ -32,8 +32,8 @@ struct WordListView: View {
     @State private var found: [WordListViewModel.Hit] = []
     /// How many words that search covers; 0 until the books have been decoded.
     @State private var total = 0
-    /// Off the top of the list — on a phone the header blurs away until you scroll back.
-    @State private var scrolled = false
+    /// How far off the top of the list, 0…1 — on a phone the header blurs away with it.
+    @State private var fade: CGFloat = 0
     @Environment(\.colorScheme) private var scheme
     /// Search spans locked books too: their words are listed as a teaser, meaning withheld.
     @Environment(PremiumViewModel.self) private var premium
@@ -82,7 +82,7 @@ struct WordListView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .tint(t.accent)
-                .tracksScrolledDown($scrolled)
+                .tracksScrollFade($fade)
             }
         }
         .paneBackground(t)
@@ -91,7 +91,7 @@ struct WordListView: View {
         // A bundled book's list is only ever pushed, from the shelf; Bookmarks and Search are panes.
         .paneHeader(wordbook?.shortName ?? "Search", back: wordbook != nil && wordbook != .saved,
                     ribbon: isPhone && wordbook?.id == SavedWords.resource,
-                    hidden: isPhone && scrolled && !results.isEmpty) {
+                    fade: isPhone && !results.isEmpty ? fade : 0) {
             // How many you've kept. Only Bookmarks — every other pane's total is
             // already in the search prompt, and it never changes while you look at it.
             // A phone has no room for it; the ribbon leads the title there instead.

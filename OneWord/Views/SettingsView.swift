@@ -23,6 +23,8 @@ struct SettingsView: View {
     // App Group, like the dictionary: one switch drives the app and the widget.
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
+    /// Phone only: the Mac flips it from the synonyms box itself.
+    @AppStorage("relatedAsGraph") private var relatedAsGraph = false
     // App-only: the widget shows a word, never a sentence — so these stay in the
     // standard defaults, same as `appearance`.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
@@ -118,6 +120,16 @@ struct SettingsView: View {
                     .onChange(of: showHindi) { WidgetCenter.shared.reloadAllTimelines() }
                     .onChange(of: showExample) { WidgetCenter.shared.reloadAllTimelines() }
                 }
+
+                if isPhone { section("Synonyms", t) {
+                    card(t) {
+                        row("Show as a graph", "Draws \u{201C}In the same vein\u{201D} as a honeycomb instead of a list.", t) {
+                            Toggle("Show as a graph", isOn: $relatedAsGraph).labelsHidden()
+                        }
+                    }
+                    .toggleStyle(.switch)
+                    .tint(t.accent)
+                } }
 
                 if Features.practice { section("Practice", t) {
                     card(t) {

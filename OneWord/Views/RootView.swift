@@ -83,6 +83,8 @@ struct RootView: View {
     /// the dismissed sheet.
     @State private var feedback = FeedbackViewModel()
     @State private var writing = false
+    /// The launch animation, once per launch; it hands over by fading out.
+    @State private var splashing = true
     @Environment(\.colorScheme) private var scheme
     @Environment(AuthViewModel.self) private var auth
     /// For the plan tag in the corner.
@@ -112,6 +114,14 @@ struct RootView: View {
         // Over the whole window, not the button: the browser round trip owns the
         // screen until it resolves, and nothing behind it should take a click.
         .busy(auth.busy, theme: Theme.of(scheme, doodle))
+        .overlay {
+            if splashing {
+                SplashView(ground: Theme.of(scheme, doodle).background) {
+                    withAnimation(.easeOut(duration: 0.3)) { splashing = false }
+                }
+                .transition(.opacity)
+            }
+        }
     }
 
     /// Everything behind the gate: tabs on a phone, the sidebar everywhere else.
@@ -143,15 +153,10 @@ struct RootView: View {
         return Group {
             if #available(iOS 18, macOS 15, *) {
                 TabView(selection: $pane) {
-                    ForEach(tabOrder.filter { $0 != .search }) { tab in
-                        Tab(tab.title, systemImage: tab.glyph.symbol, value: tab) {
+                    ForEach(tabOrder) { tab in
+                        Tab(tab.title, systemImage: tab.glyph.symbol, value: tab, role: tab == .search ? Self.searchRole : nil) {
                             stack(tab, route: route)
                         }
-                    }
-                    // Its own static Tab: a role picked per-item inside ForEach
-                    // doesn't split it off into the trailing circle.
-                    Tab(Pane.search.title, systemImage: Pane.search.glyph.symbol, value: Pane.search, role: .search) {
-                        stack(.search, route: route)
                     }
                 }
             } else {
@@ -168,6 +173,14 @@ struct RootView: View {
         // The third tab can swap under you (a purchase, the Practice switch): a
         // selection no tab carries shows an empty window, so land on Home instead.
         .onChange(of: tabOrder) { if !tabOrder.contains(pane) { pane = .home } }
+    }
+
+    /// What splits Search off into its own circle at the trailing edge. iOS 26
+    /// did that for `.search`; iOS 27 keeps `.search` inline and moved the
+    /// detached button to `.prominent`.
+    @available(iOS 18, macOS 15, *)
+    private static var searchRole: TabRole {
+        if #available(iOS 27, macOS 27, *) { .prominent } else { .search }
     }
 
     private func stack(_ tab: Pane, route: Binding<Pane>) -> some View {
