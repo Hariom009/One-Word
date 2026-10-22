@@ -218,18 +218,7 @@ struct WordDetail: View {
                         .contentShape(Rectangle())
                         .onTapGesture { withAnimation { showRelated.toggle() } }
                     Spacer(minLength: 0)
-                    Picker("Show as", selection: $relatedAsGraph) {
-                        Image(systemName: "list.bullet")
-                            .accessibilityLabel("List").help("Show as a list").tag(false)
-                        Image(systemName: "point.3.connected.trianglepath.dotted")
-                            .accessibilityLabel("Graph").help("Show as a graph").tag(true)
-                    }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    .controlSize(.small)
-                    .fixedSize()
-                    // Picking a view is asking to see it.
-                    .onChange(of: relatedAsGraph) { withAnimation { showRelated = true } }
+                    viewToggle(t)
                 }
             }
             .tint(t.muted)
@@ -238,6 +227,37 @@ struct WordDetail: View {
         } else if store.isBuilding(shelfID) {
             buildingBox(t)
         }
+    }
+
+    /// List on the left, graph on the right. Two plain buttons rather than a segmented
+    /// Picker, so the toggle takes the theme's ink and radius like the header's buttons.
+    private func viewToggle(_ t: Theme) -> some View {
+        HStack(spacing: 2) {
+            toggleSide("list.bullet", "List", graph: false, t)
+            toggleSide("point.3.connected.trianglepath.dotted", "Graph", graph: true, t)
+        }
+        .padding(2)
+        .background(t.ink.opacity(0.06), in: RoundedRectangle(cornerRadius: t.radius(7)))
+    }
+
+    private func toggleSide(_ symbol: String, _ name: String, graph: Bool, _ t: Theme) -> some View {
+        let on = relatedAsGraph == graph
+        return Button {
+            relatedAsGraph = graph
+            // Picking a view is asking to see it.
+            withAnimation { showRelated = true }
+        } label: {
+            Image(systemName: symbol)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(on ? t.ink : t.muted)
+                .frame(width: 26, height: 20)
+                .background(on ? t.ink.opacity(0.14) : .clear, in: RoundedRectangle(cornerRadius: t.radius(5)))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help("Show as a \(name.lowercased())")
+        .accessibilityLabel(name)
+        .accessibilityAddTraits(on ? .isSelected : [])
     }
 
     /// The box's heading with the wait beside it, held on the same rule and the
