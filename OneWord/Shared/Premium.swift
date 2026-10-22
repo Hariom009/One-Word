@@ -15,8 +15,12 @@ import Foundation
 
 // nonisolated: the widget's timeline provider reads this off the main actor, as it does AppGroup.
 nonisolated enum Premium {
-    /// App Store Connect's product id. Forever once shipped — Apple never lets an id be reused.
+    /// App Store Connect's product ids. Forever once shipped — Apple never lets an id be reused.
+    /// Lifetime is the non-consumable; the other two share one auto-renewable subscription group.
     static let productID = "com.hariom.swift.oneword.premium"
+    static let productIDs: Set<String> = [productID,
+                                          "com.hariom.swift.oneword.premium.yearly",
+                                          "com.hariom.swift.oneword.premium.monthly"]
 
     /// v1: every shelf the app lists (Features.premium is off). Bookmarks — the reader's own
     /// words — is never sold back to them. Ids are spelled the way AppGroup.dictionaryID

@@ -113,9 +113,18 @@ Rules that have already cost something:
 
 ## Premium — where the lock lives
 
-Everyday English (and Bookmarks) is free; every other dictionary unlocks with one
-non-consumable in-app purchase. Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
+Everyday English (and Bookmarks) is free; every other dictionary unlocks with Premium:
+a lifetime non-consumable, or a yearly or monthly auto-renewable subscription (one group).
+Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
 
+- **The App Store's Apple ID is the identity — no sign-in.** `PremiumViewModel.refresh()`
+  counts any verified, unrevoked entitlement for an id in `Premium.productIDs`; purchases
+  carry no `appAccountToken`. StoreKit already shares entitlements across every Mac and
+  iPhone on that Apple ID (one bundle id, so Universal Purchase), and lists a subscription
+  in `currentEntitlements` only while it's active — no expiry dates are checked here.
+  Premium never reads `AuthViewModel`; it loads at launch whatever `Features.accounts` says.
+- **Local testing:** `StoreKit/OneWord.storekit` (the OneWord scheme's Run action) holds all
+  three products. Today's purchase UI (`UnlockButton`) sells lifetime only.
 - **The rule is `Shared/Premium.swift`**, `nonisolated` so the widget can read it off-main:
   `free`, `allows(_:)`, `resolve(_:)`, and the flag mirrored into the App Group.
 - **`Premium.set(unlocked:)` is its only writer**, called only by `PremiumViewModel` (the one

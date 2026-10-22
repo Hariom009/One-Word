@@ -119,7 +119,7 @@ struct UnlockButton: View {
         Task {
             premium.begin()
             do {
-                let result = try await purchase(product, options: premium.purchaseOptions)
+                let result = try await purchase(product)
                 await premium.handle(result)
             } catch {
                 premium.failed(error)
