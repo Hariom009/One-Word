@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct WelcomeView: View {
     static let onboardedKey = "onboarded"
@@ -77,6 +78,10 @@ struct WelcomeView: View {
     private func start() {
         guard !name.isEmpty else { return }
         profileName = name
+        // ponytail: off for new users only. Written here, not as the @AppStorage
+        // default, so readers who onboarded earlier (key absent = shown) keep it on.
+        AppGroup.defaults.set(false, forKey: "showExample")
+        WidgetCenter.shared.reloadAllTimelines()
         onboarded = true
     }
 }
