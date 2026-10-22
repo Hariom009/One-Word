@@ -77,7 +77,8 @@ struct LearnedListView: View {
             NavigationStack {
                 WordDetail(word: entry.word, shelf: entry.shelf, close: { opened = nil })
             }
-            .frame(minWidth: 520, idealWidth: 600, minHeight: 560, idealHeight: 680)
+            // A phone's sheet is the screen's width: a 520pt floor centres the page and clips both edges.
+            .frame(minWidth: isPhone ? nil : 520, idealWidth: isPhone ? nil : 600, minHeight: 560, idealHeight: 680)
         }
         // Only ever pushed, from Profile.
         .paneHeader("Learned", back: true) {
