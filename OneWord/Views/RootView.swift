@@ -246,7 +246,9 @@ struct RootView: View {
                 row(item).tag(Optional(item))
             }
             Section("Dictionaries") {
-                row(.dictionaries).tag(Optional(Pane.dictionaries))
+                // Through ForEach like the rows above, which select by its id. A lone
+                // `.tag(Optional(…))` row stopped matching the selection and took no click.
+                ForEach([Pane.dictionaries]) { row($0) }
             }
         }
         .safeAreaInset(edge: .top, spacing: 0) { searchField }

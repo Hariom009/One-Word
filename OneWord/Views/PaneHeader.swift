@@ -50,15 +50,17 @@ extension View {
     /// Pins a `PaneHeader` over this pane. Content scrolls up under it and the
     /// header hides it by painting the pane's own ground — same top, same width, so
     /// Midnight's glow runs through the seam instead of starting again below it.
+    @ViewBuilder
     func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
-                                    bare: Bool = false, fade: CGFloat = 0, titleAction: (() -> Void)? = nil,
+                                    bare: Bool = false, onBack: (() -> Void)? = nil, fade: CGFloat = 0,
+                                    titleAction: (() -> Void)? = nil,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
-        safeAreaInset(edge: .top, spacing: 0) {
+        let pane = safeAreaInset(edge: .top, spacing: 0) {
             // Scrolled down on a phone the strip blurs away; its space stays, so the
             // list shows through rather than jumping up — which would re-fire the scroll.
             // `fade` follows the finger (0 at the top, 1 a header's height down), so
             // there's no timed animation to fight the scroll.
-            PaneHeader(title: title, back: back, ribbon: ribbon, bare: bare, titleAction: titleAction,
+            PaneHeader(title: title, back: back, ribbon: ribbon, bare: bare, onBack: onBack, titleAction: titleAction,
                        trailing: trailing())
                 .blur(radius: fade * 12)
                 .opacity(1 - fade)
@@ -69,8 +71,6 @@ extension View {
             // The hidden title bar still reserves its height; the header takes it.
             // On a phone that space is the status bar, so the strip stays below it.
             .ignoresSafeArea(.container, edges: isPhone ? [] : .top)
-            // Nothing draws it any more, but the Window menu and VoiceOver read it.
-            .navigationTitle(title ?? "One Word")
             // A push adds the stack's own Back to the window toolbar, which brings the
             // toolbar back — a black strip over this header in full screen. Ours replaces it.
             .navigationBarBackButtonHidden(back)
@@ -78,6 +78,10 @@ extension View {
             // The strip IS the bar: a stock one on top would double the title and the back.
             .toolbar(.hidden, for: .navigationBar)
             #endif
+        // Nothing draws it in a pane, but the Window menu and VoiceOver read it. Not on
+        // a bare strip: a Mac sheet's stack paints its title in a bar of its own — the
+        // app's name again, laid over this header and its Back.
+        if bare { pane } else { pane.navigationTitle(title ?? "One Word") }
     }
 
     func paneHeader(_ title: String? = nil, back: Bool = false) -> some View {
@@ -112,6 +116,9 @@ struct PaneHeader<Trailing: View>: View {
     /// A sheet's strip: no sidebar toggle and no app name, just the back button and
     /// the trailing buttons. The sheet is a window of its own, not a pane.
     var bare = false
+    /// What Back does instead of `dismiss`. A Mac sheet's stack root reads as
+    /// presented in its own stack, so `dismiss` there pops nothing and the sheet stays.
+    var onBack: (() -> Void)?
     /// Phone only: makes the title a button — Home's day picker.
     var titleAction: (() -> Void)?
     let trailing: Trailing
@@ -138,7 +145,7 @@ struct PaneHeader<Trailing: View>: View {
             }
 
             if showsBack {
-                Button { dismiss() } label: { Label("Back", systemImage: "chevron.left") }
+                Button { if let onBack { onBack() } else { dismiss() } } label: { Label("Back", systemImage: "chevron.left") }
                     .help("Back")
                     // Esc closes a word's sheet, as it does the app's other sheets.
                     // Not on every pane: Esc there belongs to the search field.

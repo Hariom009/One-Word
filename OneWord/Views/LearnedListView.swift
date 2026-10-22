@@ -75,14 +75,9 @@ struct LearnedListView: View {
         .sheet(item: $opened) { entry in
             // The sheet's own stack, so a related word can still push within it.
             NavigationStack {
-                WordDetail(word: entry.word, shelf: entry.shelf)
+                WordDetail(word: entry.word, shelf: entry.shelf, close: { opened = nil })
             }
             .frame(minWidth: 520, idealWidth: 600, minHeight: 560, idealHeight: 680)
-            #if os(macOS)
-            // A sheet has no traffic lights to lose: drop its toolbar, which painted the
-            // app's name over the header and hid its Back (dismiss) and actions.
-            .toolbar(.hidden, for: .windowToolbar)
-            #endif
         }
         // Only ever pushed, from Profile.
         .paneHeader("Learned", back: true) {

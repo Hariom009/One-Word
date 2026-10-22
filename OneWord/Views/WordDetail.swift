@@ -30,6 +30,9 @@ struct WordDetail: View {
     /// Home and History host the word inside their own pane: they paint the ground
     /// and put `WordActions` in their header, so the page draws neither.
     var embedded = false
+    /// The sheet's own close, passed only to the word a sheet opens on. Pushed
+    /// related words leave it nil, so their Back pops back to that word.
+    var close: (() -> Void)? = nil
     @Environment(\.colorScheme) private var scheme
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
@@ -54,7 +57,7 @@ struct WordDetail: View {
                 .paneBackground(Theme.of(scheme, doodle))
                 // No bookmark on a locked word: a bookmark keeps the whole entry, and
                 // Bookmarks is free — it would hand the meaning over.
-                .paneHeader(back: true, bare: true) { if !locked { WordActions(word: word) } }
+                .paneHeader(back: true, bare: true, onBack: close) { if !locked { WordActions(word: word) } }
         }
     }
 
@@ -132,15 +135,11 @@ struct WordDetail: View {
 
                             if showExample { footer(t) }
 
+                            // No fade on the box: inserted with one while the launch build
+                            // ran, it stuck at zero opacity — the box missing until the word
+                            // changed. A pop is the price.
                             relatedBox(related, t)
                                 .id("vein")
-                                // The box fades in when the background build lands — without
-                                // this it pops. On the box, not the column: up here it sprang
-                                // every paragraph's frame each time the word changed.
-                                .animation(.default, value: related)
-                                // …and the placeholder fades out the same way, whether the
-                                // build ends with neighbours or with none.
-                                .animation(.default, value: store.isBuilding(shelfID))
                         }
                     }
                     .frame(maxWidth: 720, alignment: .leading)
