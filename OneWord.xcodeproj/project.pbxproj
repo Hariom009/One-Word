@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09D61080727D9856F6A3588B /* WordWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E911C1375108796596E7A0B /* WordWidget.swift */; };
+		0BEA103E6CDE9885B0342894 /* pets.json in Resources */ = {isa = PBXBuildFile; fileRef = 566C433B829A765BEBF251DB /* pets.json */; };
 		0BFF165D1B1C37B579AF9882 /* emotions.json in Resources */ = {isa = PBXBuildFile; fileRef = 251E69A6F52172455BF1BF41 /* emotions.json */; };
 		223036CF8FCA794ED8CB88DB /* WordWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD252FD12B6844492A537A1 /* WordWidgetView.swift */; };
 		454D75AFB332E44669580C25 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44AE8128AEAEF5A8205EEF86 /* Cocoa.framework */; };
@@ -15,7 +16,6 @@
 		51D1930D2882FFBC14111DE0 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9090519E3AF740D8B3721FE /* Word.swift */; };
 		5A17D0C3E4B8419DA07C1E22 /* startup.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B9E1F52D8408BB6A45D01 /* startup.json */; };
 		88971BAE2A7B087FC0689195 /* german.json in Resources */ = {isa = PBXBuildFile; fileRef = 081C7561D3D5DCF0D2323A5A /* german.json */; };
-		0BEA103E6CDE9885B0342894 /* pets.json in Resources */ = {isa = PBXBuildFile; fileRef = 566C433B829A765BEBF251DB /* pets.json */; };
 		8F79308649D2CE63237474B3 /* Premium.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B9A32BBBA58C279F7F24E1 /* Premium.swift */; };
 		92E2AB170B5A8261678553DE /* WordProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FFB551199DA0B818E57D55 /* WordProvider.swift */; };
 		A546D10CC8A6C1B69CEC2FEF /* philosophy.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B567267BBFDED8FB15FC6DF /* philosophy.json */; };
@@ -62,12 +62,12 @@
 /* Begin PBXFileReference section */
 		01BF4AF016573226ACF62597 /* urdu.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = urdu.json; path = OneWord/Shared/urdu.json; sourceTree = "<group>"; };
 		081C7561D3D5DCF0D2323A5A /* german.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = german.json; path = OneWord/Shared/german.json; sourceTree = "<group>"; };
-		566C433B829A765BEBF251DB /* pets.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = pets.json; path = OneWord/Shared/pets.json; sourceTree = "<group>"; };
 		1B567267BBFDED8FB15FC6DF /* philosophy.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = philosophy.json; path = OneWord/Shared/philosophy.json; sourceTree = "<group>"; };
 		24FFB551199DA0B818E57D55 /* WordProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordProvider.swift; path = OneWord/Shared/WordProvider.swift; sourceTree = "<group>"; };
 		251E69A6F52172455BF1BF41 /* emotions.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = emotions.json; path = OneWord/Shared/emotions.json; sourceTree = "<group>"; };
 		44AE8128AEAEF5A8205EEF86 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		55C811B3A327A36356E4F0A2 /* words.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = words.json; path = OneWord/Shared/words.json; sourceTree = "<group>"; };
+		566C433B829A765BEBF251DB /* pets.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = pets.json; path = OneWord/Shared/pets.json; sourceTree = "<group>"; };
 		5AD252FD12B6844492A537A1 /* WordWidgetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordWidgetView.swift; path = OneWordWidget/WordWidgetView.swift; sourceTree = "<group>"; };
 		632497746DB64191A42ED5DB /* idioms.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = idioms.json; path = OneWord/Shared/idioms.json; sourceTree = "<group>"; };
 		698712E60A8441BA9D56521B /* classical.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = classical.json; path = OneWord/Shared/classical.json; sourceTree = "<group>"; };

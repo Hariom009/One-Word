@@ -140,6 +140,7 @@ nonisolated struct RelatedWordsIndex {
 
     /// The similarity floor, for the check script's exclusion assertion.
     static var similarityFloor: Float { floor }
+
 }
 
 /// Owns the index for the open dictionary. One instance, injected through the
@@ -225,8 +226,11 @@ final class RelatedWordsStore {
     /// render asked the previous book's index and got another dictionary's words
     /// back, with live navigation links. Mismatch now answers [] until the right
     /// index lands.
-    func related(to word: Word, in bookID: String) -> [Word] {
+    /// `limit` is the graph's: it rings eight, the list shows three — the same ranking,
+    /// so the list's three are always the graph's first three.
+    func related(to word: Word, in bookID: String, limit: Int = 3) -> [Word] {
         guard builtFor == bookID else { return [] }
-        return index?.nearest(to: word) ?? []
+        return index?.nearest(to: word, limit: limit) ?? []
     }
+
 }

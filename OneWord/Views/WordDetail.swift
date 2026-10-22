@@ -34,6 +34,8 @@ struct WordDetail: View {
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @State private var showRelated = false
+    /// The box's right-hand toggle: the neighbours as a graph instead of a list.
+    @AppStorage("relatedAsGraph") private var relatedAsGraph = false
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
     @Environment(PremiumViewModel.self) private var premium
@@ -186,29 +188,38 @@ struct WordDetail: View {
     private func relatedBox(_ words: [Word], _ t: Theme) -> some View {
         if !words.isEmpty {
             DisclosureGroup(isExpanded: $showRelated) {
-                VStack(alignment: .leading, spacing: 18) {
-                    ForEach(words) { w in
-                        NavigationLink {
-                            // The pushed screen reads the same environment store,
-                            // so it renders its own box — that is the chain.
-                            WordDetail(word: w, shelf: shelf)
-                        } label: {
-                            relatedRow(w, t)
+                if relatedAsGraph {
+                    ConstellationView(word: word, ring: store.related(to: word, in: shelfID, limit: 8), t: t)
+                        .padding(.top, 18)
+                } else {
+                    VStack(alignment: .leading, spacing: 18) {
+                        ForEach(words) { w in
+                            NavigationLink {
+                                // The pushed screen reads the same environment store,
+                                // so it renders its own box — that is the chain.
+                                WordDetail(word: w, shelf: shelf)
+                            } label: {
+                                relatedRow(w, t)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(w.spokenSummary)
                         }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(accessibilitySummary(of: w))
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 18)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 18)
             } label: {
-                Text("In the same vein \u{00B7} Synonyms")
-                    .font(.system(size: 10, weight: .bold))
-                    .textCase(.uppercase).tracking(1.6)
-                    .foregroundStyle(t.muted)
-                    // The chevron toggles itself; the label is inert until asked.
-                    .contentShape(Rectangle())
-                    .onTapGesture { withAnimation { showRelated.toggle() } }
+                HStack(spacing: 12) {
+                    Text("In the same vein \u{00B7} Synonyms")
+                        .font(.system(size: 10, weight: .bold))
+                        .textCase(.uppercase).tracking(1.6)
+                        .foregroundStyle(t.muted)
+                        // The chevron toggles itself; the label is inert until asked.
+                        .contentShape(Rectangle())
+                        .onTapGesture { withAnimation { showRelated.toggle() } }
+                    Spacer(minLength: 0)
+                    viewToggle(t)
+                }
             }
             .tint(t.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -216,6 +227,37 @@ struct WordDetail: View {
         } else if store.isBuilding(shelfID) {
             buildingBox(t)
         }
+    }
+
+    /// List on the left, graph on the right. Two plain buttons rather than a segmented
+    /// Picker, so the toggle takes the theme's ink and radius like the header's buttons.
+    private func viewToggle(_ t: Theme) -> some View {
+        HStack(spacing: 2) {
+            toggleSide("list.bullet", "List", graph: false, t)
+            toggleSide("point.3.connected.trianglepath.dotted", "Graph", graph: true, t)
+        }
+        .padding(2)
+        .background(t.ink.opacity(0.06), in: RoundedRectangle(cornerRadius: t.radius(7)))
+    }
+
+    private func toggleSide(_ symbol: String, _ name: String, graph: Bool, _ t: Theme) -> some View {
+        let on = relatedAsGraph == graph
+        return Button {
+            relatedAsGraph = graph
+            // Picking a view is asking to see it.
+            withAnimation { showRelated = true }
+        } label: {
+            Image(systemName: symbol)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(on ? t.ink : t.muted)
+                .frame(width: 26, height: 20)
+                .background(on ? t.ink.opacity(0.14) : .clear, in: RoundedRectangle(cornerRadius: t.radius(5)))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help("Show as a \(name.lowercased())")
+        .accessibilityLabel(name)
+        .accessibilityAddTraits(on ? .isSelected : [])
     }
 
     /// The box's heading with the wait beside it, held on the same rule and the
@@ -281,13 +323,6 @@ struct WordDetail: View {
         return shelfID
     }
 
-    /// One VoiceOver utterance per row, covering every field the row displays.
-    private func accessibilitySummary(of w: Word) -> String {
-        var parts = [w.term]
-        if !w.partOfSpeech.isEmpty { parts.append(w.partOfSpeech) }
-        parts.append(w.definition)
-        return parts.joined(separator: ". ")
-    }
 
     @ViewBuilder
     private func footer(_ t: Theme) -> some View {
