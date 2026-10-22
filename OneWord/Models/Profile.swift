@@ -4,7 +4,7 @@
 //
 //  The parts of "who you are" that the account doesn't hand us. The account owns the
 //  email and the join date — those are read-only for good. The name you'd rather
-//  be called, your gender and which face to show are yours to set.
+//  be called, your gender, which face to show and your own photo are yours to set.
 //
 //  ponytail: plain UserDefaults via @AppStorage at the two call sites that care
 //  (the Profile pane and the sidebar chip), exactly like `appearance`. Nothing
@@ -31,11 +31,11 @@ enum Gender: String, CaseIterable, Identifiable {
 }
 
 /// Which face the avatar wears. `.account` is the photo on the signed-in account —
-/// the default, and the only one that can come up empty (not every account has one,
-/// which is what the generic head is for). Never named after the provider: the app
-/// says "Account", not whose account.
+/// the default — and `.photo` is one you picked from your own files. Those two are
+/// the only ones that can come up empty, which is what the generic head is for.
+/// Never named after the provider: the app says "Account", not whose account.
 enum Avatar: String, CaseIterable, Identifiable {
-    case account, female, male, boy, redhead, businesswoman, woman, man,
+    case account, photo, female, male, boy, redhead, businesswoman, woman, man,
          walter, simpson, alien, dog, pumpkin
 
     var id: String { rawValue }
@@ -46,7 +46,8 @@ enum Avatar: String, CaseIterable, Identifiable {
 
     var name: String { face.name }
 
-    /// The asset to draw, or nil for `.account` — which loads the account photo.
+    /// The asset to draw, or nil for `.account` and `.photo`, which draw a picture
+    /// that isn't in the bundle.
     var asset: String? { face.asset }
 
     /// One table rather than two switches: a new face is a case above and a row
@@ -54,6 +55,7 @@ enum Avatar: String, CaseIterable, Identifiable {
     private var face: (name: String, asset: String?) {
         switch self {
         case .account:       return ("Account", nil)
+        case .photo:         return ("Your photo", nil)
         case .female:        return ("Female", "female_profile_icon")
         case .male:          return ("Male", "male_profile_icon")
         case .boy:           return ("Boy", "boy_profile")

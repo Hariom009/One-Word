@@ -14,11 +14,12 @@
 //  cancels and the sidebar chip doesn't flicker through every keystroke.
 //
 //  Dumb view: the counts live in ProfileViewModel, the session in AuthViewModel,
-//  and the three editable fields in UserDefaults (see Profile.swift).
+//  and the editable fields — your photo too — in UserDefaults (see Profile.swift).
 //
 
 import SwiftUI
 import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
+import UniformTypeIdentifiers   // UTType.image, for the photo picker
 
 struct ProfileView: View {
     /// So the bookmark count can send you to the Bookmarks pane rather than
@@ -34,6 +35,8 @@ struct ProfileView: View {
     @AppStorage("profileName") private var name = ""
     @AppStorage("profileGender") private var gender = Gender.unspecified.rawValue
     @AppStorage("profileAvatar") private var avatar = Avatar.account.rawValue
+    /// Your own picture, already shrunk to avatar size. Worn when `avatar` is `.photo`.
+    @AppStorage("profilePhoto") private var photo: Data?
     /// Set in Settings. Off, the raw count above is the whole story.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
     /// The goal counts only the German shelf, so it waits for German to unlock.
@@ -43,6 +46,9 @@ struct ProfileView: View {
     @State private var draftName = ""
     @State private var draftGender = Gender.unspecified.rawValue
     @State private var draftAvatar = Avatar.account.rawValue
+    @State private var draftPhoto: Data?
+    @State private var choosingPhoto = false
+    @State private var photoUnreadable = false
 
     /// What to call you: your own name if you set one, else the one the account gave.
     private var shownName: String {
@@ -90,7 +96,8 @@ struct ProfileView: View {
     /// Face, name, email, and the one button that puts the pane into edit mode.
     private func header(_ t: Theme) -> some View {
         HStack(alignment: .center, spacing: 18) {
-            AvatarFace(avatar: shownAvatar, url: auth.photoURL, size: 76, muted: t.muted)
+            AvatarFace(avatar: shownAvatar, url: auth.photoURL,
+                       photo: editing ? draftPhoto : photo, size: 76, muted: t.muted)
                 .overlay(Circle().strokeBorder(t.hairline))
 
             VStack(alignment: .leading, spacing: 5) {
@@ -139,6 +146,8 @@ struct ProfileView: View {
                 draftName = shownName
                 draftGender = gender
                 draftAvatar = shownAvatar.rawValue
+                draftPhoto = photo
+                photoUnreadable = false
                 editing = true
             }
         }
@@ -150,6 +159,7 @@ struct ProfileView: View {
         name = trimmed == (auth.displayName ?? "") ? "" : trimmed
         gender = draftGender
         avatar = draftAvatar
+        photo = draftPhoto
         editing = false
     }
 
@@ -267,23 +277,59 @@ struct ProfileView: View {
     /// read as a sheet of faces, which is what you're choosing from. The name is
     /// still there for the pointer and for VoiceOver.
     private func picture(_ t: Theme) -> some View {
-        section("Picture", t, note: "The face in the sidebar corner too.") {
+        section("Picture", t, note: photoUnreadable
+                ? "That file couldn't be read as a picture."
+                : "The face in the sidebar corner too.") {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 62), spacing: 8)],
                       alignment: .leading, spacing: 8) {
                 ForEach(Avatar.allCases) { choice in
-                    Button { draftAvatar = choice.rawValue } label: {
+                    let empty = choice == .photo && draftPhoto == nil
+                    Button { pick(choice) } label: {
                         AvatarTile(avatar: choice,
                                    url: auth.photoURL,
+                                   photo: draftPhoto,
                                    selected: choice.rawValue == draftAvatar,
                                    theme: t)
                     }
                     .buttonStyle(.plain)
-                    .help(choice.name)
-                    .accessibilityLabel(choice.name)
+                    .help(empty ? "Choose a photo\u{2026}" : choice.name)
+                    .accessibilityLabel(empty ? "Choose a photo" : choice.name)
                     .accessibilityAddTraits(choice.rawValue == draftAvatar ? .isSelected : [])
+                    .contextMenu {
+                        if choice == .photo && !empty {
+                            Button("Choose Another Photo\u{2026}") { choosingPhoto = true }
+                            Button("Remove Photo", role: .destructive, action: removePhoto)
+                        }
+                    }
                 }
             }
         }
+        .fileImporter(isPresented: $choosingPhoto, allowedContentTypes: [.image]) { result in
+            guard case .success(let url) = result else { return }   // cancelled
+            if let data = ProfileViewModel.photo(from: url) {
+                draftPhoto = data
+                draftAvatar = Avatar.photo.rawValue
+                photoUnreadable = false
+            } else {
+                photoUnreadable = true
+            }
+        }
+    }
+
+    /// Your photo's tile is also the way to change it: empty, or clicked again once
+    /// it's the face you're wearing, it opens the file picker.
+    private func pick(_ choice: Avatar) {
+        if choice == .photo && (draftPhoto == nil || draftAvatar == choice.rawValue) {
+            choosingPhoto = true
+        } else {
+            draftAvatar = choice.rawValue
+        }
+    }
+
+    /// Like every edit here, it only lands on Save.
+    private func removePhoto() {
+        draftPhoto = nil
+        if draftAvatar == Avatar.photo.rawValue { draftAvatar = Avatar.account.rawValue }
     }
 
     // MARK: - Details
@@ -456,12 +502,25 @@ struct ProfileView: View {
 struct AvatarFace: View {
     let avatar: Avatar
     let url: URL?
+    /// Your own picture's JPEG bytes — drawn only when `avatar` is `.photo`.
+    let photo: Data?
     let size: CGFloat
     let muted: Color
 
     var body: some View {
         Group {
-            if let asset = avatar.asset {
+            if avatar == .photo {
+                // ponytail: decoded per render. It's a ≤512px JPEG; cache the
+                // NSImage if this ever shows up in a profile.
+                if let photo, let image = NSImage(data: photo) {
+                    Image(nsImage: image)
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFill()
+                } else {
+                    head
+                }
+            } else if let asset = avatar.asset {
                 // 96pt source, so it's interpolated up on Retina at header sizes.
                 // The illustrations are black line art on a transparent ground, so
                 // they get a paper disc under them in *both* themes — on night black
@@ -475,15 +534,20 @@ struct AvatarFace: View {
                 AsyncImage(url: url) { image in
                     image.resizable().scaledToFill()
                 } placeholder: {
-                    Image(systemName: "person.crop.circle")
-                        .font(.system(size: size * 0.8))
-                        .foregroundStyle(muted)
+                    head
                 }
             }
         }
         .frame(width: size, height: size)
         .clipShape(Circle())
         .accessibilityHidden(true)   // the name beside it already says who this is
+    }
+
+    /// The generic head, for a face with no picture behind it yet.
+    private var head: some View {
+        Image(systemName: "person.crop.circle")
+            .font(.system(size: size * 0.8))
+            .foregroundStyle(muted)
     }
 }
 
@@ -494,10 +558,11 @@ struct AccountAvatar: View {
     let size: CGFloat
     let muted: Color
     @AppStorage("profileAvatar") private var avatar = Avatar.account.rawValue
+    @AppStorage("profilePhoto") private var photo: Data?
 
     var body: some View {
         AvatarFace(avatar: Avatar(stored: avatar),
-                   url: url, size: size, muted: muted)
+                   url: url, photo: photo, size: size, muted: muted)
     }
 }
 
@@ -507,16 +572,27 @@ struct AccountAvatar: View {
 private struct AvatarTile: View {
     let avatar: Avatar
     let url: URL?
+    let photo: Data?
     let selected: Bool
     let theme: Theme
 
     var body: some View {
-        AvatarFace(avatar: avatar, url: url, size: 46, muted: theme.muted)
-            .overlay(Circle().strokeBorder(selected ? theme.ink : theme.hairline,
-                                           lineWidth: selected ? 2 : 1))
-            .padding(4)
-            .background(selected ? theme.ink.opacity(0.06) : .clear, in: Circle())
-            .contentShape(Circle())
+        Group {
+            if avatar == .photo && photo == nil {
+                // Nothing picked yet: the tile is an invitation, not a face.
+                Image(systemName: "plus")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(theme.muted)
+                    .frame(width: 46, height: 46)
+            } else {
+                AvatarFace(avatar: avatar, url: url, photo: photo, size: 46, muted: theme.muted)
+            }
+        }
+        .overlay(Circle().strokeBorder(selected ? theme.ink : theme.hairline,
+                                       lineWidth: selected ? 2 : 1))
+        .padding(4)
+        .background(selected ? theme.ink.opacity(0.06) : .clear, in: Circle())
+        .contentShape(Circle())
     }
 }
 
