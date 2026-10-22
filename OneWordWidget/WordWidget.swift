@@ -16,10 +16,11 @@ import AppIntents
 /// the dictionary picked in the app's Settings (shared via the App Group); the rest
 /// pin the widget to a specific dictionary regardless of the app.
 enum WidgetDictionary: String, AppEnum {
-    case followApp, words, emotions, philosophy, startup, idioms, pets
+    case followApp, words, emotions, philosophy, startup, idioms
 
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Dictionary"
     // ponytail: mirrors Wordbook.all by hand — a literal is all AppIntents accepts here.
+    // Cats & Dogs (pets) is app-only and left out on purpose.
     // When Premium ships, locked shelves take a "· Premium" suffix again.
     static var caseDisplayRepresentations: [WidgetDictionary: DisplayRepresentation] = [
         .followApp:   "Follow App Settings",
@@ -28,7 +29,6 @@ enum WidgetDictionary: String, AppEnum {
         .philosophy:  "Philosophy",
         .startup:     "Corporate Slang",
         .idioms:      "Idioms",
-        .pets:        "Cats & Dogs",
     ]
 
     /// Bundled JSON resource name (`<resource>.json`). `.followApp` resolves at read
@@ -36,7 +36,9 @@ enum WidgetDictionary: String, AppEnum {
     /// Resolved through Premium: this is the widget's only dictionary read, so the one
     /// gate here covers both the Edit-menu pick and Follow App Settings.
     var resource: String {
-        Premium.resolve(self == .followApp ? AppGroup.dictionaryID : rawValue)
+        let id = Premium.resolve(self == .followApp ? AppGroup.dictionaryID : rawValue)
+        // pets is app-only: Follow App Settings shows Everyday English while it's the app's pick.
+        return id == "pets" ? "words" : id
     }
 }
 
