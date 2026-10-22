@@ -62,4 +62,4 @@ just sits on the Mac's display and rotates daily.
   index (e.g. day-of-epoch % count) so app and widget always agree without syncing state.
 
 ## Not doing (yet)
-Accounts, sync, notifications, an editable word list, word capture on iPhone (a Share Extension), lock-screen widgets. Add when asked.
+Accounts, sync beyond bookmarks and learned words (see ARCHITECTURE.md), notifications, an editable word list, word capture on iPhone (a Share Extension), lock-screen widgets. Add when asked.

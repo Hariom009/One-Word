@@ -47,6 +47,19 @@ enum SavedWords {
         }
     }
 
+    /// term → when it was un-bookmarked. Only iCloud sync (CloudSync) reads these:
+    /// without them a word removed here comes straight back from the other device's copy.
+    nonisolated static var removed: [String: Date] {
+        get {
+            AppGroup.defaults.data(forKey: "savedWordsRemoved")
+                .flatMap { try? JSONDecoder().decode([String: Date].self, from: $0) } ?? [:]
+        }
+        set {
+            guard let data = try? JSONEncoder().encode(newValue) else { return }
+            AppGroup.defaults.set(data, forKey: "savedWordsRemoved")
+        }
+    }
+
     /// Shown when nothing has been bookmarked yet — keeps the list non-empty (so
     /// WordProvider's precondition holds) and teaches the feature in the process.
     nonisolated static let placeholder = Word(
@@ -100,6 +113,7 @@ enum SavedWords {
         // Un-bookmarking the pinned word would leave `pinned` resolving to nothing;
         // clear it so today's word falls back to the dictionary's instead.
         if wasSaved, WordSelectionStore.pinnedTerm == word.term { WordSelectionStore.pinnedTerm = nil }
+        if wasSaved { removed[word.term] = Date() }
         all = words
         NotificationCenter.default.post(name: didChange, object: nil)
         return !wasSaved

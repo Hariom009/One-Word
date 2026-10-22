@@ -51,6 +51,7 @@ struct OneWordApp: App {
         }
         #endif
         if Features.accounts { Self.configureFirebase() }
+        CloudSync.start()
         #if os(iOS)
         // The default category, .soloAmbient, stops the user's music the moment the shelf
         // clicks or the roll shuffles, and .ambient is muted outright by Silent mode —

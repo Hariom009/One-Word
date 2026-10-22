@@ -52,7 +52,7 @@ xcodebuild -project OneWord.xcodeproj -scheme OneWord -destination 'generic/plat
 ```
 
 ```bash
-for s in check_words check_related check_learned check_capture check_sentences check_premium; do bash tools/$s.sh; done
+for s in check_words check_related check_learned check_capture check_sentences check_premium check_sync; do bash tools/$s.sh; done
 ```
 
 All three must be green. The gates compile Swift files by explicit path, so if you move a file,

@@ -147,6 +147,27 @@ Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
 - A new sheet or pane that shows a word or the shelf inherits the environment. An AppKit-hosted
   view (`NSHostingView`, like the capture HUD) does **not** — inject `PremiumViewModel` there.
 
+## Sync — bookmarks and learned words over iCloud
+
+Bookmarks and learned words follow the reader between Mac and iPhone with no sign-in: the
+device's iCloud account is the identity. `Models/CloudSync.swift`, app target only.
+
+- **The App Group stays the truth; iCloud key-value storage is a mirror**, as Premium mirrors
+  StoreKit. The widget never touches iCloud and needs no change.
+- **One move, `CloudSync.sync()`, for every trigger** — launch, `SavedWords.didChange` /
+  `LearnedWords.didChange`, and iCloud's `didChangeExternallyNotification`: merge both sides,
+  write only the side that differs, then post `didChange` if local moved. Merge is
+  idempotent, so that post re-syncs to a no-op instead of looping.
+- **Learned** is grow-only: union, earliest date per term.
+- **Bookmarks**: per term the latest event wins, a save or an un-save. Un-saves are
+  tombstones (`SavedWords.removed`, written by `toggle`), kept locally and in the cloud
+  payload — without them a delete on one device is resurrected by the other.
+- **Not synced:** the pick, the offset and the pin (`WordSelectionStore`) — per device.
+- Both entitlements files carry the same `ubiquity-kvstore-identifier`; differ, and the
+  platforms see two stores. The app id needs the iCloud capability (Key-value storage).
+- Ceiling: 1 MB total. A fully-read 12k shelf is ~300KB of learned terms. The upgrade is
+  CKSyncEngine. The merge rules are checked by `tools/check_sync.sh`.
+
 ## Testing seam
 `WordProvider.word(for:)` and `WordViewModel` are pure over an injected word list — unit-test
 date→word mapping (boundaries: day rollover, list wrap-around) without WidgetKit or SwiftUI.
@@ -164,7 +185,7 @@ OneWord/                        app target
   ViewModels/                   @Observable. No view types. The unit-testable seam.
     WordViewModel, WordListViewModel, ProfileViewModel, PremiumViewModel
   Models/                       App-only model + state. No SwiftUI.
-    Wordbook, Appearance, LearnedWords, RelatedWords
+    Wordbook, Appearance, LearnedWords, RelatedWords, CloudSync
   Shared/                       MEMBER OF BOTH TARGETS — app + widget
     Word, WordProvider, WordSelectionStore, SavedWords, Theme, AppGroup, Premium, *.json
   Assets.xcassets/
