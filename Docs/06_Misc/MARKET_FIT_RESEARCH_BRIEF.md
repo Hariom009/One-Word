@@ -271,3 +271,31 @@ shelf, a shuffle on practice). A real app icon exists.
   the smallest thing that answers the "I forget passive words" objection without
   becoming a flashcard app?
 - Does anyone want the Practice pane, or is it a distraction from the core promise?
+
+---
+
+# Part 3 — Added 2026-10-22: monetisation and the illustrated-book question
+
+Context since Part 2 was written: Premium is a single one-time unlock
+(`OneWord/Shared/Premium.swift`) and everything is free in v1. The plan is to sell a
+**subscription**, with an **illustrated premium dictionary** (~500 important words,
+each with its own art) as the hook, modelled on the competitor **Lookup**. Per-word
+photos for all 12k words are ruled out (bundle size, copyright). A Colours picture book
+was judged too niche to carry a subscription.
+
+Answer these three in addition to Part 1, with sources:
+
+13. **Subscription or one-time?** Would One Word's audience (Hindi-speaking English
+    learners, non-native professionals, self-learners) pay for a **subscription**, or
+    only a one-time price? What price anchors do comparable apps use (Lookup,
+    Vocabulary, Word of the Day apps), monthly / yearly / lifetime, US and India?
+14. **Which content would they pay for?** Work/interview English, "sound smart" words,
+    exam vocabulary (GRE/CAT/IELTS), or niche books such as Urdu or Idioms? Use
+    evidence from reviews and threads, not guesses.
+15. **Do illustrated words pay?** Does a picture per entry (as Lookup does) measurably
+    drive purchases or reviews for competitors? Look for reviews that mention the
+    pictures, press that leads with them, and rating/rank differences between
+    illustrated and plain apps.
+
+Deliverable for Part 3: a clear recommendation — subscription or one-time (with a
+price) — and which illustrated book to build first.
