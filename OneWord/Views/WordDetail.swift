@@ -34,6 +34,8 @@ struct WordDetail: View {
     @Environment(RelatedWordsStore.self) private var store
     @AppStorage("dictionaryID", store: AppGroup.defaults) private var dictionaryID = Wordbook.everydayEnglish.id
     @State private var showRelated = false
+    /// The box's right-hand toggle: the neighbours as a graph instead of a list.
+    @AppStorage("relatedAsGraph") private var relatedAsGraph = false
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
     @AppStorage("showExample", store: AppGroup.defaults) private var showExample = true
     @Environment(PremiumViewModel.self) private var premium
@@ -186,29 +188,50 @@ struct WordDetail: View {
     private func relatedBox(_ words: [Word], _ t: Theme) -> some View {
         if !words.isEmpty {
             DisclosureGroup(isExpanded: $showRelated) {
-                VStack(alignment: .leading, spacing: 18) {
-                    ForEach(words) { w in
-                        NavigationLink {
-                            // The pushed screen reads the same environment store,
-                            // so it renders its own box — that is the chain.
-                            WordDetail(word: w, shelf: shelf)
-                        } label: {
-                            relatedRow(w, t)
+                if relatedAsGraph {
+                    // Asked here, not up in `page`: seven rankings, only when drawn.
+                    ConstellationView(word: word, graph: store.constellation(around: word, in: shelfID), t: t)
+                        .padding(.top, 18)
+                } else {
+                    VStack(alignment: .leading, spacing: 18) {
+                        ForEach(words) { w in
+                            NavigationLink {
+                                // The pushed screen reads the same environment store,
+                                // so it renders its own box — that is the chain.
+                                WordDetail(word: w, shelf: shelf)
+                            } label: {
+                                relatedRow(w, t)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(w.spokenSummary)
                         }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(accessibilitySummary(of: w))
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 18)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 18)
             } label: {
-                Text("In the same vein \u{00B7} Synonyms")
-                    .font(.system(size: 10, weight: .bold))
-                    .textCase(.uppercase).tracking(1.6)
-                    .foregroundStyle(t.muted)
-                    // The chevron toggles itself; the label is inert until asked.
-                    .contentShape(Rectangle())
-                    .onTapGesture { withAnimation { showRelated.toggle() } }
+                HStack(spacing: 12) {
+                    Text("In the same vein \u{00B7} Synonyms")
+                        .font(.system(size: 10, weight: .bold))
+                        .textCase(.uppercase).tracking(1.6)
+                        .foregroundStyle(t.muted)
+                        // The chevron toggles itself; the label is inert until asked.
+                        .contentShape(Rectangle())
+                        .onTapGesture { withAnimation { showRelated.toggle() } }
+                    Spacer(minLength: 0)
+                    Picker("Show as", selection: $relatedAsGraph) {
+                        Image(systemName: "list.bullet")
+                            .accessibilityLabel("List").help("Show as a list").tag(false)
+                        Image(systemName: "point.3.connected.trianglepath.dotted")
+                            .accessibilityLabel("Graph").help("Show as a graph").tag(true)
+                    }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
+                    .controlSize(.small)
+                    .fixedSize()
+                    // Picking a view is asking to see it.
+                    .onChange(of: relatedAsGraph) { withAnimation { showRelated = true } }
+                }
             }
             .tint(t.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -281,13 +304,6 @@ struct WordDetail: View {
         return shelfID
     }
 
-    /// One VoiceOver utterance per row, covering every field the row displays.
-    private func accessibilitySummary(of w: Word) -> String {
-        var parts = [w.term]
-        if !w.partOfSpeech.isEmpty { parts.append(w.partOfSpeech) }
-        parts.append(w.definition)
-        return parts.joined(separator: ". ")
-    }
 
     @ViewBuilder
     private func footer(_ t: Theme) -> some View {
