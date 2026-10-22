@@ -151,6 +151,7 @@ Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
 
 Bookmarks and learned words follow the reader between Mac and iPhone with no sign-in: the
 device's iCloud account is the identity. `Models/CloudSync.swift`, app target only.
+**Free for everyone** — `CloudSync.start()` never checks Premium; keep it that way.
 
 - **The App Group stays the truth; iCloud key-value storage is a mirror**, as Premium mirrors
   StoreKit. The widget never touches iCloud and needs no change.

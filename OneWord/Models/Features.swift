@@ -8,7 +8,8 @@
 //
 
 enum Features {
-    /// StoreKit, the paywall, the plan tag. Off: every shelf in Wordbook.all is free.
+    /// The paywall, the gates, the sidebar plan tag. Off: every shelf in Wordbook.all is free
+    /// and Premium is a tag only — sold in Profile (ProfileView.plans), it unlocks nothing.
     static let premium = false
     /// The Practice pane and its Settings section.
     static let practice = false

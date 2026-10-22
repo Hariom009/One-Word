@@ -89,7 +89,8 @@ struct OneWordApp: App {
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
                 // Premium belongs to the App Store's Apple ID, not a sign-in: no one to wait for.
-                .task { if Features.premium { await premium.load() } }
+                // Always: Profile sells it even while Features.premium keeps it a tag.
+                .task { await premium.load() }
                 // The widget reads the unlock from the App Group; tell it to look again.
                 .onChange(of: premium.isUnlocked) { WidgetCenter.shared.reloadAllTimelines() }
         }

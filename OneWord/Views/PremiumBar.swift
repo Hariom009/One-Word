@@ -73,6 +73,8 @@ struct UnlockButton: View {
     var name = "Unlock every dictionary"
     /// The plans pane's version: full width, taller, and it says what it unlocks.
     var large = false
+    /// Profile sells Premium as a tag, so there it says Buy: nothing is unlocked.
+    var verb = "Unlock"
 
     @Environment(PremiumViewModel.self) private var premium
     @Environment(\.purchase) private var purchase
@@ -84,7 +86,7 @@ struct UnlockButton: View {
         if premium.phase == .purchasing {
             spinner
         } else if let product = premium.product {
-            pill(large ? "Unlock Premium \u{2014} \(product.displayPrice)" : "Unlock \u{2014} \(product.displayPrice)", t) { buy(product) }
+            pill(large ? "\(verb) Premium \u{2014} \(product.displayPrice)" : "\(verb) \u{2014} \(product.displayPrice)", t) { buy(product) }
                 .accessibilityLabel("\(name), \(product.displayPrice)")
         } else if premium.storeUnavailable {
             pill("Try Again", t) { Task { await premium.load() } }

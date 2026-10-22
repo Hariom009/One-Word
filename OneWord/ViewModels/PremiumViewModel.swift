@@ -43,7 +43,8 @@ final class PremiumViewModel {
         }
     }
 
-    func allows(_ id: String) -> Bool { Premium.allows(id, unlocked: isUnlocked) }
+    /// While Features.premium is off, owning Premium opens nothing: it's the Profile tag only.
+    func allows(_ id: String) -> Bool { Premium.allows(id, unlocked: Features.premium && isUnlocked) }
 
     /// What's in the way of buying, if anything — shown in place of the pitch.
     var problem: String? {
@@ -120,8 +121,10 @@ final class PremiumViewModel {
 
     /// Always writes through — that heals a stale cache and walks a locked pick home — but
     /// only touches the observed flag when it changes, so nothing redraws for nothing.
+    /// With Features.premium off the App Group is never written, so the widget and the
+    /// reader's pick behave exactly as for a free reader.
     private func set(_ owned: Bool) {
-        Premium.set(unlocked: owned)
+        if Features.premium { Premium.set(unlocked: owned) }
         if owned != isUnlocked { isUnlocked = owned }
     }
 

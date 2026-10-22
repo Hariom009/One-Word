@@ -75,6 +75,7 @@ struct ProfileView: View {
                 if editing { picture(t) }
                 stats(t)
                 if fluencyGoal && premium.allows(Wordbook.german.id) { goal(t) }
+                plans(t)
                 details(t)
                 rows(t)
                 if Features.accounts { footer(t) }
@@ -479,6 +480,54 @@ struct ProfileView: View {
         .animation(.snappy(duration: 0.16), value: draftGender)
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Gender")
+    }
+
+    // MARK: - Plan
+
+    /// Free and Premium side by side, the current one tagged. Premium is a tag for now
+    /// (Features.premium is off): buying it moves the tag and opens nothing, so neither
+    /// card lists features. Restore stays — App Review wants one beside a non-consumable.
+    private func plans(_ t: Theme) -> some View {
+        let owned = premium.isUnlocked
+        return section("Plan", t, note: owned ? nil : premium.problem) {
+            HStack(alignment: .top, spacing: 12) {
+                planCard("Free", current: !owned, t) { EmptyView() }
+                planCard("Premium", current: owned, t) {
+                    Text("Lifetime")
+                        .font(.system(size: 12))
+                        .foregroundStyle(t.muted)
+                    if !owned {
+                        UnlockButton(name: "Buy Premium", verb: "Buy")
+                        Button("Restore Purchase") { Task { await premium.restore() } }
+                            .buttonStyle(.plain)
+                            .font(.system(size: 11))
+                            .foregroundStyle(t.muted)
+                            .disabled(premium.phase == .purchasing)
+                    }
+                }
+            }
+            // Both cards as tall as the taller one.
+            .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func planCard<C: View>(_ name: String, current: Bool, _ t: Theme,
+                                   @ViewBuilder content: () -> C) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Text(name)
+                    .font(.system(size: isPhone ? 17 : 15, weight: .semibold))
+                    .foregroundStyle(t.ink)
+                Spacer(minLength: 0)
+                if current { PlanTag(text: "Current", filled: true) }
+            }
+            content()
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background { ProfileCard(t: t) }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(current ? "\(name), current plan" : name)
     }
 
     // MARK: - Learned, settings & sign out
