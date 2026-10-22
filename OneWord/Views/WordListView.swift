@@ -32,6 +32,8 @@ struct WordListView: View {
     @State private var found: [WordListViewModel.Hit] = []
     /// How many words that search covers; 0 until the books have been decoded.
     @State private var total = 0
+    /// Off the top of the list — on a phone the header blurs away until you scroll back.
+    @State private var scrolled = false
     @Environment(\.colorScheme) private var scheme
     /// Search spans locked books too: their words are listed as a teaser, meaning withheld.
     @Environment(PremiumViewModel.self) private var premium
@@ -80,16 +82,20 @@ struct WordListView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .tint(t.accent)
+                .tracksScrolledDown($scrolled)
             }
         }
         .paneBackground(t)
         // The field rides in the header strip — no row of its own above the list,
         // which a Bookmarks pane holding three words never needed.
         // A bundled book's list is only ever pushed, from the shelf; Bookmarks and Search are panes.
-        .paneHeader(wordbook?.shortName ?? "Search", back: wordbook != nil && wordbook != .saved) {
+        .paneHeader(wordbook?.shortName ?? "Search", back: wordbook != nil && wordbook != .saved,
+                    ribbon: isPhone && wordbook?.id == SavedWords.resource,
+                    hidden: isPhone && scrolled && !results.isEmpty) {
             // How many you've kept. Only Bookmarks — every other pane's total is
             // already in the search prompt, and it never changes while you look at it.
-            if wordbook?.id == SavedWords.resource {
+            // A phone has no room for it; the ribbon leads the title there instead.
+            if !isPhone && wordbook?.id == SavedWords.resource {
                 HStack(spacing: 6) {
                     BookmarkRibbon(size: 18)
                     Text("\(model.count)")
@@ -232,10 +238,8 @@ struct WordListView: View {
         .padding(isPhone ? 24 : 40)
     }
 
-    /// The mark over an empty pane. Classic mode stamps the BOOK's own symbol —
-    /// the one on its cover — which the doodle set has no per-dictionary answer
-    /// for. It gives the nearest thing it does have: the shelf, or the ribbon when
-    /// the empty pane is Bookmarks.
+    /// The mark over an empty pane: the shelf, or the ribbon when the empty pane
+    /// is Bookmarks.
     @ViewBuilder
     private func emptyMark(_ t: Theme) -> some View {
         if query.isEmpty {
@@ -243,7 +247,6 @@ struct WordListView: View {
                       size: 52, weight: .thin)
                 .foregroundStyle(t.accent.opacity(0.5))
         } else {
-            // No drawing for "nothing matched" in either set — the hexagon stands.
             Image(systemName: "hexagon")
                 .font(.system(size: 52, weight: .thin))
                 .foregroundStyle(t.accent.opacity(0.5))

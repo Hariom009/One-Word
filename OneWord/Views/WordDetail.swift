@@ -189,7 +189,11 @@ struct WordDetail: View {
     private func relatedBox(_ words: [Word], _ t: Theme) -> some View {
         if !words.isEmpty {
             DisclosureGroup(isExpanded: $showRelated) {
-                if relatedAsGraph {
+                if relatedAsGraph && isPhone {
+                    // Two rings of the honeycomb: the six nearest, then the next twelve.
+                    BubbleField(word: word, neighbours: store.related(to: word, in: shelfID, limit: 18), t: t)
+                        .padding(.top, 18)
+                } else if relatedAsGraph {
                     ConstellationView(word: word, ring: store.related(to: word, in: shelfID, limit: 8), t: t)
                         .padding(.top, 18)
                 } else {
@@ -436,22 +440,8 @@ struct BookmarkRibbon: View {
     /// Height, not a box. A ribbon is taller than it is wide (the asset's viewBox is
     /// cropped to the artwork, so it fills what it's given); the width follows.
     var size: CGFloat = 17
-    @Environment(\.doodle) private var doodle
 
     var body: some View {
-        if doodle.icons {
-            // The drawn ribbon, and the same drawing greyed out for "not kept" —
-            // the set has no hollow bookmark, and swapping in the SF outline here
-            // would make the two states look like two different apps.
-            Doodle("bookmark_doodle", size: size * 1.3)
-                .grayscale(filled ? 0 : 1)
-                .opacity(filled ? 1 : 0.4)
-        } else {
-            classic
-        }
-    }
-
-    private var classic: some View {
         Group {
             if filled {
                 // The asset is a ribbon centred in a square canvas with a wide

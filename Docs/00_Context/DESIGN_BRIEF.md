@@ -41,13 +41,11 @@ room to breathe.
 
 ### Appearances, as built
 
-Five, picked in Settings. The app only — the widget always follows the Mac's light or dark.
+Three, picked in Settings. The app only — the widget always follows the device's light or dark.
 
 | | What it is | Why it exists |
 |---|---|---|
-| **System** | Light or Dark, following the Mac | the default |
-| **Light** | white paper, black ink, greys between; serif; hairline rules | the editorial page |
-| **Dark** | the same, inverted | the editorial page at night |
+| **System** | the editorial page — white paper, black ink, greys between; serif; hairline rules — inverted at night, following the device's light or dark | the plain look |
 | **Midnight** | near-black (`#0F0F0F`) under a band of deep blue across the top edge; translucent "frosted" tiles; geometric sans, tight; corners ×2.2 so controls turn into pills; a light-blue accent | the modern look — depth from *light* |
 | **Umber** | flat warm charcoal (`#161412`), parchment ink, opaque surfaces; serif; hairline rules; corners as drawn; one hue, brass, spent on the Hindi rule | the "warmer ambers/golds" direction above, as a dark theme — depth from *temperature*, nothing glows |
 

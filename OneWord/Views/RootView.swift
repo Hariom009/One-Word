@@ -123,10 +123,11 @@ struct RootView: View {
     /// that asked for it: Dictionaries from Home's chip, Settings and Premium from
     /// Profile's rows. The third tab is what you paid for: Practice once Premium is
     /// owned (and the setting leaves it on), Bookmarks until then — Profile grows a
-    /// row for whichever of the two lost its tab.
+    /// row for whichever of the two lost its tab. Search goes last: on iOS 26 it
+    /// detaches into its own button at the trailing edge, as in Music.
     private var tabOrder: [Pane] {
         [.home] + (Features.history ? [.history] : [])
-            + [Features.practice && premium.isUnlocked && practiceEnabled ? .practice : .bookmarks, .search, .profile]
+            + [Features.practice && premium.isUnlocked && practiceEnabled ? .practice : .bookmarks, .profile, .search]
     }
     /// One path per tab, so Settings pushed from Profile doesn't also sit on Home.
     @State private var paths: [Pane: [Pane]] = [:]
@@ -139,20 +140,41 @@ struct RootView: View {
             let target = picked == .practice && !premium.isUnlocked ? .premium : picked
             if tabOrder.contains(target) { pane = target } else { paths[pane, default: []].append(target) }
         }
-        return TabView(selection: $pane) {
-            ForEach(tabOrder) { tab in
-                NavigationStack(path: Binding { paths[tab] ?? [] } set: { paths[tab] = $0 }) {
-                    detail(tab, route: route)
-                        .navigationDestination(for: Pane.self) { detail($0, route: route) }
+        return Group {
+            if #available(iOS 18, macOS 15, *) {
+                TabView(selection: $pane) {
+                    ForEach(tabOrder.filter { $0 != .search }) { tab in
+                        Tab(tab.title, systemImage: tab.glyph.symbol, value: tab) {
+                            stack(tab, route: route)
+                        }
+                    }
+                    // Its own static Tab: a role picked per-item inside ForEach
+                    // doesn't split it off into the trailing circle.
+                    Tab(Pane.search.title, systemImage: Pane.search.glyph.symbol, value: Pane.search, role: .search) {
+                        stack(.search, route: route)
+                    }
                 }
-                .tabItem { Label(tab.title, systemImage: tab.glyph.symbol) }
-                .tag(tab)
+            } else {
+                TabView(selection: $pane) {
+                    ForEach(tabOrder) { tab in
+                        stack(tab, route: route)
+                            .tabItem { Label(tab.title, systemImage: tab.glyph.symbol) }
+                            .tag(tab)
+                    }
+                }
             }
         }
         .tint(doodle.appearance.paintsPalette ? t.accent : nil)
         // The third tab can swap under you (a purchase, the Practice switch): a
         // selection no tab carries shows an empty window, so land on Home instead.
         .onChange(of: tabOrder) { if !tabOrder.contains(pane) { pane = .home } }
+    }
+
+    private func stack(_ tab: Pane, route: Binding<Pane>) -> some View {
+        NavigationStack(path: Binding { paths[tab] ?? [] } set: { paths[tab] = $0 }) {
+            detail(tab, route: route)
+                .navigationDestination(for: Pane.self) { detail($0, route: route) }
+        }
     }
 
     private var split: some View {

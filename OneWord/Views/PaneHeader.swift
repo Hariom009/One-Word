@@ -23,6 +23,23 @@ import UIKit
 let isPhone = false
 #endif
 
+#if os(iOS)
+/// The edge swipe back, on every pushed screen. UIKit only lets it begin while the
+/// stack shows its own Back, and the strip hides the bar to draw its own — so every
+/// pane lost it. Re-armed for any stack deeper than its root.
+/// ponytail: app-wide, which is the point — every stack here hides its bar.
+extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = self
+    }
+
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        viewControllers.count > 1
+    }
+}
+#endif
+
 extension EnvironmentValues {
     /// The split view's columns, so a pane's header can fold the sidebar away.
     /// Inert by default: a preview with no split view has nothing to fold.
@@ -33,9 +50,18 @@ extension View {
     /// Pins a `PaneHeader` over this pane. Content scrolls up under it and the
     /// header hides it by painting the pane's own ground — same top, same width, so
     /// Midnight's glow runs through the seam instead of starting again below it.
-    func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false,
+    func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
+                                    hidden: Bool = false,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
-        safeAreaInset(edge: .top, spacing: 0) { PaneHeader(title: title, back: back, trailing: trailing()) }
+        safeAreaInset(edge: .top, spacing: 0) {
+            // Scrolled down on a phone the strip blurs away; its space stays, so the
+            // list shows through rather than jumping up — which would re-fire the scroll.
+            PaneHeader(title: title, back: back, ribbon: ribbon, trailing: trailing())
+                .blur(radius: hidden ? 10 : 0)
+                .opacity(hidden ? 0 : 1)
+                .allowsHitTesting(!hidden)
+                .animation(.easeInOut(duration: 0.25), value: hidden)
+        }
             // The hidden title bar still reserves its height; the header takes it.
             // On a phone that space is the status bar, so the strip stays below it.
             .ignoresSafeArea(.container, edges: isPhone ? [] : .top)
@@ -53,18 +79,38 @@ extension View {
     func paneHeader(_ title: String? = nil, back: Bool = false) -> some View {
         paneHeader(title, back: back) { EmptyView() }
     }
+
+    /// Sets `scrolled` once this scroll view leaves its top — what `paneHeader(hidden:)` reads.
+    /// ponytail: iOS 18 / macOS 15 only; on 17 the header just stays put.
+    @ViewBuilder
+    func tracksScrolledDown(_ scrolled: Binding<Bool>) -> some View {
+        if #available(iOS 18, macOS 15, *) {
+            onScrollGeometryChange(for: Bool.self) { $0.contentOffset.y + $0.contentInsets.top > 8 } action: {
+                scrolled.wrappedValue = $1
+            }
+        } else {
+            self
+        }
+    }
 }
 
 struct PaneHeader<Trailing: View>: View {
     let title: String?
-    /// Passed by the screens that are only ever pushed. Not `\.isPresented`: that
-    /// reads true on a pane's own root inside the split view, so every pane grew a Back.
+    /// Passed by the screens that are only ever pushed. Not `\.isPresented` on the
+    /// Mac: that reads true on a pane's own root inside the split view, so every pane
+    /// grew a Back. A phone's tab roots read false, so there it decides on its own —
+    /// Settings, Dictionaries and Premium are panes on the Mac but pushes on a phone.
     let back: Bool
+    /// Bookmarks on a phone: the ribbon leads the title instead of a count trailing it.
+    var ribbon = false
     let trailing: Trailing
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
     @Environment(\.sidebar) private var sidebar
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.isPresented) private var presented
+
+    private var showsBack: Bool { back || (isPhone && presented) }
 
     var body: some View {
         let t = Theme.of(scheme, doodle)
@@ -80,12 +126,13 @@ struct PaneHeader<Trailing: View>: View {
                 .help(folded ? "Show the sidebar" : "Hide the sidebar")
             }
 
-            if back {
+            if showsBack {
                 Button { dismiss() } label: { Label("Back", systemImage: "chevron.left") }
                     .help("Back")
             }
 
             if isPhone {
+                if ribbon { BookmarkRibbon(size: 18) }
                 // One name per strip. The tab bar already says which section this
                 // is, so the pane's title takes the wordmark's place and its face;
                 // a pane with no title of its own keeps the app's name.
@@ -94,7 +141,7 @@ struct PaneHeader<Trailing: View>: View {
                     .tracking(doodle.tracking(20))
                     .foregroundStyle(t.ink)
                     .lineLimit(1)
-                    .padding(.leading, back ? 2 : 0)
+                    .padding(.leading, showsBack ? 2 : 0)
             } else {
                 Text("One Word")
                     .font(doodle.face(18))

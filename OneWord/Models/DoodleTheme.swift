@@ -2,10 +2,8 @@
 //  DoodleTheme.swift
 //  OneWord
 //
-//  The doodle theme — two switches, not one. Hand-drawn glyphs and hand-drawn
-//  lettering are separate tastes: some readers want the drawings next to the
-//  editorial serif, some want the marker face next to the app's own symbols, and
-//  some want the lot. So `icons` and `handwriting` are stored apart and read apart.
+//  The doodle theme — hand-drawn lettering, one switch. (It once had a second, for
+//  hand-drawn icons; that set was cut, and every glyph is an SF Symbol again.)
 //
 //  It carries the appearance too. Not a doodle — but an appearance is the other
 //  thing that can change the display face (Midnight's is Plus Jakarta Sans), and
@@ -13,7 +11,7 @@
 //  the doodle switches' own keys; this value carries which one is picked.
 //
 //  App-only, in the standard defaults (like `appearance`, unlike `showHindi`):
-//  neither the doodle art nor the Pulpen face is in the widget's bundle, so an App
+//  the Pulpen face is not in the widget's bundle, so an App
 //  Group switch would promise the widget something it cannot draw.
 //
 //  Resolved once at the app root and handed down the environment, the way
@@ -26,53 +24,38 @@ import SwiftUI
 
 // MARK: - What a symbol means
 
-/// Every symbol the app draws through the theme, named for what it *means*
-/// rather than for the glyph it happens to use — so the SF Symbol set and the
-/// doodle set are two answers to one question and neither can drift from the other.
-///
-/// `doodle` is nil where the set has no drawing for that meaning: there is no
-/// hand-drawn magnifier, gear or head. Those keep their symbol in both modes,
-/// which is the reason this is one table rather than two parallel enums — the art
-/// arriving later is a single string, here, and nothing else moves.
+/// Every symbol the app draws, named for what it *means* rather than for the
+/// glyph it happens to use.
 enum Glyph {
     case home, history, practice, bookmarks, dictionaries
     case search, settings, profile, feedback
     case learned, selected, bookmarked, premium
 
-    /// The SF Symbol. Always present — it is what the app has always drawn.
-    var symbol: String { art.symbol }
-
-    /// The asset in `Assets.xcassets`, or nil when the set has no drawing for this.
-    var doodle: String? { art.doodle }
-
-    /// One table rather than two switches: a new meaning is a case above and a row
-    /// here, and the drawing can never end up labelled with the wrong symbol.
-    private var art: (symbol: String, doodle: String?) {
+    /// The SF Symbol.
+    var symbol: String {
         switch self {
-        case .home:         ("house", "house_doodle")
-        case .history:      ("clock", "calender_doodle")       // the typo is the asset's
-        case .practice:     ("text.bubble", "write_doodle")
-        case .bookmarks:    ("bookmark", "bookmark_doodle")
-        case .dictionaries: ("book", "dictionary_doodle")
-        case .search:       ("magnifyingglass", nil)
-        case .settings:     ("gearshape", nil)
-        case .profile:      ("person.crop.circle", nil)
-        case .feedback:     ("bubble.left", nil)
-        case .learned:      ("checkmark.seal", "check_doodle")
-        case .selected:     ("checkmark.circle.fill", "check_doodle")
-        case .bookmarked:   ("bookmark.fill", "bookmark_doodle")
-        case .premium:      ("lock.open", nil)
+        case .home:         "house"
+        case .history:      "clock"
+        case .practice:     "text.bubble"
+        case .bookmarks:    "bookmark"
+        case .dictionaries: "book"
+        case .search:       "magnifyingglass"
+        case .settings:     "gearshape"
+        case .profile:      "person.crop.circle"
+        case .feedback:     "bubble.left"
+        case .learned:      "checkmark.seal"
+        case .selected:     "checkmark.circle.fill"
+        case .bookmarked:   "bookmark.fill"
+        case .premium:      "lock.open"
         }
     }
 }
 
 // MARK: - The theme
 
-/// Which half of the doodle theme is on, and which appearance is picked. A value,
+/// Whether the doodle hand is on, and which appearance is picked. A value,
 /// not a store: `OneWordApp` reads the defaults and puts one of these in the environment.
 nonisolated struct DoodleTheme: Equatable {
-    /// Hand-drawn drawings in place of SF Symbols.
-    var icons = false
     /// Pulpen Snowman in place of the editorial serif.
     var handwriting = false
     /// The appearance picked in Settings. It decides the palette through
@@ -85,19 +68,15 @@ nonisolated struct DoodleTheme: Equatable {
     /// that doesn't say otherwise.
     static let off = DoodleTheme()
 
-    /// Named once so the Settings switches, the app root and the capture HUD
+    /// Named once so the Settings switch, the app root and the capture HUD
     /// cannot disagree about which key they are reading.
-    static let iconsKey = "doodleIcons"
     static let handwritingKey = "doodleFont"
 
     /// For the one place that is outside the SwiftUI environment: the capture HUD,
     /// which AppKit puts on screen in a window of its own.
     static var current: DoodleTheme {
-        DoodleTheme(icons: UserDefaults.standard.bool(forKey: iconsKey),
-                    handwriting: UserDefaults.standard.bool(forKey: handwritingKey),
-                    // A missing or unknown string is the initial appearance, as at the app root.
-                    appearance: UserDefaults.standard.string(forKey: "appearance")
-                        .flatMap(Appearance.init(rawValue:)) ?? .initial)
+        DoodleTheme(handwriting: UserDefaults.standard.bool(forKey: handwritingKey),
+                    appearance: .stored(UserDefaults.standard.string(forKey: "appearance")))
     }
 
     // MARK: The face
@@ -169,9 +148,9 @@ extension Theme {
     static func of(_ scheme: ColorScheme, _ look: DoodleTheme) -> Theme {
         // No `default`: a new appearance has to name its palette here to compile.
         switch look.appearance {
-        case .midnight:              return .midnight
-        case .umber:                 return .umber
-        case .system, .light, .dark: return .of(scheme)
+        case .midnight: return .midnight
+        case .umber:    return .umber
+        case .system:   return .of(scheme)
         }
     }
 }
@@ -183,7 +162,7 @@ private struct DoodleThemeKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    /// The doodle switches and Midnight. Read it at the top of a body beside
+    /// The doodle switch and Midnight. Read it at the top of a body beside
     /// `Theme.of(scheme, doodle)` — the two answer the same kind of question.
     var doodle: DoodleTheme {
         get { self[DoodleThemeKey.self] }

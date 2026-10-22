@@ -19,7 +19,6 @@ struct SettingsView: View {
     @AppStorage("appearance") private var appearance = Appearance.initial.rawValue
     // Two switches, not one: the drawings and the handwriting are separate tastes.
     // App-only — the widget's bundle carries neither the art nor the face.
-    @AppStorage(DoodleTheme.iconsKey) private var doodleIcons = false
     @AppStorage(DoodleTheme.handwritingKey) private var doodleFont = false
     // App Group, like the dictionary: one switch drives the app and the widget.
     @AppStorage("showHindi", store: AppGroup.defaults) private var showHindi = true
@@ -67,49 +66,41 @@ struct SettingsView: View {
 
                 section("Appearance", t,
                         note: "The app only \u{2014} the widget follows the system's own light or dark.") {
-                    // A grid, not a row: five tiles fill this column at 96pt each, and a
-                    // sixth — or a narrow window — wraps instead of clipping a name.
+                    // A grid, not a row: a further tile — or a narrow window — wraps
+                    // instead of clipping a name.
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 92), spacing: 10)],
                               spacing: 10) {
                         ForEach(Appearance.allCases) { mode in
                             Button { appearance = mode.rawValue } label: {
                                 AppearanceTile(mode: mode,
-                                               selected: mode.rawValue == appearance,
+                                               selected: mode == .stored(appearance),
                                                theme: t)
                             }
                             .buttonStyle(.plain)
-                            .accessibilityAddTraits(mode.rawValue == appearance ? .isSelected : [])
+                            .accessibilityAddTraits(mode == .stored(appearance) ? .isSelected : [])
                         }
                     }
                 }
 
                 section("Doodle", t,
-                        note: "The app only. The widget keeps its symbols and its serif \u{2014} "
-                            + "neither the drawings nor the face ships inside it.") {
-                    VStack(spacing: 10) {
-                        DoodleSample(theme: t)
-                        card(t) {
-                            row("Hand-drawn icons",
-                                "Swaps the app's symbols for the doodle set.",
-                                t) {
-                                Toggle("Hand-drawn icons", isOn: $doodleIcons).labelsHidden()
-                            }
-                            rule(t)
-                            row("Handwritten type",
-                                "Sets the headwords and titles in Pulpen Snowman.",
-                                t,
-                                info: """
-                                Pulpen Snowman draws Latin letters, digits and \
-                                quotation marks. It has no Devanagari and no em-dash, \
-                                so the Hindi meaning \u{2014} and the odd long dash \u{2014} \
-                                keep the system face underneath.
-                                """) {
-                                Toggle("Handwritten type", isOn: $doodleFont).labelsHidden()
-                            }
+                        note: "The app only. The widget keeps its serif \u{2014} "
+                            + "the face doesn't ship inside it.") {
+                    card(t) {
+                        row("Handwritten type",
+                            "Sets the headwords and titles in Pulpen Snowman.",
+                            t,
+                            info: """
+                            Pulpen Snowman draws Latin letters, digits and \
+                            quotation marks. It has no Devanagari and no em-dash, \
+                            so the Hindi meaning \u{2014} and the odd long dash \u{2014} \
+                            keep the system face underneath.
+                            """,
+                            sample: true) {
+                            Toggle("Handwritten type", isOn: $doodleFont).labelsHidden()
                         }
-                        .toggleStyle(.switch)
-                        .tint(t.accent)
                     }
+                    .toggleStyle(.switch)
+                    .tint(t.accent)
                 }
 
                 section("The entry", t, note: "Applies to the widget too.") {
@@ -285,6 +276,7 @@ struct SettingsView: View {
                               _ caption: String,
                               _ t: Theme,
                               info: String? = nil,
+                              sample: Bool = false,
                               @ViewBuilder control: () -> C) -> some View {
         HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 2) {
@@ -292,7 +284,7 @@ struct SettingsView: View {
                     Text(title)
                         .font(.system(size: 13))
                         .foregroundStyle(t.ink)
-                    if let info { InfoButton(text: info, theme: t) }
+                    if let info { InfoButton(text: info, theme: t, sample: sample) }
                 }
                 Text(caption)
                     .font(.system(size: 11))
@@ -312,6 +304,8 @@ struct SettingsView: View {
 private struct InfoButton: View {
     let text: String
     let theme: Theme
+    /// Leads with the doodle sample, for the handwriting row.
+    var sample = false
     @State private var showing = false
 
     var body: some View {
@@ -328,38 +322,38 @@ private struct InfoButton: View {
             // The ground goes under it because a surface may be see-through: Midnight's
             // is 7% white, and on a Mac in Light mode that alone lands on a light
             // popover and leaves near-white ink on near-white.
-            Text(text)
-                .font(.system(size: 12))
-                .foregroundStyle(theme.ink)
-                .lineSpacing(3)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(width: 250, alignment: .leading)
-                .padding(14)
-                .background(theme.surface)
-                .background(theme.background)
+            // On iPhone the popover adapts to a sheet; the detent keeps it a bottom sheet.
+            VStack(alignment: .leading, spacing: 14) {
+                if sample { DoodleSample(theme: theme) }
+                Text(text)
+                    .font(.system(size: 12))
+                    .foregroundStyle(theme.ink)
+                    .lineSpacing(3)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            #if os(iOS)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(20)
+            #else
+            .frame(width: 250, alignment: .leading)
+            .padding(14)
+            #endif
+            .background(theme.surface)
+            .background(theme.background)
+            .presentationDetents([.medium])
         }
     }
 }
 
-/// Both halves of the doodle theme at once, in a strip the size of a row: the
-/// drawings the sidebar would wear, and a word in the face the headwords would
-/// take. It reads `\.doodle` rather than the two switches, so it shows what the
+/// The doodle hand in a strip the size of a row: a word in the face the headwords
+/// would take. It reads `\.doodle` rather than the switch, so it shows what the
 /// app is actually about to look like and not what Settings thinks it asked for.
 private struct DoodleSample: View {
     let theme: Theme
     @Environment(\.doodle) private var doodle
 
-    private let glyphs: [Glyph] = [.home, .history, .practice, .bookmarks,
-                                   .dictionaries, .learned]
-
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 12) {
-                ForEach(Array(glyphs.enumerated()), id: \.offset) { _, g in
-                    GlyphIcon(g, size: 15)
-                        .foregroundStyle(theme.ink)
-                }
-            }
             VStack(alignment: .leading, spacing: 2) {
                 Text("ephemeral")
                     .font(doodle.face(30))
@@ -374,7 +368,7 @@ private struct DoodleSample: View {
         .background(theme.surface, in: RoundedRectangle(cornerRadius: theme.radius(10)))
         .overlay(RoundedRectangle(cornerRadius: theme.radius(10)).strokeBorder(theme.hairline))
         .animation(.easeInOut(duration: 0.18), value: doodle)
-        .accessibilityHidden(true)   // the two rows under it say what it shows
+        .accessibilityHidden(true)   // the row under it says what it shows
     }
 }
 
@@ -412,9 +406,7 @@ private struct AppearanceTile: View {
 
     @ViewBuilder private var preview: some View {
         switch mode {
-        case .light:    page(.light, as: .light)
-        case .dark:     page(.dark, as: .dark)
-        case .system:   HStack(spacing: 0) { page(.light, as: .light); page(.dark, as: .dark) }
+        case .system:   HStack(spacing: 0) { page(.light, as: .system); page(.dark, as: .system) }
         case .midnight: page(.midnight, as: .midnight)
         case .umber:    page(.umber, as: .umber)
         }

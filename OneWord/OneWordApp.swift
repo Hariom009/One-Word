@@ -23,7 +23,6 @@ struct OneWordApp: App {
     // The doodle theme's two switches, read HERE and nowhere else: a view that
     // asked UserDefaults directly would draw the right thing once and then never
     // hear the switch flip. Down the environment, every pane redraws together.
-    @AppStorage(DoodleTheme.iconsKey) private var doodleIcons = false
     @AppStorage(DoodleTheme.handwritingKey) private var doodleFont = false
     // One index for the whole navigation stack — every WordDetail in a chain
     // serves itself from this store via the environment.
@@ -35,8 +34,8 @@ struct OneWordApp: App {
     // ask it what's unlocked, and it tells the widget through the App Group.
     @State private var premium = PremiumViewModel()
 
-    /// The stored string, parsed once. A missing or unknown value is System.
-    private var look: Appearance { Appearance(rawValue: appearance) ?? .initial }
+    /// The stored string, parsed once.
+    private var look: Appearance { .stored(appearance) }
 
     /// Firebase here, not in an app delegate: on macOS the window's views appear before
     /// applicationDidFinishLaunching fires, so RootView's `auth.restore()` asked Firebase
@@ -90,7 +89,7 @@ struct OneWordApp: App {
                 .environment(premium)
                 // The appearance rides the same value: it can change the face as well as
                 // the palette, and `face()` is the one place the face is decided.
-                .environment(\.doodle, DoodleTheme(icons: doodleIcons, handwriting: doodleFont,
+                .environment(\.doodle, DoodleTheme(handwriting: doodleFont,
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
                 .task { if Features.premium { await premium.load() } }

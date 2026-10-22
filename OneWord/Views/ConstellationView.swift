@@ -31,6 +31,8 @@ struct ConstellationView: View {
     /// The word just copied, for the toast; cleared by the toast's own timer.
     @State private var copied: String?
     @State private var toastTimer: Task<Void, Never>?
+    /// The centre pill's drawn size, so each spoke can start at its outline.
+    @State private var pill: CGSize = .zero
 
     // ponytail: one ring, not two — a second ring of phrase-length terms can't fit a
     // 700pt column without labels colliding. Room for a label beside a side star:
@@ -51,7 +53,9 @@ struct ConstellationView: View {
                     for (i, p) in points.enumerated() {
                         let lit = active == ring[i] || active == word
                         var path = Path()
-                        path.move(to: centre)
+                        // From the pill's outline, not its middle: the line meets the
+                        // word's edge instead of running in behind it.
+                        path.move(to: edge(toward: p, from: centre, size: pill))
                         path.addLine(to: p)
                         context.stroke(path, with: .color(lit ? t.accent.opacity(0.8) : t.muted.opacity(0.3)),
                                        lineWidth: lit ? 1.5 : 1)
@@ -101,6 +105,23 @@ struct ConstellationView: View {
         .accessibilityLabel("Words connected to \(word.term)")
     }
 
+    /// Where the line from `c` toward `p` leaves a capsule of `size` centred on `c`:
+    /// the flat top or bottom if it gets there first, else the round end.
+    private func edge(toward p: CGPoint, from c: CGPoint, size: CGSize) -> CGPoint {
+        let dx = p.x - c.x, dy = p.y - c.y, len = hypot(dx, dy)
+        guard len > 0, size.height > 0 else { return c }
+        let ux = dx / len, uy = dy / len
+        let r = size.height / 2, a = max(size.width / 2 - r, 0)
+        var d = abs(uy) > 0 ? r / abs(uy) : .infinity
+        if abs(d * ux) > a {
+            // The round end: a circle of radius r centred `a` out along the axis.
+            let cx = ux >= 0 ? a : -a
+            let b = ux * cx
+            d = b + sqrt(max(b * b - cx * cx + r * r, 0))
+        }
+        return CGPoint(x: c.x + ux * min(d, len), y: c.y + uy * min(d, len))
+    }
+
     /// Evenly round the circle, the nearest word at twelve o'clock.
     private func angle(_ i: Int) -> Double {
         -.pi / 2 + 2 * .pi * Double(i) / Double(max(ring.count, 1))
@@ -120,7 +141,8 @@ struct ConstellationView: View {
                 Capsule().fill(t.accent.opacity(0.14))
             }
             .overlay(Capsule().strokeBorder(t.accent.opacity(0.7), lineWidth: 1.2))
-            .contentShape(Capsule()))
+            .contentShape(Capsule())
+            .onGeometryChange(for: CGSize.self, of: \.size) { pill = $0 })
     }
 
     /// A dot on the ring with its label on the outward side: right of the dot on the

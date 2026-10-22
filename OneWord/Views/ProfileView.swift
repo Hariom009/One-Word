@@ -39,7 +39,7 @@ struct ProfileView: View {
     @AppStorage("profilePhoto") private var photo: Data?
     /// Set in Settings. Off, the raw count above is the whole story.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
-    /// Settings can hide Practice; on a phone that hides its row here.
+    /// Settings can hide Practice, which hands its tab back to Bookmarks.
     @AppStorage("practiceEnabled") private var practiceEnabled = true
     /// The goal counts only the German shelf, so it waits for German to unlock.
     @Environment(PremiumViewModel.self) private var premium
@@ -444,7 +444,7 @@ struct ProfileView: View {
 
     /// Two rows, one idiom: Learned pushes a list, Settings switches pane. Settings
     /// is off the sidebar now, so this row is the way in. A phone has no sidebar
-    /// at all, so Practice and the plan tag get rows here too.
+    /// at all, so the plan tag gets a row here too.
     private func rows(_ t: Theme) -> some View {
         // Separate tiles on the Mac; one card with inset rules on a phone, the way
         // a phone groups a short list of ways onward.
@@ -457,9 +457,10 @@ struct ProfileView: View {
             .buttonStyle(.plain)
 
             if isPhone {
-                // The tab bar's third slot is Practice once it's owned and on, Bookmarks
-                // until then (RootView.tabOrder) — so the row here is whichever one has no tab.
-                if premium.isUnlocked && practiceEnabled {
+                // The tab bar's third slot is Practice once it's flagged on, owned and
+                // on, Bookmarks until then (RootView.tabOrder). Bookmarks gets a row here
+                // when Practice took its tab; Practice itself never gets one.
+                if Features.practice && premium.isUnlocked && practiceEnabled {
                     separator(t)
                     Button { pane = .bookmarks } label: {
                         row(t, "Bookmarks") {
@@ -467,16 +468,6 @@ struct ProfileView: View {
                         }
                     }
                     .buttonStyle(.plain)
-                } else if practiceEnabled {
-                    separator(t)
-                    // The shell gates it: locked, the row lands on the plans.
-                    Button { pane = .practice } label: {
-                        row(t, "Practice") {
-                            GlyphIcon(.practice, size: 15).foregroundStyle(t.muted)
-                        }
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityValue("Premium")
                 }
                 separator(t)
                 Button { pane = .premium } label: {
@@ -491,8 +482,6 @@ struct ProfileView: View {
 
             Button { pane = .settings } label: {
                 row(t, "Settings") {
-                    // No hand-drawn gear in the set, so this one stays a symbol in
-                    // both themes — GlyphIcon falls back on its own.
                     GlyphIcon(.settings, size: 15)
                         .foregroundStyle(t.muted)
                 }
@@ -690,20 +679,12 @@ private struct AvatarTile: View {
 
 /// The learned mark: a filled green seal that carries its own colour, so nothing
 /// here tints it. Same idea as BookmarkRibbon — the glyph is the state.
-///
-/// Already an illustration rather than a symbol, so the doodle theme doesn't
-/// change its nature — only its hand, from the drawn seal to the drawn tick.
 struct LearnedSeal: View {
     var size: CGFloat = 14
-    @Environment(\.doodle) private var doodle
 
     var body: some View {
-        if doodle.icons {
-            Doodle("check_doodle", size: size)
-        } else {
-            Image("learned_icon").resizable().scaledToFit()
-                .frame(width: size, height: size)
-        }
+        Image("learned_icon").resizable().scaledToFit()
+            .frame(width: size, height: size)
     }
 }
 
