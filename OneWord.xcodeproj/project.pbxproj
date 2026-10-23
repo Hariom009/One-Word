@@ -33,6 +33,7 @@
 		E7504A8C84034840B5489A19 /* idioms.json in Resources */ = {isa = PBXBuildFile; fileRef = 632497746DB64191A42ED5DB /* idioms.json */; };
 		EBEC398F5303F3C1079E8231 /* RefreshWordIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983BD001F6B3181E50330BCB /* RefreshWordIntent.swift */; };
 		F4D4B5616D7628DBC8D8FDFA /* urdu.json in Resources */ = {isa = PBXBuildFile; fileRef = 01BF4AF016573226ACF62597 /* urdu.json */; };
+		FD44A459DC5C46A991046DA5 /* sanskrit.json in Resources */ = {isa = PBXBuildFile; fileRef = 5044C0F8D4B946DBA6268E90 /* sanskrit.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		1B567267BBFDED8FB15FC6DF /* philosophy.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = philosophy.json; path = OneWord/Shared/philosophy.json; sourceTree = "<group>"; };
 		24FFB551199DA0B818E57D55 /* WordProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordProvider.swift; path = OneWord/Shared/WordProvider.swift; sourceTree = "<group>"; };
 		251E69A6F52172455BF1BF41 /* emotions.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = emotions.json; path = OneWord/Shared/emotions.json; sourceTree = "<group>"; };
+		5044C0F8D4B946DBA6268E90 /* sanskrit.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = sanskrit.json; path = OneWord/Shared/sanskrit.json; sourceTree = "<group>"; };
 		55C811B3A327A36356E4F0A2 /* words.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = words.json; path = OneWord/Shared/words.json; sourceTree = "<group>"; };
 		566C433B829A765BEBF251DB /* pets.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = pets.json; path = OneWord/Shared/pets.json; sourceTree = "<group>"; };
 		5AD252FD12B6844492A537A1 /* WordWidgetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WordWidgetView.swift; path = OneWordWidget/WordWidgetView.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				01BF4AF016573226ACF62597 /* urdu.json */,
 				081C7561D3D5DCF0D2323A5A /* german.json */,
 				566C433B829A765BEBF251DB /* pets.json */,
+				5044C0F8D4B946DBA6268E90 /* sanskrit.json */,
 				B2139C626E6D2A9B6EC0D8A2 /* SavedWords.swift */,
 			);
 			name = SharedRefs;
@@ -284,6 +287,7 @@
 				88971BAE2A7B087FC0689195 /* german.json in Resources */,
 				0A1F0C5E7D2B4E9A8C3D6F01 /* PrivacyInfo.xcprivacy in Resources */,
 				0BEA103E6CDE9885B0342894 /* pets.json in Resources */,
+				FD44A459DC5C46A991046DA5 /* sanskrit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

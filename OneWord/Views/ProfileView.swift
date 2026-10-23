@@ -40,8 +40,6 @@ struct ProfileView: View {
     @AppStorage("profilePhoto") private var photo: Data?
     /// Set in Settings. Off, the raw count above is the whole story.
     @AppStorage("fluencyGoal") private var fluencyGoal = false
-    /// Settings can hide Practice, which hands its tab back to Bookmarks.
-    @AppStorage("practiceEnabled") private var practiceEnabled = true
     /// The goal counts only the German shelf, so it waits for German to unlock.
     @Environment(PremiumViewModel.self) private var premium
 
@@ -75,6 +73,7 @@ struct ProfileView: View {
                 if editing { picture(t) }
                 stats(t)
                 if fluencyGoal && premium.allows(Wordbook.german.id) { goal(t) }
+                plans(t)
                 details(t)
                 rows(t)
                 if Features.accounts { footer(t) }
@@ -481,6 +480,54 @@ struct ProfileView: View {
         .accessibilityLabel("Gender")
     }
 
+    // MARK: - Plan
+
+    /// Free and Premium side by side, the current one tagged. Premium is a tag for now
+    /// (Features.premium is off): buying it moves the tag and opens nothing, so neither
+    /// card lists features. Restore stays — App Review wants one beside a non-consumable.
+    private func plans(_ t: Theme) -> some View {
+        let owned = premium.isUnlocked
+        return section("Plan", t, note: owned ? nil : premium.problem) {
+            HStack(alignment: .top, spacing: 12) {
+                planCard("Free", current: !owned, t) { EmptyView() }
+                planCard("Premium", current: owned, t) {
+                    Text("Lifetime")
+                        .font(.system(size: 12))
+                        .foregroundStyle(t.muted)
+                    if !owned {
+                        UnlockButton(name: "Buy Premium", verb: "Buy")
+                        Button("Restore Purchase") { Task { await premium.restore() } }
+                            .buttonStyle(.plain)
+                            .font(.system(size: 11))
+                            .foregroundStyle(t.muted)
+                            .disabled(premium.phase == .purchasing)
+                    }
+                }
+            }
+            // Both cards as tall as the taller one.
+            .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func planCard<C: View>(_ name: String, current: Bool, _ t: Theme,
+                                   @ViewBuilder content: () -> C) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Text(name)
+                    .font(.system(size: isPhone ? 17 : 15, weight: .semibold))
+                    .foregroundStyle(t.ink)
+                Spacer(minLength: 0)
+                if current { PlanTag(text: "Current", filled: true) }
+            }
+            content()
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background { ProfileCard(t: t) }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(current ? "\(name), current plan" : name)
+    }
+
     // MARK: - Learned, settings & sign out
 
     /// Learned pushes a list, Settings switches pane. Settings is off the sidebar
@@ -500,18 +547,14 @@ struct ProfileView: View {
             }
 
             if isPhone {
-                // The tab bar's third slot is Practice once it's flagged on, owned and
-                // on, Bookmarks until then (RootView.tabOrder). Bookmarks gets a row here
-                // when Practice took its tab; Practice itself never gets one.
-                if Features.practice && premium.isUnlocked && practiceEnabled {
-                    NavigationLink { WordListView(wordbook: .saved) } label: {
-                        row(t, "Bookmarks") {
-                            GlyphIcon(.bookmarks, size: 15).foregroundStyle(t.muted)
-                        }
+                // Bookmarks has no tab on a phone (RootView.tabOrder), so it gets a row here.
+                NavigationLink { WordListView(wordbook: .saved) } label: {
+                    row(t, "Bookmarks") {
+                        GlyphIcon(.bookmarks, size: 15).foregroundStyle(t.muted)
                     }
-                    .buttonStyle(.plain)
-                    separator(t)
                 }
+                .buttonStyle(.plain)
+                separator(t)
             }
 
             Button { pane = .settings } label: {

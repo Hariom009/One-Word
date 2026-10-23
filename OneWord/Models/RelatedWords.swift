@@ -244,4 +244,26 @@ final class RelatedWordsStore {
         return words
     }
 
+    /// Ranks `word` off the main thread and parks the answer in the memo, so a card
+    /// about to come to the front (Home's cover flow draws the next one early) finds
+    /// its neighbours waiting instead of ranking on the frame its slide starts.
+    /// ponytail: this reads the embedding off-main while `related` may read it on main —
+    /// the concurrent stress test above is the evidence it holds, not a guarantee.
+    func prefetch(_ word: Word, in bookID: String, limit: Int = 3) {
+        let key = "\(limit) \(word.term)"
+        guard builtFor == bookID, let index, memo[key] == nil else { return }
+        Task { [weak self] in
+            let words = await Self.rank(index, word, limit: limit)
+            // The book may have changed, and the memo been cleared, while it ranked.
+            guard let self, self.builtFor == bookID else { return }
+            self.memo[key] = words
+        }
+    }
+
+    /// @concurrent for the same reason as `build`: a bare nonisolated async would run on main.
+    @concurrent private nonisolated static func rank(_ index: RelatedWordsIndex, _ word: Word,
+                                                    limit: Int) async -> [Word] {
+        index.nearest(to: word, limit: limit)
+    }
+
 }

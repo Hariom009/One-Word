@@ -15,6 +15,9 @@ struct Word: Codable, Identifiable, Hashable {
     /// A bundled recording, `OneWord/Sounds/<sound>.m4a`, for books whose entries are
     /// sounds (Cats & Dogs). Absent from every other json, so it decodes as nil.
     var sound: String? = nil
+    /// A bundled photo, `OneWord/Pictures/<image>.jpg`, for the picture book. Same
+    /// shape as `sound`: absent from every other json, so it decodes as nil.
+    var image: String? = nil
 
     /// Stable id — the term is unique in `words.json`.
     var id: String { term }

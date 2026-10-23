@@ -51,6 +51,7 @@ struct OneWordApp: App {
         }
         #endif
         if Features.accounts { Self.configureFirebase() }
+        CloudSync.start()
         #if os(iOS)
         // The default category, .soloAmbient, stops the user's music the moment the shelf
         // clicks or the roll shuffles, and .ambient is muted outright by Silent mode —
@@ -76,11 +77,6 @@ struct OneWordApp: App {
         GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
     }
 
-    private func bindPremium() {
-        guard Features.premium, auth.restored else { return }
-        premium.bind(account: auth.accountID)
-    }
-
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -92,11 +88,9 @@ struct OneWordApp: App {
                 .environment(\.doodle, DoodleTheme(handwriting: doodleFont,
                                                    appearance: look))
                 .preferredColorScheme(look.colorScheme)
-                .task { if Features.premium { await premium.load() } }
-                // Premium belongs to the signed-in account: hand it over once Firebase has
-                // said who that is, and again on every sign-in and sign-out.
-                .onChange(of: auth.restored) { bindPremium() }
-                .onChange(of: auth.accountID) { bindPremium() }
+                // Premium belongs to the App Store's Apple ID, not a sign-in: no one to wait for.
+                // Always: Profile sells it even while Features.premium keeps it a tag.
+                .task { await premium.load() }
                 // The widget reads the unlock from the App Group; tell it to look again.
                 .onChange(of: premium.isUnlocked) { WidgetCenter.shared.reloadAllTimelines() }
         }

@@ -25,8 +25,8 @@ nonisolated enum AppGroup {
     // old container's contents were moved across by hand.
     //
     // iOS is the other way round: an App Group there MUST start with `group.`, so the
-    // iPhone gets its own id. The two containers never meet — there is no sync — so
-    // a pick made on the Mac is not the pick on the phone.
+    // iPhone gets its own id. The two containers never meet — only bookmarks and learned
+    // words cross, through iCloud (CloudSync) — so a pick made on the Mac is not the pick on the phone.
     #if os(iOS)
     static let id = "group.com.hariom.swift.oneword"
     #else

@@ -238,3 +238,17 @@ Which skill lands where:
   `OneWord/Sounds/` ([sources](06_Misc/PETS_SOUND_CANDIDATES.md); body language and terms were cut). App-only:
   not in the widget, whose Follow App Settings falls back to Everyday English. **Release is
   gated** on the painted cover: it borrows the Idioms art until `Dictionary_of_CatsAndDogs` lands.)*
+- **Sanskrit dictionary** (`sanskrit`) — built on `feat/icloud-and-subscription-wall` (`de23af4`).
+  Build and all gates green; the by-hand checks (shelf, today's word, search, widget) are still open.
+  [strategy](01_Brainstorm/SANSKRIT_DICTIONARY_STRATEGY.md) →
+  [resolved plan](02_Plan/Resolved/SANSKRIT_DICTIONARY_PLAN_RESOLVED.md)
+  *(The language under your Hindi: 216 curated entries with Devanagari headwords, the `hindi`
+  line naming what each word became, English definitions. Free, on the shelf and in the widget.
+  Borrows the Idioms art until `Dictionary_of_Sanskrit` lands.)*
+- **Picture Book** (`pictures`) — built on `feat/icloud-and-subscription-wall`.
+  Builds and all gates green; the by-hand checks are still open.
+  [image sources](06_Misc/PICTURES_IMAGE_SOURCES.md)
+  *(Picture-first: 243 everyday nouns, each with a CC0 / public-domain photo from
+  `OneWord/Pictures/` above the headword, via the entry's `image` field. App-only: not in the
+  widget, whose Follow App Settings falls back to Everyday English. Borrows the Everyday
+  English art until `Dictionary_of_PictureBook` lands.)*

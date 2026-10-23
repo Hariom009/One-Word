@@ -113,9 +113,18 @@ Rules that have already cost something:
 
 ## Premium — where the lock lives
 
-Everyday English (and Bookmarks) is free; every other dictionary unlocks with one
-non-consumable in-app purchase. Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
+Everyday English (and Bookmarks) is free; every other dictionary unlocks with Premium:
+a lifetime non-consumable, or a yearly or monthly auto-renewable subscription (one group).
+Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
 
+- **The App Store's Apple ID is the identity — no sign-in.** `PremiumViewModel.refresh()`
+  counts any verified, unrevoked entitlement for an id in `Premium.productIDs`; purchases
+  carry no `appAccountToken`. StoreKit already shares entitlements across every Mac and
+  iPhone on that Apple ID (one bundle id, so Universal Purchase), and lists a subscription
+  in `currentEntitlements` only while it's active — no expiry dates are checked here.
+  Premium never reads `AuthViewModel`; it loads at launch whatever `Features.accounts` says.
+- **Local testing:** `StoreKit/OneWord.storekit` (the OneWord scheme's Run action) holds all
+  three products. Today's purchase UI (`UnlockButton`) sells lifetime only.
 - **The rule is `Shared/Premium.swift`**, `nonisolated` so the widget can read it off-main:
   `free`, `allows(_:)`, `resolve(_:)`, and the flag mirrored into the App Group.
 - **`Premium.set(unlocked:)` is its only writer**, called only by `PremiumViewModel` (the one
@@ -138,6 +147,32 @@ non-consumable in-app purchase. Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLV
 - A new sheet or pane that shows a word or the shelf inherits the environment. An AppKit-hosted
   view (`NSHostingView`, like the capture HUD) does **not** — inject `PremiumViewModel` there.
 
+## Sync — bookmarks and learned words over iCloud
+
+Bookmarks and learned words follow the reader between Mac and iPhone with no sign-in: the
+device's iCloud account is the identity. `Models/CloudSync.swift`, app target only.
+**Free for everyone** — `CloudSync.start()` never checks Premium; keep it that way.
+
+- **The App Group stays the truth; iCloud key-value storage is a mirror**, as Premium mirrors
+  StoreKit. The widget never touches iCloud and needs no change.
+- **One move, `CloudSync.sync()`, for every trigger** — launch, `SavedWords.didChange` /
+  `LearnedWords.didChange`, and iCloud's `didChangeExternallyNotification`: merge both sides,
+  write only the side that differs, then post `didChange` if local moved. Merge is
+  idempotent, so that post re-syncs to a no-op instead of looping.
+- **Learned** is grow-only: union, earliest date per term.
+- **Bookmarks**: per term the latest event wins, a save or an un-save. Un-saves are
+  tombstones (`SavedWords.removed`, written by `toggle`), kept locally and in the cloud
+  payload — without them a delete on one device is resurrected by the other.
+- **The toast** (`Views/SyncToast.swift`, on RootView): a sync that PULLED anything posts
+  `CloudSync.didSync` and bumps `CloudSync.pulls`; the pill shows "Syncing…" then "Synced
+  with iCloud". Pushes stay quiet — every bookmark and new word read pushes. The launch sync
+  runs before any view listens, so the toast seeds from `pulls` and waits out the splash.
+- **Not synced:** the pick, the offset and the pin (`WordSelectionStore`) — per device.
+- Both entitlements files carry the same `ubiquity-kvstore-identifier`; differ, and the
+  platforms see two stores. The app id needs the iCloud capability (Key-value storage).
+- Ceiling: 1 MB total. A fully-read 12k shelf is ~300KB of learned terms. The upgrade is
+  CKSyncEngine. The merge rules are checked by `tools/check_sync.sh`.
+
 ## Testing seam
 `WordProvider.word(for:)` and `WordViewModel` are pure over an injected word list — unit-test
 date→word mapping (boundaries: day rollover, list wrap-around) without WidgetKit or SwiftUI.
@@ -155,7 +190,7 @@ OneWord/                        app target
   ViewModels/                   @Observable. No view types. The unit-testable seam.
     WordViewModel, WordListViewModel, ProfileViewModel, PremiumViewModel
   Models/                       App-only model + state. No SwiftUI.
-    Wordbook, Appearance, LearnedWords, RelatedWords
+    Wordbook, Appearance, LearnedWords, RelatedWords, CloudSync
   Shared/                       MEMBER OF BOTH TARGETS — app + widget
     Word, WordProvider, WordSelectionStore, SavedWords, Theme, AppGroup, Premium, *.json
   Assets.xcassets/

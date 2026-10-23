@@ -6,11 +6,11 @@
 //  price, and the state of a purchase in flight. Every unlock or loss is mirrored
 //  into the App Group through `Premium.set`, which is what the widget reads. The
 //  purchase sheet itself is SwiftUI's (`\.purchase`), so PremiumBar starts it and
-//  hands the result back here — this file names no views.
+//  hands the result back here — this file names no views. The App Store's Apple ID is the
+//  identity: any Premium entitlement it holds unlocks, on every device signed into it.
 //  MainActor-isolated by default isolation.
 //
 
-import CryptoKit      // SHA256 — the account's purchase token
 import Foundation
 import Observation
 import StoreKit
@@ -30,11 +30,6 @@ final class PremiumViewModel {
     @ObservationIgnored private var updates: Task<Void, Never>?
     /// Refreshes suspend while they read, so two can overlap; only the latest one applies.
     @ObservationIgnored private var generation = 0
-    /// Whose Premium this is: the signed-in account's id, nil while signed out or before
-    /// Firebase has restored the session. A purchase is stamped with it (`appAccountToken`)
-    /// and only transactions carrying the same stamp count — so one Apple ID buying once
-    /// doesn't unlock every account that signs in on this device.
-    @ObservationIgnored private var account: String?
 
     init() {
         // The cache first, so an owner never sees the shelf flash locked while StoreKit answers.
@@ -48,27 +43,8 @@ final class PremiumViewModel {
         }
     }
 
-    func allows(_ id: String) -> Bool { Premium.allows(id, unlocked: isUnlocked) }
-
-    /// Called whenever the signed-in account changes, once Firebase has reported it.
-    /// Signing out locks at once; signing in re-reads StoreKit for that account's purchase.
-    func bind(account: String?) {
-        self.account = account
-        guard account != nil else { set(false); return }
-        Task { await refresh() }
-    }
-
-    /// What the purchase sheet is told, so the receipt names who bought it.
-    var purchaseOptions: Set<Product.PurchaseOption> {
-        account.map { [.appAccountToken(Self.token(for: $0))] } ?? []
-    }
-
-    /// The uid folded into a UUID, deterministically, so a receipt can be matched to an
-    /// account on any device with no table of tokens kept anywhere.
-    private static func token(for account: String) -> UUID {
-        let hash = Array(SHA256.hash(data: Data(account.utf8)).prefix(16))
-        return hash.withUnsafeBytes { UUID(uuid: $0.load(as: uuid_t.self)) }
-    }
+    /// While Features.premium is off, owning Premium opens nothing: it's the Profile tag only.
+    func allows(_ id: String) -> Bool { Premium.allows(id, unlocked: Features.premium && isUnlocked) }
 
     /// What's in the way of buying, if anything — shown in place of the pitch.
     var problem: String? {
@@ -87,18 +63,18 @@ final class PremiumViewModel {
         storeUnavailable = product == nil
     }
 
+    /// Lifetime or a live subscription: StoreKit lists a subscription here only while it's
+    /// active, so an expiry drops out on its own with no dates checked.
+    /// ponytail: runs at launch, after a purchase or restore, and on Transaction.updates — a
+    /// lapse with no renewal sends none, so it relocks at the next launch. Also refresh on
+    /// app-active if a Mac left open for weeks ever matters.
     func refresh() async {
-        // Nobody to own it yet: leave the cache alone rather than relock an owner (and walk
-        // their pick back) in the moment before Firebase restores the session.
-        guard let account else { return }
-        let token = Self.token(for: account)
         generation += 1
         let mine = generation
         var owned = false
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
-               transaction.productID == Premium.productID,
-               transaction.appAccountToken == token,
+               Premium.productIDs.contains(transaction.productID),
                transaction.revocationDate == nil { owned = true }
         }
         // A newer refresh started while this one read: its snapshot is the fresher one.
@@ -145,8 +121,10 @@ final class PremiumViewModel {
 
     /// Always writes through — that heals a stale cache and walks a locked pick home — but
     /// only touches the observed flag when it changes, so nothing redraws for nothing.
+    /// With Features.premium off the App Group is never written, so the widget and the
+    /// reader's pick behave exactly as for a free reader.
     private func set(_ owned: Bool) {
-        Premium.set(unlocked: owned)
+        if Features.premium { Premium.set(unlocked: owned) }
         if owned != isUnlocked { isUnlocked = owned }
     }
 

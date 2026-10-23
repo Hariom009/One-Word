@@ -22,8 +22,9 @@ One Word/
 | `WordCapture.swift` | AppKit glue: `NSServices` "Save to One Word", the capture HUD. | Neither M, V, nor VM — AppKit lives at root. |
 | `Views/` | SwiftUI `View`s only. | **No data loading, no persistence, no JSON.** |
 | `ViewModels/` | `@Observable` classes driving those views. | `import Observation` only — **never** SwiftUI, never a view type. This is the testable seam. |
-| `Models/` | App-only data and state: `Wordbook`, `Appearance`, `LearnedWords`, `RelatedWords`, `Sentences` — and app-only data files (`sentences.json`). | No SwiftUI. Not visible to the widget. |
+| `Models/` | App-only data and state: `Wordbook`, `Appearance`, `LearnedWords`, `RelatedWords`, `Sentences`, `CloudSync` — and app-only data files (`sentences.json`). | No SwiftUI. Not visible to the widget. |
 | `Sounds/` | Real recordings a sound book plays, `<book>-<term>.m4a` (Cats & Dogs: `pets-trill.m4a`), named by each entry's `sound` field. CC0; provenance in `Docs/06_Misc/PETS_SOUND_CANDIDATES.md`. | App-only, not visible to the widget. `check_words` fails if a `sound` has no file here. |
+| `Pictures/` | The picture book's photos, `pictures-<term>.jpg` (≤800px JPEG), named by each entry's `image` field. CC0 / public domain from Wikimedia Commons; provenance in `Docs/06_Misc/PICTURES_IMAGE_SOURCES.md`. | App-only, not visible to the widget. `check_words` fails if an `image` has no file here. |
 | `Shared/` | `Word`, `WordProvider`, `WordSelectionStore`, `SavedWords`, `Theme`, `AppGroup`, `Premium`, and every `<book>.json`. | **Member of BOTH targets.** Anything the widget reads must live here. |
 | `Assets.xcassets/` | App icon (Mac set plus one iOS 1024), accent color. | |
 | `OneWord.entitlements`, `OneWord-iOS.entitlements` | One per platform, picked by `CODE_SIGN_ENTITLEMENTS[sdk=…]`. The iOS one has no sandbox key and a `group.`-prefixed App Group. | Edit the iOS file by hand: Xcode's Signing editor only touches the Mac one. |
@@ -49,13 +50,14 @@ No view models: a widget is timeline-driven, not user-event-driven, so `Timeline
 | `check_capture.sh` | Pinned-word precedence over the daily offset. |
 | `check_premium.sh` | Premium's rules: what's free, what unlocking opens, and what losing Premium does to the pick. |
 | `check_sentences.sh` | Practice corpus decodes; the reel's draw excludes and stays uniform. |
+| `check_sync.sh` | iCloud sync's merge rules: earliest learned date, latest bookmark event wins, tombstones, idempotence. |
 | `*Check.swift` | Headless harnesses the `check_*.sh` scripts compile and run. |
 | `gen_words/` | Python word-set generation/translation. Has its own README. |
 
-Run all six before calling work done:
+Run all seven before calling work done:
 
 ```bash
-for s in check_words check_related check_learned check_capture check_sentences check_premium; do bash tools/$s.sh; done
+for s in check_words check_related check_learned check_capture check_sentences check_premium check_sync; do bash tools/$s.sh; done
 ```
 
 They compile source **by explicit path** — moving a Swift file means updating the script
