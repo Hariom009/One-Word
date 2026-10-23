@@ -1,0 +1,1946 @@
+[
+  {
+    "term": "acorn",
+    "partOfSpeech": "noun",
+    "hindi": "बलूत का फल — ओक के पेड़ पर लगने वाला छोटा, चिकना, अंडाकार मेवा जिस पर टोपी जैसा आवरण होता है",
+    "definition": "a small, smooth, oval nut with a woody cap, which grows on oak trees and is eaten by squirrels",
+    "example": "The squirrel hid an acorn under the leaves and promptly forgot where it was.",
+    "image": "pictures-acorn"
+  },
+  {
+    "term": "aeroplane",
+    "partOfSpeech": "noun",
+    "hindi": "हवाई जहाज़ — पंखों और इंजन वाली बड़ी सवारी जो आसमान में उड़कर लोगों को दूर ले जाती है",
+    "definition": "a large flying vehicle with fixed wings and engines that carries passengers or goods through the air",
+    "example": "The aeroplane rose above the clouds, and the city shrank to toy size.",
+    "image": "pictures-aeroplane"
+  },
+  {
+    "term": "ambulance",
+    "partOfSpeech": "noun",
+    "hindi": "एम्बुलेंस — बीमार या घायल लोगों को जल्दी अस्पताल पहुँचाने वाली ख़ास गाड़ी",
+    "definition": "a van with flashing lights and a siren that rushes sick or injured people to hospital",
+    "example": "The ambulance swept past us, and every car made room at once.",
+    "image": "pictures-ambulance"
+  },
+  {
+    "term": "ant",
+    "partOfSpeech": "noun",
+    "hindi": "चींटी — एक छोटा-सा कीड़ा जो झुंड में रहता है और मीठी चीज़ों की ओर खिंचा चला आता है",
+    "definition": "a tiny insect with six legs and a narrow waist that lives in large groups and carries food back to its nest",
+    "example": "A line of ants marched across the kitchen floor, carrying one tiny crumb of cake.",
+    "image": "pictures-ant"
+  },
+  {
+    "term": "apple",
+    "partOfSpeech": "noun",
+    "hindi": "सेब — लाल या हरे छिलके वाला एक गोल, मीठा और रसीला फल",
+    "definition": "a round fruit with crisp white flesh and red, green or yellow skin, growing on trees in cool climates",
+    "example": "She packed a shiny red apple in her bag for the long train journey.",
+    "image": "pictures-apple"
+  },
+  {
+    "term": "backpack",
+    "partOfSpeech": "noun",
+    "hindi": "बैकपैक — पीठ पर टाँगा जाने वाला, दो पट्टियों वाला बड़ा थैला",
+    "definition": "a bag with two shoulder straps, carried on the back and used for books, clothes and other things",
+    "example": "He packed a sandwich, a water bottle and two comics into his backpack.",
+    "image": "pictures-backpack"
+  },
+  {
+    "term": "balloon",
+    "partOfSpeech": "noun",
+    "hindi": "गुब्बारा — हवा भरने पर फूल जाने वाली रबड़ की रंगीन थैली",
+    "definition": "a thin rubber bag that swells into a round shape when filled with air or gas, used for parties and play",
+    "example": "Every child at the party left holding a balloon and a slice of cake.",
+    "image": "pictures-balloon"
+  },
+  {
+    "term": "bamboo",
+    "partOfSpeech": "noun",
+    "hindi": "बाँस — एक ऊँची, सीधी घास जिसके खोखले, गाँठदार हरे तने से छड़ें और फ़र्नीचर बनते हैं",
+    "definition": "a tall, woody grass with hollow, jointed green stems, used to make furniture, poles and scaffolding in many parts of Asia",
+    "example": "We built a small garden fence out of bamboo, and the neighbours were quite jealous.",
+    "image": "pictures-bamboo"
+  },
+  {
+    "term": "banana",
+    "partOfSpeech": "noun",
+    "hindi": "केला — पीले छिलके वाला एक लंबा, मुड़ा हुआ और मीठा फल",
+    "definition": "a long curved fruit with soft sweet flesh inside a yellow skin that you peel before eating",
+    "example": "The monkey peeled the banana very slowly, as if the whole zoo were watching him.",
+    "image": "pictures-banana"
+  },
+  {
+    "term": "barn",
+    "partOfSpeech": "noun",
+    "hindi": "खलिहान — खेत के पास बना बड़ा घर जहाँ फ़सल, अनाज, भूसा और औज़ार रखे जाते हैं",
+    "definition": "a large farm building with a high roof, used for storing hay, grain and machinery or for sheltering animals",
+    "example": "After the harvest, the whole village gathered in the barn to sort the grain.",
+    "image": "pictures-barn"
+  },
+  {
+    "term": "basket",
+    "partOfSpeech": "noun",
+    "hindi": "टोकरी — बेंत, बाँस या तार से बुना हुआ खुला बर्तन जिसमें सामान रखकर ले जाया जाता है",
+    "definition": "a container woven from cane, straw or wire, usually with a handle, used for carrying or storing fruit, bread, clothes and other things",
+    "example": "She filled the basket with ripe mangoes and carried it home from the market.",
+    "image": "pictures-basket"
+  },
+  {
+    "term": "beach",
+    "partOfSpeech": "noun",
+    "hindi": "समुद्र तट — समुद्र या झील के किनारे रेत या छोटे पत्थरों से भरी जगह",
+    "definition": "a strip of sand or small stones beside the sea or a lake, where people walk, swim and play",
+    "example": "We spent the whole afternoon on the beach, building a sandcastle that the tide quickly washed away.",
+    "image": "pictures-beach"
+  },
+  {
+    "term": "bed",
+    "partOfSpeech": "noun",
+    "hindi": "पलंग — लकड़ी या लोहे का बना वह फ़र्नीचर जिस पर गद्दा बिछाकर लोग सोते हैं",
+    "definition": "a large piece of furniture with a soft mattress, pillows and blankets, where people lie down to sleep at night",
+    "example": "The cat jumped onto the bed and refused to move for the whole afternoon.",
+    "image": "pictures-bed"
+  },
+  {
+    "term": "bee",
+    "partOfSpeech": "noun",
+    "hindi": "मधुमक्खी — एक उड़ने वाला कीड़ा जो फूलों से रस इकट्ठा करके शहद बनाता है",
+    "definition": "a small flying insect with a striped yellow and black body that collects nectar from flowers and makes honey",
+    "example": "The bee settled on a sunflower and hummed happily while it worked.",
+    "image": "pictures-bee"
+  },
+  {
+    "term": "bell",
+    "partOfSpeech": "noun",
+    "hindi": "घंटी — धातु की बनी, बजाने पर तेज़ आवाज़ देने वाली कटोरी जैसी चीज़",
+    "definition": "a hollow metal object shaped like a cup, which makes a clear ringing sound when it is struck or shaken",
+    "example": "When the school bell rings, the whole corridor fills with happy noise.",
+    "image": "pictures-bell"
+  },
+  {
+    "term": "belt",
+    "partOfSpeech": "noun",
+    "hindi": "बेल्ट — कमर पर बाँधी जाने वाली चमड़े या कपड़े की पट्टी, जिससे पैंट कसी रहती है",
+    "definition": "a long, narrow strip of leather or cloth worn around the waist to hold up trousers, usually fastened with a metal buckle",
+    "example": "Grandfather pulled his belt one notch tighter after a very large lunch.",
+    "image": "pictures-belt"
+  },
+  {
+    "term": "bicycle",
+    "partOfSpeech": "noun",
+    "hindi": "साइकिल — दो पहियों वाली सवारी जिसे पैडल मारकर चलाया जाता है",
+    "definition": "a vehicle with two wheels, a seat and handlebars, which you ride by pushing pedals with your feet",
+    "example": "On Sunday mornings we ride our bicycles to the park and back.",
+    "image": "pictures-bicycle"
+  },
+  {
+    "term": "blanket",
+    "partOfSpeech": "noun",
+    "hindi": "कंबल — ऊन या मोटे कपड़े की बनी बड़ी चादर जो सर्दी में शरीर को गर्म रखने के लिए ओढ़ी जाती है",
+    "definition": "a large, thick piece of soft cloth, usually made of wool or fleece, that you spread over yourself to keep warm in bed",
+    "example": "On cold winter nights, nothing feels better than a warm blanket and a hot cup of tea.",
+    "image": "pictures-blanket"
+  },
+  {
+    "term": "boat",
+    "partOfSpeech": "noun",
+    "hindi": "नाव — पानी पर तैरने वाली छोटी सवारी जिसे चप्पू, पाल या इंजन से चलाते हैं",
+    "definition": "a small vessel that floats and carries people or goods across water, moved by oars, sails or an engine",
+    "example": "The little boat rocked gently as we drifted across the quiet lake.",
+    "image": "pictures-boat"
+  },
+  {
+    "term": "book",
+    "partOfSpeech": "noun",
+    "hindi": "किताब — जिल्द के भीतर जुड़े छपे पन्नों का वह संग्रह जिसे हम पढ़ते हैं",
+    "definition": "a set of printed pages joined together inside a cover, which people read for stories, facts or study",
+    "example": "She curled up on the sofa with a good book and a cup of tea.",
+    "image": "pictures-book"
+  },
+  {
+    "term": "boot",
+    "partOfSpeech": "noun",
+    "hindi": "बूट — टखने या घुटने तक पैर को ढकने वाला मज़बूत जूता",
+    "definition": "a strong shoe that covers the foot and ankle, and sometimes the leg up to the knee, worn in rain, mud or snow",
+    "example": "She jumped into every puddle on the way home, and one boot filled with water.",
+    "image": "pictures-boot"
+  },
+  {
+    "term": "bottle",
+    "partOfSpeech": "noun",
+    "hindi": "बोतल — काँच या प्लास्टिक का लंबी गर्दन वाला बर्तन जिसमें पानी, दूध या कोई और तरल पदार्थ भरकर रखा जाता है",
+    "definition": "a glass or plastic container with a narrow neck and a cap or cork, used for keeping water, milk or other liquids",
+    "example": "He always carries a bottle of cold water in his bag during summer.",
+    "image": "pictures-bottle"
+  },
+  {
+    "term": "bowl",
+    "partOfSpeech": "noun",
+    "hindi": "कटोरा — खाने-पीने की चीज़ें रखने के लिए गहरा और गोल बर्तन",
+    "definition": "a deep, round dish with a wide opening, used for serving or eating soup, rice, cereal and other food",
+    "example": "Grandma served the hot dal in a big steel bowl, and everyone wanted seconds.",
+    "image": "pictures-bowl"
+  },
+  {
+    "term": "bread",
+    "partOfSpeech": "noun",
+    "hindi": "ब्रेड — आटे या मैदे से सेंककर बनाई गई नरम चीज़, जिसके स्लाइस काटकर खाए जाते हैं",
+    "definition": "a baked food made from flour, water and yeast, usually cut into slices and eaten with butter or jam",
+    "example": "He toasted two slices of bread and spread butter on them while the tea brewed.",
+    "image": "pictures-bread"
+  },
+  {
+    "term": "bridge",
+    "partOfSpeech": "noun",
+    "hindi": "पुल — नदी, सड़क या घाटी के ऊपर बना ढाँचा जिससे लोग और गाड़ियाँ दूसरी ओर पहुँचते हैं",
+    "definition": "a structure built over a river, road or valley so that people and vehicles can cross from one side to the other",
+    "example": "The old bridge shakes a little whenever a heavy truck rumbles across it.",
+    "image": "pictures-bridge"
+  },
+  {
+    "term": "broccoli",
+    "partOfSpeech": "noun",
+    "hindi": "ब्रोकली — छोटे पेड़ जैसी बनावट वाली हरी सब्ज़ी, जिसमें मोटे डंठल पर फूलों का गुच्छा होता है",
+    "definition": "a green vegetable shaped like a small tree, with a thick stalk and a tight head of tiny flower buds",
+    "example": "The little boy said the broccoli looked like a forest and ate it bravely.",
+    "image": "pictures-broccoli"
+  },
+  {
+    "term": "broom",
+    "partOfSpeech": "noun",
+    "hindi": "झाड़ू — लंबी डंडी और तिनकों से बनी चीज़ जिससे फ़र्श की धूल और कचरा साफ़ किया जाता है",
+    "definition": "a cleaning tool with a long handle and a bunch of stiff bristles or grass at one end, used for sweeping floors",
+    "example": "Every morning she takes the broom and sweeps the dust out of the front door.",
+    "image": "pictures-broom"
+  },
+  {
+    "term": "brush",
+    "partOfSpeech": "noun",
+    "hindi": "ब्रश — हत्थे के सिरे पर रेशों या बालों का गुच्छा लगा औज़ार, जिससे रंग लगाते या सफ़ाई करते हैं",
+    "definition": "a tool with a handle and a bunch of bristles at one end, used for painting, cleaning or tidying hair",
+    "example": "He dipped the brush in blue paint and began colouring the sky.",
+    "image": "pictures-brush"
+  },
+  {
+    "term": "bucket",
+    "partOfSpeech": "noun",
+    "hindi": "बाल्टी — धातु या प्लास्टिक का गोल खुला बर्तन जिसमें हैंडल लगा होता है और जिसमें पानी भरकर ले जाया जाता है",
+    "definition": "a round, open container made of plastic or metal with a handle over the top, used for carrying water",
+    "example": "The children filled the bucket at the tap and carried it carefully to the garden.",
+    "image": "pictures-bucket"
+  },
+  {
+    "term": "bus",
+    "partOfSpeech": "noun",
+    "hindi": "बस — सड़क पर चलने वाली बड़ी गाड़ी जिसमें बहुत-से यात्री एक साथ सफ़र करते हैं",
+    "definition": "a large road vehicle with many seats that carries passengers along a fixed route and stops at set places",
+    "example": "I missed the bus by a minute, so I enjoyed a slow walk instead.",
+    "image": "pictures-bus"
+  },
+  {
+    "term": "butterfly",
+    "partOfSpeech": "noun",
+    "hindi": "तितली — रंग-बिरंगे पंखों वाला एक सुंदर कीड़ा जो फूलों पर मँडराता है",
+    "definition": "an insect with four large, colourful wings that flutters from flower to flower and starts life as a caterpillar",
+    "example": "A yellow butterfly landed on my notebook, as if it wanted to read too.",
+    "image": "pictures-butterfly"
+  },
+  {
+    "term": "button",
+    "partOfSpeech": "noun",
+    "hindi": "बटन — कपड़े को बंद करने के लिए लगा हुआ छोटा गोल टुकड़ा",
+    "definition": "a small, round, flat piece sewn onto clothes, pushed through a hole or loop to fasten two edges together",
+    "example": "One button on his shirt came loose, so he kept his jacket closed all day.",
+    "image": "pictures-button"
+  },
+  {
+    "term": "cabbage",
+    "partOfSpeech": "noun",
+    "hindi": "पत्तागोभी — हरी या बैंगनी पत्तियों की कसी हुई परतों से बनी गोल सब्ज़ी",
+    "definition": "a large round vegetable made of tightly packed green or purple leaves, eaten raw in salads or cooked",
+    "example": "Mother chopped the cabbage finely and tossed it into the hot, sizzling pan.",
+    "image": "pictures-cabbage"
+  },
+  {
+    "term": "cactus",
+    "partOfSpeech": "noun",
+    "hindi": "नागफनी — काँटों से भरा रेगिस्तानी पौधा जो अपने मोटे तने में पानी जमा रखता है",
+    "definition": "a thick, spiny desert plant that stores water in its fleshy green stem and sometimes bears bright flowers",
+    "example": "Be careful with that cactus; its tiny spines are harder to spot than to remove.",
+    "image": "pictures-cactus"
+  },
+  {
+    "term": "cake",
+    "partOfSpeech": "noun",
+    "hindi": "केक — आटे, चीनी और मक्खन से सेंका हुआ नरम मीठा पकवान, जो अक्सर जन्मदिन पर काटा जाता है",
+    "definition": "a soft sweet baked food made from flour, sugar and butter, often decorated with icing and eaten at birthdays",
+    "example": "We sang loudly while she blew out the candles on the cake.",
+    "image": "pictures-cake"
+  },
+  {
+    "term": "calculator",
+    "partOfSpeech": "noun",
+    "hindi": "कैलकुलेटर — जोड़, घटाव, गुणा और भाग झटपट करने वाली छोटी इलेक्ट्रॉनिक मशीन",
+    "definition": "a small electronic device with number buttons and a screen that quickly adds, subtracts, multiplies and divides numbers",
+    "example": "I always reach for the calculator when the shop bill gets complicated.",
+    "image": "pictures-calculator"
+  },
+  {
+    "term": "camel",
+    "partOfSpeech": "noun",
+    "hindi": "ऊँट — पीठ पर कूबड़ वाला लंबा जानवर जो रेगिस्तान में सवारी और बोझ ढोने के काम आता है",
+    "definition": "a tall desert animal with a long neck and one or two humps on its back, used for carrying people and loads",
+    "example": "The camel strolled across the sand as calmly as if it owned the desert.",
+    "image": "pictures-camel"
+  },
+  {
+    "term": "camera",
+    "partOfSpeech": "noun",
+    "hindi": "कैमरा — फ़ोटो और वीडियो खींचने वाला यंत्र",
+    "definition": "a device with a lens that captures photographs or videos, usually held in the hands or fixed on a stand",
+    "example": "Please smile at the camera, everyone, and hold still for a moment.",
+    "image": "pictures-camera"
+  },
+  {
+    "term": "candle",
+    "partOfSpeech": "noun",
+    "hindi": "मोमबत्ती — मोम की बनी बत्ती वाली छड़ जो जलाने पर रोशनी देती है",
+    "definition": "a stick of wax with a string wick in the middle, which gives a soft, flickering light when you burn it",
+    "example": "When the power went out, we lit a candle and told stories until dinner.",
+    "image": "pictures-candle"
+  },
+  {
+    "term": "canoe",
+    "partOfSpeech": "noun",
+    "hindi": "डोंगी — चप्पू से चलाई जाने वाली पतली और हल्की छोटी नाव",
+    "definition": "a light, narrow boat pointed at both ends, which a person paddles while sitting or kneeling facing forward",
+    "example": "We paddled the canoe slowly along the river and watched the herons.",
+    "image": "pictures-canoe"
+  },
+  {
+    "term": "cap",
+    "partOfSpeech": "noun",
+    "hindi": "टोपी — सिर पर पहना जाने वाला नरम, गोल कपड़ा जिसके आगे छज्जा निकला होता है",
+    "definition": "a soft, close-fitting hat with a stiff curved front part called a peak, worn to shade the eyes",
+    "example": "He wore his cap backwards and still managed to look very serious.",
+    "image": "pictures-cap"
+  },
+  {
+    "term": "car",
+    "partOfSpeech": "noun",
+    "hindi": "कार — इंजन से चलने वाली चार पहियों की गाड़ी जिसमें कुछ लोग बैठकर सफ़र करते हैं",
+    "definition": "a road vehicle with four wheels and an engine, designed to carry a driver and a few passengers",
+    "example": "Our old car rattles a little, but it always gets us home.",
+    "image": "pictures-car"
+  },
+  {
+    "term": "carrot",
+    "partOfSpeech": "noun",
+    "hindi": "गाजर — लंबी, नुकीली और नारंगी रंग की जड़ वाली सब्ज़ी जो मिट्टी के नीचे उगती है",
+    "definition": "a long pointed orange root vegetable that grows underground and tastes sweet and crunchy when eaten raw",
+    "example": "The rabbit nibbled the carrot down to a tiny stub.",
+    "image": "pictures-carrot"
+  },
+  {
+    "term": "castle",
+    "partOfSpeech": "noun",
+    "hindi": "किला — मोटी पत्थर की दीवारों और बुर्जों वाली बड़ी पुरानी इमारत जो राजा की रक्षा के लिए बनी थी",
+    "definition": "a large old building with thick stone walls and towers, built long ago to protect a king or lord",
+    "example": "From the top of the castle you can see the entire valley and the winding river.",
+    "image": "pictures-castle"
+  },
+  {
+    "term": "cat",
+    "partOfSpeech": "noun",
+    "hindi": "बिल्ली — एक छोटा पालतू जानवर जिसके नरम रोएँ, लंबी मूँछें और तेज़ पंजे होते हैं",
+    "definition": "a small furry pet with whiskers, sharp claws and pointed ears that purrs when happy and chases mice",
+    "example": "Our cat sleeps all afternoon in the one patch of sunlight on the sofa.",
+    "image": "pictures-cat"
+  },
+  {
+    "term": "cave",
+    "partOfSpeech": "noun",
+    "hindi": "गुफ़ा — पहाड़ या चट्टान के अंदर बनी बड़ी प्राकृतिक खोखली जगह",
+    "definition": "a large natural hollow space under the ground or inside a hill or cliff, often dark and cool",
+    "example": "The bats slept quietly in the cave until our torch woke them up.",
+    "image": "pictures-cave"
+  },
+  {
+    "term": "chain",
+    "partOfSpeech": "noun",
+    "hindi": "ज़ंजीर — धातु की कड़ियों को एक-दूसरे में फँसाकर बनी मज़बूत लंबी लड़ी",
+    "definition": "a row of metal rings linked together in a line, used to pull, hold, fasten or decorate things",
+    "example": "The old gate was fastened shut with a heavy iron chain.",
+    "image": "pictures-chain"
+  },
+  {
+    "term": "chair",
+    "partOfSpeech": "noun",
+    "hindi": "कुर्सी — पीठ टिकाने की जगह और चार पैरों वाली वह सीट जिस पर एक व्यक्ति बैठता है",
+    "definition": "a seat for one person, with a back and usually four legs, often made of wood, metal or plastic",
+    "example": "Please pull up a chair and sit with us while the tea is still hot.",
+    "image": "pictures-chair"
+  },
+  {
+    "term": "cheese",
+    "partOfSpeech": "noun",
+    "hindi": "चीज़ — दूध से बना पीला या सफ़ेद ठोस खाना, जिसे काटकर या कद्दूकस करके खाया जाता है",
+    "definition": "a solid food made from milk, usually yellow or white, that can be sliced, melted or grated",
+    "example": "A small mouse crept toward the cheese, hoping nobody in the house was awake.",
+    "image": "pictures-cheese"
+  },
+  {
+    "term": "cherry",
+    "partOfSpeech": "noun",
+    "hindi": "चेरी — एक छोटा, गोल, चमकदार लाल फल जिसमें लंबी डंडी और अंदर कड़ी गुठली होती है",
+    "definition": "a small round shiny red fruit with a long thin stalk and a hard stone inside",
+    "example": "She placed a bright cherry on top of the ice cream and smiled.",
+    "image": "pictures-cherry"
+  },
+  {
+    "term": "chessboard",
+    "partOfSpeech": "noun",
+    "hindi": "शतरंज की बिसात — चौंसठ काले-सफ़ेद खानों वाला चौकोर तख़्ता",
+    "definition": "a square board marked with 64 alternating light and dark squares, on which the game of chess is played",
+    "example": "Uncle laid out the chessboard and promised a quick game that lasted all afternoon.",
+    "image": "pictures-chessboard"
+  },
+  {
+    "term": "chili",
+    "partOfSpeech": "noun",
+    "hindi": "मिर्च — तीखा स्वाद देने वाली लंबी, पतली हरी या लाल फली",
+    "definition": "a small thin green or red pod that tastes very hot and is used to add spice to food",
+    "example": "One bite of the green chili made his eyes water and his ears burn.",
+    "image": "pictures-chili"
+  },
+  {
+    "term": "clock",
+    "partOfSpeech": "noun",
+    "hindi": "घड़ी — दीवार या मेज़ पर रखा जाने वाला यंत्र जो समय बताता है",
+    "definition": "a device with a round face and moving hands that shows the time, usually hung on a wall or kept on a table",
+    "example": "The clock on the wall ticked loudly in the quiet room.",
+    "image": "pictures-clock"
+  },
+  {
+    "term": "cloud",
+    "partOfSpeech": "noun",
+    "hindi": "बादल — आसमान में तैरता पानी की नन्हीं बूँदों से बना सफ़ेद या स्लेटी गुच्छा जिससे बारिश होती है",
+    "definition": "a white or grey mass of tiny water drops floating high in the sky, from which rain often falls",
+    "example": "A single dark cloud drifted over the cricket ground, and everyone looked for their umbrellas.",
+    "image": "pictures-cloud"
+  },
+  {
+    "term": "coat",
+    "partOfSpeech": "noun",
+    "hindi": "कोट — सर्दी से बचाने वाला, लंबी बाँहों का गर्म ऊपरी कपड़ा",
+    "definition": "a long, warm piece of clothing with sleeves, worn over other clothes outdoors to keep out the cold",
+    "example": "It was so cold that she buttoned her coat up to her chin.",
+    "image": "pictures-coat"
+  },
+  {
+    "term": "coconut",
+    "partOfSpeech": "noun",
+    "hindi": "नारियल — भूरे रेशेदार खोल वाला बड़ा गोल फल, जिसके अंदर सफ़ेद गूदा और मीठा पानी होता है",
+    "definition": "a large round fruit with a hard hairy brown shell, white flesh inside and sweet watery juice in the middle",
+    "example": "The vendor chopped the top off the coconut and handed me a straw.",
+    "image": "pictures-coconut"
+  },
+  {
+    "term": "coffee",
+    "partOfSpeech": "noun",
+    "hindi": "कॉफ़ी — भुने हुए बीजों को पीसकर बनाया गया गहरे भूरे रंग का गरम और कड़वा पेय",
+    "definition": "a hot dark brown drink made from roasted ground beans, which many people enjoy in the morning",
+    "example": "Grandfather held his warm coffee with both hands and watched the rain fall.",
+    "image": "pictures-coffee"
+  },
+  {
+    "term": "coin",
+    "partOfSpeech": "noun",
+    "hindi": "सिक्का — धातु का छोटा, गोल और चपटा टुकड़ा जो पैसे के रूप में चलता है",
+    "definition": "a small, round, flat piece of metal stamped with a design and used as money",
+    "example": "He found a shiny coin under the sofa cushion and grinned.",
+    "image": "pictures-coin"
+  },
+  {
+    "term": "comb",
+    "partOfSpeech": "noun",
+    "hindi": "कंघी — प्लास्टिक या लकड़ी की दाँतेदार पट्टी जिससे बाल सुलझाए और सँवारे जाते हैं",
+    "definition": "a flat strip of plastic, wood or metal with a row of thin teeth, used to tidy and straighten your hair",
+    "example": "He ran a comb through his messy hair and was ready for school.",
+    "image": "pictures-comb"
+  },
+  {
+    "term": "compass",
+    "partOfSpeech": "noun",
+    "hindi": "कम्पास — दिशा बताने वाला यंत्र जिसकी चुंबकीय सुई हमेशा उत्तर की ओर रहती है",
+    "definition": "an instrument with a magnetic needle that always points north, helping travellers find their direction",
+    "example": "Without a compass, the hikers could not tell which way was north.",
+    "image": "pictures-compass"
+  },
+  {
+    "term": "corn",
+    "partOfSpeech": "noun",
+    "hindi": "मक्का — हरे छिलके में लिपटा, पीले दानों से भरा भुट्टा, जिसे भूनकर या उबालकर खाया जाता है",
+    "definition": "a tall crop whose long green-wrapped ear is packed with rows of sweet yellow grains, eaten boiled or roasted",
+    "example": "On rainy evenings we roast corn over the coals and add lemon and salt.",
+    "image": "pictures-corn"
+  },
+  {
+    "term": "cow",
+    "partOfSpeech": "noun",
+    "hindi": "गाय — खेतों में पाला जाने वाला बड़ा जानवर जो दूध देता है",
+    "definition": "a large farm animal with four legs, a long tail and often black and white patches, kept for its milk",
+    "example": "Every morning the cow waits quietly at the gate to be milked.",
+    "image": "pictures-cow"
+  },
+  {
+    "term": "crab",
+    "partOfSpeech": "noun",
+    "hindi": "केकड़ा — कठोर खोल और दो बड़े पंजों वाला जीव जो समुद्र के किनारे आड़ा चलता है",
+    "definition": "a sea creature with a hard flat shell, eight legs and two large claws that walks sideways on the beach",
+    "example": "A small crab scuttled sideways into a rock pool as we walked past.",
+    "image": "pictures-crab"
+  },
+  {
+    "term": "crayon",
+    "partOfSpeech": "noun",
+    "hindi": "क्रेयॉन — मोम का रंगीन डंडा जिससे बच्चे चित्र बनाते और रंग भरते हैं",
+    "definition": "a short coloured stick of wax that children use to draw pictures and colour in shapes on paper",
+    "example": "My little sister coloured the whole sun with one orange crayon.",
+    "image": "pictures-crayon"
+  },
+  {
+    "term": "crocodile",
+    "partOfSpeech": "noun",
+    "hindi": "मगरमच्छ — पानी में रहने वाला बड़ा, खुरदरी खाल और नुकीले दाँतों वाला सरीसृप",
+    "definition": "a large reptile with rough green or brown skin, a long snout and many sharp teeth, living in rivers and lakes",
+    "example": "The crocodile lay so still in the river that it looked like a log.",
+    "image": "pictures-crocodile"
+  },
+  {
+    "term": "cucumber",
+    "partOfSpeech": "noun",
+    "hindi": "खीरा — हरे छिलके वाली लंबी, ठंडी और पानी से भरी सब्ज़ी जिसे अक्सर कच्चा खाया जाता है",
+    "definition": "a long green vegetable with crisp, watery flesh that is often sliced and eaten raw in salads",
+    "example": "On hot afternoons, a cool slice of cucumber with salt tastes like a small holiday.",
+    "image": "pictures-cucumber"
+  },
+  {
+    "term": "cup",
+    "partOfSpeech": "noun",
+    "hindi": "कप — चाय, कॉफ़ी या दूध पीने के लिए छोटा गोल बर्तन जिसमें एक हैंडल होता है",
+    "definition": "a small, round container, often with a handle, from which you drink hot drinks such as tea and coffee",
+    "example": "She wrapped both hands around the cup and enjoyed the warm steam rising from her tea.",
+    "image": "pictures-cup"
+  },
+  {
+    "term": "deer",
+    "partOfSpeech": "noun",
+    "hindi": "हिरन — पतले पैरों वाला तेज़ दौड़ने वाला जंगली जानवर, जिसके नर के सिर पर शाखादार सींग होते हैं",
+    "definition": "a graceful wild animal with slender legs and a brown coat, the males of which grow branching antlers",
+    "example": "A deer stepped out of the trees, looked at us, and quietly disappeared.",
+    "image": "pictures-deer"
+  },
+  {
+    "term": "desert",
+    "partOfSpeech": "noun",
+    "hindi": "रेगिस्तान — रेत से भरा विशाल सूखा इलाक़ा जहाँ बारिश बहुत कम होती है और पौधे कम उगते हैं",
+    "definition": "a huge dry area of sand or rock where it hardly ever rains and very few plants or animals can live",
+    "example": "Camels can walk across the desert for days without needing a single drink of water.",
+    "image": "pictures-desert"
+  },
+  {
+    "term": "dice",
+    "partOfSpeech": "noun",
+    "hindi": "पासा — खेलों में फेंका जाने वाला, बिंदियों वाला छोटा घनाकार टुकड़ा",
+    "definition": "small cubes with one to six dots on each side, thrown in board games to show a number by chance",
+    "example": "I shook the dice twice, hoping for a six, and got a one both times.",
+    "image": "pictures-dice"
+  },
+  {
+    "term": "dog",
+    "partOfSpeech": "noun",
+    "hindi": "कुत्ता — एक वफ़ादार पालतू जानवर जो भौंकता है और घर की रखवाली करता है",
+    "definition": "a loyal four-legged pet with a wet nose and a wagging tail that barks and is often trained to guard or play",
+    "example": "My dog wags his whole body when I come home from school.",
+    "image": "pictures-dog"
+  },
+  {
+    "term": "doll",
+    "partOfSpeech": "noun",
+    "hindi": "गुड़िया — बच्चों के खेलने के लिए बनी, इंसान जैसी दिखने वाली छोटी मूरत",
+    "definition": "a small toy figure shaped like a person, usually a girl or baby, which children hold and play with",
+    "example": "My little sister gives her doll a bath and a bedtime story every night.",
+    "image": "pictures-doll"
+  },
+  {
+    "term": "dolphin",
+    "partOfSpeech": "noun",
+    "hindi": "डॉल्फ़िन — समुद्र में रहने वाला समझदार और खिलंदड़ा स्तनधारी जीव जो पानी से ऊपर कूदता है",
+    "definition": "a smart, friendly sea mammal with a smooth grey body and a pointed snout that leaps high above the waves",
+    "example": "A dolphin leapt out of the water, and all the children cheered.",
+    "image": "pictures-dolphin"
+  },
+  {
+    "term": "donkey",
+    "partOfSpeech": "noun",
+    "hindi": "गधा — लंबे कानों वाला मज़बूत जानवर जो बोझ ढोने के काम आता है",
+    "definition": "a sturdy grey or brown animal like a small horse, with long ears, that carries heavy loads and brays loudly",
+    "example": "The donkey plodded up the hill with two heavy sacks on its back.",
+    "image": "pictures-donkey"
+  },
+  {
+    "term": "door",
+    "partOfSpeech": "noun",
+    "hindi": "दरवाज़ा — लकड़ी या धातु का वह पल्ला जो घर या कमरे के रास्ते को खोलता और बंद करता है",
+    "definition": "a flat panel of wood, metal or glass that swings or slides to open and close the entrance to a room or building",
+    "example": "Someone knocked on the door just as we sat down to eat lunch.",
+    "image": "pictures-door"
+  },
+  {
+    "term": "doughnut",
+    "partOfSpeech": "noun",
+    "hindi": "डोनट — बीच में छेद वाली, तली हुई गोल मीठी चीज़ जिस पर अक्सर चॉकलेट या चीनी की परत होती है",
+    "definition": "a soft, sweet, fried ring of pastry with a hole in the middle, often covered in icing or sugar",
+    "example": "He ate the pink doughnut in four bites and licked the sugar off his fingers.",
+    "image": "pictures-doughnut"
+  },
+  {
+    "term": "drawer",
+    "partOfSpeech": "noun",
+    "hindi": "दराज़ — मेज़ या अलमारी में लगा बाहर खींचकर खुलने वाला डिब्बेनुमा खाना जिसमें सामान रखा जाता है",
+    "definition": "a box-shaped compartment in a desk or cupboard that you pull out to put things in or take them out",
+    "example": "My socks were all tangled up in the drawer, so I wore mismatched ones.",
+    "image": "pictures-drawer"
+  },
+  {
+    "term": "dress",
+    "partOfSpeech": "noun",
+    "hindi": "ड्रेस — लड़कियों या औरतों का एक ही टुकड़े का ऊपर से नीचे तक का पहनावा",
+    "definition": "a piece of women's or girls' clothing that covers the top of the body and hangs down over the legs in one piece",
+    "example": "Her yellow dress spun out like a bright flower when she twirled.",
+    "image": "pictures-dress"
+  },
+  {
+    "term": "drum",
+    "partOfSpeech": "noun",
+    "hindi": "ढोल — खाल मढ़ा हुआ बाजा, जिसे डंडियों या हाथ से पीटकर बजाते हैं",
+    "definition": "a musical instrument made of a hollow cylinder with tight skin stretched across the top, played by hitting it with sticks or hands",
+    "example": "The little boy beat the drum so loudly that the pigeons flew off the roof.",
+    "image": "pictures-drum"
+  },
+  {
+    "term": "duck",
+    "partOfSpeech": "noun",
+    "hindi": "बत्तख — चपटी चोंच वाला पक्षी जो तालाब या झील के पानी में तैरता है",
+    "definition": "a water bird with a flat beak and webbed feet that swims on ponds and makes a loud quacking sound",
+    "example": "The duck paddled across the pond with five fluffy ducklings following in a neat line.",
+    "image": "pictures-duck"
+  },
+  {
+    "term": "eagle",
+    "partOfSpeech": "noun",
+    "hindi": "गरुड़ — बहुत ऊँचा उड़ने वाला शक्तिशाली शिकारी पक्षी जिसकी नज़र बहुत तेज़ होती है",
+    "definition": "a large, powerful bird of prey with broad wings, a hooked beak and very sharp eyesight, which soars high in the sky",
+    "example": "An eagle circled slowly above the valley, watching everything below with sharp eyes.",
+    "image": "pictures-eagle"
+  },
+  {
+    "term": "egg",
+    "partOfSpeech": "noun",
+    "hindi": "अंडा — मुर्गी का अंडाकार, पतले कड़े खोल वाला खाने का सामान, जिसके अंदर पीली जर्दी और सफ़ेदी होती है",
+    "definition": "an oval food with a thin hard shell, laid by hens, holding a yellow yolk surrounded by white",
+    "example": "Grandmother tapped the egg on the edge of the bowl and it cracked neatly.",
+    "image": "pictures-egg"
+  },
+  {
+    "term": "eggplant",
+    "partOfSpeech": "noun",
+    "hindi": "बैंगन — चमकदार गहरे बैंगनी रंग की सब्ज़ी, जिसके सिरे पर हरी टोपी जैसा डंठल होता है",
+    "definition": "a glossy dark purple vegetable with a green cap and soft, pale flesh that is usually cooked in curries or roasted",
+    "example": "She roasted the eggplant over the flame until its skin turned black and smoky.",
+    "image": "pictures-eggplant"
+  },
+  {
+    "term": "elephant",
+    "partOfSpeech": "noun",
+    "hindi": "हाथी — लंबी सूँड़, बड़े कानों और मोटे पैरों वाला धरती का सबसे बड़ा जानवर",
+    "definition": "the largest land animal, with thick grey skin, big flapping ears, two tusks and a long trunk for drinking and grasping",
+    "example": "The elephant sprayed water over its back with its trunk and looked very pleased.",
+    "image": "pictures-elephant"
+  },
+  {
+    "term": "envelope",
+    "partOfSpeech": "noun",
+    "hindi": "लिफ़ाफ़ा — चिट्ठी या कार्ड रखकर बंद करने वाला काग़ज़ का आयताकार खोल",
+    "definition": "a flat paper cover with a sealable flap, used for putting a letter or card inside before posting it",
+    "example": "She sealed the envelope, stuck on a stamp and walked to the postbox.",
+    "image": "pictures-envelope"
+  },
+  {
+    "term": "eye",
+    "partOfSpeech": "noun",
+    "hindi": "आँख — चेहरे पर मौजूद गोल अंग जिससे हम देखते हैं",
+    "definition": "one of the two round organs in the face, with a coloured ring and dark centre, that people use to see",
+    "example": "She closed one eye and carefully threaded the needle on her first try.",
+    "image": "pictures-eye"
+  },
+  {
+    "term": "feather",
+    "partOfSpeech": "noun",
+    "hindi": "पंख — चिड़िया के शरीर पर उगा हलका, मुलायम और रेशेदार टुकड़ा जो उसे गर्म रखता है",
+    "definition": "one of the light, soft, fringed growths that cover a bird's body and help it fly and stay warm",
+    "example": "She tucked a white feather into her hat and walked off feeling rather elegant.",
+    "image": "pictures-feather"
+  },
+  {
+    "term": "flag",
+    "partOfSpeech": "noun",
+    "hindi": "झंडा — किसी देश या संस्था की पहचान दिखाने वाला रंगीन कपड़े का टुकड़ा जो डंडे पर फहराया जाता है",
+    "definition": "a piece of cloth in particular colours and patterns, flown from a pole to represent a country or group",
+    "example": "The children waved a small flag as the parade marched past.",
+    "image": "pictures-flag"
+  },
+  {
+    "term": "flamingo",
+    "partOfSpeech": "noun",
+    "hindi": "फ़्लेमिंगो — गुलाबी पंखों और बहुत लंबी टाँगों वाला पक्षी जो अक्सर एक पैर पर खड़ा रहता है",
+    "definition": "a tall pink water bird with very long thin legs and a long curved neck that often stands on one leg",
+    "example": "The flamingo stood on one leg in the shallow lake, perfectly balanced and perfectly pink.",
+    "image": "pictures-flamingo"
+  },
+  {
+    "term": "flute",
+    "partOfSpeech": "noun",
+    "hindi": "बाँसुरी — फूँक मारकर बजाया जाने वाला, छेदों वाला लंबा बाजा",
+    "definition": "a long, thin musical pipe with finger holes, played by blowing across a hole near one end",
+    "example": "The soft music of a flute drifted across the fields as the sun went down.",
+    "image": "pictures-flute"
+  },
+  {
+    "term": "foot",
+    "partOfSpeech": "noun",
+    "hindi": "पैर — टाँग के नीचे का वह हिस्सा जिस पर हम खड़े होते और चलते हैं, जिसमें एड़ी और पाँच उँगलियाँ होती हैं",
+    "definition": "the part at the bottom of the leg, with a heel and five toes, that you stand and walk on",
+    "example": "He stepped in a puddle with his left foot and squelched all the way home.",
+    "image": "pictures-foot"
+  },
+  {
+    "term": "forest",
+    "partOfSpeech": "noun",
+    "hindi": "जंगल — बहुत सारे पेड़ों और झाड़ियों से घिरा बड़ा इलाक़ा जहाँ कई जानवर रहते हैं",
+    "definition": "a large area thickly covered with trees and plants, where many wild animals live",
+    "example": "The path through the forest was so quiet that we could hear every bird.",
+    "image": "pictures-forest"
+  },
+  {
+    "term": "fork",
+    "partOfSpeech": "noun",
+    "hindi": "काँटा — खाना उठाकर खाने के लिए इस्तेमाल होने वाला नुकीले दाँतों वाला छोटा बर्तन",
+    "definition": "a small tool with a handle and two or more pointed prongs, used for picking up food and eating it",
+    "example": "He twirled the spaghetti around his fork and hoped no sauce would reach his shirt.",
+    "image": "pictures-fork"
+  },
+  {
+    "term": "fountain",
+    "partOfSpeech": "noun",
+    "hindi": "फ़व्वारा — पानी को ऊपर उछालने वाला सजावटी ढाँचा जो अकसर बाग़ या चौक में लगा होता है",
+    "definition": "a structure that shoots a jet of water into the air, usually in a park, garden or town square",
+    "example": "The children threw coins into the fountain and made wishes they refused to share.",
+    "image": "pictures-fountain"
+  },
+  {
+    "term": "fox",
+    "partOfSpeech": "noun",
+    "hindi": "लोमड़ी — लाल-भूरे रोएँ और झबरीली पूँछ वाला चालाक जंगली जानवर",
+    "definition": "a wild animal like a small dog, with reddish-brown fur, pointed ears, a narrow face and a thick bushy tail",
+    "example": "The fox slipped through the hedge, its bushy tail disappearing last.",
+    "image": "pictures-fox"
+  },
+  {
+    "term": "frog",
+    "partOfSpeech": "noun",
+    "hindi": "मेंढक — हरी चिकनी त्वचा और लंबी पिछली टाँगों वाला जीव जो बारिश में टर्र-टर्र करता है",
+    "definition": "a small green animal with smooth wet skin and strong back legs for jumping, which lives near water and croaks",
+    "example": "A frog jumped onto the lily leaf, and the whole pond went quiet.",
+    "image": "pictures-frog"
+  },
+  {
+    "term": "garlic",
+    "partOfSpeech": "noun",
+    "hindi": "लहसुन — सफ़ेद पतले छिलके में लिपटी कलियों वाला तेज़ गंध का कंद जो खाने में स्वाद के लिए डाला जाता है",
+    "definition": "a small round bulb made of separate white cloves in papery skin, with a strong smell and taste used in cooking",
+    "example": "The smell of garlic frying in hot oil drifted from the kitchen to the street.",
+    "image": "pictures-garlic"
+  },
+  {
+    "term": "giraffe",
+    "partOfSpeech": "noun",
+    "hindi": "जिराफ़ — बहुत लंबी गर्दन और टाँगों वाला धब्बेदार जानवर जो पेड़ों की ऊँची पत्तियाँ खाता है",
+    "definition": "the tallest animal in the world, with a very long neck, long legs and a yellow coat covered in brown patches",
+    "example": "The giraffe bent its long neck down to drink, looking slightly embarrassed.",
+    "image": "pictures-giraffe"
+  },
+  {
+    "term": "globe",
+    "partOfSpeech": "noun",
+    "hindi": "ग्लोब — पृथ्वी का गोल नमूना जिस पर देश और समुद्र दिखाए गए होते हैं",
+    "definition": "a round model of the Earth, usually on a stand, showing countries and oceans in miniature",
+    "example": "Grandpa spun the globe and pointed to a faraway island.",
+    "image": "pictures-globe"
+  },
+  {
+    "term": "glove",
+    "partOfSpeech": "noun",
+    "hindi": "दस्ताना — हाथ और उँगलियों को ठंड या चोट से बचाने वाला पहनावा",
+    "definition": "a covering for the hand with separate parts for the thumb and each finger, worn for warmth or protection",
+    "example": "He lost one glove on the bus and kept the other in his pocket.",
+    "image": "pictures-glove"
+  },
+  {
+    "term": "goat",
+    "partOfSpeech": "noun",
+    "hindi": "बकरी — सींगों और छोटी दाढ़ी वाला पालतू जानवर जो दूध देता है और पहाड़ों पर आसानी से चढ़ जाता है",
+    "definition": "a hardy farm animal with horns, a short tail and a small beard, kept for milk and good at climbing rocks",
+    "example": "The goat climbed onto the roof of the shed to get a better view.",
+    "image": "pictures-goat"
+  },
+  {
+    "term": "grape",
+    "partOfSpeech": "noun",
+    "hindi": "अंगूर — गुच्छों में लगने वाला छोटा, गोल, रसीला फल जो हरा, लाल या काला होता है",
+    "definition": "a small round juicy fruit that grows in bunches on a vine and may be green, red or purple",
+    "example": "Each grape was so sweet that the bunch disappeared before lunch.",
+    "image": "pictures-grape"
+  },
+  {
+    "term": "guitar",
+    "partOfSpeech": "noun",
+    "hindi": "गिटार — तारों वाला, उँगलियों से छेड़कर बजाया जाने वाला लकड़ी का बाजा",
+    "definition": "a musical instrument with a wooden body, a long neck and six strings, played by plucking or strumming",
+    "example": "He tuned his guitar slowly, and everyone around the campfire began to hum.",
+    "image": "pictures-guitar"
+  },
+  {
+    "term": "hammer",
+    "partOfSpeech": "noun",
+    "hindi": "हथौड़ा — कील ठोकने या चीज़ें तोड़ने के लिए भारी सिर और हत्थे वाला औज़ार",
+    "definition": "a tool with a heavy metal head on a handle, used for hitting nails into wood and breaking things apart",
+    "example": "Dad tapped the nail gently with the hammer and hung the picture.",
+    "image": "pictures-hammer"
+  },
+  {
+    "term": "hand",
+    "partOfSpeech": "noun",
+    "hindi": "हाथ — कलाई के आगे का वह अंग जिसमें हथेली और उँगलियाँ होती हैं और जिससे हम चीज़ें पकड़ते हैं",
+    "definition": "the part of the body at the end of the arm, with a palm, four fingers and a thumb, used for holding things",
+    "example": "He raised his hand politely, but the teacher was busy writing on the board.",
+    "image": "pictures-hand"
+  },
+  {
+    "term": "hanger",
+    "partOfSpeech": "noun",
+    "hindi": "हैंगर — कपड़े टाँगने के लिए बना हुक वाला तार, लकड़ी या प्लास्टिक का ढाँचा",
+    "definition": "a curved piece of wire, wood or plastic with a hook at the top, used for hanging clothes in a wardrobe",
+    "example": "She hung the wet shirt on a hanger and left it near the window to dry.",
+    "image": "pictures-hanger"
+  },
+  {
+    "term": "harp",
+    "partOfSpeech": "noun",
+    "hindi": "हार्प — बड़े तिकोने ढाँचे पर कसे तारों वाला बाजा, जिसे उँगलियों से बजाते हैं",
+    "definition": "a large musical instrument with many strings stretched on a tall triangular frame, played by plucking with the fingers",
+    "example": "The harp stood in the corner of the hall, its golden strings glowing in the light.",
+    "image": "pictures-harp"
+  },
+  {
+    "term": "hat",
+    "partOfSpeech": "noun",
+    "hindi": "हैट — सिर पर पहनी जाने वाली, चारों ओर किनारी वाली बड़ी टोपी",
+    "definition": "a covering for the head, often with a brim around the edge, worn for warmth, for shade or as part of an outfit",
+    "example": "A strong gust of wind lifted his hat and sent it rolling down the lane.",
+    "image": "pictures-hat"
+  },
+  {
+    "term": "hedgehog",
+    "partOfSpeech": "noun",
+    "hindi": "झाऊ चूहा — पीठ पर नुकीले काँटों वाला छोटा जानवर जो ख़तरा देखकर गेंद की तरह सिकुड़ जाता है",
+    "definition": "a small brown animal covered in sharp spines on its back that curls into a tight ball when frightened",
+    "example": "The hedgehog rolled into a ball when the garden gate creaked open.",
+    "image": "pictures-hedgehog"
+  },
+  {
+    "term": "helicopter",
+    "partOfSpeech": "noun",
+    "hindi": "हेलीकॉप्टर — ऊपर लगे घूमते पंखों से सीधा उड़ने और उतरने वाला विमान",
+    "definition": "an aircraft with large spinning blades on top that lets it lift straight up, hover and land in small spaces",
+    "example": "The helicopter hovered over the field, and the grass bent in waves.",
+    "image": "pictures-helicopter"
+  },
+  {
+    "term": "honey",
+    "partOfSpeech": "noun",
+    "hindi": "शहद — मधुमक्खियों द्वारा फूलों के रस से बनाया गया गाढ़ा, सुनहरा और मीठा तरल",
+    "definition": "a thick sweet golden liquid made by bees from flower nectar, often spread on bread or stirred into tea",
+    "example": "A spoonful of honey slid slowly off the spoon and onto the warm toast.",
+    "image": "pictures-honey"
+  },
+  {
+    "term": "horse",
+    "partOfSpeech": "noun",
+    "hindi": "घोड़ा — चार पैरों वाला तेज़ दौड़ने वाला जानवर जिस पर लोग सवारी करते हैं",
+    "definition": "a large strong animal with a long mane and tail and four hooves, ridden by people and used to pull carts",
+    "example": "The horse trotted around the field while the children waved from the fence.",
+    "image": "pictures-horse"
+  },
+  {
+    "term": "iceberg",
+    "partOfSpeech": "noun",
+    "hindi": "आइसबर्ग — समुद्र में तैरती बर्फ़ की विशाल चट्टान जिसका ज़्यादातर हिस्सा पानी के नीचे छिपा रहता है",
+    "definition": "a huge block of ice floating in the sea, with most of it hidden below the water",
+    "example": "Only the tip of the iceberg is visible; the rest hides quietly beneath the waves.",
+    "image": "pictures-iceberg"
+  },
+  {
+    "term": "icicle",
+    "partOfSpeech": "noun",
+    "hindi": "हिमलंब — बर्फ़ की लंबी नुकीली छड़ जो टपकता पानी जमने से छत या डाल से लटकती है",
+    "definition": "a long, pointed piece of ice that hangs down from a roof or branch when dripping water freezes",
+    "example": "A long icicle hung from the roof and dripped slowly onto the doorstep.",
+    "image": "pictures-icicle"
+  },
+  {
+    "term": "igloo",
+    "partOfSpeech": "noun",
+    "hindi": "इग्लू — बर्फ़ की सख़्त सिल्लियों से बना गुंबद जैसा गोल घर जिसमें बहुत ठंडे इलाक़ों के लोग रहते हैं",
+    "definition": "a round house shaped like a dome, built from blocks of hard snow by people living in the Arctic",
+    "example": "Inside the igloo it was surprisingly warm, and we drank hot tea with our gloves on.",
+    "image": "pictures-igloo"
+  },
+  {
+    "term": "island",
+    "partOfSpeech": "noun",
+    "hindi": "द्वीप — चारों ओर से पानी से घिरा ज़मीन का छोटा या बड़ा टुकड़ा",
+    "definition": "a piece of land completely surrounded by water, either in the sea, in a lake or in a river",
+    "example": "We reached the island by a small boat and had the whole beach to ourselves.",
+    "image": "pictures-island"
+  },
+  {
+    "term": "jacket",
+    "partOfSpeech": "noun",
+    "hindi": "जैकेट — कमर तक आने वाला, आगे से बंद होने वाला हल्का गर्म ऊपरी कपड़ा",
+    "definition": "a short coat reaching the waist or hips, usually with a zip or buttons down the front and long sleeves",
+    "example": "On chilly mornings she zips her jacket right up to her nose.",
+    "image": "pictures-jacket"
+  },
+  {
+    "term": "jar",
+    "partOfSpeech": "noun",
+    "hindi": "मर्तबान — चौड़े मुँह वाला काँच या चीनी मिट्टी का बर्तन जिसमें अचार, जैम या मसाले भरकर रखे जाते हैं",
+    "definition": "a round container made of glass or clay with a wide mouth and a lid, used for storing pickles, jam or spices",
+    "example": "Mum kept a jar of mango pickle on the top shelf, safe from hungry little hands.",
+    "image": "pictures-jar"
+  },
+  {
+    "term": "jellyfish",
+    "partOfSpeech": "noun",
+    "hindi": "जेलीफ़िश — समुद्र में तैरने वाला छतरी जैसे आकार का नरम पारदर्शी जीव जिसके लटकते हुए लंबे धागे जैसे अंग होते हैं",
+    "definition": "a soft, see-through sea creature shaped like an umbrella, with long trailing tentacles that can sting",
+    "example": "We watched a jellyfish drift past the glass, glowing softly like a lamp.",
+    "image": "pictures-jellyfish"
+  },
+  {
+    "term": "kettle",
+    "partOfSpeech": "noun",
+    "hindi": "केतली — चाय या पानी उबालने के लिए बना नली और हैंडल वाला ढक्कनदार बर्तन",
+    "definition": "a metal or plastic pot with a lid, a spout and a handle, used for boiling water for tea or coffee",
+    "example": "The kettle began to whistle, so I hurried to the kitchen to make the tea.",
+    "image": "pictures-kettle"
+  },
+  {
+    "term": "key",
+    "partOfSpeech": "noun",
+    "hindi": "चाबी — धातु की छोटी छड़ जिससे ताला खोला या बंद किया जाता है",
+    "definition": "a small piece of metal with a shaped end, which you put in a lock and turn to open or close it",
+    "example": "I searched my bag for ten minutes before finding the key at the very bottom.",
+    "image": "pictures-key"
+  },
+  {
+    "term": "kite",
+    "partOfSpeech": "noun",
+    "hindi": "पतंग — डोर के सहारे हवा में उड़ाया जाने वाला काग़ज़ का खिलौना",
+    "definition": "a light toy made of paper or cloth on a frame, flown in the wind on a long string",
+    "example": "My brother's kite climbed higher and higher until it was just a tiny dot.",
+    "image": "pictures-kite"
+  },
+  {
+    "term": "knife",
+    "partOfSpeech": "noun",
+    "hindi": "चाकू — तेज़ धार वाला औज़ार जिससे फल, सब्ज़ियाँ और दूसरी चीज़ें काटी जाती हैं",
+    "definition": "a tool with a sharp metal blade fixed to a handle, used for cutting vegetables, fruit, bread and other food",
+    "example": "Please be careful with the knife when you slice the onions for dinner.",
+    "image": "pictures-knife"
+  },
+  {
+    "term": "ladder",
+    "partOfSpeech": "noun",
+    "hindi": "सीढ़ी — लकड़ी, धातु या बाँस की बनी डंडियों वाली चीज़ जिस पर चढ़कर ऊँची जगह पहुँचा जाता है",
+    "definition": "a tall frame of wood or metal with two long sides joined by flat steps, which you climb to reach high places",
+    "example": "Dad leaned the ladder against the wall and climbed up to fix the light.",
+    "image": "pictures-ladder"
+  },
+  {
+    "term": "ladybird",
+    "partOfSpeech": "noun",
+    "hindi": "लेडीबर्ड — लाल पंखों पर काली बिंदियों वाला छोटा गोल कीड़ा",
+    "definition": "a tiny round beetle with a shiny red back dotted with black spots, often found on garden leaves",
+    "example": "A ladybird crawled up my finger and then opened its wings and flew away.",
+    "image": "pictures-ladybird"
+  },
+  {
+    "term": "lamp",
+    "partOfSpeech": "noun",
+    "hindi": "लैंप — बिजली, तेल या गैस से जलने वाला उपकरण जो कमरे में रोशनी करता है",
+    "definition": "a device that gives light, usually with a bulb inside a shade, placed on a table or floor",
+    "example": "He switched on the lamp beside his bed and read for another hour.",
+    "image": "pictures-lamp"
+  },
+  {
+    "term": "lantern",
+    "partOfSpeech": "noun",
+    "hindi": "लालटेन — काँच या काग़ज़ के खोल में बंद रोशनी जिसे हाथ में लेकर चलते या टाँग देते हैं",
+    "definition": "a portable light with a flame or bulb inside a glass or paper case, carried or hung up at night",
+    "example": "Grandma hung a glowing lantern outside the door for the festival.",
+    "image": "pictures-lantern"
+  },
+  {
+    "term": "leaf",
+    "partOfSpeech": "noun",
+    "hindi": "पत्ता — पेड़ या पौधे का चपटा, अकसर हरा हिस्सा जो डंठल से जुड़ा रहता है",
+    "definition": "a flat, usually green part of a plant that grows from a stem or branch and makes food from sunlight",
+    "example": "A single golden leaf floated down and landed right on my open notebook.",
+    "image": "pictures-leaf"
+  },
+  {
+    "term": "lemon",
+    "partOfSpeech": "noun",
+    "hindi": "नींबू — पीले छिलके वाला अंडाकार, खट्टा और रसीला फल, जिसका रस शरबत और खाने में डाला जाता है",
+    "definition": "an oval yellow fruit with sour juice, often squeezed into drinks or over food to add a sharp taste",
+    "example": "She squeezed half a lemon into the water and made a face at the first sip.",
+    "image": "pictures-lemon"
+  },
+  {
+    "term": "lighthouse",
+    "partOfSpeech": "noun",
+    "hindi": "प्रकाश स्तंभ — समुद्र किनारे बनी ऊँची मीनार जिसकी तेज़ रोशनी जहाज़ों को रास्ता दिखाती है",
+    "definition": "a tall tower by the sea with a powerful light at the top that guides ships and warns them of danger",
+    "example": "The keeper climbed every step of the lighthouse to switch on the lamp before dusk.",
+    "image": "pictures-lighthouse"
+  },
+  {
+    "term": "lightning",
+    "partOfSpeech": "noun",
+    "hindi": "बिजली — तूफ़ान में बादलों से चमकने वाली तेज़ रोशनी की टेढ़ी रेखा, जिसके बाद गड़गड़ाहट सुनाई देती है",
+    "definition": "a sudden bright flash of light in the sky during a storm, caused by electricity moving between clouds or to the ground",
+    "example": "We counted the seconds between the lightning and the thunder to guess how far the storm was.",
+    "image": "pictures-lightning"
+  },
+  {
+    "term": "lion",
+    "partOfSpeech": "noun",
+    "hindi": "शेर — सुनहरे रंग का बड़ा जंगली जानवर जिसके नर की गर्दन पर घनी अयाल होती है",
+    "definition": "a large golden-brown wild cat that lives in groups and whose male has a thick mane around its head and neck",
+    "example": "The lion yawned so widely that the children giggled behind the glass.",
+    "image": "pictures-lion"
+  },
+  {
+    "term": "lizard",
+    "partOfSpeech": "noun",
+    "hindi": "छिपकली — लंबी पूँछ और चार छोटे पैरों वाला रेंगने वाला जीव जो दीवारों पर चलता है",
+    "definition": "a small reptile with a long tail, four short legs and dry scaly skin that runs quickly over walls and rocks",
+    "example": "A lizard froze on the warm wall, then darted into a crack.",
+    "image": "pictures-lizard"
+  },
+  {
+    "term": "lotus",
+    "partOfSpeech": "noun",
+    "hindi": "कमल — तालाब में खिलने वाला बड़ा गुलाबी या सफ़ेद फूल, जो भारत का राष्ट्रीय फूल है",
+    "definition": "a large pink or white flower that grows in still ponds, with round flat leaves floating on the water",
+    "example": "A pink lotus opened at dawn, and the whole pond seemed to smile.",
+    "image": "pictures-lotus"
+  },
+  {
+    "term": "mango",
+    "partOfSpeech": "noun",
+    "hindi": "आम — पीले-हरे या लाल छिलके वाला बड़ा, मीठा और रसीला फल जिसके अंदर एक बड़ी गुठली होती है",
+    "definition": "a large oval tropical fruit with smooth green, yellow or red skin, sweet orange flesh and one big stone",
+    "example": "In summer, the whole family sits on the porch and shares one juicy mango.",
+    "image": "pictures-mango"
+  },
+  {
+    "term": "map",
+    "partOfSpeech": "noun",
+    "hindi": "नक्शा — किसी इलाक़े, शहर या देश की सड़कों, नदियों और सीमाओं को दिखाने वाला चित्र",
+    "definition": "a flat drawing of a town, country or the world, showing places, roads, rivers and borders",
+    "example": "We unfolded the map on the bonnet and searched for the nearest tea stall.",
+    "image": "pictures-map"
+  },
+  {
+    "term": "medal",
+    "partOfSpeech": "noun",
+    "hindi": "मेडल — जीत या सम्मान में दिया जाने वाला गोल, चमकता धातु का तमग़ा",
+    "definition": "a flat piece of metal, often round and hung on a ribbon, given as a prize or an honour",
+    "example": "He won a medal in the race and slept with it around his neck.",
+    "image": "pictures-medal"
+  },
+  {
+    "term": "microscope",
+    "partOfSpeech": "noun",
+    "hindi": "माइक्रोस्कोप — बहुत छोटी चीज़ों को कई गुना बड़ा करके दिखाने वाला यंत्र",
+    "definition": "an instrument with lenses that makes tiny things, too small to see with the eye, look much larger",
+    "example": "Under the microscope, a single drop of pond water was full of life.",
+    "image": "pictures-microscope"
+  },
+  {
+    "term": "milk",
+    "partOfSpeech": "noun",
+    "hindi": "दूध — गाय या भैंस से मिलने वाला सफ़ेद पौष्टिक तरल पेय",
+    "definition": "a white liquid that cows and other animals produce to feed their young, which people also drink and use in cooking",
+    "example": "The cat sat patiently by the bowl, waiting for someone to pour some milk.",
+    "image": "pictures-milk"
+  },
+  {
+    "term": "mirror",
+    "partOfSpeech": "noun",
+    "hindi": "आईना — चमकदार काँच की सतह जिसमें देखने पर अपनी छवि दिखाई देती है",
+    "definition": "a smooth piece of glass that reflects light, so you can see your own face and body when you look into it",
+    "example": "She smiled at herself in the mirror and straightened her new school tie.",
+    "image": "pictures-mirror"
+  },
+  {
+    "term": "monkey",
+    "partOfSpeech": "noun",
+    "hindi": "बंदर — लंबी पूँछ वाला चुलबुला जानवर जो पेड़ों पर कूदता-फाँदता है और केले खाता है",
+    "definition": "a clever, playful animal covered in fur, with a long tail and hands that grip, which swings through trees",
+    "example": "The monkey grabbed my banana, peeled it neatly and looked very proud of itself.",
+    "image": "pictures-monkey"
+  },
+  {
+    "term": "moon",
+    "partOfSpeech": "noun",
+    "hindi": "चाँद — रात को आसमान में चमकने वाला गोल पिंड जो पृथ्वी के चारों ओर घूमता है",
+    "definition": "the large round object that shines in the night sky and travels around the earth once every month",
+    "example": "The full moon was so bright that we walked home without using a torch.",
+    "image": "pictures-moon"
+  },
+  {
+    "term": "motorcycle",
+    "partOfSpeech": "noun",
+    "hindi": "मोटरसाइकिल — इंजन से चलने वाली दो पहियों की तेज़ सवारी",
+    "definition": "a two-wheeled road vehicle with a powerful engine, a seat and handlebars, ridden by one or two people",
+    "example": "The motorcycle roared down the lane, and the neighbourhood dogs barked back.",
+    "image": "pictures-motorcycle"
+  },
+  {
+    "term": "mountain",
+    "partOfSpeech": "noun",
+    "hindi": "पहाड़ — ज़मीन से बहुत ऊँचा उठा विशाल चट्टानी भाग जिसकी चोटी पर अकसर बर्फ़ जमी रहती है",
+    "definition": "a very high, steep piece of land rising far above the ground around it, often with snow on its top",
+    "example": "It took us two days to climb the mountain, and the view was worth every step.",
+    "image": "pictures-mountain"
+  },
+  {
+    "term": "mushroom",
+    "partOfSpeech": "noun",
+    "hindi": "मशरूम — छतरी जैसी टोपी और डंठल वाली, नमी में उगने वाली खाने योग्य फफूँद",
+    "definition": "a soft fungus with a rounded cap on a short stalk that grows in damp places, and some kinds are safe to eat",
+    "example": "After the first rain, a white mushroom popped up beside the garden wall.",
+    "image": "pictures-mushroom"
+  },
+  {
+    "term": "necklace",
+    "partOfSpeech": "noun",
+    "hindi": "हार — गले में पहना जाने वाला मोतियों या धातु का गहना",
+    "definition": "a piece of jewellery, such as a chain or a string of beads, worn around the neck as decoration",
+    "example": "My grandmother's silver necklace shines brightest whenever she laughs at her own jokes.",
+    "image": "pictures-necklace"
+  },
+  {
+    "term": "needle",
+    "partOfSpeech": "noun",
+    "hindi": "सुई — सिलाई या कढ़ाई के लिए इस्तेमाल होने वाली पतली, नुकीली धातु की छड़ जिसमें धागा पिरोने का छेद होता है",
+    "definition": "a very thin, pointed piece of metal with a small hole at one end for thread, used for sewing",
+    "example": "It took me three tries to pass the thread through the eye of the needle.",
+    "image": "pictures-needle"
+  },
+  {
+    "term": "nest",
+    "partOfSpeech": "noun",
+    "hindi": "घोंसला — चिड़िया का तिनकों और पत्तों से बना छोटा घर जिसमें वह अंडे देती है",
+    "definition": "a small home that a bird makes from twigs, grass and feathers, where it lays eggs and raises its young",
+    "example": "A tiny sparrow built a nest on our balcony and now treats the place as hers.",
+    "image": "pictures-nest"
+  },
+  {
+    "term": "noodle",
+    "partOfSpeech": "noun",
+    "hindi": "नूडल्स — मैदे या आटे से बनी लंबी, पतली और मुलायम लड़ियाँ, जिन्हें उबालकर पकाया जाता है",
+    "definition": "a long thin strip of soft cooked dough made from flour, usually served in soup or with sauce",
+    "example": "He slurped one long noodle so loudly that everyone at the table laughed.",
+    "image": "pictures-noodle"
+  },
+  {
+    "term": "octopus",
+    "partOfSpeech": "noun",
+    "hindi": "ऑक्टोपस — आठ भुजाओं वाला नरम शरीर का समुद्री जीव जो ख़तरा देखकर स्याही छोड़ता है",
+    "definition": "a soft-bodied sea creature with a round head and eight long arms covered in suckers, able to squirt dark ink",
+    "example": "The octopus squeezed through a gap no bigger than a coin and vanished.",
+    "image": "pictures-octopus"
+  },
+  {
+    "term": "onion",
+    "partOfSpeech": "noun",
+    "hindi": "प्याज़ — परतदार गोल कंद, जिसे काटने पर आँखों में पानी आ जाता है और जो खाने में स्वाद बढ़ाता है",
+    "definition": "a round bulb with papery skin and many layers inside, which has a strong smell and makes your eyes water when cut",
+    "example": "Dad wiped his eyes and blamed the onion for every tear.",
+    "image": "pictures-onion"
+  },
+  {
+    "term": "orange",
+    "partOfSpeech": "noun",
+    "hindi": "संतरा — गोल, नारंगी छिलके वाला रसीला फल जिसके अंदर फाँकें होती हैं और स्वाद खट्टा-मीठा होता है",
+    "definition": "a round juicy citrus fruit with a thick bright skin that you peel to eat the sweet segments inside",
+    "example": "He peeled the orange in one long spiral and handed half to his brother.",
+    "image": "pictures-orange"
+  },
+  {
+    "term": "owl",
+    "partOfSpeech": "noun",
+    "hindi": "उल्लू — बड़ी गोल आँखों वाला पक्षी जो रात में जागता है और दिन में सोता है",
+    "definition": "a bird with a flat round face, big eyes and soft feathers that hunts at night and hoots in the dark",
+    "example": "The owl sat on the branch and turned its head to look behind itself.",
+    "image": "pictures-owl"
+  },
+  {
+    "term": "padlock",
+    "partOfSpeech": "noun",
+    "hindi": "ताला — दरवाज़े, संदूक या अलमारी को बंद रखने के लिए लगाया जाने वाला धातु का उपकरण जिसे चाबी से खोला जाता है",
+    "definition": "a small metal lock with a curved bar at the top that you can fasten to a door, gate or box",
+    "example": "He fastened a heavy padlock on the gate before leaving for the weekend.",
+    "image": "pictures-padlock"
+  },
+  {
+    "term": "pan",
+    "partOfSpeech": "noun",
+    "hindi": "कड़ाही — खाना तलने या पकाने का चौड़ा, गोल और कम गहरा बर्तन जिसमें हैंडल लगा होता है",
+    "definition": "a wide, round, shallow metal pot with a long handle, used on a stove for frying and cooking food",
+    "example": "The onions sizzled in the pan as the whole house filled with a lovely smell.",
+    "image": "pictures-pan"
+  },
+  {
+    "term": "parrot",
+    "partOfSpeech": "noun",
+    "hindi": "तोता — हरे पंखों और मुड़ी हुई लाल चोंच वाला पक्षी जो इंसानों की बोली की नक़ल कर लेता है",
+    "definition": "a brightly coloured bird with a curved beak and strong claws that can copy words and sounds that people say",
+    "example": "Our parrot greets every visitor with a loud hello and then asks for biscuits.",
+    "image": "pictures-parrot"
+  },
+  {
+    "term": "peacock",
+    "partOfSpeech": "noun",
+    "hindi": "मोर — रंग-बिरंगे लंबे पंखों वाला भारत का राष्ट्रीय पक्षी जो बारिश में नाचता है",
+    "definition": "a large male bird with shiny blue-green feathers and a long tail that it spreads out like a colourful fan",
+    "example": "The peacock opened its tail like a huge fan and danced in the rain.",
+    "image": "pictures-peacock"
+  },
+  {
+    "term": "peanut",
+    "partOfSpeech": "noun",
+    "hindi": "मूँगफली — मिट्टी के नीचे फली में उगने वाला भूरा दाना, जिसे भूनकर खाया जाता है और जिससे तेल निकलता है",
+    "definition": "a small pale seed that grows in a thin brown shell underground and is eaten roasted or pressed for oil",
+    "example": "We cracked the shells and ate every peanut, even the tiny ones.",
+    "image": "pictures-peanut"
+  },
+  {
+    "term": "pear",
+    "partOfSpeech": "noun",
+    "hindi": "नाशपाती — नीचे से मोटा और ऊपर से पतला, हरे-पीले छिलके वाला रसीला, मीठा फल",
+    "definition": "a sweet juicy fruit that is wide at the bottom and narrow at the top, with thin green or yellow skin",
+    "example": "The ripe pear was so soft and juicy that she ate it over the sink.",
+    "image": "pictures-pear"
+  },
+  {
+    "term": "pencil",
+    "partOfSpeech": "noun",
+    "hindi": "पेंसिल — लकड़ी के खोल में काली नोक वाली, लिखने और चित्र बनाने की छड़",
+    "definition": "a thin wooden stick with a dark graphite core, used for writing or drawing marks that can be rubbed out",
+    "example": "He sharpened his pencil until the tip was as fine as a needle.",
+    "image": "pictures-pencil"
+  },
+  {
+    "term": "penguin",
+    "partOfSpeech": "noun",
+    "hindi": "पेंगुइन — काले-सफ़ेद पंखों वाला पक्षी जो उड़ नहीं सकता पर बर्फ़ पर चलता और पानी में तैरता है",
+    "definition": "a black and white sea bird that cannot fly, walks upright on ice and uses its flat wings to swim",
+    "example": "The penguin waddled across the ice and slid down on its tummy.",
+    "image": "pictures-penguin"
+  },
+  {
+    "term": "piano",
+    "partOfSpeech": "noun",
+    "hindi": "पियानो — काली और सफ़ेद कुंजियों वाला बड़ा बाजा",
+    "definition": "a large musical instrument with black and white keys that are pressed to make hammers strike metal strings inside",
+    "example": "Her fingers danced over the piano keys as the whole family sang along.",
+    "image": "pictures-piano"
+  },
+  {
+    "term": "pig",
+    "partOfSpeech": "noun",
+    "hindi": "सूअर — मोटे शरीर और चपटी नाक वाला पालतू जानवर जो कीचड़ में लोटना पसंद करता है",
+    "definition": "a plump farm animal with a pink or brown body, a flat nose and a short curly tail, fond of mud",
+    "example": "The pig rolled happily in the mud and refused to come out for dinner.",
+    "image": "pictures-pig"
+  },
+  {
+    "term": "pillow",
+    "partOfSpeech": "noun",
+    "hindi": "तकिया — रूई या पंखों से भरा नरम कपड़े का थैला जिसे सोते समय सिर के नीचे रखा जाता है",
+    "definition": "a soft cushion filled with feathers, foam or cotton, which you rest your head on when you sleep",
+    "example": "After a long day, she buried her face in the soft pillow and fell asleep.",
+    "image": "pictures-pillow"
+  },
+  {
+    "term": "pineapple",
+    "partOfSpeech": "noun",
+    "hindi": "अनानास — काँटेदार खुरदरे छिलके और ऊपर हरे पत्तों के ताज वाला रसीला, खट्टा-मीठा फल",
+    "definition": "a large tropical fruit with rough spiky skin, a crown of stiff green leaves and sweet, tangy yellow flesh",
+    "example": "Cutting a pineapple takes patience, but the first juicy bite makes up for it.",
+    "image": "pictures-pineapple"
+  },
+  {
+    "term": "pinecone",
+    "partOfSpeech": "noun",
+    "hindi": "चीड़ का फल — चीड़ के पेड़ पर लगने वाला भूरा, सख़्त और परतदार शंकु जिसके अंदर बीज होते हैं",
+    "definition": "the hard, brown, egg-shaped fruit of a pine tree, made of overlapping scales that hold the seeds",
+    "example": "We painted a pinecone gold and placed it on the table for the festival.",
+    "image": "pictures-pinecone"
+  },
+  {
+    "term": "pizza",
+    "partOfSpeech": "noun",
+    "hindi": "पिज़्ज़ा — गोल, चपटी रोटी जिस पर टमाटर की चटनी, पिघला हुआ चीज़ और सब्ज़ियाँ डालकर ओवन में सेंका जाता है",
+    "definition": "a flat round baked bread topped with tomato sauce, melted cheese and other toppings, cut into triangular slices",
+    "example": "The pizza arrived hot, and the whole family fought politely over the last slice.",
+    "image": "pictures-pizza"
+  },
+  {
+    "term": "plate",
+    "partOfSpeech": "noun",
+    "hindi": "थाली — खाना परोसने और खाने के लिए इस्तेमाल होने वाला चपटा, गोल बर्तन",
+    "definition": "a flat, round dish, usually made of ceramic, glass or metal, from which you eat your meal",
+    "example": "The waiter placed a plate of hot samosas in the middle of the table.",
+    "image": "pictures-plate"
+  },
+  {
+    "term": "potato",
+    "partOfSpeech": "noun",
+    "hindi": "आलू — मिट्टी के नीचे उगने वाला गोल या अंडाकार कंद, जिसे उबालकर, तलकर या भूनकर खाते हैं",
+    "definition": "a round or oval vegetable with brown skin and soft white flesh that grows underground and is boiled, fried or roasted",
+    "example": "My uncle passed me a hot potato and told me to blow on it first.",
+    "image": "pictures-potato"
+  },
+  {
+    "term": "pretzel",
+    "partOfSpeech": "noun",
+    "hindi": "प्रेट्ज़ेल — गाँठ की तरह मुड़ा हुआ, ऊपर से नमक के दानों वाला भूरा बेक किया हुआ नाश्ता",
+    "definition": "a baked snack of brown dough twisted into a knot shape, usually sprinkled with coarse salt on top",
+    "example": "The warm pretzel was so salty that he asked for a second glass of water.",
+    "image": "pictures-pretzel"
+  },
+  {
+    "term": "pumpkin",
+    "partOfSpeech": "noun",
+    "hindi": "कद्दू — मोटे नारंगी छिलके वाला बड़ा गोल फल-सब्ज़ी, जिसके अंदर गूदा और बीज भरे होते हैं",
+    "definition": "a large round vegetable with thick ribbed orange skin, soft flesh and many seeds inside, used in soups and pies",
+    "example": "The farmer carried the heavy pumpkin home as gently as a sleeping baby.",
+    "image": "pictures-pumpkin"
+  },
+  {
+    "term": "pyramid",
+    "partOfSpeech": "noun",
+    "hindi": "पिरामिड — चौकोर आधार और ऊपर एक नुकीले बिंदु पर मिलती तिकोनी दीवारों वाला मिस्र का विशाल पत्थर का ढाँचा",
+    "definition": "a huge stone structure with a square base and four sloping triangular sides that meet at a point at the top",
+    "example": "Tourists queue for hours in the sun just to stand beside the great pyramid.",
+    "image": "pictures-pyramid"
+  },
+  {
+    "term": "rabbit",
+    "partOfSpeech": "noun",
+    "hindi": "ख़रगोश — लंबे कानों और नरम रोएँ वाला छोटा जानवर जो फुदक-फुदककर चलता है",
+    "definition": "a small furry animal with long ears, a short fluffy tail and strong back legs that hops and eats carrots",
+    "example": "The rabbit twitched its nose and nibbled a lettuce leaf in the garden.",
+    "image": "pictures-rabbit"
+  },
+  {
+    "term": "rainbow",
+    "partOfSpeech": "noun",
+    "hindi": "इंद्रधनुष — बारिश के बाद आसमान में दिखने वाला सात रंगों का बड़ा अर्धवृत्ताकार चाप",
+    "definition": "a curved band of seven colours that appears in the sky when sunlight shines through falling rain",
+    "example": "After the sudden shower, a bright rainbow stretched across the whole sky.",
+    "image": "pictures-rainbow"
+  },
+  {
+    "term": "rhinoceros",
+    "partOfSpeech": "noun",
+    "hindi": "गैंडा — मोटी खाल और नाक पर एक या दो सींग वाला विशाल जानवर",
+    "definition": "a huge heavy animal with thick grey skin and one or two horns on its nose, living in Africa and Asia",
+    "example": "The rhinoceros walked slowly through the tall grass, as solid as a small tank.",
+    "image": "pictures-rhinoceros"
+  },
+  {
+    "term": "rice",
+    "partOfSpeech": "noun",
+    "hindi": "चावल — धान से मिलने वाले छोटे, सफ़ेद दाने जो उबालकर या भाप में पकाए जाते हैं",
+    "definition": "small white grains from a plant grown in wet fields, boiled or steamed until soft and eaten as a main food",
+    "example": "Steam rose from the bowl of rice and fogged up his glasses.",
+    "image": "pictures-rice"
+  },
+  {
+    "term": "ring",
+    "partOfSpeech": "noun",
+    "hindi": "अँगूठी — उँगली में पहना जाने वाला छोटा गोल गहना",
+    "definition": "a small circle of gold, silver or another metal, often set with a stone, worn on a finger as jewellery",
+    "example": "The tiny ring slipped off her finger and rolled under the sofa.",
+    "image": "pictures-ring"
+  },
+  {
+    "term": "river",
+    "partOfSpeech": "noun",
+    "hindi": "नदी — पहाड़ों से निकलकर समुद्र की ओर बहने वाली पानी की बड़ी प्राकृतिक धारा",
+    "definition": "a wide natural stream of fresh water that flows across the land and usually ends in the sea",
+    "example": "The river is calm in winter but turns wild and muddy after the monsoon.",
+    "image": "pictures-river"
+  },
+  {
+    "term": "rock",
+    "partOfSpeech": "noun",
+    "hindi": "चट्टान — ज़मीन में धँसा या बाहर निकला बहुत बड़ा, कठोर पत्थर",
+    "definition": "a hard, solid piece of stone, either part of the ground or lying loose, which can be very large",
+    "example": "He sat on a warm rock by the stream and ate his sandwich in peace.",
+    "image": "pictures-rock"
+  },
+  {
+    "term": "rocket",
+    "partOfSpeech": "noun",
+    "hindi": "रॉकेट — अंतरिक्ष में जाने वाला लंबा, नुकीला वाहन जो आग की तेज़ धार छोड़कर उड़ता है",
+    "definition": "a tall, pointed vehicle that blasts upwards with fire and smoke to carry satellites or astronauts into space",
+    "example": "We counted down loudly and cheered as the rocket lifted off the pad.",
+    "image": "pictures-rocket"
+  },
+  {
+    "term": "rope",
+    "partOfSpeech": "noun",
+    "hindi": "रस्सी — कई मज़बूत धागों को बटकर बनी मोटी और लंबी डोरी",
+    "definition": "a thick, strong cord made of twisted fibres, used for tying, pulling, climbing and hauling heavy things",
+    "example": "The cat ignored every toy and happily chased the end of the rope.",
+    "image": "pictures-rope"
+  },
+  {
+    "term": "rose",
+    "partOfSpeech": "noun",
+    "hindi": "गुलाब — काँटेदार डंठल पर खिलने वाला सुगंधित फूल जो लाल, गुलाबी, सफ़ेद या पीला हो सकता है",
+    "definition": "a sweet-smelling flower with soft layered petals and a thorny stem, usually red, pink, white or yellow",
+    "example": "He gave her a single red rose and then forgot what he wanted to say.",
+    "image": "pictures-rose"
+  },
+  {
+    "term": "rug",
+    "partOfSpeech": "noun",
+    "hindi": "कालीन — फ़र्श के एक हिस्से पर बिछाने के लिए ऊन या मोटे धागों का बुना हुआ छोटा टुकड़ा",
+    "definition": "a thick piece of woven material that covers part of a floor, making it warmer, softer and more colourful",
+    "example": "The puppy curled up on the rug in a patch of warm sunlight and soon fell asleep.",
+    "image": "pictures-rug"
+  },
+  {
+    "term": "sandal",
+    "partOfSpeech": "noun",
+    "hindi": "सैंडल — पट्टियों वाला खुला हल्का जूता, जो गर्मी में पहना जाता है",
+    "definition": "a light, open shoe with straps over the foot, worn in warm weather",
+    "example": "One sandal floated away in the stream, and we all laughed as he chased it.",
+    "image": "pictures-sandal"
+  },
+  {
+    "term": "saw",
+    "partOfSpeech": "noun",
+    "hindi": "आरी — लकड़ी या लोहा काटने वाला दाँतेदार पत्ती का औज़ार",
+    "definition": "a tool with a thin metal blade edged with sharp teeth, used for cutting wood by moving it back and forth",
+    "example": "Dad drew the saw slowly across the plank and a neat piece fell away.",
+    "image": "pictures-saw"
+  },
+  {
+    "term": "scarf",
+    "partOfSpeech": "noun",
+    "hindi": "स्कार्फ — गले या सिर पर लपेटा जाने वाला लंबा नरम कपड़ा",
+    "definition": "a long strip of soft cloth or wool, wrapped around the neck or head for warmth or decoration",
+    "example": "She wound her red scarf twice around her neck before stepping into the fog.",
+    "image": "pictures-scarf"
+  },
+  {
+    "term": "scissors",
+    "partOfSpeech": "noun",
+    "hindi": "कैंची — दो धारदार फलकों वाला औज़ार जिससे काग़ज़, कपड़ा या बाल काटे जाते हैं",
+    "definition": "a tool with two sharp blades joined in the middle and two handles, used for cutting paper, cloth and hair",
+    "example": "Please pass me the scissors so I can cut this ribbon for the gift.",
+    "image": "pictures-scissors"
+  },
+  {
+    "term": "scooter",
+    "partOfSpeech": "noun",
+    "hindi": "स्कूटर — दो पहियों वाली हल्की मोटर सवारी जिसमें पैर रखने की सपाट जगह होती है",
+    "definition": "a light two-wheeled vehicle with a small engine, a step-through frame and a flat floor for the rider's feet",
+    "example": "My aunt rides her scooter to the market and comes back with bags of mangoes.",
+    "image": "pictures-scooter"
+  },
+  {
+    "term": "screwdriver",
+    "partOfSpeech": "noun",
+    "hindi": "पेचकस — पेच को घुमाकर कसने और खोलने वाला औज़ार",
+    "definition": "a tool with a long thin metal tip and a handle, turned to tighten or loosen screws",
+    "example": "I used a small screwdriver to open the back of the remote control.",
+    "image": "pictures-screwdriver"
+  },
+  {
+    "term": "seashell",
+    "partOfSpeech": "noun",
+    "hindi": "सीपी — समुद्र में रहने वाले छोटे जीव का कठोर, चमकदार खोल जो किनारे की रेत पर मिल जाता है",
+    "definition": "the hard, often patterned outer case of a small sea animal, found empty on the sand",
+    "example": "She held a seashell to her ear and swore she could hear the sea.",
+    "image": "pictures-seashell"
+  },
+  {
+    "term": "sheep",
+    "partOfSpeech": "noun",
+    "hindi": "भेड़ — घने ऊन वाला पालतू जानवर जिसके ऊन से स्वेटर और कंबल बनते हैं",
+    "definition": "a farm animal with a thick woolly coat that grazes in flocks on hillsides and is kept for its wool",
+    "example": "A flock of sheep wandered onto the road and the traffic politely waited.",
+    "image": "pictures-sheep"
+  },
+  {
+    "term": "ship",
+    "partOfSpeech": "noun",
+    "hindi": "जहाज़ — समुद्र में चलने वाली बहुत बड़ी सवारी जो यात्रियों और सामान को दूर ले जाती है",
+    "definition": "a very large vessel that sails across seas and oceans, carrying passengers or cargo over long distances",
+    "example": "The huge ship sounded its horn and slowly left the harbour.",
+    "image": "pictures-ship"
+  },
+  {
+    "term": "shirt",
+    "partOfSpeech": "noun",
+    "hindi": "शर्ट — कॉलर और बाँहों वाला, ऊपरी शरीर पर पहना जाने वाला कपड़ा",
+    "definition": "a piece of clothing for the upper body, with a collar, sleeves and buttons down the front",
+    "example": "Dad ironed his best shirt twice and still spilled tea on it.",
+    "image": "pictures-shirt"
+  },
+  {
+    "term": "shoe",
+    "partOfSpeech": "noun",
+    "hindi": "जूता — पैर को ढकने वाला, तलवे और फीतों वाला पहनावा",
+    "definition": "a strong covering for the foot with a firm sole and a closed top, usually fastened with laces",
+    "example": "He searched the whole house for his left shoe and found it in the fridge.",
+    "image": "pictures-shoe"
+  },
+  {
+    "term": "shovel",
+    "partOfSpeech": "noun",
+    "hindi": "फावड़ा — मिट्टी या रेत खोदने और उठाने का चौड़े फल और लंबे हत्थे वाला औज़ार",
+    "definition": "a tool with a broad, curved metal blade and a long handle, used for digging and moving soil or sand",
+    "example": "The children dug a deep hole in the sand with a plastic shovel.",
+    "image": "pictures-shovel"
+  },
+  {
+    "term": "sink",
+    "partOfSpeech": "noun",
+    "hindi": "सिंक — रसोई या बाथरूम में लगा गहरा बेसिन जिसमें बर्तन या हाथ धोए जाते हैं",
+    "definition": "a fixed bowl with a tap and a drain, found in kitchens and bathrooms, where you wash dishes and hands",
+    "example": "The sink was full of dirty dishes, and nobody wanted to be the one to wash them.",
+    "image": "pictures-sink"
+  },
+  {
+    "term": "skateboard",
+    "partOfSpeech": "noun",
+    "hindi": "स्केटबोर्ड — चार छोटे पहियों वाला तख़्ता जिस पर खड़े होकर पैर से धक्का देकर चलते हैं",
+    "definition": "a short board with four small wheels underneath, which a person stands on and pushes along with one foot",
+    "example": "He wobbled at first, but soon he glided across the park on his skateboard.",
+    "image": "pictures-skateboard"
+  },
+  {
+    "term": "snail",
+    "partOfSpeech": "noun",
+    "hindi": "घोंघा — पीठ पर सर्पिल खोल लिए धीरे-धीरे रेंगने वाला नरम जीव",
+    "definition": "a small soft creature that carries a spiral shell on its back and moves very slowly, leaving a shiny trail",
+    "example": "The snail took all morning to cross the path, but it never looked worried.",
+    "image": "pictures-snail"
+  },
+  {
+    "term": "snake",
+    "partOfSpeech": "noun",
+    "hindi": "साँप — बिना पैरों का लंबा रेंगने वाला जीव जिसकी खाल पर शल्क होते हैं",
+    "definition": "a long thin reptile with no legs, covered in dry scales, that slides smoothly along the ground and over rocks",
+    "example": "The snake slid silently under the rock and was gone in a moment.",
+    "image": "pictures-snake"
+  },
+  {
+    "term": "soap",
+    "partOfSpeech": "noun",
+    "hindi": "साबुन — नहाने और हाथ-कपड़े धोने के लिए इस्तेमाल होने वाली झाग देने वाली सफ़ाई की टिकिया",
+    "definition": "a solid or liquid cleaning product that makes bubbles when mixed with water, used for washing your body, hands or clothes",
+    "example": "Wash your hands with soap and water for twenty seconds before you eat.",
+    "image": "pictures-soap"
+  },
+  {
+    "term": "sock",
+    "partOfSpeech": "noun",
+    "hindi": "मोज़ा — पैर और टखने पर पहना जाने वाला नरम बुना हुआ कपड़ा",
+    "definition": "a soft knitted covering for the foot and ankle, worn inside a shoe to keep the foot warm and comfortable",
+    "example": "After every wash, one sock goes missing, and nobody can explain how.",
+    "image": "pictures-sock"
+  },
+  {
+    "term": "sofa",
+    "partOfSpeech": "noun",
+    "hindi": "सोफ़ा — कई लोगों के बैठने के लिए बना लंबा, गद्देदार और आरामदायक आसन",
+    "definition": "a long, soft seat with a back and arms, big enough for two or three people to sit on comfortably",
+    "example": "After the picnic, the whole family collapsed on the sofa and watched cricket.",
+    "image": "pictures-sofa"
+  },
+  {
+    "term": "spider",
+    "partOfSpeech": "noun",
+    "hindi": "मकड़ी — आठ पैरों वाला छोटा जीव जो जाला बुनकर कीड़े पकड़ता है",
+    "definition": "a small creature with eight thin legs that spins a sticky silk web to catch flies and other tiny insects",
+    "example": "A spider spun a perfect web across the window overnight, silver in the morning light.",
+    "image": "pictures-spider"
+  },
+  {
+    "term": "spoon",
+    "partOfSpeech": "noun",
+    "hindi": "चम्मच — छोटा गहरा सिरा और हैंडल वाला बर्तन जिससे खाना खाया या परोसा जाता है",
+    "definition": "a small tool with a handle and a shallow bowl at one end, used for eating, stirring and serving food",
+    "example": "The baby happily banged the spoon on the table while waiting for her porridge.",
+    "image": "pictures-spoon"
+  },
+  {
+    "term": "squirrel",
+    "partOfSpeech": "noun",
+    "hindi": "गिलहरी — झबरीली पूँछ वाला छोटा फुर्तीला जानवर जो पेड़ों पर चढ़ता और मेवे कुतरता है",
+    "definition": "a small quick animal with a bushy tail that climbs trees and holds nuts in its front paws to nibble",
+    "example": "The squirrel stuffed its cheeks with nuts and scampered up the tall tree.",
+    "image": "pictures-squirrel"
+  },
+  {
+    "term": "stool",
+    "partOfSpeech": "noun",
+    "hindi": "स्टूल — बिना पीठ और हत्थों वाली छोटी ऊँची बैठक जिस पर एक व्यक्ति बैठता है",
+    "definition": "a simple seat with legs but no back or arms, often small enough to carry from room to room",
+    "example": "She stood on a stool to reach the biscuit tin on the top shelf.",
+    "image": "pictures-stool"
+  },
+  {
+    "term": "strawberry",
+    "partOfSpeech": "noun",
+    "hindi": "स्ट्रॉबेरी — दिल जैसे आकार का चमकदार लाल फल जिसकी सतह पर छोटे-छोटे बीज होते हैं",
+    "definition": "a small heart-shaped red fruit with tiny seeds on its skin and a green leafy top, sweet and juicy",
+    "example": "He saved the biggest strawberry for last and then shared it anyway.",
+    "image": "pictures-strawberry"
+  },
+  {
+    "term": "submarine",
+    "partOfSpeech": "noun",
+    "hindi": "पनडुब्बी — पानी के नीचे चलने वाला बंद, लंबा जहाज़",
+    "definition": "a long, sealed ship that can travel deep underwater, with a periscope to see above the surface",
+    "example": "Through a round window in the submarine, we watched silver fish glide by.",
+    "image": "pictures-submarine"
+  },
+  {
+    "term": "sunflower",
+    "partOfSpeech": "noun",
+    "hindi": "सूरजमुखी — बड़ा पीला फूल जिसका बीजों से भरा भूरा केंद्र होता है और जो सूरज की ओर मुड़ता लगता है",
+    "definition": "a tall plant with a very large round yellow flower, whose centre holds seeds that give us edible oil",
+    "example": "Every sunflower in the field had turned its face towards the morning sun.",
+    "image": "pictures-sunflower"
+  },
+  {
+    "term": "sunglasses",
+    "partOfSpeech": "noun",
+    "hindi": "धूप का चश्मा — तेज़ रोशनी से आँखों को बचाने वाले गहरे शीशों का चश्मा",
+    "definition": "glasses with dark lenses, worn outdoors to protect the eyes from bright sunlight",
+    "example": "He wore his sunglasses even indoors, until he walked straight into the door.",
+    "image": "pictures-sunglasses"
+  },
+  {
+    "term": "swan",
+    "partOfSpeech": "noun",
+    "hindi": "हंस — लंबी सुंदर गर्दन वाला बड़ा सफ़ेद जलपक्षी जो झील में शान से तैरता है",
+    "definition": "a large water bird with white feathers and a long curved neck that glides gracefully across lakes and rivers",
+    "example": "The swan glided across the lake without making a single ripple.",
+    "image": "pictures-swan"
+  },
+  {
+    "term": "table",
+    "partOfSpeech": "noun",
+    "hindi": "मेज़ — समतल ऊपरी सतह और पैरों वाला फ़र्नीचर जिस पर खाना खाया या काम किया जाता है",
+    "definition": "a piece of furniture with a flat top and legs, on which you put food, books or other things",
+    "example": "We gathered around the table for dinner and talked about our day.",
+    "image": "pictures-table"
+  },
+  {
+    "term": "teapot",
+    "partOfSpeech": "noun",
+    "hindi": "चायदानी — चाय बनाने और परोसने के लिए टोंटी और ढक्कन वाला बर्तन",
+    "definition": "a container with a spout, a lid and a handle, in which you make tea and from which you pour it",
+    "example": "The teapot kept our tea warm while we chatted on the balcony all evening.",
+    "image": "pictures-teapot"
+  },
+  {
+    "term": "tent",
+    "partOfSpeech": "noun",
+    "hindi": "तंबू — कपड़े या तिरपाल का बना अस्थायी आश्रय जो खंभों और रस्सियों के सहारे खड़ा किया जाता है",
+    "definition": "a portable shelter made of cloth or canvas, held up by poles and ropes, used for camping or temporary stays",
+    "example": "It rained all night, but our little tent stayed dry and cosy.",
+    "image": "pictures-tent"
+  },
+  {
+    "term": "thermometer",
+    "partOfSpeech": "noun",
+    "hindi": "थर्मामीटर — शरीर या मौसम का तापमान नापने वाला यंत्र",
+    "definition": "a glass tube or small device with a scale that measures how hot or cold a person, room or place is",
+    "example": "Mum held the thermometer under my arm and told me to stay still.",
+    "image": "pictures-thermometer"
+  },
+  {
+    "term": "tiger",
+    "partOfSpeech": "noun",
+    "hindi": "बाघ — पीली खाल पर काली धारियों वाला बड़ा और ताक़तवर जंगली जानवर",
+    "definition": "a large powerful wild cat with orange fur and black stripes, found in forests in Asia",
+    "example": "The tiger stretched lazily in the shade, its stripes glowing in the dappled light.",
+    "image": "pictures-tiger"
+  },
+  {
+    "term": "tomato",
+    "partOfSpeech": "noun",
+    "hindi": "टमाटर — गोल, चिकना और लाल रसीला फल जिसे सब्ज़ी की तरह पकाया या सलाद में खाया जाता है",
+    "definition": "a round smooth red fruit with juicy flesh and small seeds, eaten raw in salads or cooked in sauces and curries",
+    "example": "The ripe tomato rolled off the counter and bounced, but somehow stayed whole.",
+    "image": "pictures-tomato"
+  },
+  {
+    "term": "toothbrush",
+    "partOfSpeech": "noun",
+    "hindi": "टूथब्रश — लंबी मूठ और सिरे पर महीन बालों वाला छोटा ब्रश जिससे दाँत साफ़ किए जाते हैं",
+    "definition": "a small brush with a long handle and soft bristles, used with toothpaste to clean your teeth",
+    "example": "Remember to change your toothbrush every three months so your smile stays healthy.",
+    "image": "pictures-toothbrush"
+  },
+  {
+    "term": "tortoise",
+    "partOfSpeech": "noun",
+    "hindi": "कछुआ — पीठ पर कठोर गुंबदनुमा खोल वाला धीमे चलने वाला जीव जो ख़तरा देखकर सिर अंदर खींच लेता है",
+    "definition": "a slow reptile that lives on land and has a hard, rounded shell on its back into which it pulls its head",
+    "example": "The tortoise took a very long time to cross the lawn, but it enjoyed every step.",
+    "image": "pictures-tortoise"
+  },
+  {
+    "term": "towel",
+    "partOfSpeech": "noun",
+    "hindi": "तौलिया — नरम, सोखने वाला कपड़े का टुकड़ा जिससे नहाने के बाद शरीर और हाथ पोंछे जाते हैं",
+    "definition": "a piece of soft, thick cloth that soaks up water, used for drying your body or hands after washing",
+    "example": "He wrapped himself in a fluffy towel and ran shivering out of the bathroom.",
+    "image": "pictures-towel"
+  },
+  {
+    "term": "tractor",
+    "partOfSpeech": "noun",
+    "hindi": "ट्रैक्टर — खेतों में जुताई करने और भारी बोझ खींचने वाली बड़े पहियों की ताक़तवर गाड़ी",
+    "definition": "a strong farm vehicle with very large rear wheels, used to pull ploughs, trailers and other heavy equipment",
+    "example": "The farmer's tractor chugged across the field in the early morning mist.",
+    "image": "pictures-tractor"
+  },
+  {
+    "term": "train",
+    "partOfSpeech": "noun",
+    "hindi": "रेलगाड़ी — पटरियों पर चलने वाली, जुड़े हुए कई डिब्बों की लंबी गाड़ी",
+    "definition": "a long line of connected carriages pulled by an engine along railway tracks, carrying passengers or goods",
+    "example": "The train whistled twice and rolled out of the station on time.",
+    "image": "pictures-train"
+  },
+  {
+    "term": "tram",
+    "partOfSpeech": "noun",
+    "hindi": "ट्राम — शहर की सड़कों में बिछी पटरियों पर बिजली से चलने वाली गाड़ी",
+    "definition": "a public vehicle that runs on rails set into city streets and is usually powered by overhead electric wires",
+    "example": "The yellow tram rattled along the street, ringing its bell at every crossing.",
+    "image": "pictures-tram"
+  },
+  {
+    "term": "tree",
+    "partOfSpeech": "noun",
+    "hindi": "पेड़ — मोटे तने, शाखाओं और पत्तों वाला ऊँचा पौधा जो कई सालों तक जीता है",
+    "definition": "a tall plant with a thick wooden trunk, branches and leaves, which can live for many years",
+    "example": "We sat under the old tree and ate mangoes until nobody could move.",
+    "image": "pictures-tree"
+  },
+  {
+    "term": "trophy",
+    "partOfSpeech": "noun",
+    "hindi": "ट्रॉफ़ी — जीत के इनाम में दिया जाने वाला चमकदार प्याला",
+    "definition": "a cup or other shiny object given to the winner of a competition as a prize",
+    "example": "Our team polished the trophy until we could see our faces in it.",
+    "image": "pictures-trophy"
+  },
+  {
+    "term": "truck",
+    "partOfSpeech": "noun",
+    "hindi": "ट्रक — भारी सामान ढोने वाली बड़ी और मज़बूत गाड़ी",
+    "definition": "a large, strong road vehicle with an open or closed back, used to carry heavy goods over long distances",
+    "example": "A painted truck full of sacks of rice rumbled slowly past our gate.",
+    "image": "pictures-truck"
+  },
+  {
+    "term": "trumpet",
+    "partOfSpeech": "noun",
+    "hindi": "ट्रम्पेट — पीतल का मुड़ा हुआ बाजा, जिसमें फूँक मारकर तेज़ आवाज़ निकाली जाती है",
+    "definition": "a brass musical instrument with a long curved tube that widens at the end, played by blowing and pressing three valves",
+    "example": "The trumpet gave one loud, bright note, and every sleepy head turned around.",
+    "image": "pictures-trumpet"
+  },
+  {
+    "term": "tulip",
+    "partOfSpeech": "noun",
+    "hindi": "ट्यूलिप — वसंत में खिलने वाला प्याले जैसे आकार का चटकीला फूल जो एक सीधे डंठल पर लगता है",
+    "definition": "a bright, cup-shaped flower on a single straight stem, which blooms in spring and comes in many colours",
+    "example": "Rows of red tulips lit up the garden as soon as spring arrived.",
+    "image": "pictures-tulip"
+  },
+  {
+    "term": "umbrella",
+    "partOfSpeech": "noun",
+    "hindi": "छाता — बारिश या धूप से बचने के लिए हाथ में पकड़कर तानने वाला कपड़े का गोल ढाँचा",
+    "definition": "a round, folding cover of cloth on a long handle, held over the head to keep off rain or strong sun",
+    "example": "The wind turned her umbrella inside out just as the rain began to pour.",
+    "image": "pictures-umbrella"
+  },
+  {
+    "term": "vase",
+    "partOfSpeech": "noun",
+    "hindi": "फूलदान — सजावटी बर्तन जिसमें पानी भरकर फूल सजाकर रखे जाते हैं",
+    "definition": "a tall decorative container made of glass, clay or metal, used for holding cut flowers and displaying them in a room",
+    "example": "She arranged fresh marigolds in a blue vase and placed it by the window.",
+    "image": "pictures-vase"
+  },
+  {
+    "term": "violin",
+    "partOfSpeech": "noun",
+    "hindi": "वायलिन — चार तारों वाला लकड़ी का बाजा, जिसे गज़ से बजाया जाता है",
+    "definition": "a small wooden musical instrument with four strings, held under the chin and played with a long bow",
+    "example": "She tucked the violin under her chin and played a tune that made us smile.",
+    "image": "pictures-violin"
+  },
+  {
+    "term": "volcano",
+    "partOfSpeech": "noun",
+    "hindi": "ज्वालामुखी — ऐसा पहाड़ जिसके मुँह से कभी-कभी गर्म पिघली चट्टान, राख और गैस बाहर निकलती है",
+    "definition": "a mountain with an opening at the top through which hot melted rock, ash and gas can burst out",
+    "example": "Smoke curled gently from the top of the volcano as the guide told us its story.",
+    "image": "pictures-volcano"
+  },
+  {
+    "term": "wallet",
+    "partOfSpeech": "noun",
+    "hindi": "पर्स — जेब में रखा जाने वाला चपटा थैला, जिसमें नोट और कार्ड रखे जाते हैं",
+    "definition": "a small, flat case, often made of leather and folded in the middle, for keeping banknotes, cards and coins",
+    "example": "My wallet feels lighter after every visit to the sweet shop.",
+    "image": "pictures-wallet"
+  },
+  {
+    "term": "walnut",
+    "partOfSpeech": "noun",
+    "hindi": "अखरोट — सख़्त, झुर्रीदार भूरे खोल वाला मेवा, जिसके अंदर दिमाग जैसी आकृति की गिरी होती है",
+    "definition": "a round hard-shelled nut whose wrinkled, brain-shaped kernel is eaten as a snack or added to cakes",
+    "example": "She cracked the walnut with a small hammer and pulled out the crinkly pieces.",
+    "image": "pictures-walnut"
+  },
+  {
+    "term": "watch",
+    "partOfSpeech": "noun",
+    "hindi": "घड़ी — कलाई पर बाँधा जाने वाला, समय बताने वाला छोटा यंत्र",
+    "definition": "a small clock on a strap, worn around the wrist to tell the time",
+    "example": "Our teacher glanced at her watch, smiled, and gave us five more minutes.",
+    "image": "pictures-watch"
+  },
+  {
+    "term": "waterfall",
+    "partOfSpeech": "noun",
+    "hindi": "झरना — पहाड़ या चट्टान की ऊँचाई से सीधे नीचे गिरती पानी की धारा",
+    "definition": "a place where a river or stream falls from a great height over rocks or a cliff into a pool below",
+    "example": "We stood in the cool spray of the waterfall and forgot all about the heat.",
+    "image": "pictures-waterfall"
+  },
+  {
+    "term": "watermelon",
+    "partOfSpeech": "noun",
+    "hindi": "तरबूज़ — हरे छिलके और अंदर से लाल, रसीले और मीठे गूदे वाला बड़ा गोल फल",
+    "definition": "a very large round fruit with a smooth green rind, sweet watery red flesh and many small black seeds",
+    "example": "On a hot day, nothing is better than a cold slice of watermelon.",
+    "image": "pictures-watermelon"
+  },
+  {
+    "term": "whale",
+    "partOfSpeech": "noun",
+    "hindi": "व्हेल — समुद्र का विशाल स्तनधारी जीव जो सिर के ऊपर से पानी का फ़व्वारा छोड़ता है",
+    "definition": "a huge sea mammal shaped like a fish that blows water into the air through a hole on top of its head",
+    "example": "A whale rose beside our boat, sighed loudly and sank slowly back into the sea.",
+    "image": "pictures-whale"
+  },
+  {
+    "term": "wheel",
+    "partOfSpeech": "noun",
+    "hindi": "पहिया — बीच से घूमने वाला गोल ढाँचा जिसके सहारे गाड़ियाँ लुढ़ककर चलती हैं",
+    "definition": "a round frame or disc that turns around its centre, fixed under vehicles so that they can roll along",
+    "example": "The front wheel of my bicycle squeaks every time I pedal uphill.",
+    "image": "pictures-wheel"
+  },
+  {
+    "term": "windmill",
+    "partOfSpeech": "noun",
+    "hindi": "पवन चक्की — हवा से घूमने वाले बड़े पंखों वाली मीनार जो बिजली बनाती है या अनाज पीसती है",
+    "definition": "a tall structure with large blades that are turned by the wind, used to grind grain, pump water or make electricity",
+    "example": "The windmill spun lazily in the breeze, as if it had nowhere important to be.",
+    "image": "pictures-windmill"
+  },
+  {
+    "term": "window",
+    "partOfSpeech": "noun",
+    "hindi": "खिड़की — दीवार में बना खुला हिस्सा, जिसमें काँच या पल्ले लगे होते हैं और जिससे रोशनी और हवा अंदर आती है",
+    "definition": "an opening in a wall, usually filled with glass, that lets light and air into a room and lets you look outside",
+    "example": "I like to sit by the window and watch the rain fall on the street.",
+    "image": "pictures-window"
+  },
+  {
+    "term": "wrench",
+    "partOfSpeech": "noun",
+    "hindi": "पाना — नट और बोल्ट को कसने या खोलने वाला धातु का औज़ार",
+    "definition": "a metal tool with an open or closed end that grips and turns nuts and bolts to tighten or loosen them",
+    "example": "The mechanic reached for a wrench and loosened the stubborn nut.",
+    "image": "pictures-wrench"
+  },
+  {
+    "term": "zebra",
+    "partOfSpeech": "noun",
+    "hindi": "ज़ेबरा — काली-सफ़ेद धारियों वाला घोड़े जैसा जानवर जो अफ़्रीका के घास के मैदानों में रहता है",
+    "definition": "an African animal like a horse with bold black and white stripes on its body, living in grassy plains",
+    "example": "Every zebra has its own pattern of stripes, just as every person has fingerprints.",
+    "image": "pictures-zebra"
+  }
+]

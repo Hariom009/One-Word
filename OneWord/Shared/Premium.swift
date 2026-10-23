@@ -25,7 +25,7 @@ nonisolated enum Premium {
     /// v1: every shelf the app lists (Features.premium is off). Bookmarks — the reader's own
     /// words — is never sold back to them. Ids are spelled the way AppGroup.dictionaryID
     /// spells them: Wordbook is app-only.
-    static let free: Set<String> = ["words", "emotions", "philosophy", "startup", "idioms", "pets", "sanskrit", SavedWords.resource]
+    static let free: Set<String> = ["words", "emotions", "philosophy", "startup", "idioms", "pets", "sanskrit", "pictures", SavedWords.resource]
 
     private static let key = "premiumUnlocked"
 

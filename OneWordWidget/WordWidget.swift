@@ -20,7 +20,8 @@ enum WidgetDictionary: String, AppEnum {
 
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Dictionary"
     // ponytail: mirrors Wordbook.all by hand — a literal is all AppIntents accepts here.
-    // Cats & Dogs (pets) is app-only and left out on purpose.
+    // Cats & Dogs (pets) and Picture Book are app-only and left out on purpose: a widget
+    // can't play the sound, and the photos ship in the app bundle only.
     // When Premium ships, locked shelves take a "· Premium" suffix again.
     static var caseDisplayRepresentations: [WidgetDictionary: DisplayRepresentation] = [
         .followApp:   "Follow App Settings",
@@ -38,8 +39,8 @@ enum WidgetDictionary: String, AppEnum {
     /// gate here covers both the Edit-menu pick and Follow App Settings.
     var resource: String {
         let id = Premium.resolve(self == .followApp ? AppGroup.dictionaryID : rawValue)
-        // pets is app-only: Follow App Settings shows Everyday English while it's the app's pick.
-        return id == "pets" ? "words" : id
+        // App-only books: Follow App Settings shows Everyday English while one is the app's pick.
+        return id == "pets" || id == "pictures" ? "words" : id
     }
 }
 

@@ -32,6 +32,8 @@ struct Wordbook: Identifiable, Hashable {
     static let pets = Wordbook(id: "pets", name: "Dictionary of Cats & Dogs", cover: 0x6B4A2F, symbol: "pawprint.fill", mark: "Mw", image: "Dictionary_of_Idioms", height: 0.91)
     // TODO(develop): Idioms art is a dev placeholder; swap to "Dictionary_of_Sanskrit" and re-sample `cover` once the painted cover lands.
     static let sanskrit = Wordbook(id: "sanskrit", name: "Dictionary of Sanskrit", cover: 0x8C2F1E, symbol: "character.book.closed.fill", mark: "\u{0950}", image: "Dictionary_of_Idioms", height: 0.92)
+    // TODO(develop): Everyday English art is a placeholder; swap to "Dictionary_of_PictureBook" and re-sample `cover` once the painted cover lands.
+    static let pictures = Wordbook(id: "pictures", name: "Picture Book", cover: 0x9A7432, symbol: "photo.fill", mark: "Pp", image: "Dictionary_of_EverydayEnglish", height: 0.95)
     /// Not a bundled json — WordProvider resolves this id from the words you bookmarked.
     static let saved = Wordbook(id: SavedWords.resource, name: "Bookmarks", cover: 0x2A4634, symbol: "bookmark.fill", mark: "\u{2014}", image: "Dictionary_of_Philosophy")
 
@@ -53,8 +55,8 @@ struct Wordbook: Identifiable, Hashable {
     }
 
     /// Every dictionary the app offers. Grow this as new word sets are added.
-    // v1 ships seven shelves; classical, urdu and german stay defined (and bundled) for the next release.
-    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, startup, idioms, pets, sanskrit, saved]
+    // v1 ships eight shelves; classical, urdu and german stay defined (and bundled) for the next release.
+    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, startup, idioms, pets, sanskrit, pictures, saved]
 
     /// Resolve a stored id back to a Wordbook (falls back to the default).
     static func named(_ id: String) -> Wordbook {

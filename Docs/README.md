@@ -245,3 +245,10 @@ Which skill lands where:
   *(The language under your Hindi: 216 curated entries with Devanagari headwords, the `hindi`
   line naming what each word became, English definitions. Free, on the shelf and in the widget.
   Borrows the Idioms art until `Dictionary_of_Sanskrit` lands.)*
+- **Picture Book** (`pictures`) — built on `feat/icloud-and-subscription-wall`.
+  Builds and all gates green; the by-hand checks are still open.
+  [image sources](06_Misc/PICTURES_IMAGE_SOURCES.md)
+  *(Picture-first: 243 everyday nouns, each with a CC0 / public-domain photo from
+  `OneWord/Pictures/` above the headword, via the entry's `image` field. App-only: not in the
+  widget, whose Follow App Settings falls back to Everyday English. Borrows the Everyday
+  English art until `Dictionary_of_PictureBook` lands.)*

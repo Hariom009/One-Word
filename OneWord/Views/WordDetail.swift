@@ -10,6 +10,11 @@
 import SwiftUI
 import AVFoundation
 import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
+#if os(macOS)
+import AppKit    // NSImage — the picture book's photos
+#else
+import UIKit     // UIImage — same
+#endif
 
 // ponytail: one shared synth — a local would deallocate mid-utterance, and two
 // synths would talk over each other when you leave a word mid-sentence for Practice.
@@ -77,6 +82,19 @@ struct WordDetail: View {
                 ZStack(alignment: .topLeading) {
                     VStack(alignment: .leading, spacing: 0) {
                         //if showDate { dateLine(t) }
+
+                        // A picture book's entry leads with its photo. Fit, never fill:
+                        // a crop would behead the giraffe and lose the lighthouse's lamp.
+                        if let photo = word.image.flatMap(Self.photo), !locked {
+                            photo
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(RoundedRectangle(cornerRadius: t.radius(10)))
+                                .frame(maxWidth: isPhone ? .infinity : 480, maxHeight: isPhone ? 260 : 320,
+                                       alignment: .leading)
+                                .padding(.bottom, 26)
+                                .accessibilityLabel("Photo of \(word.term)")
+                        }
 
                         HStack(alignment: .lastTextBaseline, spacing: isPhone ? 10 : 16) {
                             Text(word.term)
@@ -331,6 +349,16 @@ struct WordDetail: View {
 
     /// A word from a shelf Premium hasn't opened — reached from search, or a Learned row.
     private var locked: Bool { !premium.allows(shelfID) }
+
+    /// A bundled photo, `OneWord/Pictures/<name>.jpg`. `named:` caches the decode, so
+    /// a cover-flow swipe re-rendering three pages a frame doesn't decode them again.
+    private static func photo(_ name: String) -> Image? {
+        #if os(macOS)
+        NSImage(named: "\(name).jpg").map(Image.init(nsImage:))
+        #else
+        UIImage(named: "\(name).jpg").map(Image.init(uiImage:))
+        #endif
+    }
 
     /// The shelf this word counts towards. A just-captured word belongs to
     /// Bookmarks wherever you happen to be reading it.
