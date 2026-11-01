@@ -244,9 +244,9 @@ final class RelatedWordsStore {
         return words
     }
 
-    /// Ranks `word` off the main thread and parks the answer in the memo, so a card
-    /// about to come to the front (Home's cover flow draws the next one early) finds
-    /// its neighbours waiting instead of ranking on the frame its slide starts.
+    /// Ranks `word` off the main thread and parks the answer in the memo, so the word
+    /// Home's next pull brings in (drawn early) finds its neighbours waiting instead of
+    /// ranking on the frame its slide starts.
     /// ponytail: this reads the embedding off-main while `related` may read it on main —
     /// the concurrent stress test above is the evidence it holds, not a guarantee.
     func prefetch(_ word: Word, in bookID: String, limit: Int = 3) {

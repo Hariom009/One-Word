@@ -95,16 +95,11 @@ enum Check {
         check(model.word.term == today, "the day's word comes back on its own")
         check(!model.isPeeking, "and the peek flag clears")
 
-        // Home's cover flow: the word peeking in on the right is the one a swipe
-        // brings in, and a swipe right walks back.
+        // Home draws the next word early, so its neighbours rank before it shows.
         let waiting = model.upcoming.term
         model.shuffle(for: day)
-        check(model.word.term == waiting, "a swipe brings in the word that was peeking in")
-        check(model.previous?.term == today, "with the day's word one back")
-        check(![today, waiting].contains(model.upcoming.term), "and a fresh word waiting behind it")
-        model.back(for: day)
-        check(model.word.term == today && model.upcoming.term == waiting, "back returns, the word left now waiting")
-        check(!model.isPeeking && model.previous == nil, "and at the day's word there's nothing to return from")
+        check(model.word.term == waiting, "a pull brings in the word drawn ahead")
+        check(model.upcoming.term != waiting, "and draws a fresh one behind it")
 
         // The bug this guards: a peek left running while the reader moves to
         // another day used to fire late and yank the old day's word back.

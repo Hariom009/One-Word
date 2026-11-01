@@ -112,12 +112,11 @@ from Everyday English for now). Design the picker so it scales to more dictionar
 - **Current layout:** left-aligned vertical stack — big bold term, italic part of speech,
   Hindi line, definition, quoted example. Plain.
 - **Header (top of the pane — there is no window toolbar):** the app name and today's date
-  on the left; the **Dictionary chip**, Bookmark and Pronounce on the right. A long press
-  on the page turns it into a cover flow — the word on a card, the last one peeking in on
-  the left and a random one on the right — that swipes sideways to browse the book, the
-  day's word returning 5s after the last swipe; another long press puts the page back. A
-  double tap on bare page bookmarks it, and a ribbon drops onto the card (with a success
-  haptic) to say so.
+  on the left; the **Dictionary chip**, Bookmark and Pronounce on the right. Pulling the
+  page up past its end and letting go pushes a random word from the book up in its place;
+  the day's word comes back 5s after the page is let be, or when the app comes back. A
+  double tap on bare page bookmarks it: the screen frosts over and a ribbon drops into the
+  middle (with a success haptic), then both clear.
 - **Design goal:** this is the signature screen. Make one word feel special — strong
   typographic hierarchy, generous space, maybe a subtle date ("Word for July 25"). The
   Hindi should feel like a first-class part of the entry, not an afterthought.
