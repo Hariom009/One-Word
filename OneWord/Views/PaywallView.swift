@@ -6,7 +6,8 @@
 //  with a toggle in its corner; Lifetime has its own, with the cat asleep on it. No
 //  sign-in: StoreKit's Apple ID is the identity, as everywhere else Premium is sold.
 //  Drawn from the "Pencil Cat Mascot" canvas (MacPremium, PhonePremium and their
-//  Thanks boards) on the Cat light page, whatever the app's own appearance.
+//  Thanks boards). It wears the app's own palette — Midnight, Umber, or System's dark —
+//  and the canvas's Cat paper only when the reader picked System and the system is light.
 //
 //  On the Mac this is its own window (OneWordApp), and the welcome is a modal over
 //  the plans inside it; on iPhone and iPad it's a sheet that swaps to the welcome.
@@ -39,11 +40,16 @@ struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.displayScale) private var displayScale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var scheme
+    @Environment(\.doodle) private var doodle
 
     /// Opens on Yearly, so the savings chip shows. Resets each time the plans open.
     @State private var yearly = true
 
-    private let t = Theme.cat
+    /// The app's palette; System's light half is the canvas's Cat paper rather than plain white.
+    private var t: Theme {
+        doodle.appearance == .system && scheme == .light ? .cat : Theme.of(scheme, doodle)
+    }
 
     /// Every dictionary on the shelf — what the fan shows.
     private static let shelf = Wordbook.all.filter { $0.id != SavedWords.resource }
@@ -63,7 +69,7 @@ struct PaywallView: View {
             // The window's size under `.contentSize`. A knob.
             .frame(width: 760, height: 600)
             #endif
-            .background(t.background)
+            .background { PaneGround(t: t) }
             .overlay {
                 if !reduceMotion {
                     Confetti(trigger: premium.celebrations)
@@ -75,10 +81,7 @@ struct PaywallView: View {
             .onChange(of: premium.celebrations) {
                 AccessibilityNotification.Announcement("Welcome to the Premium Club").post()
             }
-            // Paper, so spinners, links and scrollers draw for it. Not .preferredColorScheme:
-            // in a sheet that would reach back and repaint the window under it.
-            .environment(\.colorScheme, .light)
-            // Midnight's tint would otherwise reach into the sheet.
+            // The palette's own accent on links and spinners, not the system blue.
             .tint(t.accent)
             .presentationDetents(premium.isUnlocked ? [.height(584)] : [.medium, .large])
             .presentationDragIndicator(.visible)
@@ -92,7 +95,7 @@ struct PaywallView: View {
             offers.accessibilityHidden(premium.isUnlocked)
             if premium.isUnlocked {
                 // The dim takes the clicks meant for the plans beneath it.
-                Color(hex: 0x1E1B26).opacity(0.34)
+                Color.black.opacity(scheme == .dark ? 0.55 : 0.34)
                     .ignoresSafeArea()
                     .transition(.opacity)
                 thanks
@@ -109,15 +112,19 @@ struct PaywallView: View {
     private var answered: Bool { premium.product != nil || premium.storeUnavailable }
     private var yearlyProduct: Product? { premium.products[Premium.yearlyID] }
     private var monthlyProduct: Product? { premium.products[Premium.monthlyID] }
+    private var showsSubscription: Bool { !answered || (yearlyProduct != nil && monthlyProduct != nil) }
+    private var showsLifetime: Bool { !answered || premium.product != nil }
 
     private var offers: some View {
         ScrollView {
             VStack(spacing: isPhone ? 18 : 22) {
                 PremiumView.fan(Self.shelf, height: isPhone ? 72 : 100, scale: displayScale)
                     .padding(.top, isPhone ? 8 : 18)
+                    // The outer covers settle below the fan's frame; keep them off the title.
+                    .padding(.bottom, 10)
                 VStack(spacing: 8) {
                     Text("The whole shelf")
-                        .font(.serif(isPhone ? 30 : 36, .medium))
+                        .font(doodle.face(isPhone ? 30 : 36, .medium))
                         .foregroundStyle(t.ink)
                         .accessibilityAddTraits(.isHeader)
                     Text("Premium, on every device signed in to your Apple ID. No account needed.")
@@ -155,8 +162,8 @@ struct PaywallView: View {
 
     /// Side by side on the Mac, one under the other on iPhone and iPad.
     @ViewBuilder private var cards: some View {
-        let showSubscription = !answered || (yearlyProduct != nil && monthlyProduct != nil)
-        let showLifetime = !answered || premium.product != nil
+        let showSubscription = showsSubscription
+        let showLifetime = showsLifetime
         if showSubscription || showLifetime {
             #if os(macOS)
             HStack(alignment: .top, spacing: 20) {
@@ -193,14 +200,14 @@ struct PaywallView: View {
         return card(emphasized: false) {
             HStack(alignment: .center) {
                 Text("Premium")
-                    .font(.serif(24, .medium))
+                    .font(doodle.face(24, .medium))
                     .foregroundStyle(t.ink)
                 Spacer(minLength: 8)
                 periodToggle
             }
             HStack(alignment: .firstTextBaseline, spacing: 6) {
                 Text(shown?.displayPrice ?? "\u{2014}")
-                    .font(.serif(40, .medium))
+                    .font(doodle.face(40, .medium))
                     .foregroundStyle(t.ink)
                     .contentTransition(.numericText())
                 Text(yearly ? "/ year" : "/ month")
@@ -252,7 +259,7 @@ struct PaywallView: View {
     private func segment(_ text: String, on: Bool) -> some View {
         Text(text)
             .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(on ? .white : t.muted)
+            .foregroundStyle(on ? t.background : t.muted)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
             .background(on ? t.accent : .clear, in: Capsule())
@@ -261,11 +268,11 @@ struct PaywallView: View {
     private var lifetimeCard: some View {
         card(emphasized: true) {
             Text("Lifetime")
-                .font(.serif(24, .medium))
+                .font(doodle.face(24, .medium))
                 .foregroundStyle(t.ink)
             HStack(alignment: .firstTextBaseline, spacing: 6) {
                 Text(premium.product?.displayPrice ?? "\u{2014}")
-                    .font(.serif(40, .medium))
+                    .font(doodle.face(40, .medium))
                     .foregroundStyle(t.ink)
                 Text("once")
                     .font(.system(size: 15))
@@ -289,6 +296,7 @@ struct PaywallView: View {
                 .scaledToFit()
                 .frame(width: isPhone ? 118 : 168)
                 .modifier(Breathe())
+                .modifier(CatLight(on: scheme == .dark))
                 .offset(x: isPhone ? 8 : 30, y: isPhone ? 20 : 34)
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
@@ -307,7 +315,7 @@ struct PaywallView: View {
             Button { UnlockButton.buy(product, with: purchase, premium) } label: {
                 Text("\(label), \(product.displayPrice)")
                     .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(t.background)
                     .padding(.horizontal, 22)
                     .frame(maxWidth: isPhone ? .infinity : nil, minHeight: isPhone ? 50 : 40)
                     .frame(minWidth: 160)
@@ -328,7 +336,8 @@ struct PaywallView: View {
                 .foregroundStyle(t.accent)
                 .frame(minHeight: 34)
                 .disabled(premium.phase == .purchasing)
-            if let problem = premium.problem, answered {
+            // With no card to show, the problem already stands in their place.
+            if let problem = premium.problem, answered, showsSubscription || showsLifetime {
                 Text(problem)
                     .font(.system(size: 12))
                     .foregroundStyle(t.muted)
@@ -354,7 +363,7 @@ struct PaywallView: View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: "checkmark")
                 .font(.system(size: 9, weight: .heavy))
-                .foregroundStyle(.white)
+                .foregroundStyle(t.background)
                 .frame(width: 20, height: 20)
                 .background(t.accent, in: Circle())
                 .accessibilityHidden(true)
@@ -387,7 +396,7 @@ struct PaywallView: View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 12) {
                 kicker
-                WelcomeHeadline(size: 36, alignment: .leading)
+                WelcomeHeadline(size: 36, alignment: .leading, ink: t.ink)
                 note(alignment: .leading)
                 doneButton.padding(.top, 8)
             }
@@ -399,12 +408,14 @@ struct PaywallView: View {
                 .scaledToFit()
                 .frame(width: 280)
                 .modifier(Breathe())
+                .modifier(CatLight(on: scheme == .dark))
                 .padding(.trailing, 30)
                 .accessibilityHidden(true)
         }
         .frame(width: 680, height: 420)
-        .background(t.background, in: RoundedRectangle(cornerRadius: 20))
-        .shadow(color: Color(hex: 0x1E1B26).opacity(0.3), radius: 32, y: 12)
+        .background { PaneGround(t: t).clipShape(RoundedRectangle(cornerRadius: 20)) }
+        .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(t.hairline))
+        .shadow(color: .black.opacity(0.3), radius: 32, y: 12)
         .transition(reduceMotion ? .opacity : .scale(scale: 0.92).combined(with: .opacity))
         #else
         VStack(spacing: 0) {
@@ -414,10 +425,11 @@ struct PaywallView: View {
                 .scaledToFit()
                 .frame(width: 220)
                 .modifier(Breathe())
+                .modifier(CatLight(on: scheme == .dark))
                 .padding(.top, 26)
                 .accessibilityHidden(true)
             kicker.padding(.top, 14)
-            WelcomeHeadline(size: 30, alignment: .center)
+            WelcomeHeadline(size: 30, alignment: .center, ink: t.ink)
                 .padding(.top, 6)
             note(alignment: .center)
                 .padding(.top, 8)
@@ -454,7 +466,7 @@ struct PaywallView: View {
         Button { dismiss() } label: {
             Text("Done")
                 .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(t.background)
                 .frame(maxWidth: isPhone ? .infinity : nil, minHeight: isPhone ? 50 : 40)
                 .padding(.horizontal, 26)
                 .background(t.accent, in: RoundedRectangle(cornerRadius: isPhone ? 14 : 12))
@@ -470,14 +482,16 @@ struct PaywallView: View {
 private struct WelcomeHeadline: View {
     let size: CGFloat
     let alignment: TextAlignment
+    let ink: Color
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.doodle) private var doodle
     @State private var shown = false
 
     var body: some View {
         Text("Welcome to the Premium Club")
-            .font(.serif(size, .medium))
-            .foregroundStyle(Theme.cat.ink)
+            .font(doodle.face(size, .medium))
+            .foregroundStyle(ink)
             .multilineTextAlignment(alignment)
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
@@ -504,6 +518,15 @@ private struct Breathe: ViewModifier {
                 view.scaleEffect(x: up ? 1.006 : 1, y: up ? 1.02 : 1, anchor: .bottom)
             } animation: { _ in .easeInOut(duration: 3.6) }
         }
+    }
+}
+
+/// On a dark page the drawings' pencil outlines sink into the ground; a soft light
+/// behind each cat lifts it off, the way a lamp would.
+private struct CatLight: ViewModifier {
+    let on: Bool
+    func body(content: Content) -> some View {
+        content.shadow(color: on ? .white.opacity(0.22) : .clear, radius: 18)
     }
 }
 
@@ -556,7 +579,7 @@ private nonisolated struct Piece {
 
     static let all: [Piece] = {
         let colors: [Color] = [Color(hex: 0x5B3FD6), Color(hex: 0xE9B949), Color(hex: 0xF07167),
-                               Color(hex: 0x2BB3A3), Color(hex: 0x6CA8F0), Color(hex: 0x1E1B26)]
+                               Color(hex: 0x2BB3A3), Color(hex: 0x6CA8F0), Color(hex: 0x9B7BFF)]
         return (0..<90).map { i in
             Piece(x0: .random(in: 0.02...0.98),
                   y0: .random(in: -0.35 ... -0.02),
@@ -576,7 +599,7 @@ private nonisolated struct Piece {
 // MARK: - The Cat page
 
 extension Theme {
-    /// The canvas's light Cat page (CAT_UI_PLAN §4), the paywall's palette on every appearance.
+    /// The canvas's light Cat page (CAT_UI_PLAN §4): the paywall's palette under System, light.
     /// ponytail: CAT_UI Phase 1 adds this to Shared/Theme.swift; this copy then won't compile
     /// (redeclaration), so delete it there.
     static let cat = Theme(

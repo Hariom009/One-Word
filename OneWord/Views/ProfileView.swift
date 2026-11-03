@@ -504,54 +504,115 @@ struct ProfileView: View {
 
     // MARK: - Plan
 
-    /// Free's plans; an owner sees `premiumCard` instead. Free and Premium side by side,
-    /// Free tagged. The Buy pill opens the paywall (all three plans) rather than buying
-    /// Lifetime outright. Restore stays — App Review wants one beside a non-consumable.
+    /// Premium's colour in Profile: the owner's card is filled with it, the free reader's
+    /// offer is edged with it, so the one reads as the other kept. Fixed on every
+    /// appearance; `goldInk` on it is 7.2:1 at the dark end, 11.6:1 at the light.
+    private static let gold = LinearGradient(colors: [Color(hex: 0xF6D77A), Color(hex: 0xD4A52C)],
+                                             startPoint: .topLeading, endPoint: .bottomTrailing)
+    private static let goldInk = Color(hex: 0x2A1E05)
+
+    /// A free reader's plan: Free, tagged as yours, then Premium on offer under it. The
+    /// offer opens the paywall (all three plans). Restore stays — App Review wants one
+    /// beside a non-consumable. An owner sees `premiumCard` instead.
     private func plans(_ t: Theme) -> some View {
         section("Plan", t, note: premium.problem) {
-            HStack(alignment: .top, spacing: 12) {
-                planCard("Free", current: true, t) { EmptyView() }
-                planCard("Premium", current: false, t) {
-                    Text("Lifetime")
-                        .font(.system(size: 12))
-                        .foregroundStyle(t.muted)
-                    UnlockButton(name: "Buy Premium", verb: "Buy", open: { showPlans() })
-                    Button("Restore Purchase") { Task { await premium.restore() } }
-                        .buttonStyle(.plain)
-                        .font(.system(size: 11))
-                        .foregroundStyle(t.muted)
-                        .disabled(premium.phase == .purchasing)
-                }
+            VStack(spacing: 10) {
+                freeCard(t)
+                offerCard(t)
             }
-            // Both cards as tall as the taller one.
-            .fixedSize(horizontal: false, vertical: true)
         }
     }
 
-    private func planCard<C: View>(_ name: String, current: Bool, _ t: Theme,
-                                   @ViewBuilder content: () -> C) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 8) {
-                Text(name)
-                    .font(.system(size: isPhone ? 17 : 15, weight: .semibold))
+    private func freeCard(_ t: Theme) -> some View {
+        HStack(alignment: .center, spacing: 12) {
+            Image(systemName: "book.closed")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(t.muted)
+                .frame(width: 34, height: 34)
+                .background(t.ink.opacity(0.07), in: Circle())
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Free")
+                    .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
                     .foregroundStyle(t.ink)
-                Spacer(minLength: 0)
-                if current { PlanTag(text: "Current", filled: true) }
+                Text("A new word every day, from every dictionary.")
+                    .font(.system(size: 13))
+                    .foregroundStyle(t.muted)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            content()
+            Spacer(minLength: 8)
+            PlanTag(text: "Current", filled: true)
         }
         .padding(14)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background { ProfileCard(t: t) }
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel(current ? "\(name), current plan" : name)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Free, your current plan")
+    }
+
+    private func offerCard(_ t: Theme) -> some View {
+        let shape = RoundedRectangle(cornerRadius: t.radius(12))
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .center, spacing: 12) {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 14))
+                    .foregroundStyle(Self.goldInk)
+                    .frame(width: 34, height: 34)
+                    .background(Self.gold, in: Circle())
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("One Word Premium")
+                        .font(doodle.face(isPhone ? 21 : 20))
+                        .tracking(doodle.tracking(20))
+                        .foregroundStyle(t.ink)
+                    Text(offerPrice)
+                        .font(.system(size: 13))
+                        .foregroundStyle(t.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            HStack(spacing: 16) {
+                Button { showPlans() } label: {
+                    Text("See Plans")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Self.goldInk)
+                        .padding(.horizontal, 18)
+                        .frame(maxWidth: isPhone ? .infinity : nil, minHeight: isPhone ? 44 : 34)
+                        .background(Self.gold, in: Capsule())
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint("Shows the monthly, yearly and lifetime plans")
+                Button("Restore Purchase") { Task { await premium.restore() } }
+                    .buttonStyle(.plain)
+                    .font(.system(size: 12))
+                    .foregroundStyle(t.muted)
+                    .disabled(premium.phase == .purchasing)
+                if !isPhone { Spacer(minLength: 0) }
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background {
+            shape.fill(t.surface)
+                .overlay(shape.fill(Color(hex: 0xD4A52C).opacity(0.07)))
+        }
+        .overlay(shape.strokeBorder(Self.gold, lineWidth: 1.2))
+    }
+
+    /// The cheapest way in and the once-for-good one, as the App Store prices them here.
+    private var offerPrice: String {
+        if let monthly = premium.products[Premium.monthlyID], let lifetime = premium.product {
+            return "From \(monthly.displayPrice) a month, or \(lifetime.displayPrice) once."
+        }
+        return "Monthly, yearly, or once for good."
     }
 
     /// An owner's plan: a gold card, the same on every appearance. Tapping it unfolds
     /// what Premium includes (PaywallView.perks — mock for now); a subscriber also gets
     /// Manage Subscription under it.
     private func premiumCard(_ t: Theme) -> some View {
-        let ink = Color(hex: 0x2A1E05)   // 7.2:1 on the gradient's dark end, 11.6:1 on its light end
+        let ink = Self.goldInk
         let shape = RoundedRectangle(cornerRadius: t.radius(12))
         return section("Plan", t) {
             VStack(alignment: .leading, spacing: 12) {
@@ -621,8 +682,7 @@ struct ProfileView: View {
             .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background {
-                shape.fill(LinearGradient(colors: [Color(hex: 0xF6D77A), Color(hex: 0xD4A52C)],
-                                          startPoint: .topLeading, endPoint: .bottomTrailing))
+                shape.fill(Self.gold)
                     .shadow(color: Color(hex: 0xD4A52C).opacity(0.35), radius: 14, y: 6)
             }
         }

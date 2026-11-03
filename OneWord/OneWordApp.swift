@@ -105,7 +105,11 @@ struct OneWordApp: App {
         // The Mac's paywall is its own window, opened only by Profile's Buy pill.
         Window("Premium", id: PaywallView.windowID) {
             PaywallView()
-                .environment(premium)   // the only environment value it reads
+                .environment(premium)
+                // A scene of its own, so the look is handed in again: the same palette and
+                // scheme as the main window, not the light default.
+                .environment(\.doodle, DoodleTheme(handwriting: doodleFont, appearance: look))
+                .preferredColorScheme(look.colorScheme)
                 // A window restored on its own at launch has no RootView to load the prices.
                 .task { if premium.product == nil { await premium.load() } }
         }
