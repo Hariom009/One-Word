@@ -28,12 +28,9 @@ struct Wordbook: Identifiable, Hashable {
     static let classical = Wordbook(id: "classical", name: "Dictionary of Classical English", cover: 0x86786B, symbol: "building.columns.fill", mark: "\u{00C6}", image: "Dictionary_of_ClassicalEnglish", height: 0.98)
     static let urdu = Wordbook(id: "urdu", name: "Dictionary of Urdu", cover: 0x32422E, symbol: "scroll.fill", mark: "\u{0627}\u{0631}\u{062F}\u{0648}", image: "Dictionary_of_Urdu", height: 0.88)
     static let german = Wordbook(id: "german", name: "Dictionary of German", cover: 0x4A5260, symbol: "puzzlepiece.fill", mark: "\u{00DF}", image: "Dictionary_of_German", height: 0.94)
-    // TODO(develop): Idioms art is a dev placeholder (S6d); swap to "Dictionary_of_CatsAndDogs" and re-sample `cover` once the painted cover lands.
-    static let pets = Wordbook(id: "pets", name: "Dictionary of Cats & Dogs", cover: 0x6B4A2F, symbol: "pawprint.fill", mark: "Mw", image: "Dictionary_of_Idioms", height: 0.91)
-    // TODO(develop): Idioms art is a dev placeholder; swap to "Dictionary_of_Sanskrit" and re-sample `cover` once the painted cover lands.
-    static let sanskrit = Wordbook(id: "sanskrit", name: "Dictionary of Sanskrit", cover: 0x8C2F1E, symbol: "character.book.closed.fill", mark: "\u{0950}", image: "Dictionary_of_Idioms", height: 0.92)
-    // TODO(develop): Everyday English art is a placeholder; swap to "Dictionary_of_PictureBook" and re-sample `cover` once the painted cover lands.
-    static let pictures = Wordbook(id: "pictures", name: "Picture Book", cover: 0x9A7432, symbol: "photo.fill", mark: "Pp", image: "Dictionary_of_EverydayEnglish", height: 0.95)
+    static let pets = Wordbook(id: "pets", name: "Dictionary of Cats & Dogs", cover: 0x0D4B48, symbol: "pawprint.fill", mark: "Mw", image: "Dictionary_of_PetSounds", height: 0.91)
+    static let sanskrit = Wordbook(id: "sanskrit", name: "Dictionary of Sanskrit", cover: 0xB46014, symbol: "character.book.closed.fill", mark: "\u{0950}", image: "Dictionary_of_Sanskrit", height: 0.92)
+    static let pictures = Wordbook(id: "pictures", name: "Picture Book", cover: 0x89769D, symbol: "photo.fill", mark: "Pp", image: "Dictionary_of_PictureBook", height: 0.95)
     /// Not a bundled json — WordProvider resolves this id from the words you bookmarked.
     static let saved = Wordbook(id: SavedWords.resource, name: "Bookmarks", cover: 0x2A4634, symbol: "bookmark.fill", mark: "\u{2014}", image: "Dictionary_of_Philosophy")
 
