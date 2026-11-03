@@ -81,6 +81,7 @@ enum Check {
         model.shuffle(for: day)
         check(model.word.term != today, "a peek shows another word")
         check(model.isPeeking, "and says so")
+        check(model.flips == 1, "and counts the flip")
         let first = model.word.term
         model.shuffle(for: day)
         check(model.word.term != first, "peeking again moves on again")
@@ -94,6 +95,7 @@ enum Check {
         try? await Task.sleep(for: WordViewModel.peekDuration + .seconds(1))
         check(model.word.term == today, "the day's word comes back on its own")
         check(!model.isPeeking, "and the peek flag clears")
+        check(model.flips == 0, "and the flip count resets")
 
         // Home draws the next word early, so its neighbours rank before it shows.
         let waiting = model.upcoming.term

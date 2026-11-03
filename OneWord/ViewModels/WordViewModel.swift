@@ -25,6 +25,8 @@ final class WordViewModel {
     private(set) var wordbook: Wordbook
     /// True while showing a peeked word rather than the day's.
     private(set) var isPeeking = false
+    /// Pulls since the day's word last showed — Home's "Flip 3". Zero on the day's word.
+    private(set) var flips = 0
 
     private var provider: WordProvider
     private var revert: Task<Void, Never>?
@@ -57,6 +59,7 @@ final class WordViewModel {
         revert?.cancel()
         revert = nil
         isPeeking = false
+        flips = 0
         word = provider.word(for: date, offset: WordSelectionStore.offset, pinned: SavedWords.pinned)
         // Kept through a plain app-active refresh, so the card peeking in doesn't change under you.
         if peeked || upcoming.term == word.term { upcoming = Self.draw(provider, besides: word) }
@@ -88,6 +91,7 @@ final class WordViewModel {
     func shuffle(for date: Date = Date()) {
         word = upcoming
         upcoming = Self.draw(provider, besides: word)
+        flips += 1
         peek(for: date)
     }
 

@@ -24,8 +24,10 @@ struct HomeView: View {
     /// today across midnight rather than freezing on the day it was opened.
     @State private var day: Date?
     @State private var picking = false
-    /// The page is pulled far enough past its end that letting go brings the next word.
-    @State private var armed = false
+    /// The end the page is pulled far enough past that letting go brings the next word.
+    @State private var armed: Edge?
+    /// Where the next word comes in from: the end the page was pulled past.
+    @State private var pushFrom: Edge = .bottom
     /// Bumped by every pull that brings a word; the phone's landing tap fires off it.
     @State private var peeks = 0
     /// Bumped by every double tap that keeps a word; the ribbon drops in off it.
@@ -122,7 +124,7 @@ struct HomeView: View {
             }
     }
 
-    /// The word. Pull the page up past its end and let go for a random word from the
+    /// The word. Pull the page past either end and let go for a random word from the
     /// book; the day's word comes back 5s after the page is let be. A past day stays put.
     private var page: some View {
         ZStack {
@@ -133,18 +135,25 @@ struct HomeView: View {
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) { if model.bookmark() { kept += 1 } }
                 .modifier(PullForNext(armed: $armed) { $0 ? model.hold() : model.letGo() } next: {
-                    nextWord()
+                    nextWord(from: $0)
                 })
-                // Keyed on the word, so every change of word pushes a new page up from below.
+                // Keyed on the word, so every change of word brings a new page in.
                 .id(model.word.term)
-                .transition(reduceMotion ? .opacity : .push(from: .bottom))
+                .transition(flip)
         }
-        .animation(.spring(duration: 0.5, bounce: 0.15), value: model.word.term)
+        // Only a flip pushes up. The day's word coming back — the peek running out, a
+        // pane switch, the app reopening — just swaps in, with the corner saying which it is.
+        .animation(model.isPeeking ? .spring(duration: 0.5, bounce: 0.15) : nil, value: model.word.term)
+        #if os(macOS)
+        .overlay(alignment: .topLeading) {
+            flipLabel(Theme.of(scheme, doodle)).padding(.horizontal, 20).padding(.top, 14)
+        }
+        #endif
         // The next word gets its neighbours ranked off the main thread now, so the pull
         // that brings it in doesn't rank them on its first frame.
         .onChange(of: model.upcoming.term, initial: true) { store.prefetch(model.upcoming, in: dictionaryID) }
         // A tick as the pull passes the point where letting go brings the next word, a tap as it lands.
-        .sensoryFeedback(.selection, trigger: armed) { _, armed in armed && day == nil }
+        .sensoryFeedback(.selection, trigger: armed) { _, armed in armed != nil && day == nil }
         .sensoryFeedback(.impact(weight: .light), trigger: peeks)
         .sensoryFeedback(.success, trigger: kept)
         .accessibilityElement(children: .contain)
@@ -152,10 +161,25 @@ struct HomeView: View {
     }
 
     /// Pulling on iPhone and double-space on Mac share the same temporary preview.
-    private func nextWord() {
+    private func nextWord(from edge: Edge = .bottom) {
         guard day == nil else { return }
-        model.shuffle()
-        peeks += 1
+        pushFrom = edge
+        // A turn later, so the leaving page has its direction too, not the last flip's.
+        Task { @MainActor in
+            model.shuffle()
+            peeks += 1
+        }
+    }
+
+    /// The new page rises a short way in from the end you pulled past. The old one
+    /// leaves fast, drifting against its own rubber band springing back — so it holds
+    /// still and fades instead of lurching the wrong way under the incoming word.
+    private var flip: AnyTransition {
+        if reduceMotion { return .opacity }
+        let way: CGFloat = pushFrom == .bottom ? 1 : -1
+        return .asymmetric(
+            insertion: .offset(y: 120 * way).combined(with: .opacity),
+            removal: .offset(y: -80 * way).combined(with: .opacity).animation(.easeOut(duration: 0.18)))
     }
 
     /// The double tap's answer, since no button was pressed: the screen frosts over and a
@@ -236,10 +260,20 @@ struct HomeView: View {
             .presentationBackground(t.background)
     }
 
+    /// Which word is up: the day's, or how many pulls away from it you are.
+    private func flipLabel(_ t: Theme) -> some View {
+        Text(model.flips == 0 ? "Word of the day" : "Flip \(model.flips)")
+            .font(.system(size: 12, weight: .medium))
+            .foregroundStyle(t.muted)
+            .contentTransition(.numericText())
+            .animation(.snappy, value: model.flips)
+    }
+
     /// Phone only: the dictionary over the word, no rule under it. Tapping the book
     /// goes to the Dictionaries pane, as the Mac's chip does.
     private func dateline(_ t: Theme) -> some View {
         HStack(alignment: .center, spacing: 12) {
+            flipLabel(t)
             Spacer(minLength: 8)
             Button { pane = .dictionaries } label: {
                 HStack(spacing: 6) {
@@ -270,30 +304,35 @@ private struct RibbonDrop {
     var veil: Double = 0
 }
 
-/// Pulling Home's page up past its end, then letting go, asks for the next word. The
+/// Pulling Home's page past either end, then letting go, asks for the next word. The
 /// stretch is the page's own rubber band, so it reads as scrolling on, not a new gesture;
 /// any scroll at all holds the day's word off. The scroll APIs are iOS 18 / macOS 15:
 /// before those the page only scrolls, and "Another word" stays in the rotor.
 private struct PullForNext: ViewModifier {
     /// How far past its end the page has to be pulled — about twice that under the finger.
     static let pull: CGFloat = 60
-    @Binding var armed: Bool
+    @Binding var armed: Edge?
     let scrolling: (Bool) -> Void
-    let next: () -> Void
+    let next: (Edge) -> Void
+    /// Only a finger arms it: a flick's coast overshooting the end would tick for nothing.
+    @State private var dragging = false
 
     func body(content: Content) -> some View {
         if #available(iOS 18, macOS 15, *) {
             content
                 // A page shorter than the screen has no end to pull past unless it bounces.
                 .scrollBounceBehavior(.always, axes: .vertical)
-                .onScrollGeometryChange(for: Bool.self, of: Self.past) { armed = $1 }
+                .onScrollGeometryChange(for: Edge?.self, of: Self.past) { if dragging { armed = $1 } }
                 // Read off the release, not `armed`: the page leaving keeps reporting as it goes.
                 .onScrollPhaseChange { old, new, context in
                     if new == .interacting {
+                        dragging = true
                         scrolling(true)
                     } else if old == .interacting {
+                        dragging = false
+                        armed = nil
                         scrolling(false)
-                        if Self.past(context.geometry) { next() }
+                        if let edge = Self.past(context.geometry) { next(edge) }
                     }
                 }
         } else {
@@ -301,12 +340,15 @@ private struct PullForNext: ViewModifier {
         }
     }
 
+    /// Which end the page is pulled past, far enough to count. nil while it isn't.
     @available(iOS 18, macOS 15, *)
-    private static func past(_ g: ScrollGeometry) -> Bool {
-        // Where the page rests scrolled to its end; one shorter than the screen rests at its top.
-        let end = max(g.contentSize.height + g.contentInsets.bottom - g.containerSize.height,
-                      -g.contentInsets.top)
-        return g.contentOffset.y - end > pull
+    private static func past(_ g: ScrollGeometry) -> Edge? {
+        // Where the page rests at either end; one shorter than the screen rests at its top for both.
+        let top = -g.contentInsets.top
+        let end = max(g.contentSize.height + g.contentInsets.bottom - g.containerSize.height, top)
+        if g.contentOffset.y - end > pull { return .bottom }
+        if top - g.contentOffset.y > pull { return .top }
+        return nil
     }
 }
 
