@@ -100,5 +100,21 @@ struct OneWordApp: App {
         // and RootView switches the window's toolbar off.
         .windowStyle(.hiddenTitleBar)
         #endif
+
+        #if os(macOS)
+        // The Mac's paywall is its own window, opened only by Profile's Buy pill.
+        Window("Premium", id: PaywallView.windowID) {
+            PaywallView()
+                .environment(premium)   // the only environment value it reads
+                // A window restored on its own at launch has no RootView to load the prices.
+                .task { if premium.product == nil { await premium.load() } }
+        }
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentSize)
+        .commandsRemoved()   // no Window-menu entry: the pill is the way in
+        // ponytail: a Premium window left open can come back at launch. restorationBehavior(.disabled)
+        // is macOS 15+, and SceneBuilder has no buildEither, so an `if #available` would drop the
+        // window on macOS 14. Add it when the floor reaches macOS 15.
+        #endif
     }
 }

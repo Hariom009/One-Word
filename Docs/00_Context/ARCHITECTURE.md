@@ -124,7 +124,8 @@ Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
   in `currentEntitlements` only while it's active — no expiry dates are checked here.
   Premium never reads `AuthViewModel`; it loads at launch whatever `Features.accounts` says.
 - **Local testing:** `StoreKit/OneWord.storekit` (the OneWord scheme's Run action) holds all
-  three products. Today's purchase UI (`UnlockButton`) sells lifetime only.
+  three products. The paywall (`Views/PaywallView.swift`) sells all three; `UnlockButton`
+  elsewhere sells lifetime.
 - **The rule is `Shared/Premium.swift`**, `nonisolated` so the widget can read it off-main:
   `free`, `allows(_:)`, `resolve(_:)`, and the flag mirrored into the App Group.
 - **`Premium.set(unlocked:)` is its only writer**, called only by `PremiumViewModel` (the one
@@ -144,6 +145,15 @@ Plan: `Docs/02_Plan/Resolved/PREMIUM_PLAN_RESOLVED.md`.
   PREMIUM `PlanTag` in the sidebar's corner. Once Premium is owned that pane stops selling and
   lists what it opened instead. Both buy through `UnlockButton`, and read what's in
   the way from `PremiumViewModel.problem`, so they can't say different things.
+- **The paywall** (`PaywallView`) is reached from Profile's Buy pill: its own `Window` on the
+  Mac (a scene of its own — `OneWordApp` injects `PremiumViewModel` there too), a sheet on
+  iPhone and iPad. Monthly/Yearly share one card with a toggle; Lifetime has its own. It
+  draws on the Cat light page whatever the appearance.
+- **`PremiumViewModel.celebrations` is the celebration signal** — bumped only by a completed
+  purchase or by a Restore that unlocked, never by launch or `Transaction.updates`. The
+  paywall keys its confetti, haptic and announcement on it, at its root.
+- **Owners see Profile's gold card** instead of the plans; `PaywallView.perks` is the one
+  list both it and the paywall read (mock copy until real Premium features are flagged).
 - A new sheet or pane that shows a word or the shelf inherits the environment. An AppKit-hosted
   view (`NSHostingView`, like the capture HUD) does **not** — inject `PremiumViewModel` there.
 
@@ -181,13 +191,13 @@ date→word mapping (boundaries: day rollover, list wrap-around) without WidgetK
 
 ```
 OneWord/                        app target
-  OneWordApp.swift              @main — window, scene, app-active refresh
+  OneWordApp.swift              @main — main window, the Mac's Premium window, app-active refresh
   WordCapture.swift             AppKit glue: NSServices "Save to One Word" + HUD
   WordRefreshShortcut.swift     AppKit bridge: Home's Mac double-space refresh
   Views/                        SwiftUI only. No data loading, no persistence.
     RootView, PaneHeader, HomeView, HistoryView, WordDetail, WordListView,
     LearnedListView, ProfileView, SettingsView, DictionaryPicker, MonthCalendar,
-    PremiumBar (+ UnlockButton), PremiumView (+ PlanTag)
+    PremiumBar (+ UnlockButton), PremiumView (+ PlanTag), PaywallView
   ViewModels/                   @Observable. No view types. The unit-testable seam.
     WordViewModel, WordListViewModel, ProfileViewModel, PremiumViewModel
   Models/                       App-only model + state. No SwiftUI.

@@ -21,6 +21,7 @@
 import SwiftUI
 import Combine   // NotificationCenter.publisher — MEMBER_IMPORT_VISIBILITY needs it named
 import UniformTypeIdentifiers   // UTType.image, for the photo picker
+import StoreKit   // manageSubscriptionsSheet — MEMBER_IMPORT_VISIBILITY needs it named
 
 struct ProfileView: View {
     /// So the bookmark count can send you to the Bookmarks pane on the Mac rather
@@ -42,6 +43,14 @@ struct ProfileView: View {
     @AppStorage("fluencyGoal") private var fluencyGoal = false
     /// The goal counts only the German shelf, so it waits for German to unlock.
     @Environment(PremiumViewModel.self) private var premium
+
+    /// iPhone and iPad: the plans as a sheet. The Mac opens their window instead.
+    @State private var paywall = false
+    @Environment(\.openWindow) private var openWindow
+    /// The gold card's perks, folded until it's tapped.
+    @State private var perksShown = false
+    @State private var managing = false
+    @Environment(\.openURL) private var openURL
 
     @State private var editing = false
     @State private var draftName = ""
@@ -73,7 +82,7 @@ struct ProfileView: View {
                 if editing { picture(t) }
                 stats(t)
                 if fluencyGoal && premium.allows(Wordbook.german.id) { goal(t) }
-                plans(t)
+                if premium.isUnlocked { premiumCard(t) } else { plans(t) }
                 details(t)
                 rows(t)
                 if Features.accounts { footer(t) }
@@ -95,6 +104,19 @@ struct ProfileView: View {
             model.refresh()
         }
         .task { model.refresh() }
+        .sheet(isPresented: $paywall) { PaywallView() }
+        #if os(iOS)
+        .manageSubscriptionsSheet(isPresented: $managing)
+        #endif
+    }
+
+    /// The plans: their own window on the Mac, a sheet on iPhone and iPad.
+    private func showPlans() {
+        #if os(macOS)
+        openWindow(id: PaywallView.windowID)
+        #else
+        paywall = true
+        #endif
     }
 
     // MARK: - Header
@@ -482,26 +504,23 @@ struct ProfileView: View {
 
     // MARK: - Plan
 
-    /// Free and Premium side by side, the current one tagged. Premium is a tag for now
-    /// (Features.premium is off): buying it moves the tag and opens nothing, so neither
-    /// card lists features. Restore stays — App Review wants one beside a non-consumable.
+    /// Free's plans; an owner sees `premiumCard` instead. Free and Premium side by side,
+    /// Free tagged. The Buy pill opens the paywall (all three plans) rather than buying
+    /// Lifetime outright. Restore stays — App Review wants one beside a non-consumable.
     private func plans(_ t: Theme) -> some View {
-        let owned = premium.isUnlocked
-        return section("Plan", t, note: owned ? nil : premium.problem) {
+        section("Plan", t, note: premium.problem) {
             HStack(alignment: .top, spacing: 12) {
-                planCard("Free", current: !owned, t) { EmptyView() }
-                planCard("Premium", current: owned, t) {
+                planCard("Free", current: true, t) { EmptyView() }
+                planCard("Premium", current: false, t) {
                     Text("Lifetime")
                         .font(.system(size: 12))
                         .foregroundStyle(t.muted)
-                    if !owned {
-                        UnlockButton(name: "Buy Premium", verb: "Buy")
-                        Button("Restore Purchase") { Task { await premium.restore() } }
-                            .buttonStyle(.plain)
-                            .font(.system(size: 11))
-                            .foregroundStyle(t.muted)
-                            .disabled(premium.phase == .purchasing)
-                    }
+                    UnlockButton(name: "Buy Premium", verb: "Buy", open: { showPlans() })
+                    Button("Restore Purchase") { Task { await premium.restore() } }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 11))
+                        .foregroundStyle(t.muted)
+                        .disabled(premium.phase == .purchasing)
                 }
             }
             // Both cards as tall as the taller one.
@@ -526,6 +545,87 @@ struct ProfileView: View {
         .background { ProfileCard(t: t) }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(current ? "\(name), current plan" : name)
+    }
+
+    /// An owner's plan: a gold card, the same on every appearance. Tapping it unfolds
+    /// what Premium includes (PaywallView.perks — mock for now); a subscriber also gets
+    /// Manage Subscription under it.
+    private func premiumCard(_ t: Theme) -> some View {
+        let ink = Color(hex: 0x2A1E05)   // 7.2:1 on the gradient's dark end, 11.6:1 on its light end
+        let shape = RoundedRectangle(cornerRadius: t.radius(12))
+        return section("Plan", t) {
+            VStack(alignment: .leading, spacing: 12) {
+                Button { withAnimation(.snappy) { perksShown.toggle() } } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "crown.fill")
+                            .font(.system(size: 20))
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("Premium")
+                                .font(.system(size: 11, weight: .bold))
+                                .textCase(.uppercase).tracking(2)
+                            Text("One Word Premium")
+                                .font(doodle.face(22))
+                                .tracking(doodle.tracking(22))
+                            Text(premium.subscribed ? "Subscription" : "Lifetime")
+                                .font(.system(size: 12))
+                                .opacity(0.8)
+                        }
+                        Spacer(minLength: 8)
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 13, weight: .semibold))
+                            .rotationEffect(.degrees(perksShown ? 90 : 0))
+                            .accessibilityHidden(true)
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("One Word Premium, \(premium.subscribed ? "subscription" : "lifetime")")
+                .accessibilityValue(perksShown ? "Expanded" : "Collapsed")
+                .accessibilityHint("Shows what Premium includes")
+                .accessibilityAddTraits(.isButton)
+
+                if perksShown {
+                    VStack(alignment: .leading, spacing: 9) {
+                        ForEach(PaywallView.perks, id: \.self) { perk in
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 11, weight: .heavy))
+                                    .padding(.top, 2)
+                                    .accessibilityHidden(true)
+                                Text(perk)
+                                    .font(.system(size: 14))
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                        }
+                    }
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                }
+
+                if premium.subscribed {
+                    Button("Manage Subscription") {
+                        #if os(iOS)
+                        managing = true
+                        #else
+                        // ponytail: the account page Apple documents for subscriptions; showManageSubscriptions is iOS-only.
+                        openURL(URL(string: "https://apps.apple.com/account/subscriptions")!)
+                        #endif
+                    }
+                    .buttonStyle(.plain)
+                    .font(.system(size: 13, weight: .semibold))
+                    .underline()
+                }
+            }
+            .foregroundStyle(ink)
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background {
+                shape.fill(LinearGradient(colors: [Color(hex: 0xF6D77A), Color(hex: 0xD4A52C)],
+                                          startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .shadow(color: Color(hex: 0xD4A52C).opacity(0.35), radius: 14, y: 6)
+            }
+        }
     }
 
     // MARK: - Learned, settings & sign out

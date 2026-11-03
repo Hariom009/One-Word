@@ -27,7 +27,7 @@ One Word/
 | `Sounds/` | Real recordings a sound book plays, `<book>-<term>.m4a` (Cats & Dogs: `pets-trill.m4a`), named by each entry's `sound` field. CC0; provenance in `Docs/06_Misc/PETS_SOUND_CANDIDATES.md`. | App-only, not visible to the widget. `check_words` fails if a `sound` has no file here. |
 | `Pictures/` | The picture book's photos, `pictures-<term>.jpg` (≤800px JPEG), named by each entry's `image` field. CC0 / public domain from Wikimedia Commons; provenance in `Docs/06_Misc/PICTURES_IMAGE_SOURCES.md`. | App-only, not visible to the widget. `check_words` fails if an `image` has no file here. |
 | `Shared/` | `Word`, `WordProvider`, `WordSelectionStore`, `SavedWords`, `Theme`, `AppGroup`, `Premium`, and every `<book>.json`. | **Member of BOTH targets.** Anything the widget reads must live here. |
-| `Assets.xcassets/` | App icon (Mac set plus one iOS 1024), accent color. | |
+| `Assets.xcassets/` | App icon (Mac set plus one iOS 1024), accent color, dictionary covers, avatars, `Cat/Poses/` (`cat_cushion`, `cat_cafe`: the paywall's two cat drawings, 1x slot). | |
 | `OneWord.entitlements`, `OneWord-iOS.entitlements` | One per platform, picked by `CODE_SIGN_ENTITLEMENTS[sdk=…]`. The iOS one has no sandbox key and a `group.`-prefixed App Group. | Edit the iOS file by hand: Xcode's Signing editor only touches the Mac one. |
 | `PrivacyInfo.xcprivacy` | Required-reason APIs (UserDefaults) and collected data types. Required for an iOS upload. | |
 
@@ -49,7 +49,7 @@ No view models: a widget is timeline-driven, not user-event-driven, so `Timeline
 | `check_related.sh` | Related-words embedding coverage per book (≥99%). |
 | `check_learned.sh` | Learned-log recording and per-shelf counting. |
 | `check_capture.sh` | Pinned-word precedence over the daily offset. |
-| `check_premium.sh` | Premium's rules: what's free, what unlocking opens, and what losing Premium does to the pick. |
+| `check_premium.sh` | Premium's rules: what's free, what unlocking opens, what losing Premium does to the pick, and the yearly-savings figure. |
 | `check_sentences.sh` | Practice corpus decodes; the reel's draw excludes and stays uniform. |
 | `check_sync.sh` | iCloud sync's merge rules: earliest learned date, latest bookmark event wins, tombstones, idempotence. |
 | `*Check.swift` | Headless harnesses the `check_*.sh` scripts compile and run. |

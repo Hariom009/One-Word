@@ -83,7 +83,7 @@ struct PremiumView: View {
 
     private func hero(_ t: Theme) -> some View {
         VStack(spacing: 18) {
-            fan
+            Self.fan(Self.books, height: isPhone ? 72 : 100, scale: displayScale)
             VStack(spacing: 10) {
                 Text(premium.isUnlocked ? "Premium \u{00B7} Unlocked" : "One Word Premium")
                     .font(.system(size: 11, weight: .bold))
@@ -113,14 +113,14 @@ struct PremiumView: View {
 
     /// The seven premium covers, fanned like a hand of cards: the centre one upright
     /// and on top, the rest tipping away and settling lower towards the edges.
-    private var fan: some View {
-        let mid = CGFloat(Self.books.count - 1) / 2
+    /// Static so the paywall can fan its own shelf the same way.
+    static func fan(_ books: [Wordbook], height: CGFloat, scale: CGFloat) -> some View {
+        let mid = CGFloat(books.count - 1) / 2
         // 100pt covers overlap 20; the phone's 72pt covers keep the same proportion.
-        let height: CGFloat = isPhone ? 72 : 100
         return HStack(spacing: -height / 5) {
-            ForEach(Array(Self.books.enumerated()), id: \.element.id) { i, book in
+            ForEach(Array(books.enumerated()), id: \.element.id) { i, book in
                 let away = CGFloat(i) - mid
-                Self.cover(book.image, height: height, scale: displayScale)
+                cover(book.image, height: height, scale: scale)
                     .shadow(color: .black.opacity(0.28), radius: 10, y: 6)
                     .rotationEffect(.degrees(away * 5), anchor: .bottom)
                     .offset(y: abs(away) * abs(away) * 1.8)

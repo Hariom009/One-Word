@@ -87,6 +87,13 @@ enum Check {
         Premium.set(unlocked: true)
         check(picked == "urdu" && WordSelectionStore.offset == 2, "unlocking never moves the pick")
 
+        print("\nyearly savings")
+        let d = { (s: String) in Decimal(string: s)! }
+        check(Premium.savings(yearly: d("149.99"), monthly: d("14.99")) == 16, "the real prices save 16%, rounded down")
+        check(Premium.savings(yearly: d("120"), monthly: d("12.5")) == 20, "an exact boundary stays exact (Decimal, not Double)")
+        check(Premium.savings(yearly: d("180"), monthly: d("15")) == nil, "no saving, no label")
+        check(Premium.savings(yearly: d("100"), monthly: d("0")) == nil, "a zero monthly price can't divide")
+
         AppGroup.defaults.removePersistentDomain(forName: AppGroup.id)
         print("\nall checks passed")
     }

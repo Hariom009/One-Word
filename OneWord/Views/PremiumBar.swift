@@ -75,6 +75,8 @@ struct UnlockButton: View {
     var large = false
     /// Profile sells Premium as a tag, so there it says Buy: nothing is unlocked.
     var verb = "Unlock"
+    /// Profile's: the pill opens the plans rather than buying Lifetime outright.
+    var open: (() -> Void)? = nil
 
     @Environment(PremiumViewModel.self) private var premium
     @Environment(\.purchase) private var purchase
@@ -86,8 +88,11 @@ struct UnlockButton: View {
         if premium.phase == .purchasing {
             spinner
         } else if let product = premium.product {
-            pill(large ? "\(verb) Premium \u{2014} \(product.displayPrice)" : "\(verb) \u{2014} \(product.displayPrice)", t) { buy(product) }
+            pill(large ? "\(verb) Premium \u{2014} \(product.displayPrice)" : "\(verb) \u{2014} \(product.displayPrice)", t) {
+                if let open { open() } else { Self.buy(product, with: purchase, premium) }
+            }
                 .accessibilityLabel("\(name), \(product.displayPrice)")
+                .accessibilityHint(open == nil ? "" : "Shows the plans")
         } else if premium.storeUnavailable {
             pill("Try Again", t) { Task { await premium.load() } }
         } else {
@@ -117,7 +122,8 @@ struct UnlockButton: View {
         .buttonStyle(.plain)
     }
 
-    private func buy(_ product: Product) {
+    /// Shared with PaywallView: SwiftUI's purchase sheet, its result handed to the view model.
+    static func buy(_ product: Product, with purchase: PurchaseAction, _ premium: PremiumViewModel) {
         Task {
             premium.begin()
             do {

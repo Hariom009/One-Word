@@ -18,9 +18,9 @@ nonisolated enum Premium {
     /// App Store Connect's product ids. Forever once shipped — Apple never lets an id be reused.
     /// Lifetime is the non-consumable; the other two share one auto-renewable subscription group.
     static let productID = "com.hariom.swift.oneword.premium"
-    static let productIDs: Set<String> = [productID,
-                                          "com.hariom.swift.oneword.premium.yearly",
-                                          "com.hariom.swift.oneword.premium.monthly"]
+    static let yearlyID = "com.hariom.swift.oneword.premium.yearly"
+    static let monthlyID = "com.hariom.swift.oneword.premium.monthly"
+    static let productIDs: Set<String> = [productID, yearlyID, monthlyID]
 
     /// v1: every shelf the app lists (Features.premium is off). Bookmarks — the reader's own
     /// words — is never sold back to them. Ids are spelled the way AppGroup.dictionaryID
@@ -39,6 +39,20 @@ nonisolated enum Premium {
 
     /// The dictionary to actually show for `id`: itself, or Everyday English while it's locked.
     static func resolve(_ id: String) -> String { allows(id) ? id : "words" }
+
+    /// What Yearly saves against twelve months of Monthly, in whole percent — the paywall's
+    /// "Save n%" chip. Nil when there's no saving to claim.
+    // ponytail: rounds down so the chip never overstates. App-only math in a Shared file (the widget
+    // compiles it unused) because check_premium.sh already compiles this file; its own file would
+    // need its own gate wiring.
+    static func savings(yearly: Decimal, monthly: Decimal) -> Int? {
+        guard monthly > 0 else { return nil }
+        var percent = (1 - yearly / (monthly * 12)) * 100
+        var rounded = Decimal()
+        NSDecimalRound(&rounded, &percent, 0, .down)
+        let whole = NSDecimalNumber(decimal: rounded).intValue
+        return whole > 0 ? whole : nil
+    }
 
     /// The only writer. Losing Premium also walks a locked pick back to Everyday English —
     /// offset and pin with it — so every raw `@AppStorage("dictionaryID")` reader agrees

@@ -224,6 +224,19 @@ Which skill lands where:
   *(every audit finding resolved — **build from the resolved plan, it stands alone**. Operator
   calls: WebP covers, the in-app privacy link lands in this PR, "$9.99, once" with a US note.
   The audit's blocker was the privacy draft missing the Google profile-photo fetch.)*
+- **Paywall** — built on `release/1.1.0`, not committed. Both builds and all seven gates green; the
+  by-eye and purchase checks in the resolved checklist are still open (they need an Xcode Run with
+  `StoreKit/OneWord.storekit`). True perk copy, App Store Connect and a sandbox pass gate release.
+  [plan](02_Plan/PAYWALL_PLAN.md) ·
+  [audit](02_Plan/Audit/PAYWALL_PLAN_AUDIT.md) →
+  [resolved plan](02_Plan/Resolved/PAYWALL_PLAN_RESOLVED.md) →
+  [checklist](03_Checklist/PAYWALL_CHECKLIST.md) ·
+  [checklist audit](03_Checklist/Audit/PAYWALL_CHECKLIST_AUDIT.md) →
+  [resolved checklist](03_Checklist/Resolved/PAYWALL_CHECKLIST_RESOLVED.md)
+  *(**tick the resolved checklist** — it stands alone. `PaywallView` sells Monthly $14.99 / Yearly $149.99 in one card
+  with a corner toggle, Lifetime $169.99; no sign-in; nothing gated. Mac: its own window; iPhone: an
+  expandable sheet. Owners get a gold Premium card with mock perks; confetti, "Welcome to the
+  Premium Club" and a haptic on purchase or a Restore that unlocks.)*
 - **Cat UI** — planned, not built. Cat becomes the default look (light and dark pages);
   Midnight stays as the cat-free alternative; System/Light/Dark/Umber fold into Cat.
   [theme brief](01_Brainstorm/CAT_THEME_BRIEF.md) →

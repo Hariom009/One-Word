@@ -2,8 +2,10 @@
 //  PremiumViewModel.swift
 //  OneWord
 //
-//  The app's one StoreKit owner: whether Premium is unlocked, the product for its
-//  price, and the state of a purchase in flight. Every unlock or loss is mirrored
+//  The app's one StoreKit owner: whether Premium is unlocked, all three products
+//  (lifetime, yearly, monthly) for their prices, and the state of a purchase in flight.
+//  `celebrations` is the paywall's trigger for its confetti — bumped only by a purchase
+//  that completed or a Restore that unlocked, never by launch or Transaction.updates. Every unlock or loss is mirrored
 //  into the App Group through `Premium.set`, which is what the widget reads. The
 //  purchase sheet itself is SwiftUI's (`\.purchase`), so PremiumBar starts it and
 //  hands the result back here — this file names no views. The App Store's Apple ID is the
@@ -20,8 +22,16 @@ final class PremiumViewModel {
     enum Phase: Equatable { case idle, purchasing, pending, failed(String) }
 
     private(set) var isUnlocked: Bool
+    /// Every product the App Store returned, by id. Empty until it answers.
+    private(set) var products: [String: Product] = [:]
+    /// Lifetime — what every older caller (PremiumBar, PremiumView, Profile) means by "the product".
     /// Nil until the App Store answers; the bar shows no price until then.
-    private(set) var product: Product?
+    var product: Product? { products[Premium.productID] }
+    /// A renewing subscription is among what's owned — Profile offers Manage Subscription.
+    private(set) var subscribed = false
+    /// The paywall's celebration trigger: a purchase that completed, or a Restore that
+    /// unlocked. Launch and Transaction.updates only refresh, so they never bump it.
+    private(set) var celebrations = 0
     private(set) var phase: Phase = .idle
     /// The product didn't load — offline, or the store isn't set up yet. The bar offers a retry.
     private(set) var storeUnavailable = false
@@ -59,7 +69,9 @@ final class PremiumViewModel {
     /// needs the network. Neither waits on the other's failure.
     func load() async {
         await refresh()
-        product = try? await Product.products(for: [Premium.productID]).first
+        let found = (try? await Product.products(for: Premium.productIDs)) ?? []
+        products = Dictionary(found.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        // Still "lifetime didn't load": the free Profile's pill and note read it.
         storeUnavailable = product == nil
     }
 
@@ -72,16 +84,21 @@ final class PremiumViewModel {
         generation += 1
         let mine = generation
         var owned = false
+        var renews = false
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
                Premium.productIDs.contains(transaction.productID),
-               transaction.revocationDate == nil { owned = true }
+               transaction.revocationDate == nil {
+                owned = true
+                if transaction.productType == .autoRenewable { renews = true }
+            }
         }
         // A newer refresh started while this one read: its snapshot is the fresher one.
         guard mine == generation else { return }
         // An Ask to Buy that was declined never sends a transaction; stop waiting on it here.
         if phase == .pending { phase = .idle }
         set(owned)
+        if renews != subscribed { subscribed = renews }
     }
 
     func begin() { phase = .purchasing }
@@ -93,6 +110,9 @@ final class PremiumViewModel {
             // Not set(true): through refresh, so a slower refresh can't land after and relock.
             await refresh()
             phase = .idle
+            // ponytail: if this refresh lost the generation race the flag may still be false here;
+            // the newer refresh then shows the thank-you without confetti. Harmless.
+            if isUnlocked { celebrations += 1 }
         case .success(.unverified):
             phase = .failed("Apple couldn't verify this purchase.")
         case .pending:
@@ -107,6 +127,7 @@ final class PremiumViewModel {
     func failed(_ error: Error) { phase = .failed(Self.message(for: error)) }
 
     func restore() async {
+        let was = isUnlocked
         phase = .purchasing
         do {
             try await AppStore.sync()
@@ -117,6 +138,8 @@ final class PremiumViewModel {
             phase = .failed(Self.message(for: error))
         }
         await refresh()
+        // A Restore that unlocks is celebrated like a purchase.
+        if !was && isUnlocked { celebrations += 1 }
     }
 
     /// Always writes through — that heals a stale cache and walks a locked pick home — but
