@@ -183,6 +183,7 @@ date→word mapping (boundaries: day rollover, list wrap-around) without WidgetK
 OneWord/                        app target
   OneWordApp.swift              @main — window, scene, app-active refresh
   WordCapture.swift             AppKit glue: NSServices "Save to One Word" + HUD
+  WordRefreshShortcut.swift     AppKit bridge: Home's Mac double-space refresh
   Views/                        SwiftUI only. No data loading, no persistence.
     RootView, PaneHeader, HomeView, HistoryView, WordDetail, WordListView,
     LearnedListView, ProfileView, SettingsView, DictionaryPicker, MonthCalendar,
@@ -202,8 +203,8 @@ tools/                          check_*.sh gates + generators
 Docs/                           see Docs/README.md
 ```
 
-Two files sit at the app-target root on purpose: `OneWordApp.swift` is the entry point and
-`WordCapture.swift` is AppKit/NSServices glue — neither is a model, a view, or a view model.
+The app-target root holds `OneWordApp.swift`, the entry point, plus `WordCapture.swift`
+and `WordRefreshShortcut.swift` for AppKit glue outside the model, view and view-model layers.
 
 ### Where a new file goes
 

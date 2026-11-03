@@ -113,7 +113,8 @@ from Everyday English for now). Design the picker so it scales to more dictionar
   Hindi line, definition, quoted example. Plain.
 - **Header (top of the pane — there is no window toolbar):** the app name and today's date
   on the left; the **Dictionary chip**, Bookmark and Pronounce on the right. Pulling the
-  page up past its end and letting go pushes a random word from the book up in its place;
+  page up past its end and letting go pushes a random word from the book up in its place.
+  On Mac, pressing Space twice quickly does the same, with a muted hint in Home's bottom strip;
   the day's word comes back 5s after the page is let be, or when the app comes back. A
   double tap on bare page bookmarks it: the screen frosts over and a ribbon drops into the
   middle (with a success haptic), then both clear.

@@ -30,6 +30,9 @@ struct HomeView: View {
     @State private var peeks = 0
     /// Bumped by every double tap that keeps a word; the ribbon drops in off it.
     @State private var kept = 0
+    #if os(macOS)
+    @State private var shortcutEnabled = false
+    #endif
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(RelatedWordsStore.self) private var store
     /// The floor when there's no account to read a join date off (accounts off).
@@ -55,6 +58,27 @@ struct HomeView: View {
             }
         }
             .paneBackground(t)
+            #if os(macOS)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                HStack {
+                    Spacer(minLength: 0)
+                    Text("Double-space for another word")
+                        .font(.system(size: 11))
+                        .foregroundStyle(t.muted)
+                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .overlay(alignment: .top) { t.hairline.frame(height: 1) }
+            }
+            .background {
+                WordRefreshShortcut(enabled: shortcutEnabled && scenePhase == .active) { nextWord() }
+                    .frame(width: 0, height: 0)
+                    .accessibilityHidden(true)
+            }
+            .onAppear { shortcutEnabled = true }
+            .onDisappear { shortcutEnabled = false }
+            #endif
             .paneHeader(isPhone ? dayTitle : Date.now.formatted(.dateTime.month(.wide).day().year()),
                         titleAction: isPhone ? { picking = true } : nil) {
                 if !isPhone {
@@ -109,9 +133,7 @@ struct HomeView: View {
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) { if model.bookmark() { kept += 1 } }
                 .modifier(PullForNext(armed: $armed) { $0 ? model.hold() : model.letGo() } next: {
-                    guard day == nil else { return }
-                    model.shuffle()
-                    peeks += 1
+                    nextWord()
                 })
                 // Keyed on the word, so every change of word pushes a new page up from below.
                 .id(model.word.term)
@@ -126,7 +148,14 @@ struct HomeView: View {
         .sensoryFeedback(.impact(weight: .light), trigger: peeks)
         .sensoryFeedback(.success, trigger: kept)
         .accessibilityElement(children: .contain)
-        .accessibilityAction(named: "Another word") { model.shuffle() }
+        .accessibilityAction(named: "Another word") { nextWord() }
+    }
+
+    /// Pulling on iPhone and double-space on Mac share the same temporary preview.
+    private func nextWord() {
+        guard day == nil else { return }
+        model.shuffle()
+        peeks += 1
     }
 
     /// The double tap's answer, since no button was pressed: the screen frosts over and a

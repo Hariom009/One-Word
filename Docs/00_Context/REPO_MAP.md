@@ -20,6 +20,7 @@ One Word/
 |---|---|---|
 | `OneWordApp.swift` | `@main`, window + scene, app-active refresh. | Entry point. Not a layer. |
 | `WordCapture.swift` | AppKit glue: `NSServices` "Save to One Word", the capture HUD. | Neither M, V, nor VM — AppKit lives at root. |
+| `WordRefreshShortcut.swift` | Mac-only AppKit bridge for Home's window-local double-space refresh. | AppKit glue at root. |
 | `Views/` | SwiftUI `View`s only. | **No data loading, no persistence, no JSON.** |
 | `ViewModels/` | `@Observable` classes driving those views. | `import Observation` only — **never** SwiftUI, never a view type. This is the testable seam. |
 | `Models/` | App-only data and state: `Wordbook`, `Appearance`, `LearnedWords`, `RelatedWords`, `Sentences`, `CloudSync` — and app-only data files (`sentences.json`). | No SwiftUI. Not visible to the widget. |
