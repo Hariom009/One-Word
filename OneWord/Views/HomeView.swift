@@ -125,7 +125,7 @@ struct HomeView: View {
     }
 
     /// The word. Pull the page past either end and let go for a random word from the
-    /// book; the day's word comes back 5s after the page is let be. A past day stays put.
+    /// book; it stays until Home refreshes. A past day stays put.
     private var page: some View {
         ZStack {
             WordDetail(word: model.word, showDate: !isPhone,
@@ -134,15 +134,13 @@ struct HomeView: View {
                 // take their taps first. contentShape so the blank paper answers too.
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) { if model.bookmark() { kept += 1 } }
-                .modifier(PullForNext(armed: $armed) { $0 ? model.hold() : model.letGo() } next: {
-                    nextWord(from: $0)
-                })
+                .modifier(PullForNext(armed: $armed) { nextWord(from: $0) })
                 // Keyed on the word, so every change of word brings a new page in.
                 .id(model.word.term)
                 .transition(flip)
         }
-        // Only a flip pushes up. The day's word coming back — the peek running out, a
-        // pane switch, the app reopening — just swaps in, with the corner saying which it is.
+        // Only a flip pushes up. The day's word coming back — a pane switch, the app
+        // reopening — just swaps in, with the corner saying which it is.
         .animation(model.isPeeking ? .spring(duration: 0.5, bounce: 0.15) : nil, value: model.word.term)
         #if os(macOS)
         .overlay(alignment: .topLeading) {
@@ -305,14 +303,13 @@ private struct RibbonDrop {
 }
 
 /// Pulling Home's page past either end, then letting go, asks for the next word. The
-/// stretch is the page's own rubber band, so it reads as scrolling on, not a new gesture;
-/// any scroll at all holds the day's word off. The scroll APIs are iOS 18 / macOS 15:
+/// stretch is the page's own rubber band, so it reads as scrolling on, not a new gesture.
+/// The scroll APIs are iOS 18 / macOS 15:
 /// before those the page only scrolls, and "Another word" stays in the rotor.
 private struct PullForNext: ViewModifier {
     /// How far past its end the page has to be pulled — about twice that under the finger.
     static let pull: CGFloat = 60
     @Binding var armed: Edge?
-    let scrolling: (Bool) -> Void
     let next: (Edge) -> Void
     /// Only a finger arms it: a flick's coast overshooting the end would tick for nothing.
     @State private var dragging = false
@@ -327,11 +324,9 @@ private struct PullForNext: ViewModifier {
                 .onScrollPhaseChange { old, new, context in
                     if new == .interacting {
                         dragging = true
-                        scrolling(true)
                     } else if old == .interacting {
                         dragging = false
                         armed = nil
-                        scrolling(false)
                         if let edge = Self.past(context.geometry) { next(edge) }
                     }
                 }

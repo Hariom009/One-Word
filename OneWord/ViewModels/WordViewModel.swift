@@ -3,8 +3,8 @@
 //  OneWord
 //
 //  The app's testable seam: holds the day's word for the SELECTED dictionary.
-//  Pulling Home's page up is a PEEK — a random word from the book, and a few seconds
-//  after the page is let be the day's word comes back, so the day still has one word.
+//  Pulling Home's page up is a PEEK — a random word from the book. It stays until Home
+//  refreshes (a pane switch, the app reopening, a new day), so the day still has one word.
 //  The peek is deliberately local: the shared WordSelectionStore offset (which the
 //  widget reads) is left alone.
 //  MainActor-isolated by default isolation.
@@ -15,9 +15,6 @@ import Observation
 
 @Observable
 final class WordViewModel {
-    /// How long a peeked word holds before the day's word returns.
-    static let peekDuration: Duration = .seconds(5)
-
     private(set) var word: Word
     /// The random word the next pull brings in — drawn ahead so Home can rank its
     /// neighbours off the main thread before it shows.
@@ -29,7 +26,6 @@ final class WordViewModel {
     private(set) var flips = 0
 
     private var provider: WordProvider
-    private var revert: Task<Void, Never>?
 
     init(wordbook: Wordbook = .selected) {
         let provider = WordProvider(resource: wordbook.id)
@@ -51,13 +47,10 @@ final class WordViewModel {
     }
 
     /// Show the day's word for `date`. Every "back to the real word" path goes
-    /// through here — app became active, a new day picked, a peek expiring — so
-    /// this is also where a pending peek gets cancelled. Without that, a peek
-    /// started before a date change would fire later and yank the old day back.
+    /// through here — app became active, a new day picked, Home reappearing — so
+    /// this is also where a peek ends.
     func refresh(for date: Date = Date()) {
         let peeked = isPeeking
-        revert?.cancel()
-        revert = nil
         isPeeking = false
         flips = 0
         word = provider.word(for: date, offset: WordSelectionStore.offset, pinned: SavedWords.pinned)
@@ -87,28 +80,12 @@ final class WordViewModel {
     }
 
     /// A pull: the word drawn ahead comes in, a fresh one is drawn behind it. Not
-    /// persisted and not shared: it expires on its own, and the widget never sees it.
-    func shuffle(for date: Date = Date()) {
+    /// persisted and not shared: the next refresh ends it, and the widget never sees it.
+    func shuffle() {
         word = upcoming
         upcoming = Self.draw(provider, besides: word)
         flips += 1
-        peek(for: date)
-    }
-
-    /// A finger on the page holds the day's word off; letting go restarts the wait.
-    func hold() { revert?.cancel() }
-    func letGo(for date: Date = Date()) { if isPeeking { peek(for: date) } }
-
-    private func peek(for date: Date) {
-        revert?.cancel()
         isPeeking = true
-        revert = Task { [weak self] in
-            try? await Task.sleep(for: Self.peekDuration)
-            guard !Task.isCancelled else { return }
-            self?.refresh(for: date)
-        }
-        // weak self, so a window closed mid-peek deallocates the model right away
-        // instead of being held alive by the sleeping task.
     }
 
     /// A random word from the book other than the one showing. Random, not the next

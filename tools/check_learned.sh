@@ -78,40 +78,33 @@ enum Check {
         let today = model.word.term
         check(!model.isPeeking, "settled to start with")
 
-        model.shuffle(for: day)
+        model.shuffle()
         check(model.word.term != today, "a peek shows another word")
         check(model.isPeeking, "and says so")
         check(model.flips == 1, "and counts the flip")
         let first = model.word.term
-        model.shuffle(for: day)
+        model.shuffle()
         check(model.word.term != first, "peeking again moves on again")
         check(WordSelectionStore.offset == 0, "a peek never touches the shared offset the widget reads")
         // Swiping peeks by the dozen: walking the day order would spoil the coming days.
         let book = WordProvider(resource: "words")
-        let peeked = (1...5).map { _ in model.shuffle(for: day); return model.word.term }
+        let peeked = (1...5).map { _ in model.shuffle(); return model.word.term }
         let ahead = (1...5).map { book.word(for: day.addingTimeInterval(86_400 * Double($0))).term }
         check(peeked != ahead, "peeks are random, not the coming days' words")
 
-        try? await Task.sleep(for: WordViewModel.peekDuration + .seconds(1))
-        check(model.word.term == today, "the day's word comes back on its own")
+        try? await Task.sleep(for: .seconds(1))
+        check(model.isPeeking, "a flipped word stays put")
+        model.refresh(for: day)
+        check(model.word.term == today, "the day's word comes back on refresh")
         check(!model.isPeeking, "and the peek flag clears")
         check(model.flips == 0, "and the flip count resets")
 
         // Home draws the next word early, so its neighbours rank before it shows.
         let waiting = model.upcoming.term
-        model.shuffle(for: day)
+        model.shuffle()
         check(model.word.term == waiting, "a pull brings in the word drawn ahead")
         check(model.upcoming.term != waiting, "and draws a fresh one behind it")
 
-        // The bug this guards: a peek left running while the reader moves to
-        // another day used to fire late and yank the old day's word back.
-        let otherDay = day.addingTimeInterval(86_400 * 3)
-        model.shuffle(for: day)
-        model.refresh(for: otherDay)
-        let otherWord = model.word.term
-        check(otherWord != today, "a different day is a different word")
-        try? await Task.sleep(for: WordViewModel.peekDuration + .seconds(1))
-        check(model.word.term == otherWord, "a pending peek doesn't yank the old day back")
 
         print("\nbookmarks")
         AppGroup.defaults.removePersistentDomain(forName: AppGroup.id)
@@ -204,8 +197,7 @@ enum Check {
 SWIFT
 
 # -default-isolation MainActor mirrors the project's SWIFT_DEFAULT_ACTOR_ISOLATION;
-# without it WordViewModel compiles nonisolated and the peek's Task would not hop
-# back to the actor the app actually runs it on.
+# without it WordViewModel compiles nonisolated, not on the actor the app runs it on.
 swiftc -O -default-isolation MainActor -o "$OUT/check" \
     "$ROOT/OneWord/Shared/Word.swift" "$ROOT/OneWord/Shared/WordProvider.swift" \
     "$ROOT/OneWord/Shared/SavedWords.swift" "$ROOT/OneWord/Shared/WordSelectionStore.swift" \
