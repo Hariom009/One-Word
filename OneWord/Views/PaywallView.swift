@@ -2,15 +2,16 @@
 //  PaywallView.swift
 //  OneWord
 //
-//  The plans, and the welcome once one is bought. Monthly and Yearly share one card
-//  with a toggle in its corner; Lifetime has its own, with the cat asleep on it. No
-//  sign-in: StoreKit's Apple ID is the identity, as everywhere else Premium is sold.
-//  Drawn from the "Pencil Cat Mascot" canvas (MacPremium, PhonePremium and their
-//  Thanks boards). It wears the app's own palette — Midnight, Umber, or System's dark —
-//  and the canvas's Cat paper only when the reader picked System and the system is light.
+//  The plans, and the welcome once one is bought. "Quiet sky": three radio rows —
+//  Yearly picked — and one sky button whose label follows the pick. No sign-in:
+//  StoreKit's Apple ID is the identity, as everywhere else Premium is sold. The
+//  welcome is from the "Pencil Cat Mascot" canvas. It wears the app's own palette —
+//  Midnight, Umber, or System's dark — and the canvas's Cat paper only when the reader
+//  picked System and the system is light. Premium's own colour is `Theme.sky`.
 //
-//  On the Mac this is its own window (OneWordApp), and the welcome is a modal over
-//  the plans inside it; on iPhone and iPad it's a sheet that swaps to the welcome.
+//  On the Mac this is its own two-column window (OneWordApp), and the welcome is a
+//  modal over the plans inside it; on iPhone and iPad it's a full-height sheet with
+//  the button pinned, and it swaps to the welcome.
 //  Confetti, the haptic and the announcement hang off the root, keyed on
 //  `premium.celebrations`: the welcome is inserted in the same update the counter
 //  changes in, so a trigger inside it would take the new value as its first.
@@ -25,7 +26,7 @@ struct PaywallView: View {
     /// The Mac's Premium window (OneWordApp); Profile's Buy pill opens it by this id.
     static let windowID = "premium"
 
-    /// MOCK — the one list of what Premium gives; Profile's gold card reads it too.
+    /// MOCK — the one list of what Premium gives; Profile's plan row reads it too.
     /// ponytail: placeholder copy; true statements replace it before submission (F10, R1).
     static let perks: [String] = [
         "Every dictionary on the shelf, and each new one as it lands",
@@ -44,7 +45,9 @@ struct PaywallView: View {
     @Environment(\.doodle) private var doodle
 
     /// Opens on Yearly, so the savings chip shows. Resets each time the plans open.
-    @State private var yearly = true
+    @State private var pick = Premium.yearlyID
+    /// Mac: the window takes the arrow keys as soon as it opens.
+    @FocusState private var keys: Bool
 
     /// The app's palette; System's light half is the canvas's Cat paper rather than plain white.
     private var t: Theme {
@@ -83,7 +86,7 @@ struct PaywallView: View {
             }
             // The palette's own accent on links and spinners, not the system blue.
             .tint(t.accent)
-            .presentationDetents(premium.isUnlocked ? [.height(584)] : [.medium, .large])
+            .presentationDetents(premium.isUnlocked ? [.height(584)] : [.large])
             .presentationDragIndicator(.visible)
             .presentationBackground(t.background)
     }
@@ -108,79 +111,123 @@ struct PaywallView: View {
 
     // MARK: - The plans
 
-    /// Neither card can say anything until the App Store has answered, one way or the other.
+    /// Nothing can be listed until the App Store has answered, one way or the other.
     private var answered: Bool { premium.product != nil || premium.storeUnavailable }
-    private var yearlyProduct: Product? { premium.products[Premium.yearlyID] }
-    private var monthlyProduct: Product? { premium.products[Premium.monthlyID] }
-    private var showsSubscription: Bool { !answered || (yearlyProduct != nil && monthlyProduct != nil) }
-    private var showsLifetime: Bool { !answered || premium.product != nil }
+
+    /// What's on offer, in list order. Yearly leads, and is the one picked on open.
+    private var plans: [Product] {
+        [Premium.yearlyID, Premium.monthlyID, Premium.productID].compactMap { premium.products[$0] }
+    }
+
+    /// The pick, or the first plan listed if the picked one didn't load.
+    private var chosen: Product? { premium.products[pick] ?? plans.first }
+
+    /// Premium's sky as a line on this page: pale on dark, deeper on the Cat paper.
+    private var sky: Color { Theme.skyMark(scheme) }
 
     private var offers: some View {
-        ScrollView {
-            VStack(spacing: isPhone ? 18 : 22) {
-                PremiumView.fan(Self.shelf, height: isPhone ? 72 : 100, scale: displayScale)
-                    .padding(.top, isPhone ? 8 : 18)
-                    // The outer covers settle below the fan's frame; keep them off the title.
-                    .padding(.bottom, 10)
-                VStack(spacing: 8) {
-                    Text("The whole shelf")
-                        .font(doodle.face(isPhone ? 30 : 36, .medium))
-                        .foregroundStyle(t.ink)
-                        .accessibilityAddTraits(.isHeader)
-                    Text("Premium, on every device signed in to your Apple ID. No account needed.")
-                        .font(.system(size: 14))
-                        .foregroundStyle(t.muted)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(Self.perks, id: \.self) { perk($0) }
-                }
-                .frame(maxWidth: 520, alignment: .leading)
-                cards
-                below
+        #if os(macOS)
+        // Two columns: the pitch, then the pick. Keyboard first — arrows pick, Return buys, Esc closes.
+        HStack(alignment: .top, spacing: 0) {
+            pitch(.leading)
+                .padding(EdgeInsets(top: 56, leading: 36, bottom: 32, trailing: 24))
+                .frame(width: 380, alignment: .leading)
+            VStack(spacing: 9) {
+                choices
+                Spacer(minLength: 12)
+                buyButton
+                Text("\u{2191} \u{2193} to choose \u{00B7} Return to buy \u{00B7} Esc to close")
+                    .font(.system(size: 11))
+                    .foregroundStyle(t.muted)
+                    .accessibilityHidden(true)
+                legal
             }
-            .padding(.horizontal, isPhone ? 20 : 44)
-            .padding(.vertical, isPhone ? 16 : 28)
-            .frame(maxWidth: .infinity)
+            .padding(EdgeInsets(top: 52, leading: 8, bottom: 26, trailing: 32))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .focusable()
+        .focusEffectDisabled()
+        .focused($keys)
+        .onAppear { keys = true }
+        .onKeyPress(.upArrow) { step(-1) }
+        .onKeyPress(.downArrow) { step(1) }
+        .overlay(alignment: .topTrailing) { closeButton }
+        #else
+        // Full height, so the price and the button are on screen from the first frame.
+        ScrollView {
+            VStack(spacing: 18) {
+                pitch(.center)
+                choices
+            }
+            .padding(.horizontal, 18)
+            .padding(.top, 8)
+            .padding(.bottom, 16)
         }
         .scrollContentBackground(.hidden)
-        .overlay(alignment: .topTrailing) {
-            Button { dismiss() } label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(t.muted)
-                    .frame(width: 36, height: 36)
-                    .contentShape(Rectangle())
+        // The one button, pinned: it never scrolls away, and its label follows the pick.
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            VStack(spacing: 9) {
+                buyButton
+                legal
             }
-            .buttonStyle(.plain)
-            .keyboardShortcut(.cancelAction)
-            .accessibilityLabel("Close")
-            .padding(10)
+            .padding(.horizontal, 18)
+            .padding(.top, 14)
+            .padding(.bottom, 6)
+            .background(t.background.opacity(0.94))
+            .overlay(alignment: .top) { t.hairline.frame(height: 1) }
+        }
+        .overlay(alignment: .topTrailing) { closeButton }
+        #endif
+    }
+
+    private var closeButton: some View {
+        Button { dismiss() } label: {
+            Image(systemName: "xmark")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(t.muted)
+                .frame(width: 36, height: 36)
+                .background(t.ink.opacity(isPhone ? 0.08 : 0), in: Circle())
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .keyboardShortcut(.cancelAction)
+        .accessibilityLabel("Close")
+        .padding(isPhone ? 6 : 8)
+    }
+
+    /// The fan, the headline, what's in it.
+    private func pitch(_ alignment: HorizontalAlignment) -> some View {
+        VStack(alignment: alignment, spacing: 14) {
+            PremiumView.fan(Self.shelf, height: isPhone ? 62 : 70, scale: displayScale)
+                // The outer covers settle below the fan's frame; keep them off the title.
+                .padding(.bottom, 10)
+            VStack(alignment: alignment, spacing: 4) {
+                Text("The whole shelf")
+                    .font(doodle.face(isPhone ? 28 : 34, .medium))
+                    .foregroundStyle(t.ink)
+                    .accessibilityAddTraits(.isHeader)
+                Text(isPhone ? "On every device with your Apple ID"
+                             : "On every device with your Apple ID. No account needed.")
+                    .font(.system(size: 13))
+                    .foregroundStyle(t.muted)
+                    .multilineTextAlignment(alignment == .center ? .center : .leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            VStack(alignment: .leading, spacing: 9) {
+                ForEach(Self.perks, id: \.self) { perk($0) }
+            }
+            .padding(.top, 2)
         }
     }
 
-    /// Side by side on the Mac, one under the other on iPhone and iPad.
-    @ViewBuilder private var cards: some View {
-        let showSubscription = showsSubscription
-        let showLifetime = showsLifetime
-        if showSubscription || showLifetime {
-            #if os(macOS)
-            HStack(alignment: .top, spacing: 20) {
-                if showSubscription { subscriptionCard }
-                if showLifetime { lifetimeCard }
-            }
-            .fixedSize(horizontal: false, vertical: true)
-            // Room for the cushion cat's overhang before Restore.
-            .padding(.bottom, 26)
-            #else
-            VStack(spacing: 14) {
-                if showSubscription { subscriptionCard }
-                if showLifetime { lifetimeCard }
-            }
-            .padding(.bottom, 14)
-            #endif
-        } else {
+    /// One row per plan, a radio each. A spinner until the store answers, a retry if it can't.
+    @ViewBuilder private var choices: some View {
+        if !answered {
+            ProgressView()
+                .controlSize(.small)
+                .frame(maxWidth: .infinity, minHeight: 170)
+        } else if plans.isEmpty {
             VStack(spacing: 12) {
                 Text(premium.problem ?? "The App Store isn't reachable right now.")
                     .font(.system(size: 14))
@@ -190,169 +237,171 @@ struct PaywallView: View {
                     .buttonStyle(.plain)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(t.accent)
+                    .frame(minHeight: 44)
             }
-            .padding(.vertical, 20)
+            .frame(maxWidth: .infinity, minHeight: 170)
+        } else {
+            VStack(spacing: 8) {
+                ForEach(plans, id: \.id) { row($0) }
+                if let problem = premium.problem {
+                    Text(problem)
+                        .font(.system(size: 12))
+                        .foregroundStyle(t.muted)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.top, 2)
+                }
+            }
         }
     }
 
-    private var subscriptionCard: some View {
-        let shown = yearly ? yearlyProduct : monthlyProduct
-        return card(emphasized: false) {
-            HStack(alignment: .center) {
-                Text("Premium")
-                    .font(doodle.face(24, .medium))
-                    .foregroundStyle(t.ink)
-                Spacer(minLength: 8)
-                periodToggle
-            }
-            HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text(shown?.displayPrice ?? "\u{2014}")
-                    .font(doodle.face(40, .medium))
-                    .foregroundStyle(t.ink)
-                    .contentTransition(.numericText())
-                Text(yearly ? "/ year" : "/ month")
-                    .font(.system(size: 15))
-                    .foregroundStyle(t.muted)
-            }
-            if yearly, let y = yearlyProduct, let m = monthlyProduct,
-               let saved = Premium.savings(yearly: y.price, monthly: m.price) {
-                Text("Save \(saved)%")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(t.accent)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(t.accent.opacity(0.12), in: Capsule())
-            }
-            if let shown {
-                // What App Review wants beside a subscription: price, period, how to cancel.
-                Text("Renews every \(yearly ? "year" : "month") at \(shown.displayPrice) until you cancel. "
-                     + "Cancel anytime in your App Store account settings.")
-                    .font(.system(size: 12))
-                    .foregroundStyle(t.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer(minLength: 4)
-            buyButton(yearly ? Premium.yearlyID : Premium.monthlyID, "Subscribe",
-                      yearly ? "Premium Yearly" : "Premium Monthly")
-        }
-    }
-
-    /// One capsule, the current period filled. One button: there are only two.
-    private var periodToggle: some View {
-        Button {
-            withAnimation(.snappy) { yearly.toggle() }
+    private func row(_ product: Product) -> some View {
+        let on = product.id == chosen?.id
+        let shape = RoundedRectangle(cornerRadius: t.radius(9))
+        return Button {
+            withAnimation(.snappy(duration: 0.2)) { pick = product.id }
         } label: {
-            HStack(spacing: 0) {
-                segment("Monthly", on: !yearly)
-                segment("Yearly", on: yearly)
+            HStack(spacing: 12) {
+                Circle()
+                    .strokeBorder(on ? sky : t.muted.opacity(0.7), lineWidth: on ? 6 : 1.5)
+                    .frame(width: 20, height: 20)
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 6) {
+                        Text(Self.name(product.id))
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(t.ink)
+                        if product.id == Premium.yearlyID, let saved {
+                            Text("Save \(saved)%")
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundStyle(Theme.skyInk)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 2)
+                                .background(Theme.sky, in: Capsule())
+                        }
+                    }
+                    if let note = note(product) {
+                        Text(note)
+                            .font(.system(size: 12))
+                            .foregroundStyle(t.muted)
+                    }
+                }
+                Spacer(minLength: 8)
+                Text(product.displayPrice)
+                    .font(.system(size: 15, weight: on ? .semibold : .regular))
+                    .foregroundStyle(t.ink)
             }
-            .padding(3)
-            .background(t.hairline.opacity(0.6), in: Capsule())
-            .contentShape(Capsule())
+            .padding(.horizontal, 14)
+            .frame(minHeight: isPhone ? 58 : 52)
+            .background(on ? sky.opacity(0.10) : t.surface, in: shape)
+            .overlay(shape.strokeBorder(on ? sky : t.hairline, lineWidth: on ? 2 : 1))
+            .contentShape(shape)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Billing period")
-        .accessibilityValue(yearly ? "Yearly" : "Monthly")
-        .accessibilityHint("Switches between monthly and yearly")
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(on ? .isSelected : [])
     }
 
-    private func segment(_ text: String, on: Bool) -> some View {
-        Text(text)
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(on ? t.background : t.muted)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(on ? t.accent : .clear, in: Capsule())
+    /// What Yearly saves against twelve months of Monthly, when both loaded.
+    private var saved: Int? {
+        guard let y = premium.products[Premium.yearlyID], let m = premium.products[Premium.monthlyID] else { return nil }
+        return Premium.savings(yearly: y.price, monthly: m.price)
     }
 
-    private var lifetimeCard: some View {
-        card(emphasized: true) {
-            Text("Lifetime")
-                .font(doodle.face(24, .medium))
-                .foregroundStyle(t.ink)
-            HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text(premium.product?.displayPrice ?? "\u{2014}")
-                    .font(doodle.face(40, .medium))
-                    .foregroundStyle(t.ink)
-                Text("once")
-                    .font(.system(size: 15))
-                    .foregroundStyle(t.muted)
+    private func note(_ product: Product) -> String? {
+        switch product.id {
+        case Premium.yearlyID: "\(Self.perMonth(product)) a month"
+        case Premium.productID: "Pay once, nothing renews"
+        default: nil
+        }
+    }
+
+    /// A plan's name, for the list here and Profile's plan row.
+    static func name(_ id: String) -> String {
+        switch id {
+        case Premium.yearlyID: "Yearly"
+        case Premium.monthlyID: "Monthly"
+        default: "Lifetime"
+        }
+    }
+
+    /// A year's price as a month's — "$12.50" — in the store's own currency style.
+    static func perMonth(_ yearly: Product) -> String {
+        (yearly.price / 12).formatted(yearly.priceFormatStyle)
+    }
+
+    /// The one sky button. Its label is the pick and its price; a spinner while a purchase is up.
+    private var buyButton: some View {
+        let product = chosen
+        let busy = premium.phase == .purchasing
+        return Button {
+            if let product { UnlockButton.buy(product, with: purchase, premium) }
+        } label: {
+            ZStack {
+                if busy {
+                    ProgressView().controlSize(.small).tint(Theme.skyInk)
+                } else {
+                    Text(product.map(buyLabel) ?? "Subscribe")
+                }
             }
-            Text("Pay once. Yours for good. Nothing renews.")
-                .font(.system(size: 14))
-                .foregroundStyle(t.example)
-                .frame(maxWidth: isPhone ? .infinity : 190, alignment: .leading)
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 4)
-            buyButton(Premium.productID, "Buy", "Premium Lifetime")
+            .font(.system(size: isPhone ? 16 : 15, weight: .bold))
+            .foregroundStyle(Theme.skyInk)
+            .frame(maxWidth: .infinity, minHeight: isPhone ? 52 : 44)
+            .background(Theme.sky, in: RoundedRectangle(cornerRadius: t.radius(14)))
+            .shadow(color: Theme.sky.opacity(scheme == .dark ? 0.3 : 0), radius: 14, y: 8)
+            .contentShape(Rectangle())
         }
-        // The cat never covers Buy: on a phone the button is full width, so the card makes
-        // room under it; elsewhere the button is leading and the cat sits off to the right.
-        .padding(.bottom, isPhone ? 96 : 0)
-        .overlay(alignment: .bottomTrailing) {
-            Image(.catCushion)
-                .resizable()
-                .interpolation(.high)
-                .scaledToFit()
-                .frame(width: isPhone ? 118 : 168)
-                .modifier(Breathe())
-                .modifier(CatLight(on: scheme == .dark))
-                .offset(x: isPhone ? 8 : 30, y: isPhone ? 20 : 34)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
+        .buttonStyle(.plain)
+        .disabled(product == nil || busy)
+        .opacity(product == nil ? 0.5 : 1)
+        // The welcome's Done takes Return once it's up.
+        .keyboardShortcut(premium.isUnlocked ? nil : .defaultAction)
+    }
+
+    private func buyLabel(_ product: Product) -> String {
+        switch product.id {
+        case Premium.yearlyID: "Subscribe \u{00B7} \(product.displayPrice) a year"
+        case Premium.monthlyID: "Subscribe \u{00B7} \(product.displayPrice) a month"
+        default: "Buy once \u{00B7} \(product.displayPrice)"
         }
     }
 
-    /// The action for one product: the price on a violet button, a spinner while the
-    /// App Store answers or a purchase is up, nothing if the store has no such product.
-    @ViewBuilder private func buyButton(_ id: String, _ label: String, _ name: String) -> some View {
-        if premium.phase == .purchasing || (!answered && premium.products[id] == nil) {
-            ProgressView()
-                .controlSize(.small)
-                .frame(maxWidth: isPhone ? .infinity : nil, minHeight: isPhone ? 50 : 40)
-                .frame(minWidth: 160, alignment: .leading)
-        } else if let product = premium.products[id] {
-            Button { UnlockButton.buy(product, with: purchase, premium) } label: {
-                Text("\(label), \(product.displayPrice)")
-                    .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
-                    .foregroundStyle(t.background)
-                    .padding(.horizontal, 22)
-                    .frame(maxWidth: isPhone ? .infinity : nil, minHeight: isPhone ? 50 : 40)
-                    .frame(minWidth: 160)
-                    .background(t.accent, in: RoundedRectangle(cornerRadius: isPhone ? 14 : 12))
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("\(label) \(name), \(product.displayPrice)")
-        }
-    }
-
-    /// Restore, whatever's in the way of buying, and the two links App Review asks for.
-    private var below: some View {
-        VStack(spacing: 10) {
-            Button("Restore Purchase") { Task { await premium.restore() } }
-                .buttonStyle(.plain)
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(t.accent)
-                .frame(minHeight: 34)
-                .disabled(premium.phase == .purchasing)
-            // With no card to show, the problem already stands in their place.
-            if let problem = premium.problem, answered, showsSubscription || showsLifetime {
-                Text(problem)
-                    .font(.system(size: 12))
-                    .foregroundStyle(t.muted)
-                    .multilineTextAlignment(.center)
+    /// What App Review wants under a subscription's button — price, period, how to cancel —
+    /// then Restore and the two links.
+    private var legal: some View {
+        VStack(spacing: 4) {
+            if let product = chosen {
+                Text(product.id == Premium.productID
+                     ? "Pay once. Yours for good."
+                     : "Renews \(product.id == Premium.yearlyID ? "yearly" : "monthly") at \(product.displayPrice) "
+                       + "until you cancel in your App Store account settings.")
                     .fixedSize(horizontal: false, vertical: true)
             }
             HStack(spacing: 6) {
-                Link("Terms of Use", destination: Self.terms)
+                Button("Restore") { Task { await premium.restore() } }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(t.accent)
+                    .disabled(premium.phase == .purchasing)
                 Text("\u{00B7}").accessibilityHidden(true)
-                Link("Privacy Policy", destination: Self.privacy)
+                Link("Terms", destination: Self.terms)
+                Text("\u{00B7}").accessibilityHidden(true)
+                Link("Privacy", destination: Self.privacy)
             }
-            .font(.system(size: 12))
-            .foregroundStyle(t.muted)
+            .frame(minHeight: 28)
         }
+        .font(.system(size: 11))
+        .foregroundStyle(t.muted)
+        .multilineTextAlignment(.center)
     }
+
+    #if os(macOS)
+    private func step(_ by: Int) -> KeyPress.Result {
+        let ids = plans.map(\.id)
+        guard let i = ids.firstIndex(of: chosen?.id ?? "") else { return .ignored }
+        let next = ids[min(max(i + by, 0), ids.count - 1)]
+        withAnimation(.snappy(duration: 0.2)) { pick = next }
+        return .handled
+    }
+    #endif
 
     /// Apple's standard EULA — the app has no terms of its own.
     private static let terms = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
@@ -360,33 +409,19 @@ struct PaywallView: View {
     private static let privacy = URL(string: "https://one-word-a2f3a.web.app/privacy")!
 
     private func perk(_ text: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
+        HStack(alignment: .top, spacing: 10) {
             Image(systemName: "checkmark")
                 .font(.system(size: 9, weight: .heavy))
-                .foregroundStyle(t.background)
+                .foregroundStyle(Theme.skyInk)
                 .frame(width: 20, height: 20)
-                .background(t.accent, in: Circle())
+                .background(Theme.sky, in: Circle())
                 .accessibilityHidden(true)
             Text(text)
-                .font(.system(size: 15))
+                .font(.system(size: 14))
                 .foregroundStyle(t.ink)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 1)
         }
-    }
-
-    /// The canvas's card: white, a hairline, 18pt corners; the lifted one gets the violet
-    /// border and a shadow under the shape only.
-    private func card<C: View>(emphasized: Bool, @ViewBuilder _ content: () -> C) -> some View {
-        let shape = RoundedRectangle(cornerRadius: t.radius(12))
-        return VStack(alignment: .leading, spacing: 12) { content() }
-            .padding(isPhone ? 18 : 24)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background {
-                shape.fill(t.surface)
-                    .shadow(color: .black.opacity(emphasized ? 0.14 : 0), radius: 20, y: 10)
-            }
-            .overlay(shape.strokeBorder(emphasized ? t.accent : t.hairline, lineWidth: emphasized ? 2 : 1))
     }
 
     // MARK: - The welcome
@@ -448,7 +483,7 @@ struct PaywallView: View {
             .font(.system(size: 11, weight: .bold))
             .textCase(.uppercase)
             .tracking(2)
-            .foregroundStyle(t.accent)
+            .foregroundStyle(sky)
     }
 
     private func note(alignment: TextAlignment) -> some View {
@@ -466,10 +501,10 @@ struct PaywallView: View {
         Button { dismiss() } label: {
             Text("Done")
                 .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
-                .foregroundStyle(t.background)
+                .foregroundStyle(Theme.skyInk)
                 .frame(maxWidth: isPhone ? .infinity : nil, minHeight: isPhone ? 50 : 40)
                 .padding(.horizontal, 26)
-                .background(t.accent, in: RoundedRectangle(cornerRadius: isPhone ? 14 : 12))
+                .background(Theme.sky, in: RoundedRectangle(cornerRadius: t.radius(14)))
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -578,8 +613,9 @@ private nonisolated struct Piece {
     let color: Color
 
     static let all: [Piece] = {
-        let colors: [Color] = [Color(hex: 0x5B3FD6), Color(hex: 0xE9B949), Color(hex: 0xF07167),
-                               Color(hex: 0x2BB3A3), Color(hex: 0x6CA8F0), Color(hex: 0x9B7BFF)]
+        // Premium's sky, from paper-pale to a deep blue that still shows on the Cat page.
+        let colors: [Color] = [Color(hex: 0xCFE2FF), Color(hex: 0xA8C7FA), Color(hex: 0x6CA8F0),
+                               Color(hex: 0x2F5FA8), Color(hex: 0xE3EEFF), Color(hex: 0xBCD6FF)]
         return (0..<90).map { i in
             Piece(x0: .random(in: 0.02...0.98),
                   y0: .random(in: -0.35 ... -0.02),

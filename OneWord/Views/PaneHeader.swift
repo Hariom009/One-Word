@@ -53,7 +53,7 @@ extension View {
     @ViewBuilder
     func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
                                     bare: Bool = false, onBack: (() -> Void)? = nil, fade: CGFloat = 0,
-                                    titleAction: (() -> Void)? = nil,
+                                    titleAction: (() -> Void)? = nil, spark: Bool = false,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
         let pane = safeAreaInset(edge: .top, spacing: 0) {
             // Scrolled down on a phone the strip blurs away; its space stays, so the
@@ -61,7 +61,7 @@ extension View {
             // `fade` follows the finger (0 at the top, 1 a header's height down), so
             // there's no timed animation to fight the scroll.
             PaneHeader(title: title, back: back, ribbon: ribbon, bare: bare, onBack: onBack, titleAction: titleAction,
-                       trailing: trailing())
+                       spark: spark, trailing: trailing())
                 .blur(radius: fade * 12)
                 .opacity(1 - fade)
                 .scaleEffect(1 - fade * 0.04, anchor: .top)
@@ -121,6 +121,8 @@ struct PaneHeader<Trailing: View>: View {
     var onBack: (() -> Void)?
     /// Phone only: makes the title a button — Home's day picker.
     var titleAction: (() -> Void)?
+    /// Phone only: a sky spark after the title — Home's one sign that Premium is owned.
+    var spark = false
     let trailing: Trailing
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
@@ -172,6 +174,12 @@ struct PaneHeader<Trailing: View>: View {
                         .padding(.leading, showsBack ? 2 : 0)
                     } else {
                         name.padding(.leading, showsBack ? 2 : 0)
+                    }
+                    if spark {
+                        Image(systemName: "sparkle")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Theme.skyMark(scheme))
+                            .accessibilityLabel("Premium")
                     }
                 }
             } else {

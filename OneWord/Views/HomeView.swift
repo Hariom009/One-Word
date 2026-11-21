@@ -20,6 +20,8 @@ struct HomeView: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
     @Environment(AuthViewModel.self) private var auth
+    /// Owning Premium shows as one sky spark after "Today"; Home sells nothing either way.
+    @Environment(PremiumViewModel.self) private var premium
     /// Phone only: the day picked from the title's calendar. nil = today, and stays
     /// today across midnight rather than freezing on the day it was opened.
     @State private var day: Date?
@@ -82,7 +84,7 @@ struct HomeView: View {
             .onDisappear { shortcutEnabled = false }
             #endif
             .paneHeader(isPhone ? dayTitle : Date.now.formatted(.dateTime.month(.wide).day().year()),
-                        titleAction: isPhone ? { picking = true } : nil) {
+                        titleAction: isPhone ? { picking = true } : nil, spark: premium.isUnlocked) {
                 if !isPhone {
                     Button {
                         pane = .dictionaries

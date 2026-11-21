@@ -29,6 +29,11 @@ final class PremiumViewModel {
     var product: Product? { products[Premium.productID] }
     /// A renewing subscription is among what's owned — Profile offers Manage Subscription.
     private(set) var subscribed = false
+    /// Which plan is owned, by product id — Lifetime wins over a subscription. Nil when free.
+    private(set) var plan: String?
+    /// A subscription's current period end, and whether it renews then or just ends.
+    private(set) var periodEnd: Date?
+    private(set) var willRenew = false
     /// The paywall's celebration trigger: a purchase that completed, or a Restore that
     /// unlocked. Launch and Transaction.updates only refresh, so they never bump it.
     private(set) var celebrations = 0
@@ -85,12 +90,22 @@ final class PremiumViewModel {
         let mine = generation
         var owned = false
         var renews = false
+        var held: String?
+        var end: Date?
+        var autoRenews = false
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
                Premium.productIDs.contains(transaction.productID),
                transaction.revocationDate == nil {
                 owned = true
-                if transaction.productType == .autoRenewable { renews = true }
+                if held != Premium.productID { held = transaction.productID }
+                if transaction.productType == .autoRenewable {
+                    renews = true
+                    end = transaction.expirationDate
+                    if case .verified(let info)? = await transaction.subscriptionStatus?.renewalInfo {
+                        autoRenews = info.willAutoRenew
+                    }
+                }
             }
         }
         // A newer refresh started while this one read: its snapshot is the fresher one.
@@ -99,6 +114,9 @@ final class PremiumViewModel {
         if phase == .pending { phase = .idle }
         set(owned)
         if renews != subscribed { subscribed = renews }
+        if held != plan { plan = held }
+        if end != periodEnd { periodEnd = end }
+        if autoRenews != willRenew { willRenew = autoRenews }
     }
 
     func begin() { phase = .purchasing }

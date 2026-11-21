@@ -47,7 +47,7 @@ struct ProfileView: View {
     /// iPhone and iPad: the plans as a sheet. The Mac opens their window instead.
     @State private var paywall = false
     @Environment(\.openWindow) private var openWindow
-    /// The gold card's perks, folded until it's tapped.
+    /// The plan row's perks, folded until "What's included" is tapped.
     @State private var perksShown = false
     @State private var managing = false
     @Environment(\.openURL) private var openURL
@@ -129,8 +129,10 @@ struct ProfileView: View {
                 AvatarFace(avatar: shownAvatar, url: auth.photoURL,
                            photo: photo, size: 96, muted: t.muted)
                     .overlay(Circle().strokeBorder(t.hairline))
+                    .modifier(SkyRing(on: premium.isUnlocked))
                 VStack(spacing: 4) {
                     nameLine(t).multilineTextAlignment(.center)
+                    if premium.isUnlocked { PlanTag(text: "Premium", premium: true) }
                     emailLine(t)
                 }
             }
@@ -141,9 +143,13 @@ struct ProfileView: View {
                 AvatarFace(avatar: shownAvatar, url: auth.photoURL,
                            photo: editing ? draftPhoto : photo, size: 76, muted: t.muted)
                     .overlay(Circle().strokeBorder(t.hairline))
+                    .modifier(SkyRing(on: premium.isUnlocked))
 
                 VStack(alignment: .leading, spacing: 5) {
-                    nameLine(t)
+                    HStack(spacing: 10) {
+                        nameLine(t)
+                        if premium.isUnlocked && !editing { PlanTag(text: "Premium", premium: true) }
+                    }
                     emailLine(t)
                 }
 
@@ -504,148 +510,158 @@ struct ProfileView: View {
 
     // MARK: - Plan
 
-    /// Premium's colour in Profile: the owner's card is filled with it, the free reader's
-    /// offer is edged with it, so the one reads as the other kept. Fixed on every
-    /// appearance; `goldInk` on it is 7.2:1 at the dark end, 11.6:1 at the light.
-    private static let gold = LinearGradient(colors: [Color(hex: 0xF6D77A), Color(hex: 0xD4A52C)],
-                                             startPoint: .topLeading, endPoint: .bottomTrailing)
-    private static let goldInk = Color(hex: 0x2A1E05)
-
-    /// A free reader's plan: Free, tagged as yours, then Premium on offer under it. The
-    /// offer opens the paywall (all three plans). Restore stays — App Review wants one
-    /// beside a non-consumable. An owner sees `premiumCard` instead.
+    /// A free reader's plan: the "Violet café" card — a deep violet fill, the café cat at
+    /// its table, one small See plans. The whole card is the button (a thumb-sized target
+    /// around a small-looking pill). Restore stays in reach under it, as App Review wants.
+    /// An owner sees `premiumCard` instead.
     private func plans(_ t: Theme) -> some View {
         section("Plan", t, note: premium.problem) {
-            VStack(spacing: 10) {
-                freeCard(t)
-                offerCard(t)
+            VStack(alignment: .leading, spacing: 8) {
+                Button { showPlans() } label: { cafeCard }
+                    .buttonStyle(.plain)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("One Word Premium, \(offerLine)")
+                    .accessibilityHint("Shows the yearly, monthly and lifetime plans")
+                    .accessibilityAddTraits(.isButton)
+                HStack(spacing: 4) {
+                    Text("You\u{2019}re on Free \u{00B7}")
+                        .foregroundStyle(t.muted)
+                    restoreButton(t)
+                }
+                .font(.system(size: 12))
+                .padding(.leading, 4)
             }
         }
     }
 
-    private func freeCard(_ t: Theme) -> some View {
-        HStack(alignment: .center, spacing: 12) {
-            Image(systemName: "book.closed")
-                .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(t.muted)
-                .frame(width: 34, height: 34)
-                .background(t.ink.opacity(0.07), in: Circle())
+    /// The card's colours: fixed on every appearance, Midnight's indigo deepened into violet.
+    private static let cafeFill = LinearGradient(
+        stops: [.init(color: Color(hex: 0x2E2370), location: 0),
+                .init(color: Color(hex: 0x4C36B8), location: 0.6),
+                .init(color: Color(hex: 0x6A4FE0), location: 1)],
+        startPoint: .topLeading, endPoint: .bottomTrailing)
+    private static let lilac = Color(hex: 0xE4DBFF)
+    private static let lilacInk = Color(hex: 0x1E1338)
+
+    private var cafeCard: some View {
+        let shape = RoundedRectangle(cornerRadius: 22, style: .continuous)
+        let cat: CGFloat = isPhone ? 136 : 118
+        return ZStack(alignment: .bottomTrailing) {
+            Self.cafeFill
+            // A soft lilac glow behind the cat.
+            Circle()
+                .fill(RadialGradient(colors: [Self.lilac.opacity(0.35), Self.lilac.opacity(0)],
+                                     center: .center, startRadius: 0, endRadius: 100))
+                .frame(width: 200, height: 200)
+                .offset(x: 30, y: 40)
+            Image(.catCafe)
+                .resizable()
+                .interpolation(.high)
+                .scaledToFit()
+                .frame(width: cat)
+                .offset(x: 4, y: 10)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 3) {
-                Text("Free")
-                    .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
-                    .foregroundStyle(t.ink)
-                Text("A new word every day, from every dictionary.")
-                    .font(.system(size: 13))
-                    .foregroundStyle(t.muted)
-                    .fixedSize(horizontal: false, vertical: true)
+                Text("One Word Premium")
+                    .font(doodle.face(15, .bold))
+                Text(offerLine)
+                    .font(.system(size: 11))
+                    .opacity(0.75)
+                Text("See plans")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Self.lilacInk)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Self.lilac, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                    .padding(.top, 9)
             }
-            Spacer(minLength: 8)
-            PlanTag(text: "Current", filled: true)
+            .foregroundStyle(.white)
+            .lineLimit(1)
+            .padding(18)
+            .padding(.trailing, cat - 18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .padding(14)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background { ProfileCard(t: t) }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Free, your current plan")
+        .frame(height: isPhone ? 146 : 128)
+        .clipShape(shape)
+        .contentShape(shape)
+        .shadow(color: Color(hex: 0x2E2370).opacity(0.45), radius: 15, y: 12)
     }
 
-    private func offerCard(_ t: Theme) -> some View {
+    /// The card's one line. A phone has room beside the cat for the price alone.
+    private var offerLine: String {
+        guard let price = fromPrice else { return "Every dictionary, and each new one" }
+        return isPhone ? "From \(price) a month" : "Every dictionary \u{00B7} from \(price) a month"
+    }
+
+    /// The cheapest way in, as the App Store prices it here: Yearly as a month.
+    private var fromPrice: String? {
+        if let yearly = premium.products[Premium.yearlyID] { return PaywallView.perMonth(yearly) }
+        return premium.products[Premium.monthlyID]?.displayPrice
+    }
+
+    private func restoreButton(_ t: Theme) -> some View {
+        Button("Restore purchase") { Task { await premium.restore() } }
+            .buttonStyle(.plain)
+            .font(.system(size: 12, weight: .medium))
+            .foregroundStyle(t.accent)
+            .frame(minHeight: isPhone ? 44 : 28)
+            .disabled(premium.phase == .purchasing)
+    }
+
+    /// Premium's tile: the card's ground, a wash of sky, a sky edge.
+    private func skyTile(_ t: Theme, _ sky: Color) -> some View {
         let shape = RoundedRectangle(cornerRadius: t.radius(12))
-        return VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .center, spacing: 12) {
-                Image(systemName: "crown.fill")
-                    .font(.system(size: 14))
-                    .foregroundStyle(Self.goldInk)
-                    .frame(width: 34, height: 34)
-                    .background(Self.gold, in: Circle())
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("One Word Premium")
-                        .font(doodle.face(isPhone ? 21 : 20))
-                        .tracking(doodle.tracking(20))
-                        .foregroundStyle(t.ink)
-                    Text(offerPrice)
-                        .font(.system(size: 13))
-                        .foregroundStyle(t.muted)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
-            HStack(spacing: 16) {
-                Button { showPlans() } label: {
-                    Text("See Plans")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(Self.goldInk)
-                        .padding(.horizontal, 18)
-                        .frame(maxWidth: isPhone ? .infinity : nil, minHeight: isPhone ? 44 : 34)
-                        .background(Self.gold, in: Capsule())
-                        .contentShape(Capsule())
-                }
-                .buttonStyle(.plain)
-                .accessibilityHint("Shows the monthly, yearly and lifetime plans")
-                Button("Restore Purchase") { Task { await premium.restore() } }
-                    .buttonStyle(.plain)
-                    .font(.system(size: 12))
-                    .foregroundStyle(t.muted)
-                    .disabled(premium.phase == .purchasing)
-                if !isPhone { Spacer(minLength: 0) }
-            }
-        }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background {
-            shape.fill(t.surface)
-                .overlay(shape.fill(Color(hex: 0xD4A52C).opacity(0.07)))
-        }
-        .overlay(shape.strokeBorder(Self.gold, lineWidth: 1.2))
+        return shape.fill(t.surface)
+            .overlay(shape.fill(sky.opacity(0.08)))
+            .overlay(shape.strokeBorder(sky.opacity(0.9), lineWidth: 1.2))
     }
 
-    /// The cheapest way in and the once-for-good one, as the App Store prices them here.
-    private var offerPrice: String {
-        if let monthly = premium.products[Premium.monthlyID], let lifetime = premium.product {
-            return "From \(monthly.displayPrice) a month, or \(lifetime.displayPrice) once."
-        }
-        return "Monthly, yearly, or once for good."
-    }
-
-    /// An owner's plan: a gold card, the same on every appearance. Tapping it unfolds
-    /// what Premium includes (PaywallView.perks — mock for now); a subscriber also gets
-    /// Manage Subscription under it.
+    /// An owner's plan: what you have, when it renews, and Manage. "What's included"
+    /// unfolds the perks (PaywallView.perks — mock for now).
     private func premiumCard(_ t: Theme) -> some View {
-        let ink = Self.goldInk
-        let shape = RoundedRectangle(cornerRadius: t.radius(12))
+        let sky = Theme.skyMark(scheme)
+        let name = PaywallView.name(premium.plan ?? Premium.productID)
         return section("Plan", t) {
-            VStack(alignment: .leading, spacing: 12) {
-                Button { withAnimation(.snappy) { perksShown.toggle() } } label: {
-                    HStack(spacing: 12) {
-                        Image(systemName: "crown.fill")
-                            .font(.system(size: 20))
-                            .accessibilityHidden(true)
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text("Premium")
-                                .font(.system(size: 11, weight: .bold))
-                                .textCase(.uppercase).tracking(2)
-                            Text("One Word Premium")
-                                .font(doodle.face(22))
-                                .tracking(doodle.tracking(22))
-                            Text(premium.subscribed ? "Subscription" : "Lifetime")
-                                .font(.system(size: 12))
-                                .opacity(0.8)
-                        }
-                        Spacer(minLength: 8)
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 13, weight: .semibold))
-                            .rotationEffect(.degrees(perksShown ? 90 : 0))
-                            .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .center, spacing: 12) {
+                    Image(systemName: "sparkle")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Theme.skyInk)
+                        .frame(width: 34, height: 34)
+                        .background(Theme.sky, in: Circle())
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("Premium \u{00B7} \(name)")
+                            .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
+                            .foregroundStyle(t.ink)
+                        Text(renewal)
+                            .font(.system(size: 13))
+                            .foregroundStyle(t.muted)
                     }
-                    .contentShape(Rectangle())
+                    .accessibilityElement(children: .combine)
+                    Spacer(minLength: 8)
+                    if !isPhone { includedButton(t) }
+                    if premium.subscribed {
+                        Button { manage() } label: {
+                            Text("Manage")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(t.ink)
+                                .padding(.horizontal, 14)
+                                .frame(minHeight: isPhone ? 44 : 30)
+                                .overlay(Capsule().strokeBorder(t.muted.opacity(0.5)))
+                                .contentShape(Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Manage subscription")
+                    }
                 }
-                .buttonStyle(.plain)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("One Word Premium, \(premium.subscribed ? "subscription" : "lifetime")")
-                .accessibilityValue(perksShown ? "Expanded" : "Collapsed")
-                .accessibilityHint("Shows what Premium includes")
-                .accessibilityAddTraits(.isButton)
+                .padding(14)
+
+                if isPhone {
+                    t.hairline.frame(height: 1).padding(.leading, 14)
+                    includedButton(t)
+                        .padding(.horizontal, 14)
+                }
 
                 if perksShown {
                     VStack(alignment: .leading, spacing: 9) {
@@ -653,39 +669,61 @@ struct ProfileView: View {
                             HStack(alignment: .top, spacing: 10) {
                                 Image(systemName: "checkmark")
                                     .font(.system(size: 11, weight: .heavy))
+                                    .foregroundStyle(sky)
                                     .padding(.top, 2)
                                     .accessibilityHidden(true)
                                 Text(perk)
                                     .font(.system(size: 14))
+                                    .foregroundStyle(t.ink)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }
                     }
+                    .padding(.horizontal, 14)
+                    .padding(.bottom, 14)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                 }
-
-                if premium.subscribed {
-                    Button("Manage Subscription") {
-                        #if os(iOS)
-                        managing = true
-                        #else
-                        // ponytail: the account page Apple documents for subscriptions; showManageSubscriptions is iOS-only.
-                        openURL(URL(string: "https://apps.apple.com/account/subscriptions")!)
-                        #endif
-                    }
-                    .buttonStyle(.plain)
-                    .font(.system(size: 13, weight: .semibold))
-                    .underline()
-                }
             }
-            .foregroundStyle(ink)
-            .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background {
-                shape.fill(Self.gold)
-                    .shadow(color: Color(hex: 0xD4A52C).opacity(0.35), radius: 14, y: 6)
-            }
+            .background { skyTile(t, sky) }
         }
+    }
+
+    /// "Renews 12 Nov 2027", "Ends …" once cancelled, or Lifetime's "Yours for good".
+    private var renewal: String {
+        guard premium.subscribed else { return "Yours for good" }
+        guard let end = premium.periodEnd else { return "Renews until you cancel" }
+        let day = end.formatted(.dateTime.day().month(.abbreviated).year())
+        return premium.willRenew ? "Renews \(day)" : "Ends \(day)"
+    }
+
+    private func includedButton(_ t: Theme) -> some View {
+        Button { withAnimation(.snappy) { perksShown.toggle() } } label: {
+            HStack(spacing: 6) {
+                Text("What\u{2019}s included")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(isPhone ? t.ink : t.muted)
+                if isPhone { Spacer(minLength: 0) }
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(t.muted)
+                    .rotationEffect(.degrees(perksShown ? 90 : 0))
+                    .accessibilityHidden(true)
+            }
+            .frame(minHeight: isPhone ? 44 : 30)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityValue(perksShown ? "Expanded" : "Collapsed")
+    }
+
+    private func manage() {
+        #if os(iOS)
+        managing = true
+        #else
+        // ponytail: the account page Apple documents for subscriptions; showManageSubscriptions is iOS-only.
+        openURL(URL(string: "https://apps.apple.com/account/subscriptions")!)
+        #endif
     }
 
     // MARK: - Learned, settings & sign out
@@ -977,4 +1015,20 @@ struct LearnedSeal: View {
         .environment(AuthViewModel())
         .environment(PremiumViewModel())
         .frame(width: 780, height: 720)
+}
+
+/// An owner's face wears a ring of Premium's sky, a hair off the photo.
+private struct SkyRing: ViewModifier {
+    let on: Bool
+    @Environment(\.colorScheme) private var scheme
+
+    func body(content: Content) -> some View {
+        if on {
+            content
+                .padding(4)
+                .overlay(Circle().strokeBorder(Theme.skyMark(scheme), lineWidth: 2.5))
+        } else {
+            content
+        }
+    }
 }

@@ -364,7 +364,7 @@ struct RootView: View {
     private var planTag: some View {
         let owned = premium.isUnlocked
         return Button { pane = .premium } label: {
-            PlanTag(text: owned ? "Premium" : "Free", filled: owned)
+            PlanTag(text: owned ? "Premium" : "Free", premium: owned)
                 .padding(.vertical, 6)
                 .contentShape(Rectangle())
         }

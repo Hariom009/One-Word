@@ -437,9 +437,21 @@ struct PremiumView: View {
 
 /// A plan's name as a small stamp in the sidebar's corner, saying which plan you're on.
 /// Filled means Premium — the thing you own — outlined means Free.
+/// Premium's colour, picked to sit beside Midnight's #A8C7FA accent: a pale sky, whiter
+/// than the accent and never cyan. A sky fill always carries `skyInk` (about 14:1).
+extension Theme {
+    static let sky = Color(hex: 0xCFE2FF)
+    static let skyInk = Color(hex: 0x0B1A33)
+    /// Sky as a line or mark rather than a fill: the pale one on dark ground; on paper it
+    /// vanishes, so a deeper sky stands in (about 6:1 on white).
+    static func skyMark(_ scheme: ColorScheme) -> Color { scheme == .dark ? sky : Color(hex: 0x2F5FA8) }
+}
+
 struct PlanTag: View {
     let text: String
     var filled = false
+    /// Filled sky: an owner's Premium tag.
+    var premium = false
 
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
@@ -450,12 +462,12 @@ struct PlanTag: View {
             .font(.system(size: 9, weight: .bold))
             .textCase(.uppercase)
             .tracking(1.2)
-            .foregroundStyle(filled ? t.background : t.muted)
+            .foregroundStyle(premium ? Theme.skyInk : filled ? t.background : t.muted)
             .padding(.horizontal, 6)
             .padding(.vertical, 3)
-            .background(filled ? t.ink : .clear, in: RoundedRectangle(cornerRadius: t.radius(4)))
+            .background(premium ? Theme.sky : filled ? t.ink : .clear, in: RoundedRectangle(cornerRadius: t.radius(4)))
             .overlay {
-                if !filled {
+                if !filled && !premium {
                     RoundedRectangle(cornerRadius: t.radius(4)).strokeBorder(t.muted.opacity(0.5))
                 }
             }
