@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- Mac App Store frame, v2: render.sh opens this once per slide (?n=0..) at 1440x900 @2x = 2880x1800. -->
+<!-- Same palette as ../iphone/frame.html, which was sampled off ../v1/designed. -->
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Jakarta"; src: url("../../../OneWord/Fonts/PlusJakartaSans-Variable.ttf"); }
+  :root { --ink: #10153A; --floor: #15204E; }
+  html, body { margin: 0; width: 1440px; height: 900px; overflow: hidden; }
+  body {
+    position: relative;
+    background: linear-gradient(180deg, #B3C1F4 0%, #D1DAF9 45%, #EDF1FD 100%);
+    font-family: "Jakarta", -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: absolute; width: 1300px; height: 1300px; border-radius: 50%;
+    left: 820px; top: -900px; background: rgba(255, 255, 255, .22);
+  }
+  body::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: var(--floor);
+  }
+  h1 {
+    position: relative; z-index: 1; margin: 0; padding-top: 52px; text-align: center;
+    font-size: 58px; font-weight: 500; letter-spacing: -1px; color: var(--ink);
+  }
+  p {
+    position: relative; z-index: 1; margin: 10px 0 0; text-align: center;
+    font-size: 22px; color: #3A4170;
+  }
+  /* MacBook lid, running off the bottom edge so the screen reads large. */
+  .lid {
+    position: absolute; z-index: 2; top: 212px; left: 50%; width: 1120px; transform: translateX(-50%);
+    padding: 22px 22px 0; box-sizing: border-box;
+    background: #0B0B0D; border-radius: 38px 38px 0 0;
+    box-shadow: 0 0 0 3px #3A3A40, 0 40px 90px rgba(21, 32, 78, .4);
+  }
+  .lid img { display: block; width: 100%; border-radius: 10px 10px 0 0; }
+  .notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 150px; height: 28px; background: #0B0B0D; border-radius: 0 0 12px 12px;
+  }
+</style>
+<h1 id="title"></h1>
+<p id="sub"></p>
+<div class="lid"><img id="shot"><div class="notch"></div></div>
+<script>
+  // Edit headlines here; order = App Store order.
+  const SLIDES = [
+    ["raw/graph.png",         "One word a day",           "Explained in English and Hindi, with every word around it."],
+    ["raw/home_pictures.png", "Words you can see",        "The Picture Book pairs 243 everyday words with a photo."],
+    ["raw/dictionaries.png",  "Eight dictionaries",       "Emotions, Idioms, Philosophy, Sanskrit, Cats & Dogs and more."],
+    ["raw/home_pets.png",     "Hear what your pet means", "Cats & Dogs: every purr and bark, with the real sound."],
+    ["raw/home_sanskrit.png", "Sanskrit, made simple",    "216 Sanskrit words explained for Hindi readers."],
+    ["raw/search.png",        "Search 24,000+ words",     "Every dictionary at once. Each result says where it's from."],
+  ];
+  const n = +new URLSearchParams(location.search).get("n") || 0;
+  document.getElementById("shot").src = SLIDES[n][0];
+  document.getElementById("title").textContent = SLIDES[n][1];
+  document.getElementById("sub").textContent = SLIDES[n][2];
+</script>
