@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+  <title>One Word: Daily Vocabulary for Mac</title>
+  <meta name="description" content="A new word every day on your Mac desktop, with its meaning in Hindi. Five dictionaries, a widget, and nothing to keep up with.">
+  <meta property="og:title" content="One Word: Daily Vocabulary for Mac">
+  <meta property="og:description" content="A new word every day on your Mac desktop, with its meaning in Hindi. Five dictionaries, a widget, and nothing to keep up with.">
+  <meta property="og:image" content="/og.png">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+  <header class="wrap top">
+    <a class="mark" href="./"><img src="favicon.png" alt="" width="28" height="28">One Word</a>
+    <nav aria-label="Site">
+      <a href="privacy">Privacy</a>
+      <a href="support">Support</a>
+      <button class="endorse" type="button" id="endorse" aria-pressed="false" title="Endorse the idea">&#9829; <span id="endorse-count">Endorse</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section aria-labelledby="hero-title">
+      <div class="wrap hero">
+        <div>
+          <h1 id="hero-title">One new word a day, on your desktop.</h1>
+          <p class="lede">A widget shows a word each morning, with its Hindi meaning, a definition and an example. Nothing to keep up with.</p>
+          <span class="get"><img src="badge.svg" alt="Download on the Mac App Store"></span>
+          <p class="small">Version 1.0 is out on the Mac App Store. Five dictionaries, the widget, search, history and bookmarks: all of it free, and we are building more. macOS 14 and later.</p>
+        </div>
+        <picture>
+          <source srcset="img/widget-dark.jpg" media="(prefers-color-scheme: dark)">
+          <img src="img/widget-light.jpg" alt="The One Word desktop widget showing the word gratitude, its Hindi meaning and its definition" width="1560" height="975">
+        </picture>
+      </div>
+    </section>
+
+    <section aria-labelledby="entry-title">
+      <div class="wrap">
+        <h2 id="entry-title">The word, its meaning, and how it's used.</h2>
+        <article class="entry" aria-label="Sample entry">
+          <div class="term">embodiment</div>
+          <p class="pos">noun</p>
+          <p class="hindi" lang="hi">एक परिचित विचार का नया व्यक्तित्व</p>
+          <p class="definition">a new personification of a familiar idea</p>
+          <p class="example">the embodiment of hope</p>
+        </article>
+        <p class="small">The Hindi line is there for readers who want it. It can be turned off in Settings.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="shelf-title">
+      <div class="wrap">
+        <p class="eyebrow">The shelf</p>
+        <h2 id="shelf-title">Five dictionaries.</h2>
+        <p class="lede">Everyday English, Emotions, Philosophy, Corporate Slang and Idioms: 24,000 entries, every one with a Hindi meaning. Pick one and your word of the day comes from it.</p>
+        <div class="shelf">
+          <figure><img src="img/covers/Dictionary_of_EverydayEnglish.webp" alt="Cover of the Dictionary of Everyday English" width="330" height="480"><figcaption><b>Everyday English</b><span>12,000 words</span></figcaption></figure>
+          <figure><img src="img/covers/Dictionary_of_Emotions.webp" alt="Cover of the Dictionary of Emotions" width="330" height="480"><figcaption><b>Emotions</b><span>3,000+ words</span></figcaption></figure>
+          <figure><img src="img/covers/Dictionary_of_Philosophy.webp" alt="Cover of the Dictionary of Philosophy" width="330" height="480"><figcaption><b>Philosophy</b><span>3,000+ entries</span></figcaption></figure>
+          <figure><img src="img/covers/Dictionary_of_CorporateSlang.webp" alt="Cover of the Dictionary of Corporate Slang" width="330" height="480"><figcaption><b>Corporate Slang</b><span>3,000+ terms</span></figcaption></figure>
+          <figure><img src="img/covers/Dictionary_of_Idioms.webp" alt="Cover of the Dictionary of Idioms" width="330" height="480"><figcaption><b>Idioms</b><span>3,000+ idioms</span></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="also-title">
+      <div class="wrap">
+        <h2 id="also-title">Also in the app.</h2>
+        <div class="features">
+          <div><b>Search every book at once</b><p>Press ⌘K anywhere in the app and search all five dictionaries together.</p></div>
+          <div><b>History</b><p>Any past day's word, with a month calendar to step back through.</p></div>
+          <div><b>Bookmarks</b><p>Keep the words you want to come back to. They become a shelf of their own.</p></div>
+          <div><b>A reading log</b><p>Every word you open in full is recorded, so you can see how far through each shelf you are.</p></div>
+          <div><b>Save a word from any Mac app</b><p>Select a word, choose Save to One Word from the Services menu, and it becomes today's word.</p></div>
+          <div><b>Related words</b><p>Up to three related words under an entry, so you can keep going.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>
+        <div class="mark">One Word: Daily Vocabulary</div>
+        <p class="small">For macOS 14 or later.</p>
+        <span class="get"><img src="badge.svg" alt="Download on the Mac App Store"></span>
+      </div>
+      <nav aria-label="Footer">
+        <a href="privacy">Privacy</a>
+        <a href="support">Support</a>
+        <a href="mailto:hi.hariom.swift@gmail.com">hi.hariom.swift@gmail.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  // The Endorse button: one anonymous +1 to a single Firestore document, read back
+  // as the number beside the heart. No SDK, no cookies, no identity — a plain
+  // fetch to the Firestore REST API, and localStorage remembers that this browser
+  // already tapped. The security rules only let the count move up by one.
+  (function () {
+    var key = "AIzaSyD0cAe9TmxghZJyarlBI4bX6R2wcBjo61I";
+    var base = "https://firestore.googleapis.com/v1/projects/one-word-a2f3a/databases/(default)/documents";
+    var doc = base + "/endorsements/site";
+    var btn = document.getElementById("endorse"), out = document.getElementById("endorse-count");
+    if (!btn) return;
+    var done = false;
+    try { done = localStorage.getItem("endorsed") === "1"; } catch (e) {}
+    function show(n) { out.textContent = n > 0 ? n.toLocaleString() : "Endorse"; }
+    function mark() { btn.setAttribute("aria-pressed", "true"); btn.classList.add("on"); }
+    if (done) mark();
+    fetch(doc + "?key=" + key).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d) show(+d.fields.count.integerValue); }).catch(function () {});
+    btn.addEventListener("click", function () {
+      if (done) return;
+      done = true; mark();
+      try { localStorage.setItem("endorsed", "1"); } catch (e) {}
+      var body = { writes: [{ transform: { document: doc.replace(/^https:[^]*?\/v1\//, ""),
+        fieldTransforms: [{ fieldPath: "count", increment: { integerValue: "1" } }] },
+        currentDocument: { exists: true } }] };
+      fetch(base + ":commit?key=" + key, { method: "POST", body: JSON.stringify(body) })
+        .then(function (r) {
+          if (r.ok) return r;
+          // First endorsement ever: the document doesn't exist yet, so create it at 1.
+          return fetch(base + "/endorsements?documentId=site&key=" + key,
+            { method: "POST", body: JSON.stringify({ fields: { count: { integerValue: "1" } } }) });
+        })
+        .then(function () { return fetch(doc + "?key=" + key); })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { show(+d.fields.count.integerValue); })
+        .catch(function () {});
+    });
+  })();
+  </script>
+</body>
+</html>

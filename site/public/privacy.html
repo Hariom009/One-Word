@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+  <title>Privacy Policy · One Word: Daily Vocabulary</title>
+  <meta name="description" content="What One Word keeps on your Mac. Nothing leaves it: no account, no analytics, no network.">
+  <meta property="og:title" content="Privacy Policy · One Word: Daily Vocabulary">
+  <meta property="og:description" content="What One Word keeps on your Mac. Nothing leaves it: no account, no analytics, no network.">
+  <meta property="og:image" content="/og.png">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+  <header class="wrap top">
+    <a class="mark" href="./"><img src="favicon.png" alt="" width="28" height="28">One Word</a>
+    <nav aria-label="Site">
+      <a href="privacy" aria-current="page">Privacy</a>
+      <a href="support">Support</a>
+      <button class="endorse" type="button" id="endorse" aria-pressed="false" title="Endorse the idea">&#9829; <span id="endorse-count">Endorse</span></button>
+    </nav>
+  </header>
+
+  <main class="wrap prose">
+    <h1>Privacy Policy</h1>
+    <p class="date">One Word: Daily Vocabulary. Effective 10 October 2026.</p>
+
+    <h2>The short version</h2>
+    <p>Every word in One Word ships inside the app. Nothing you read, search, bookmark or learn leaves your Mac. We do not store your data in our cloud or anywhere else: it stays on your Mac, local and secure. The app has no account, makes no network requests, and collects nothing. The only reason One Word exists is to grow your vocabulary, one word a day.</p>
+
+    <h2>What stays on your Mac</h2>
+    <p>Your bookmarks, your reading log, your settings, your profile name and the avatar you pick, words you save from other apps, and which dictionary each widget shows. These live in the app's own storage and are never uploaded. The app has no analytics, no advertising and no crash-reporting service.</p>
+
+    <h2>Feedback</h2>
+    <p>The Feedback button opens a new message in your own Mail app, addressed to us. Nothing is sent unless you send it, and we only ever see what you write.</p>
+
+    <h2>Who else handles your data</h2>
+    <p>No one. The app talks to no server, and we have nothing to share or sell.</p>
+
+    <h2>This website</h2>
+    <p>It sets no cookies and loads nothing from third parties. The Endorse button in the top bar adds one to a public counter when you press it; that request carries no name, email or identifier, and your browser only remembers that you already pressed it. The site is served by Firebase Hosting, which keeps ordinary server logs (IP address, page requested, time) for a limited period, as any web host does.</p>
+
+    <h2>Children</h2>
+    <p>One Word is not directed at children under 13 and does not knowingly collect information from them.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, the date at the top changes with it.</p>
+
+    <h2>Contact</h2>
+    <p><a href="mailto:hi.hariom.swift@gmail.com">hi.hariom.swift@gmail.com</a></p>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>
+        <div class="mark">One Word: Daily Vocabulary</div>
+        <p class="small">For macOS 14 or later.</p>
+        <span class="get"><img src="badge.svg" alt="Download on the Mac App Store"></span>
+      </div>
+      <nav aria-label="Footer">
+        <a href="privacy">Privacy</a>
+        <a href="support">Support</a>
+        <a href="mailto:hi.hariom.swift@gmail.com">hi.hariom.swift@gmail.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  // The Endorse button: one anonymous +1 to a single Firestore document, read back
+  // as the number beside the heart. No SDK, no cookies, no identity — a plain
+  // fetch to the Firestore REST API, and localStorage remembers that this browser
+  // already tapped. The security rules only let the count move up by one.
+  (function () {
+    var key = "AIzaSyD0cAe9TmxghZJyarlBI4bX6R2wcBjo61I";
+    var base = "https://firestore.googleapis.com/v1/projects/one-word-a2f3a/databases/(default)/documents";
+    var doc = base + "/endorsements/site";
+    var btn = document.getElementById("endorse"), out = document.getElementById("endorse-count");
+    if (!btn) return;
+    var done = false;
+    try { done = localStorage.getItem("endorsed") === "1"; } catch (e) {}
+    function show(n) { out.textContent = n > 0 ? n.toLocaleString() : "Endorse"; }
+    function mark() { btn.setAttribute("aria-pressed", "true"); btn.classList.add("on"); }
+    if (done) mark();
+    fetch(doc + "?key=" + key).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d) show(+d.fields.count.integerValue); }).catch(function () {});
+    btn.addEventListener("click", function () {
+      if (done) return;
+      done = true; mark();
+      try { localStorage.setItem("endorsed", "1"); } catch (e) {}
+      var body = { writes: [{ transform: { document: doc.replace(/^https:[^]*?\/v1\//, ""),
+        fieldTransforms: [{ fieldPath: "count", increment: { integerValue: "1" } }] },
+        currentDocument: { exists: true } }] };
+      fetch(base + ":commit?key=" + key, { method: "POST", body: JSON.stringify(body) })
+        .then(function (r) {
+          if (r.ok) return r;
+          // First endorsement ever: the document doesn't exist yet, so create it at 1.
+          return fetch(base + "/endorsements?documentId=site&key=" + key,
+            { method: "POST", body: JSON.stringify({ fields: { count: { integerValue: "1" } } }) });
+        })
+        .then(function () { return fetch(doc + "?key=" + key); })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { show(+d.fields.count.integerValue); })
+        .catch(function () {});
+    });
+  })();
+  </script>
+</body>
+</html>

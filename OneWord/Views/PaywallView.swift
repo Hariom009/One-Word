@@ -384,7 +384,7 @@ struct PaywallView: View {
                 Text("\u{00B7}").accessibilityHidden(true)
                 Link("Terms", destination: Self.terms)
                 Text("\u{00B7}").accessibilityHidden(true)
-                Link("Privacy", destination: Self.privacy)
+                Link("Privacy", destination: FeedbackViewModel.privacyPolicy)
             }
             .frame(minHeight: 28)
         }
@@ -405,8 +405,6 @@ struct PaywallView: View {
 
     /// Apple's standard EULA — the app has no terms of its own.
     private static let terms = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    /// ponytail: duplicates FeedbackViewModel.privacyPolicy once feat/website merges — point at it then.
-    private static let privacy = URL(string: "https://one-word-a2f3a.web.app/privacy")!
 
     private func perk(_ text: String) -> some View {
         HStack(alignment: .top, spacing: 10) {
