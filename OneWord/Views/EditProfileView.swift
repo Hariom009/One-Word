@@ -123,10 +123,10 @@ struct EditProfileView: View {
         .background { ProfileCard(t: t) }
     }
 
-    /// Four equal segments in one track — a segmented control in the app's colours.
+    /// Equal segments in one track — a segmented control in the app's colours.
     private func genders(_ t: Theme) -> some View {
         HStack(spacing: 4) {
-            ForEach(Gender.allCases) { choice in
+            ForEach(Gender.choices) { choice in
                 let on = choice.rawValue == draftGender
                 Button { draftGender = choice.rawValue } label: {
                     Text(choice.name)

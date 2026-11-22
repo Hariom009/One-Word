@@ -20,6 +20,10 @@ enum Gender: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
+    /// What the pickers offer. `.other` is no longer offered but stays a case, so a
+    /// value saved before still reads back.
+    static let choices: [Gender] = [.female, .male, .unspecified]
+
     var name: String {
         switch self {
         case .unspecified: return "Not set"

@@ -53,7 +53,7 @@ extension View {
     @ViewBuilder
     func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
                                     bare: Bool = false, onBack: (() -> Void)? = nil, fade: CGFloat = 0,
-                                    titleAction: (() -> Void)? = nil, spark: Bool = false,
+                                    titleAction: (() -> Void)? = nil, spark: Bool = false, backless: Bool = false,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
         let pane = safeAreaInset(edge: .top, spacing: 0) {
             // Scrolled down on a phone the strip blurs away; its space stays, so the
@@ -61,7 +61,7 @@ extension View {
             // `fade` follows the finger (0 at the top, 1 a header's height down), so
             // there's no timed animation to fight the scroll.
             PaneHeader(title: title, back: back, ribbon: ribbon, bare: bare, onBack: onBack, titleAction: titleAction,
-                       spark: spark, trailing: trailing())
+                       spark: spark, backless: backless, trailing: trailing())
                 .blur(radius: fade * 12)
                 .opacity(1 - fade)
                 .scaleEffect(1 - fade * 0.04, anchor: .top)
@@ -123,6 +123,8 @@ struct PaneHeader<Trailing: View>: View {
     var titleAction: (() -> Void)?
     /// Phone only: a sky spark after the title — Home's one sign that Premium is owned.
     var spark = false
+    /// A sheet's root strip: no Back at all, even where a presented phone would add one.
+    var backless = false
     let trailing: Trailing
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
@@ -130,7 +132,7 @@ struct PaneHeader<Trailing: View>: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.isPresented) private var presented
 
-    private var showsBack: Bool { back || (isPhone && presented) }
+    private var showsBack: Bool { !backless && (back || (isPhone && presented)) }
 
     var body: some View {
         let t = Theme.of(scheme, doodle)
@@ -183,22 +185,13 @@ struct PaneHeader<Trailing: View>: View {
                     }
                 }
             } else {
-                if !bare {
-                    Text("One Word")
-                        .font(doodle.face(18))
-                        .tracking(doodle.tracking(18))
-                        .foregroundStyle(t.ink)
-                        .lineLimit(1)
-                        .padding(.leading, 8)
-                }
+                // No wordmark: the window is the app, so the strip names only the pane.
                 if let title {
-                    if !bare {
-                        Rectangle().fill(t.hairline).frame(width: 1, height: 14).padding(.horizontal, 4)
-                    }
                     Text(title)
                         .font(.system(size: 13))
                         .foregroundStyle(t.muted)
                         .lineLimit(1)
+                        .padding(.leading, bare ? 0 : 8)
                 }
             }
 

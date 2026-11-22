@@ -86,7 +86,7 @@ struct PaywallView: View {
             }
             // The palette's own accent on links and spinners, not the system blue.
             .tint(t.accent)
-            .presentationDetents(premium.isUnlocked ? [.height(584)] : [.large])
+            .presentationDetents(premium.isUnlocked ? [.height(578)] : [.large])
             .presentationDragIndicator(.visible)
             .presentationBackground(t.background)
     }
@@ -95,7 +95,11 @@ struct PaywallView: View {
     @ViewBuilder private var content: some View {
         #if os(macOS)
         ZStack {
-            offers.accessibilityHidden(premium.isUnlocked)
+            // Gone, not just dimmed, under the welcome: the selected plan row otherwise
+            // peeks out above the card.
+            offers
+                .opacity(premium.isUnlocked ? 0 : 1)
+                .accessibilityHidden(premium.isUnlocked)
             if premium.isUnlocked {
                 // The dim takes the clicks meant for the plans beneath it.
                 Color.black.opacity(scheme == .dark ? 0.55 : 0.34)
@@ -429,9 +433,8 @@ struct PaywallView: View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 12) {
                 kicker
-                WelcomeHeadline(size: 36, alignment: .leading, ink: t.ink)
+                WelcomeHeadline(size: 34, alignment: .leading, ink: t.ink)
                 note(alignment: .leading)
-                doneButton.padding(.top, 8)
             }
             .padding(.leading, 44)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -445,9 +448,30 @@ struct PaywallView: View {
                 .padding(.trailing, 30)
                 .accessibilityHidden(true)
         }
-        .frame(width: 680, height: 420)
+        .frame(width: 690, height: 396)
         .background { PaneGround(t: t).clipShape(RoundedRectangle(cornerRadius: 20)) }
         .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(t.hairline))
+        // The one way out: closes the window, Esc and Return too.
+        .overlay(alignment: .topTrailing) {
+            Button { dismiss() } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(t.muted)
+                    .frame(width: 28, height: 28)
+                    .background(t.ink.opacity(0.08), in: Circle())
+                    .contentShape(Circle())
+            }
+            .buttonStyle(.plain)
+            .keyboardShortcut(.cancelAction)
+            .accessibilityLabel("Close")
+            .padding(14)
+        }
+        .background {
+            Button("Done") { dismiss() }
+                .keyboardShortcut(.defaultAction)
+                .opacity(0)
+                .accessibilityHidden(true)
+        }
         .shadow(color: .black.opacity(0.3), radius: 32, y: 12)
         .transition(reduceMotion ? .opacity : .scale(scale: 0.92).combined(with: .opacity))
         #else
@@ -462,7 +486,7 @@ struct PaywallView: View {
                 .padding(.top, 26)
                 .accessibilityHidden(true)
             kicker.padding(.top, 14)
-            WelcomeHeadline(size: 30, alignment: .center, ink: t.ink)
+            WelcomeHeadline(size: 21, alignment: .center, ink: t.ink)
                 .padding(.top, 6)
             note(alignment: .center)
                 .padding(.top, 8)
@@ -486,7 +510,7 @@ struct PaywallView: View {
 
     private func note(alignment: TextAlignment) -> some View {
         Text("Thank you for backing One Word. Premium is yours on every device signed in to this Apple ID.")
-            .font(.system(size: 15))
+            .font(.system(size: isPhone ? 10 : 12, design: .serif))
             .foregroundStyle(t.muted)
             .multilineTextAlignment(alignment)
             .lineSpacing(2)
@@ -494,6 +518,7 @@ struct PaywallView: View {
             .fixedSize(horizontal: false, vertical: true)
     }
 
+    /// iPhone's way out of the welcome; the Mac card closes from its corner.
     /// No "Pick a book": nothing is gated yet, so there's nothing new to pick (F8).
     private var doneButton: some View {
         Button { dismiss() } label: {

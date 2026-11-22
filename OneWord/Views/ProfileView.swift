@@ -127,7 +127,7 @@ struct ProfileView: View {
         if isPhone {
             VStack(spacing: 14) {
                 AvatarFace(avatar: shownAvatar, url: auth.photoURL,
-                           photo: photo, size: 96, muted: t.muted)
+                           photo: photo, size: 96, muted: t.muted, ringed: premium.isUnlocked)
                     .overlay(Circle().strokeBorder(t.hairline))
                     .modifier(SkyRing(on: premium.isUnlocked))
                 VStack(spacing: 4) {
@@ -141,7 +141,8 @@ struct ProfileView: View {
         } else {
             HStack(alignment: .center, spacing: 18) {
                 AvatarFace(avatar: shownAvatar, url: auth.photoURL,
-                           photo: editing ? draftPhoto : photo, size: 76, muted: t.muted)
+                           photo: editing ? draftPhoto : photo, size: 76, muted: t.muted,
+                           ringed: premium.isUnlocked)
                     .overlay(Circle().strokeBorder(t.hairline))
                     .modifier(SkyRing(on: premium.isUnlocked))
 
@@ -487,7 +488,7 @@ struct ProfileView: View {
     /// four options never justified a popup.
     private func genderChips(_ t: Theme) -> some View {
         HStack(spacing: 6) {
-            ForEach(Gender.allCases) { choice in
+            ForEach(Gender.choices) { choice in
                 let on = choice.rawValue == draftGender
                 Button { draftGender = choice.rawValue } label: {
                     Text(choice.name)
@@ -878,6 +879,8 @@ struct AvatarFace: View {
     let photo: Data?
     let size: CGFloat
     let muted: Color
+    /// The head without its own circle, for a face the sky ring already frames.
+    var ringed = false
 
     var body: some View {
         Group {
@@ -925,8 +928,8 @@ struct AvatarFace: View {
 
     /// The generic head, for a face with no picture behind it yet.
     private var head: some View {
-        Image(systemName: "person.crop.circle")
-            .font(.system(size: size * 0.8))
+        Image(systemName: ringed ? "person.fill" : "person.crop.circle")
+            .font(.system(size: size * (ringed ? 0.42 : 0.8)))
             .foregroundStyle(muted)
     }
 }

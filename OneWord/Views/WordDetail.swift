@@ -62,7 +62,19 @@ struct WordDetail: View {
                 .paneBackground(Theme.of(scheme, doodle))
                 // No bookmark on a locked word: a bookmark keeps the whole entry, and
                 // Bookmarks is free — it would hand the meaning over.
-                .paneHeader(back: true, bare: true, onBack: close) { if !locked { WordActions(word: word) } }
+                // Opened as a sheet (`close` set): no Back. A swipe closes it on a phone and
+                // Esc on the Mac. Pushed from a related word: Back, to return to the first.
+                .paneHeader(back: true, bare: true, onBack: close, backless: close != nil) {
+                    if !locked { WordActions(word: word) }
+                }
+                .background {
+                    if let close {
+                        Button("Close", action: close)
+                            .keyboardShortcut(.cancelAction)
+                            .opacity(0)
+                            .accessibilityHidden(true)
+                    }
+                }
         }
     }
 
