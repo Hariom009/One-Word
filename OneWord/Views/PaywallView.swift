@@ -164,7 +164,7 @@ struct PaywallView: View {
                 choices
             }
             .padding(.horizontal, 18)
-            .padding(.top, 8)
+            .padding(.top, 32)
             .padding(.bottom, 16)
         }
         .scrollContentBackground(.hidden)
@@ -180,25 +180,26 @@ struct PaywallView: View {
             .background(t.background.opacity(0.94))
             .overlay(alignment: .top) { t.hairline.frame(height: 1) }
         }
-        .overlay(alignment: .topTrailing) { closeButton }
+        // No X on a phone: the sheet's grabber and a swipe down close it.
         #endif
     }
 
+    #if os(macOS)
+    /// The window's way out; Esc too.
     private var closeButton: some View {
         Button { dismiss() } label: {
             Image(systemName: "xmark")
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(t.muted)
-                .frame(width: 36, height: 36)
-                .background(t.ink.opacity(isPhone ? 0.08 : 0), in: Circle())
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .keyboardShortcut(.cancelAction)
         .accessibilityLabel("Close")
-        .padding(isPhone ? 6 : 8)
+        .padding(8)
     }
+    #endif
 
     /// The fan, the headline, what's in it.
     private func pitch(_ alignment: HorizontalAlignment) -> some View {

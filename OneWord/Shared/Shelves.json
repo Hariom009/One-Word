@@ -3,12 +3,12 @@
   "shelves": {
     "words": true,
     "emotions": true,
-    "philosophy": true,
+    "philosophy": false,
     "startup": true,
-    "idioms": true,
+    "idioms": false,
     "pets": true,
-    "sanskrit": true,
-    "pictures": true,
+    "sanskrit": false,
+    "pictures": false,
     "classical": false,
     "urdu": false,
     "german": false
