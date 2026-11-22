@@ -543,12 +543,19 @@ struct ProfileView: View {
     private static let lilac = Color(hex: 0xE4DBFF)
     private static let lilacInk = Color(hex: 0x1E1338)
 
+    /// The free reader's card: the price, and See plans on the bottom edge.
     private var cafeCard: some View {
+        violetCard(offerLine) { lilacPill("See plans") }
+    }
+
+    /// The violet card both plans share: the fill, a lilac glow, the café cat at its table,
+    /// and a column with the title and one line at the top, `actions` on the bottom edge.
+    private func violetCard<Actions: View>(_ line: String,
+                                           @ViewBuilder actions: () -> Actions) -> some View {
         let shape = RoundedRectangle(cornerRadius: 22, style: .continuous)
         let cat: CGFloat = isPhone ? 136 : 118
         return ZStack(alignment: .bottomTrailing) {
             Self.cafeFill
-            // A soft lilac glow behind the cat.
             Circle()
                 .fill(RadialGradient(colors: [Self.lilac.opacity(0.35), Self.lilac.opacity(0)],
                                      center: .center, startRadius: 0, endRadius: 100))
@@ -564,27 +571,35 @@ struct ProfileView: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text("One Word Premium")
                     .font(doodle.face(15, .bold))
-                Text(offerLine)
+                    .minimumScaleFactor(0.8)
+                Text(line)
                     .font(.system(size: 11))
                     .opacity(0.75)
-                Text("See plans")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Self.lilacInk)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(Self.lilac, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
-                    .padding(.top, 9)
+                Spacer(minLength: 14)
+                actions()
             }
             .foregroundStyle(.white)
             .lineLimit(1)
             .padding(18)
-            .padding(.trailing, cat - 18)
+            // The cat's left side is mostly air, so the text may run a little into it.
+            .padding(.trailing, cat - 36)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .frame(height: isPhone ? 146 : 128)
+        // Fixed, so the Spacer has a height to fill and the actions sit on the bottom edge.
+        // Every font in the card is a fixed size, so nothing grows past it.
+        .frame(height: isPhone ? 176 : 150)
         .clipShape(shape)
         .contentShape(shape)
         .shadow(color: Color(hex: 0x2E2370).opacity(0.45), radius: 15, y: 12)
+    }
+
+    private func lilacPill(_ text: String) -> some View {
+        Text(text)
+            .font(.system(size: 12, weight: .bold))
+            .foregroundStyle(Self.lilacInk)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(Self.lilac, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
     }
 
     /// The card's one line. A phone has room beside the cat for the price alone.
@@ -608,68 +623,35 @@ struct ProfileView: View {
             .disabled(premium.phase == .purchasing)
     }
 
-    /// Premium's tile: the card's ground, a wash of sky, a sky edge.
-    private func skyTile(_ t: Theme, _ sky: Color) -> some View {
-        let shape = RoundedRectangle(cornerRadius: t.radius(12))
-        return shape.fill(t.surface)
-            .overlay(shape.fill(sky.opacity(0.08)))
-            .overlay(shape.strokeBorder(sky.opacity(0.9), lineWidth: 1.2))
-    }
-
-    /// An owner's plan: what you have, when it renews, and Manage. "What's included"
-    /// unfolds the perks (PaywallView.perks — mock for now).
+    /// An owner's plan: the same violet card, now saying what you have and when it
+    /// renews, with Manage (subscriptions) and "What's included", which unfolds the perks
+    /// (PaywallView.perks — mock for now) under the card.
     private func premiumCard(_ t: Theme) -> some View {
-        let sky = Theme.skyMark(scheme)
         let name = PaywallView.name(premium.plan ?? Premium.productID)
         return section("Plan", t) {
-            VStack(alignment: .leading, spacing: 0) {
-                HStack(alignment: .center, spacing: 12) {
-                    Image(systemName: "sparkle")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(Theme.skyInk)
-                        .frame(width: 34, height: 34)
-                        .background(Theme.sky, in: Circle())
-                        .accessibilityHidden(true)
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text("Premium \u{00B7} \(name)")
-                            .font(.system(size: isPhone ? 16 : 15, weight: .semibold))
-                            .foregroundStyle(t.ink)
-                        Text(renewal)
-                            .font(.system(size: 13))
-                            .foregroundStyle(t.muted)
-                    }
-                    .accessibilityElement(children: .combine)
-                    Spacer(minLength: 8)
-                    if !isPhone { includedButton(t) }
-                    if premium.subscribed {
-                        Button { manage() } label: {
-                            Text("Manage")
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(t.ink)
-                                .padding(.horizontal, 14)
-                                .frame(minHeight: isPhone ? 44 : 30)
-                                .overlay(Capsule().strokeBorder(t.muted.opacity(0.5)))
-                                .contentShape(Capsule())
+            VStack(alignment: .leading, spacing: 14) {
+                violetCard("\(name) \u{00B7} \(renewal)") {
+                    HStack(spacing: 14) {
+                        if premium.subscribed {
+                            Button { manage() } label: {
+                                lilacPill("Manage")
+                                    // A thumb-sized target around the small pill.
+                                    .frame(minHeight: isPhone ? 44 : 28)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("Manage subscription")
                         }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel("Manage subscription")
+                        includedButton
                     }
                 }
-                .padding(14)
-
-                if isPhone {
-                    t.hairline.frame(height: 1).padding(.leading, 14)
-                    includedButton(t)
-                        .padding(.horizontal, 14)
-                }
-
                 if perksShown {
                     VStack(alignment: .leading, spacing: 9) {
                         ForEach(PaywallView.perks, id: \.self) { perk in
                             HStack(alignment: .top, spacing: 10) {
                                 Image(systemName: "checkmark")
                                     .font(.system(size: 11, weight: .heavy))
-                                    .foregroundStyle(sky)
+                                    .foregroundStyle(Self.lilac)
                                     .padding(.top, 2)
                                     .accessibilityHidden(true)
                                 Text(perk)
@@ -679,13 +661,10 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    .padding(.horizontal, 14)
-                    .padding(.bottom, 14)
+                    .padding(.horizontal, 4)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background { skyTile(t, sky) }
         }
     }
 
@@ -697,20 +676,18 @@ struct ProfileView: View {
         return premium.willRenew ? "Renews \(day)" : "Ends \(day)"
     }
 
-    private func includedButton(_ t: Theme) -> some View {
+    private var includedButton: some View {
         Button { withAnimation(.snappy) { perksShown.toggle() } } label: {
-            HStack(spacing: 6) {
+            HStack(spacing: 5) {
                 Text("What\u{2019}s included")
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(isPhone ? t.ink : t.muted)
-                if isPhone { Spacer(minLength: 0) }
+                    .font(.system(size: 12, weight: .semibold))
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(t.muted)
+                    .font(.system(size: 9, weight: .bold))
                     .rotationEffect(.degrees(perksShown ? 90 : 0))
                     .accessibilityHidden(true)
             }
-            .frame(minHeight: isPhone ? 44 : 30)
+            .foregroundStyle(.white.opacity(0.85))
+            .frame(minHeight: isPhone ? 44 : 28)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
