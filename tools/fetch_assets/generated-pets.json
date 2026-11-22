@@ -1,0 +1,62 @@
+{
+ "alarm bark": {
+  "file": "pets-alarm-bark.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "1.webp"
+ },
+ "bark": {
+  "file": "pets-bark.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "2.webp"
+ },
+ "bay": {
+  "file": "pets-bay.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-bay.jpg"
+ },
+ "caterwaul": {
+  "file": "pets-caterwaul.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-caterwaul.png"
+ },
+ "chattering": {
+  "file": "pets-chattering.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-chattering.png"
+ },
+ "demand bark": {
+  "file": "pets-demand-bark.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-demand-bark.png"
+ },
+ "growl": {
+  "file": "pets-growl.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-growl.png"
+ },
+ "grumble": {
+  "file": "pets-grumble.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-grumble.png"
+ },
+ "guarding growl": {
+  "file": "pets-guarding-growl.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-guarding-growl.png"
+ },
+ "hiss": {
+  "file": "pets-hiss.jpg",
+  "model": "generated",
+  "made": "2026-11-23",
+  "source_file": "pets-hiss.png"
+ }
+}

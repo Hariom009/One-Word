@@ -570,6 +570,7 @@ struct ProfileView: View {
                 .frame(width: cat)
                 .offset(x: 4, y: 10)
                 .accessibilityHidden(true)
+
             VStack(alignment: .leading, spacing: 3) {
                 Text("One Word Premium")
                     .font(doodle.face(15, .bold))
@@ -579,13 +580,17 @@ struct ProfileView: View {
                     .opacity(0.75)
                 Spacer(minLength: 14)
                 actions()
+                    .padding(8)
             }
             .foregroundStyle(.white)
             .lineLimit(1)
-            .padding(18)
+            .padding(.top,24)
+            .padding(.bottom,24)
+            .padding(.all,8)
             // The cat's left side is mostly air, so the text may run a little into it.
             .padding(.trailing, cat - 36)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            
         }
         // Fixed, so the Spacer has a height to fill and the actions sit on the bottom edge.
         // Every font in the card is a fixed size, so nothing grows past it.

@@ -15,3 +15,11 @@ __pycache__/
 # Firebase CLI (site/)
 .firebase/
 firebase-debug.log
+
+# Asset sourcing intermediates (tools/fetch_assets) — candidate lists and the raw
+# downloads they point at. Only the chosen, resized files in OneWord/Pictures and
+# OneWord/Clips ship, and the provenance table in Docs/06_Misc records where each
+# one came from.
+tools/fetch_assets/candidates-*.json
+tools/fetch_assets/downloads/
+tools/fetch_assets/drop/

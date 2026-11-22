@@ -1,6 +1,6 @@
 # Word data generation
 
-`OneWord/Shared/words.json` (the ~12k word-a-day list) is **generated**, not hand-written.
+`OneWord/Shared/words.json` (the ~5.6k word-a-day list) is **generated**, not hand-written.
 Source: Princeton **WordNet** (open license) for terms/POS/definitions/examples, filtered to
 a "good vocab" frequency band, with **Hindi** produced offline by **Argos Translate**
 (no API key, nothing from this pipeline ships in the app).
@@ -59,11 +59,45 @@ connotation. To add a themed dictionary: write an extractor like this, then regi
 `Wordbook(id: "<name>", name: "…")` in `OneWord/Models/Wordbook.swift` (the `id` is the JSON name).
 
 ## Knobs (in `extract.py`)
-- `LO, HI` — the wordfreq zipf band (currently `3.0–5.6`): raise `LO` for rarer/harder words,
-  lower it for more common ones.
-- `TARGET` — how many words (currently `12000`).
+- `LO, HI` — the wordfreq zipf band (currently `3.0–3.6`): raise `LO` for rarer/harder words,
+  raise `HI` to admit more everyday ones. `HI` was `5.6` until the trim; that ceiling is what
+  put `cat` (4.8), `give` (5.7), `health` and `music` in a word-*a-day* list, so it came down
+  to 3.6 — the band where real vocabulary starts outnumbering words you already speak.
+- `TARGET` — how many words (currently `12000`, no longer binding: the 3.0–3.6 band yields ~5.6k).
+- `easy_inflection` — drops `-ing/-ed/-s/-ly` forms whose base word is common (`freeing`, `banning`,
+  `washed`): rare as a surface form, not vocabulary.
 - `BAD` — substrings that drop crude/sensitive glosses.
 - Both the selection and the day-order use fixed RNG seeds, so runs are reproducible.
 
 Ceiling: offline NMT occasionally transliterates a rare English word inside the Hindi instead
 of translating it. Swap in a higher-quality translator here (e.g. an LLM batch) if that matters.
+
+## Trimming a dictionary (`trim.py`)
+
+`emotions.json` and `startup.json` were cut from ~3,000 entries each to 500 by
+`trim.py`, which is reproducible and deterministic (ties break on an md5 of the term,
+not alphabetically — an alphabetical tiebreak handed the first attempt 500 entries
+covering five letters).
+
+```bash
+python3 -I trim.py emotions 500 ../../OneWord/Shared/emotions.json
+python3 -I trim.py startup  500 ../../OneWord/Shared/startup.json
+```
+
+Two filters, because the books are not alike. **Emotions** carries a scraped WordNet
+layer — 652 entries sharing a definition with another, 340 sharing an example, some
+still with "- Edmund Burke" hanging off them — and that layer is cut outright.
+**Corporate Slang** has none of it, so there the cut is a ranking rather than a rescue:
+`idiom` and `phrase` are what a slang book is for, while the `acronym` shelf is mostly
+finance and pharma (MLR, MSL, 8-K) and keeps a seat rather than a third of the book.
+
+Emotions also pushes words that are already in Everyday English to the back. A feeling
+word you already know teaches nothing and shows up twice in a cross-book search.
+
+**Known cost, unresolved:** the well-formedness filter requires an example, and 98
+flagship emotion words are stubs without one — `anger`, `compassion`, `desire`,
+`apathy`, `boredom`, `melancholy`, `nostalgia`, `euphoria`. They are therefore cut, so
+the trimmed book has no entry for *anger*. `tools/check_related.sh` fails on this
+(`emotions has no term melancholy`), and that failure is load-bearing: it is the gate
+noticing a real content problem, not a stale fixture. Fixing it means writing examples
+for those 98, not re-pinning the gate.
