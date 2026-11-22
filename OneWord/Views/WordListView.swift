@@ -134,7 +134,6 @@ struct WordListView: View {
             found = hits
         }
         .task { if everywhere { total = await WordListViewModel.everywhereCount() } }
-        .environment(\.paneGlow, false)
         .sheet(item: $opened) { hit in
             // The sheet's own stack, so a related word can still push within it.
             NavigationStack {

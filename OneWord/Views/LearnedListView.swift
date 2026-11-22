@@ -94,7 +94,6 @@ struct LearnedListView: View {
             rebuild()
         }
         .onChange(of: query) { _, _ in rebuild() }
-        .environment(\.paneGlow, false)
     }
 
     /// One line of the list. A `Section` header pins itself to the top of a plain
