@@ -54,7 +54,7 @@ extension View {
     func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
                                     bare: Bool = false, onBack: (() -> Void)? = nil, fade: CGFloat = 0,
                                     titleAction: (() -> Void)? = nil, spark: Bool = false, backless: Bool = false,
-                                    below: AnyView? = nil,
+                                    below: AnyView? = nil, clear: Bool = false,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
         let pane = safeAreaInset(edge: .top, spacing: 0) {
             // Scrolled down on a phone the strip blurs away; its space stays, so the
@@ -62,7 +62,7 @@ extension View {
             // `fade` follows the finger (0 at the top, 1 a header's height down), so
             // there's no timed animation to fight the scroll.
             PaneHeader(title: title, back: back, ribbon: ribbon, bare: bare, onBack: onBack, titleAction: titleAction,
-                       spark: spark, backless: backless, below: below, trailing: trailing())
+                       spark: spark, backless: backless, below: below, clear: clear, trailing: trailing())
                 .blur(radius: fade * 12)
                 .opacity(1 - fade)
                 .scaleEffect(1 - fade * 0.04, anchor: .top)
@@ -128,6 +128,8 @@ struct PaneHeader<Trailing: View>: View {
     var backless = false
     /// Phone: a row under the strip — Search's field, which no longer fits beside the title.
     var below: AnyView? = nil
+    /// No ground of its own: Home's photo runs up under the strip, edge to edge.
+    var clear = false
     let trailing: Trailing
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
@@ -184,7 +186,7 @@ struct PaneHeader<Trailing: View>: View {
         .background { if isPhone && !bare { phoneTitle(t) } }
         .background { WindowDragArea() }
 
-        VStack(spacing: 0) {
+        let stack = VStack(spacing: 0) {
             strip
             // A field that won't fit beside a centred title rides under it, on the same ground.
             if let below {
@@ -193,7 +195,7 @@ struct PaneHeader<Trailing: View>: View {
                     .padding(.bottom, 8)
             }
         }
-        .paneBackground(t)
+        if clear { stack } else { stack.paneBackground(t) }
     }
 
     /// iOS's inline title: centred, the system's semibold 17. Clear of the side buttons.

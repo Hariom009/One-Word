@@ -24,6 +24,18 @@ import UIKit     // UIImage — same
 /// `speaker`: a player that goes out of scope stops mid-sound.
 @MainActor var clip: AVAudioPlayer?
 
+/// Says the headword aloud — the header's Pronounce and Home's Hear it.
+@MainActor func pronounce(_ word: Word) {
+    speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
+    clip?.stop()
+    let utterance = AVSpeechUtterance(string: word.term)
+    // Urdu headwords are Devanagari — an en-US voice reads them as silence.
+    // Derived from the term, not the book, so any future script lands too.
+    let devanagari = word.term.unicodeScalars.contains { (0x900...0x97F).contains($0.value) }
+    utterance.voice = AVSpeechSynthesisVoice(language: devanagari ? "hi-IN" : "en-US")
+    speaker.speak(utterance)
+}
+
 struct WordDetail: View {
     let word: Word
     var showDate: Bool = false
@@ -38,6 +50,15 @@ struct WordDetail: View {
     /// One page of the phone feed: fixed to the screen, no scroll view of its own,
     /// no same-vein box. See `cardPage`.
     var card = false
+    /// Whether this entry is the one actually being read. Only a feed says otherwise,
+    /// for the cards it builds either side of you — a clip on one of those holds its
+    /// first frame instead of running a decoder for a page nobody is looking at.
+    var visible = true
+    /// Home only: the word's picture or clip runs full-bleed across the top, up under the
+    /// header, and the entry sits on its fade. Hear it moves out of the header onto the page.
+    var hero = false
+    /// Home's phone feed: the page is capped to a screen, and this opens the rest in a sheet.
+    var onFullEntry: (() -> Void)? = nil
     /// The sheet's own close, passed only to the word a sheet opens on. Pushed
     /// related words leave it nil, so their Back pops back to that word.
     var close: (() -> Void)? = nil
@@ -93,9 +114,18 @@ struct WordDetail: View {
         VStack(alignment: .leading, spacing: 0) {
             //if showDate { dateLine(t) }
 
+            // A sound book's entry leads with the few seconds of animal the sound came
+            // with: the posture behind a bark, the stretch before a trill. Silent and
+            // looping — the `sound` recording is still the entry, played on demand.
+            if !hero, let clip = word.clip, !locked {
+                ClipLoop(clip: clip, playing: visible)
+                    .frame(maxWidth: isPhone ? .infinity : 480)
+                    .frame(height: isPhone ? (card ? 200 : 260) : 320)
+                    .clipShape(RoundedRectangle(cornerRadius: t.radius(10)))
+                    .padding(.bottom, 26)
             // A picture book's entry leads with its photo. Fit, never fill:
             // a crop would behead the giraffe and lose the lighthouse's lamp.
-            if let photo = word.image.flatMap(Self.photo), !locked {
+            } else if !hero, let photo = word.image.flatMap(Self.photo), !locked {
                 photo
                     .resizable()
                     .scaledToFit()
@@ -104,6 +134,18 @@ struct WordDetail: View {
                            alignment: .leading)
                     .padding(.bottom, 26)
                     .accessibilityLabel("Photo of \(word.term)")
+            }
+
+            // The Mac's book rides over the word; a phone's is a header button.
+            if hero && !isPhone {
+                let book = Wordbook.named(shelfID)
+                HStack(spacing: 6) {
+                    BookChip(book: book, height: 18)
+                    Text(book.shortName)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(t.ink)
+                }
+                .padding(.bottom, 12)
             }
 
             HStack(alignment: .lastTextBaseline, spacing: isPhone ? 10 : 16) {
@@ -149,25 +191,37 @@ struct WordDetail: View {
                     .padding(.top, 26)
             } else {
                 if showHindi, !word.hindi.isEmpty {
-                    Text(word.hindi)
-                        .font(.system(size: isPhone ? 20 : 25))
-                        .foregroundStyle(t.ink.opacity(0.5))
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.leading, 18)
-                        .overlay(alignment: .leading) {
-                            Rectangle().fill(t.rule).frame(width: 2)
-                        }
-                        .padding(.top, 26)
+                    if hero {
+                        // A peer of the definition, not a footnote under a rule.
+                        Text(word.hindi)
+                            .font(.system(size: isPhone ? 17 : 19))
+                            .foregroundStyle(t.ink.opacity(0.92))
+                            .lineLimit(card ? 2 : nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 18)
+                    } else {
+                        Text(word.hindi)
+                            .font(.system(size: isPhone ? 20 : 25))
+                            .foregroundStyle(t.ink.opacity(0.5))
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.leading, 18)
+                            .overlay(alignment: .leading) {
+                                Rectangle().fill(t.rule).frame(width: 2)
+                            }
+                            .padding(.top, 26)
+                    }
                 }
 
                 Text(word.definition)
-                    .font(doodle.face(isPhone ? 19 : 22))
+                    .font(doodle.face(hero ? (isPhone ? 17 : 18) : (isPhone ? 19 : 22)))
                     .foregroundStyle(t.definition)
-                    .lineLimit(card ? 6 : nil)
+                    .lineLimit(card ? (hero ? 3 : 6) : nil)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 26)
+                    .padding(.top, hero ? 12 : 26)
 
                 if showExample { footer(t) }
+
+                if hero { heroActions(t) }
 
                 // No fade on the box: inserted with one while the launch build
                 // ran, it stuck at zero opacity — the box missing until the word
@@ -183,6 +237,50 @@ struct WordDetail: View {
         // A desk page has margins; a phone has a gutter.
         .padding(.horizontal, isPhone ? 20 : 56)
         .padding(.vertical, isPhone ? 20 : 44)
+        // The word lands on the hero's fade, a little above its foot.
+        .padding(.top, hero ? Self.heroHeight - (isPhone ? 148 : 154) : 0)
+        .background(alignment: .top) {
+            if hero {
+                HomeHero(word: word, book: .named(shelfID), locked: locked, visible: visible, t: t)
+                    .frame(height: Self.heroHeight)
+            }
+        }
+    }
+
+    /// How tall Home's picture runs from the very top of the screen.
+    private static var heroHeight: CGFloat { isPhone ? 480 : 400 }
+
+    /// Hear it, at thumb height, and — on the phone feed — the way to the rest of the entry.
+    private func heroActions(_ t: Theme) -> some View {
+        HStack(spacing: 12) {
+            Button { pronounce(word) } label: {
+                Label("Hear it", systemImage: "speaker.wave.2.fill")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(t.accent)
+                    .padding(.horizontal, 16)
+                    .frame(height: isPhone ? 40 : 32)
+                    .background(t.accent.opacity(0.16), in: Capsule())
+                    .contentShape(Capsule())
+            }
+            .buttonStyle(.plain)
+            .help("Pronounce \(word.term)")
+            Spacer(minLength: 12)
+            if let onFullEntry {
+                Button(action: onFullEntry) {
+                    HStack(spacing: 6) {
+                        Text("Full entry")
+                        Image(systemName: "chevron.right").font(.system(size: 10, weight: .bold))
+                    }
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(t.muted)
+                    .padding(.vertical, 10)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Full entry for \(word.term)")
+            }
+        }
+        .padding(.top, 22)
     }
 
     /// One word, scrolling: the full entry with its same-vein box. Every route but
@@ -206,6 +304,8 @@ struct WordDetail: View {
             }
             .animation(.easeInOut(duration: 0.22), value: word.term)
             .scrollContentBackground(.hidden)
+            // Home's picture starts at the window's top edge, under the clear header.
+            .ignoresSafeArea(.container, edges: hero ? .top : [])
             // Re-fires on dictionary change and on every pop back; load is idempotent.
             // Keyed on the lock too, so buying while you look loads the neighbours then.
             .task(id: locked ? nil : shelfID) { if !locked { store.load(shelfID) } }
@@ -234,7 +334,7 @@ struct WordDetail: View {
     /// that is actually showing.
     private var cardPage: some View {
         entry(Theme.of(scheme, doodle), related: [])
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: hero ? .top : .center)
             .clipped()
     }
 
@@ -390,7 +490,7 @@ struct WordDetail: View {
 
     /// A bundled photo, `OneWord/Pictures/<name>.jpg`. `named:` caches the decode, so
     /// a cover-flow swipe re-rendering three pages a frame doesn't decode them again.
-    private static func photo(_ name: String) -> Image? {
+    fileprivate static func photo(_ name: String) -> Image? {
         #if os(macOS)
         NSImage(named: "\(name).jpg").map(Image.init(nsImage:))
         #else
@@ -436,6 +536,8 @@ struct WordDetail: View {
 /// lives here, beside the one button that changes it.
 struct WordActions: View {
     let word: Word
+    /// Off on Home, where Hear it sits on the page under the word.
+    var speaks = true
     @State private var bookmarked = false
     @State private var stretch: CGFloat = 1
 
@@ -462,25 +564,73 @@ struct WordActions: View {
             .help(bookmarked ? "Remove \(word.term) from Bookmarks"
                              : "Bookmark \(word.term)")
 
-            Button {
-                speaker.stopSpeaking(at: .immediate)   // rapid clicks replace, don't queue
-                clip?.stop()
-                let utterance = AVSpeechUtterance(string: word.term)
-                // Urdu headwords are Devanagari — an en-US voice reads them as silence.
-                // Derived from the term, not the book, so any future script lands too.
-                let devanagari = word.term.unicodeScalars.contains { (0x900...0x97F).contains($0.value) }
-                utterance.voice = AVSpeechSynthesisVoice(language: devanagari ? "hi-IN" : "en-US")
-                speaker.speak(utterance)
-            } label: {
-                Label("Pronounce", systemImage: "speaker.wave.2")
+            if speaks {
+                Button { pronounce(word) } label: {
+                    Label("Pronounce", systemImage: "speaker.wave.2")
+                }
+                .help("Pronounce \(word.term)")
             }
-            .help("Pronounce \(word.term)")
         }
         .onChange(of: word.term, initial: true) { bookmarked = SavedWords.contains(word) }
         // The Bookmarks pane can un-bookmark the word under us, and a Services
         // catch bookmarks one — either way the ribbon has to agree with the store.
         .onReceive(NotificationCenter.default.publisher(for: SavedWords.didChange)) { _ in
             bookmarked = SavedWords.contains(word)
+        }
+    }
+}
+
+/// Home's full-bleed top: the word's clip or photo; until a book's media is shot, a
+/// placeholder in its own cloth; and for Everyday English, which has none, the band.
+/// Two fades make it a ground: the strip's title reads at the top, the word at the foot.
+private struct HomeHero: View {
+    let word: Word
+    let book: Wordbook
+    let locked: Bool
+    let visible: Bool
+    let t: Theme
+
+    var body: some View {
+        ZStack {
+            // Color.clear takes the size it's given; fill art overflows it and gets clipped.
+            Color.clear.overlay { art }.clipped()
+            LinearGradient(colors: [t.background.opacity(0.6), t.background.opacity(0)],
+                           startPoint: .top, endPoint: .bottom)
+                .frame(height: 160)
+                .frame(maxHeight: .infinity, alignment: .top)
+            LinearGradient(stops: [.init(color: t.background.opacity(0), location: 0.45),
+                                   .init(color: t.background.opacity(0.75), location: 0.72),
+                                   .init(color: t.background, location: 1)],
+                           startPoint: .top, endPoint: .bottom)
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)   // the entry under it says what it shows
+    }
+
+    @ViewBuilder
+    private var art: some View {
+        // A locked word keeps its media for Premium, as the entry keeps its meaning.
+        if !locked, let clip = word.clip {
+            ClipLoop(clip: clip, playing: visible).background(book.coverColor)
+        } else if !locked, let photo = word.image.flatMap(WordDetail.photo) {
+            photo.resizable().scaledToFill()
+        } else if book == .everydayEnglish {
+            LinearGradient(colors: [t.glow == .clear ? t.ink.opacity(0.05) : t.glow, t.background.opacity(0)],
+                           startPoint: .top, endPoint: .bottom)
+                .overlay(alignment: .trailing) {
+                    Text("Aa")
+                        .font(.system(size: isPhone ? 230 : 260, weight: .semibold))
+                        .tracking(-12)
+                        .foregroundStyle(t.accent.opacity(0.1))
+                        .offset(x: 24)
+                }
+        } else {
+            // ponytail: placeholder until each book's pictures and clips are shot.
+            book.coverColor.overlay {
+                Image(systemName: book.symbol)
+                    .font(.system(size: isPhone ? 110 : 130, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.14))
+            }
         }
     }
 }

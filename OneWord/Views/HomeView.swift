@@ -89,23 +89,21 @@ struct HomeView: View {
             // Stacked over the scroll view its height came off the pages without coming
             // off the container, so every page was a dateline taller than the window it
             // paged to and the snap drifted further out with each swipe.
+            // Clear: the word's picture runs up under the strip. Hear it is on the page.
             .paneHeader(isPhone ? dayTitle : Date.now.formatted(.dateTime.month(.wide).day().year()),
                         titleAction: isPhone ? { picking = true } : nil, spark: premium.isUnlocked,
-                        below: isPhone ? AnyView(dateline(t)) : nil) {
-                if !isPhone {
-                    Button {
-                        pane = .dictionaries
-                    } label: {
-                        Text(model.wordbook.shortName)
-                            .lineLimit(1)
-                            .padding(.horizontal, 10)
+                        clear: true) {
+                // The phone's book is a button in its own cloth, off the picture; the Mac's
+                // rides over the word, with Dictionaries a click away in the sidebar.
+                if isPhone {
+                    Button { pane = .dictionaries } label: {
+                        BookChip(book: model.wordbook, height: 22)
                     }
-                    // Long names ("Corporate Slang") would truncate in a squeezed strip.
-                    // Ask for the ideal width instead and the chip sizes to its text.
-                    .fixedSize()
                     .help("Choose a dictionary")
+                    .accessibilityLabel("Dictionary: \(model.wordbook.shortName)")
+                    .accessibilityHint("Chooses a dictionary")
                 }
-                WordActions(word: model.word)
+                WordActions(word: model.word, speaks: false)
             }
             // Over the header too, so the whole screen frosts behind the ribbon.
             .overlay { ribbonDrop }
@@ -145,7 +143,7 @@ struct HomeView: View {
     private var page: some View {
         ZStack {
             WordDetail(word: model.word, showDate: !isPhone,
-                       dictionaryName: isPhone ? nil : model.wordbook.shortName, embedded: true)
+                       dictionaryName: isPhone ? nil : model.wordbook.shortName, embedded: true, hero: true)
                 // A double tap on bare page keeps the word; the page's own controls still
                 // take their taps first. contentShape so the blank paper answers too.
                 .contentShape(Rectangle())
@@ -158,11 +156,6 @@ struct HomeView: View {
         // Only a flip pushes up. The day's word coming back — a pane switch, the app
         // reopening — just swaps in, with the corner saying which it is.
         .animation(model.isPeeking ? .spring(duration: 0.5, bounce: 0.15) : nil, value: model.word.term)
-        #if os(macOS)
-        .overlay(alignment: .topLeading) {
-            flipLabel(Theme.of(scheme, doodle)).padding(.horizontal, 20).padding(.top, 14)
-        }
-        #endif
         // The next word gets its neighbours ranked off the main thread now, so the pull
         // that brings it in doesn't rank them on its first frame.
         .onChange(of: model.upcoming.term, initial: true) { store.prefetch(model.upcoming, in: dictionaryID) }
@@ -181,68 +174,72 @@ struct HomeView: View {
     private func feed(_ t: Theme) -> some View {
         // A picked day stays put, as it did when a pull was the way on: one page, no feed.
         let slots = day == nil ? Array(model.deck.indices) : [0]
-        return ScrollView(.vertical) {
-            LazyVStack(spacing: 0) {
-                // Keyed on the slot, never the term: a small book repeats words, and two
-                // pages carrying one id make the paging jump between them.
-                ForEach(slots, id: \.self) { slot in
-                    card(model.deck[slot], t)
-                        .containerRelativeFrame(.vertical)
-                        .id(slot)
+        // The page height comes from a reader that ignores the safe area, NOT from
+        // `containerRelativeFrame`. A scroll container is the screen minus its insets —
+        // the header's and the tab bar's — so container-sized pages are about 290pt
+        // short, and the next word's hero sits in the gap at the foot of the screen for
+        // as long as you look at the word above it.
+        return GeometryReader { screen in
+            ScrollView(.vertical) {
+                LazyVStack(spacing: 0) {
+                    // Keyed on the slot, never the term: a small book repeats words, and two
+                    // pages carrying one id make the paging jump between them.
+                    ForEach(slots, id: \.self) { slot in
+                        card(slot, t)
+                            .frame(height: screen.size.height)
+                            .id(slot)
+                    }
+                    if day == nil && model.deck.count >= model.deckCap {
+                        endPage(t)
+                            .frame(height: screen.size.height)
+                            .id(Self.endSlot)
+                    }
                 }
-                if day == nil && model.deck.count >= model.deckCap {
-                    endPage(t)
-                        .containerRelativeFrame(.vertical)
-                        .id(Self.endSlot)
-                }
+                .scrollTargetLayout()
             }
-            .scrollTargetLayout()
+            // `.viewAligned`, not `.paging`: paging snaps by the container, which is the
+            // short measure above, so a full-height page and a container-high snap would
+            // drift further apart with every swipe. View-aligned snapping follows the
+            // pages themselves, so the two can never disagree.
+            .scrollTargetBehavior(.viewAligned)
+            .scrollPosition(id: $feedPage)
+            .scrollIndicators(.hidden)
+            .scrollBounceBehavior(.basedOnSize)
+            .onChange(of: feedPage) { _, slot in
+                guard let slot, slot != Self.endSlot, model.deck.indices.contains(slot) else { return }
+                model.land(on: slot)
+                // Logged here, not in the card: a lazy stack builds a card a page before
+                // you reach it, and a word built ahead of you was never read.
+                let shown = model.deck[slot]
+                LearnedWords.record(shown, in: SavedWords.pinned?.term == shown.term
+                                    ? SavedWords.resource : dictionaryID)
+            }
+            // The next page's neighbours get ranked off the main thread now, so opening its
+            // full entry doesn't rank 12k dot products on the first frame.
+            .onChange(of: model.deck.count, initial: true) {
+                if let last = model.deck.last { store.prefetch(last, in: dictionaryID) }
+            }
+            .sensoryFeedback(.success, trigger: kept)
+            .accessibilityElement(children: .contain)
+            .accessibilityAction(named: "Another word") {
+                let next = (feedPage ?? 0) + 1
+                if model.deck.indices.contains(next) { withAnimation { feedPage = next } }
+            }
         }
-        .scrollTargetBehavior(.paging)
-        .scrollPosition(id: $feedPage)
-        .scrollIndicators(.hidden)
-        .scrollBounceBehavior(.basedOnSize)
-        .onChange(of: feedPage) { _, slot in
-            guard let slot, slot != Self.endSlot, model.deck.indices.contains(slot) else { return }
-            model.land(on: slot)
-            // Logged here, not in the card: a lazy stack builds a card a page before
-            // you reach it, and a word built ahead of you was never read.
-            let shown = model.deck[slot]
-            LearnedWords.record(shown, in: SavedWords.pinned?.term == shown.term
-                                ? SavedWords.resource : dictionaryID)
-        }
-        // The next page's neighbours get ranked off the main thread now, so opening its
-        // full entry doesn't rank 12k dot products on the first frame.
-        .onChange(of: model.deck.count, initial: true) {
-            if let last = model.deck.last { store.prefetch(last, in: dictionaryID) }
-        }
-        .sensoryFeedback(.success, trigger: kept)
-        .accessibilityElement(children: .contain)
-        .accessibilityAction(named: "Another word") {
-            let next = (feedPage ?? 0) + 1
-            if model.deck.indices.contains(next) { withAnimation { feedPage = next } }
-        }
+        // On the reader, so `screen.size` is the whole screen and a page covers the
+        // header and the tab bar rather than stopping politely above them.
+        .ignoresSafeArea(.container, edges: [.top, .bottom])
     }
 
     /// One page of the feed: the word, fixed to the screen, with the double tap that
-    /// keeps it and the way through to its full entry.
-    private func card(_ w: Word, _ t: Theme) -> some View {
-        WordDetail(word: w, embedded: true, card: true)
+    /// keeps it and the way through to its full entry. Only the page you are on counts
+    /// as visible — a card built ahead of you holds its clip on the first frame.
+    private func card(_ slot: Int, _ t: Theme) -> some View {
+        let w = model.deck[slot]
+        return WordDetail(word: w, embedded: true, card: true, visible: slot == feedPage,
+                          hero: true, onFullEntry: { opened = w })
             .contentShape(Rectangle())
             .onTapGesture(count: 2) { if model.bookmark(w) { kept += 1 } }
-            .overlay(alignment: .bottom) {
-                Button { opened = w } label: {
-                    Text("Full entry")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(t.muted)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 7)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .padding(.bottom, 8)
-                .accessibilityLabel("Full entry for \(w.term)")
-            }
     }
 
     /// The end of the day's feed. One word a day is the whole premise: the feed is a
@@ -367,39 +364,6 @@ struct HomeView: View {
             .presentationBackground(t.background)
     }
 
-    /// Which word is up: the day's, or how many pulls away from it you are.
-    private func flipLabel(_ t: Theme) -> some View {
-        Text(model.flips == 0 ? "Word of the day" : "Flip \(model.flips)")
-            .font(.system(size: 12, weight: .medium))
-            .foregroundStyle(t.muted)
-            .contentTransition(.numericText())
-            .animation(.snappy, value: model.flips)
-    }
-
-    /// Phone only: the dictionary over the word, no rule under it. Tapping the book
-    /// goes to the Dictionaries pane, as the Mac's chip does.
-    private func dateline(_ t: Theme) -> some View {
-        HStack(alignment: .center, spacing: 12) {
-            flipLabel(t)
-            Spacer(minLength: 8)
-            Button { pane = .dictionaries } label: {
-                HStack(spacing: 6) {
-                    BookChip(book: model.wordbook, height: 18)
-                    Text(model.wordbook.shortName)
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(t.ink)
-                        .lineLimit(1)
-                }
-                .padding(.vertical, 6)
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Dictionary: \(model.wordbook.shortName)")
-            .accessibilityHint("Chooses a dictionary")
-        }
-        .padding(.horizontal, 20)
-        .padding(.top, 6)
-    }
 }
 
 /// Where the double tap's ribbon is in its drop. At rest it's unseen.
