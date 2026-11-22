@@ -277,6 +277,7 @@ struct DictionaryPicker: View {
             }
         }
         .paneHeader("Dictionaries")
+        .environment(\.paneGlow, false)
     }
 }
 

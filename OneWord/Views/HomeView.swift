@@ -30,10 +30,15 @@ struct HomeView: View {
     @State private var armed: Edge?
     /// Where the next word comes in from: the end the page was pulled past.
     @State private var pushFrom: Edge = .bottom
-    /// Bumped by every pull that brings a word; the phone's landing tap fires off it.
-    @State private var peeks = 0
     /// Bumped by every double tap that keeps a word; the ribbon drops in off it.
     @State private var kept = 0
+    /// Which page of the phone feed is showing — the deck slot, or `endSlot` for the
+    /// page that says the day's feed is done. Written by the scroll view itself.
+    @State private var feedPage: Int? = 0
+    /// The word whose full entry is open over the feed, the same sheet a list row opens.
+    @State private var opened: Word?
+    /// Not a deck slot: the end page's id.
+    private static let endSlot = -1
     #if os(macOS)
     @State private var shortcutEnabled = false
     #endif
@@ -53,10 +58,7 @@ struct HomeView: View {
                 // A phone strip can't seat the date, the chip and three buttons. The
                 // strip says "Today" and opens a calendar; the dictionary sits over the
                 // word as one quiet line, the way a dictionary page carries its running head.
-                VStack(spacing: 0) {
-                    dateline(t)
-                    page
-                }
+                feed(t)
             } else {
                 page
             }
@@ -83,8 +85,13 @@ struct HomeView: View {
             .onAppear { shortcutEnabled = true }
             .onDisappear { shortcutEnabled = false }
             #endif
+            // The dateline rides in the header's own strip rather than above the feed.
+            // Stacked over the scroll view its height came off the pages without coming
+            // off the container, so every page was a dateline taller than the window it
+            // paged to and the snap drifted further out with each swipe.
             .paneHeader(isPhone ? dayTitle : Date.now.formatted(.dateTime.month(.wide).day().year()),
-                        titleAction: isPhone ? { picking = true } : nil, spark: premium.isUnlocked) {
+                        titleAction: isPhone ? { picking = true } : nil, spark: premium.isUnlocked,
+                        below: isPhone ? AnyView(dateline(t)) : nil) {
                 if !isPhone {
                     Button {
                         pane = .dictionaries
@@ -103,6 +110,13 @@ struct HomeView: View {
             // Over the header too, so the whole screen frosts behind the ribbon.
             .overlay { ribbonDrop }
             .sheet(isPresented: $picking) { dayPicker(t) }
+            // The feed's cards are capped to fit a screen; the whole entry — same-vein
+            // box, full definition, full example — opens here, as a list row's does.
+            .sheet(item: $opened) { word in
+                NavigationStack {
+                    WordDetail(word: word, close: { opened = nil })
+                }
+            }
             .onAppear {
                 if firstOpened == 0 { firstOpened = Date.now.timeIntervalSince1970 }
                 model.select(Wordbook.named(dictionaryID))
@@ -152,12 +166,105 @@ struct HomeView: View {
         // The next word gets its neighbours ranked off the main thread now, so the pull
         // that brings it in doesn't rank them on its first frame.
         .onChange(of: model.upcoming.term, initial: true) { store.prefetch(model.upcoming, in: dictionaryID) }
-        // A tick as the pull passes the point where letting go brings the next word, a tap as it lands.
-        .sensoryFeedback(.selection, trigger: armed) { _, armed in armed != nil && day == nil }
-        .sensoryFeedback(.impact(weight: .light), trigger: peeks)
+        // ponytail: no feedback on the pull itself — only the double tap that keeps a
+        // word answers back, since nothing on screen says it landed.
         .sensoryFeedback(.success, trigger: kept)
         .accessibilityElement(children: .contain)
         .accessibilityAction(named: "Another word") { nextWord() }
+    }
+
+    /// The phone's word feed: one word per screen, paged. The OS owns the physics —
+    /// the drag tracks the finger, a flick hands its velocity to the deceleration, a
+    /// half-swipe springs back, and all of it is interruptible — which is what makes it
+    /// read as a feed rather than a button that plays an animation. Scrolling back
+    /// shows the words already passed, in the order they came.
+    private func feed(_ t: Theme) -> some View {
+        // A picked day stays put, as it did when a pull was the way on: one page, no feed.
+        let slots = day == nil ? Array(model.deck.indices) : [0]
+        return ScrollView(.vertical) {
+            LazyVStack(spacing: 0) {
+                // Keyed on the slot, never the term: a small book repeats words, and two
+                // pages carrying one id make the paging jump between them.
+                ForEach(slots, id: \.self) { slot in
+                    card(model.deck[slot], t)
+                        .containerRelativeFrame(.vertical)
+                        .id(slot)
+                }
+                if day == nil && model.deck.count >= model.deckCap {
+                    endPage(t)
+                        .containerRelativeFrame(.vertical)
+                        .id(Self.endSlot)
+                }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollTargetBehavior(.paging)
+        .scrollPosition(id: $feedPage)
+        .scrollIndicators(.hidden)
+        .scrollBounceBehavior(.basedOnSize)
+        .onChange(of: feedPage) { _, slot in
+            guard let slot, slot != Self.endSlot, model.deck.indices.contains(slot) else { return }
+            model.land(on: slot)
+            // Logged here, not in the card: a lazy stack builds a card a page before
+            // you reach it, and a word built ahead of you was never read.
+            let shown = model.deck[slot]
+            LearnedWords.record(shown, in: SavedWords.pinned?.term == shown.term
+                                ? SavedWords.resource : dictionaryID)
+        }
+        // The next page's neighbours get ranked off the main thread now, so opening its
+        // full entry doesn't rank 12k dot products on the first frame.
+        .onChange(of: model.deck.count, initial: true) {
+            if let last = model.deck.last { store.prefetch(last, in: dictionaryID) }
+        }
+        .sensoryFeedback(.success, trigger: kept)
+        .accessibilityElement(children: .contain)
+        .accessibilityAction(named: "Another word") {
+            let next = (feedPage ?? 0) + 1
+            if model.deck.indices.contains(next) { withAnimation { feedPage = next } }
+        }
+    }
+
+    /// One page of the feed: the word, fixed to the screen, with the double tap that
+    /// keeps it and the way through to its full entry.
+    private func card(_ w: Word, _ t: Theme) -> some View {
+        WordDetail(word: w, embedded: true, card: true)
+            .contentShape(Rectangle())
+            .onTapGesture(count: 2) { if model.bookmark(w) { kept += 1 } }
+            .overlay(alignment: .bottom) {
+                Button { opened = w } label: {
+                    Text("Full entry")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(t.muted)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 7)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .padding(.bottom, 8)
+                .accessibilityLabel("Full entry for \(w.term)")
+            }
+    }
+
+    /// The end of the day's feed. One word a day is the whole premise: the feed is a
+    /// short detour from today's word, so it stops and says so rather than running on.
+    private func endPage(_ t: Theme) -> some View {
+        VStack(spacing: 12) {
+            Text("That's \(model.deckCap) words")
+                .font(doodle.face(30)).tracking(doodle.tracking(30))
+                .foregroundStyle(t.ink)
+            Text("Enough for one day. Tomorrow brings a new word of the day, and a fresh set behind it.")
+                .font(.system(size: 14))
+                .foregroundStyle(t.muted)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 300)
+            Button("Back to today") { withAnimation { feedPage = 0 } }
+                .font(.system(size: 13, weight: .semibold))
+                .buttonStyle(.plain)
+                .foregroundStyle(t.accent)
+                .padding(.top, 6)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(24)
     }
 
     /// Pulling on iPhone and double-space on Mac share the same temporary preview.
@@ -165,10 +272,7 @@ struct HomeView: View {
         guard day == nil else { return }
         pushFrom = edge
         // A turn later, so the leaving page has its direction too, not the last flip's.
-        Task { @MainActor in
-            model.shuffle()
-            peeks += 1
-        }
+        Task { @MainActor in model.shuffle() }
     }
 
     /// The new page rises a short way in from the end you pulled past. The old one
@@ -233,6 +337,9 @@ struct HomeView: View {
     /// Today's word through the shared offset and pin; a past day's plain, as History reads it.
     private func show() {
         if let day { model.show(model.wordbook, on: day) } else { model.refresh() }
+        // The deck was just rebuilt around the word now showing; a stale slot would
+        // leave the feed parked on a page that no longer exists.
+        feedPage = 0
     }
 
     /// "Today", or the picked day — "October 3", with the year only once it isn't this one.
@@ -310,10 +417,10 @@ private struct RibbonDrop {
 /// before those the page only scrolls, and "Another word" stays in the rotor.
 private struct PullForNext: ViewModifier {
     /// How far past its end the page has to be pulled — about twice that under the finger.
-    static let pull: CGFloat = 60
+    static let pull: CGFloat = 20
     @Binding var armed: Edge?
     let next: (Edge) -> Void
-    /// Only a finger arms it: a flick's coast overshooting the end would tick for nothing.
+    /// Only a finger arms it: a flick's coast overshooting the end would ask for nothing.
     @State private var dragging = false
 
     func body(content: Content) -> some View {

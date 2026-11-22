@@ -122,6 +122,7 @@ struct SentenceView: View {
             .disabled(!revealed)
             .help("Pronounce the German sentence")
         }
+        .environment(\.paneGlow, false)
     }
 
     // MARK: - Pieces

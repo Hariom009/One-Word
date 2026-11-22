@@ -24,6 +24,17 @@ final class WordViewModel {
     private(set) var isPeeking = false
     /// Pulls since the day's word last showed — Home's "Flip 3". Zero on the day's word.
     private(set) var flips = 0
+    /// The phone feed's pages: the day's word first, then the words drawn in behind
+    /// it. Append-only, so scrolling back shows the same words in the same order
+    /// rather than drawing fresh ones — which is what let a good word be lost to a
+    /// flick. Reset by every path that ends a peek.
+    private(set) var deck: [Word] = []
+    /// How far one day's feed runs. One Word is one word a day: the feed is a short
+    /// detour from it, not a reel with no floor, so it has an end to reach.
+    static let deckLimit = 15
+    /// The day's cap, held down by the book — a one-word Bookmarks is one page, not
+    /// fifteen copies of it.
+    var deckCap: Int { min(Self.deckLimit, provider.allWords.count) }
 
     private var provider: WordProvider
 
@@ -34,6 +45,7 @@ final class WordViewModel {
         self.provider = provider
         self.word = word
         self.upcoming = Self.draw(provider, besides: word)
+        resetDeck()
     }
 
     /// Switch dictionaries and show that dictionary's own word of the day (offset reset).
@@ -56,6 +68,7 @@ final class WordViewModel {
         word = provider.word(for: date, offset: WordSelectionStore.offset, pinned: SavedWords.pinned)
         // Kept through a plain app-active refresh, so the card peeking in doesn't change under you.
         if peeked || upcoming.term == word.term { upcoming = Self.draw(provider, besides: word) }
+        resetDeck()
     }
 
     /// History: a past day's word from ANY book, without touching anything shared.
@@ -69,14 +82,16 @@ final class WordViewModel {
         }
         word = provider.word(for: date)
         upcoming = Self.draw(provider, besides: word)
+        resetDeck()
     }
 
     /// Home's double tap. Only ever adds: taking a word back out stays with the
     /// ribbon, so a stray double tap can never lose a bookmark. True once the word
     /// is kept — false only for the Bookmarks placeholder, which can't be.
     @discardableResult
-    func bookmark() -> Bool {
-        SavedWords.contains(word) || SavedWords.toggle(word)
+    func bookmark(_ pick: Word? = nil) -> Bool {
+        let target = pick ?? word
+        return SavedWords.contains(target) || SavedWords.toggle(target)
     }
 
     /// A pull: the word drawn ahead comes in, a fresh one is drawn behind it. Not
@@ -86,6 +101,30 @@ final class WordViewModel {
         upcoming = Self.draw(provider, besides: word)
         flips += 1
         isPeeking = true
+    }
+
+    /// The feed settled on `page`. Moves `word` with it — the header's buttons and
+    /// the double tap both read `word` — and tops the deck up, so the page behind the
+    /// one you are on is already drawn when the drag that brings it in starts.
+    func land(on page: Int) {
+        guard deck.indices.contains(page) else { return }
+        word = deck[page]
+        flips = page
+        isPeeking = page > 0
+        extend()
+    }
+
+    /// Two pages of lookahead, within the day's cap.
+    private func extend() {
+        while deck.count < min(flips + 3, deckCap) {
+            deck.append(Self.draw(provider, besides: deck.last ?? word))
+        }
+    }
+
+    /// Back to one page — the word now showing — plus its lookahead.
+    private func resetDeck() {
+        deck = [word]
+        extend()
     }
 
     /// A random word from the book other than the one showing. Random, not the next

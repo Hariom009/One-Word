@@ -72,7 +72,8 @@ struct PaywallView: View {
             // The window's size under `.contentSize`. A knob.
             .frame(width: 760, height: 600)
             #endif
-            .background { PaneGround(t: t) }
+            // Presented from a flat pane, so it asks for the band back.
+            .background { PaneGround(t: t).environment(\.paneGlow, true) }
             .overlay {
                 if !reduceMotion {
                     Confetti(trigger: premium.celebrations)
@@ -450,7 +451,7 @@ struct PaywallView: View {
                 .accessibilityHidden(true)
         }
         .frame(width: 690, height: 396)
-        .background { PaneGround(t: t).clipShape(RoundedRectangle(cornerRadius: 20)) }
+        .background { PaneGround(t: t).clipShape(RoundedRectangle(cornerRadius: 20)).environment(\.paneGlow, true) }
         .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(t.hairline))
         // The one way out: closes the window, Esc and Return too.
         .overlay(alignment: .topTrailing) {

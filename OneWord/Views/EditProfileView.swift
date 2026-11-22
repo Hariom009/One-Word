@@ -78,6 +78,7 @@ struct EditProfileView: View {
             draftAvatar = avatar
             draftPhoto = photo
         }
+        .environment(\.paneGlow, false)
     }
 
     /// The face as it will be saved, with the photo controls under it.

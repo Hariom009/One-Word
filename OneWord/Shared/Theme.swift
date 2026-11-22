@@ -105,11 +105,21 @@ struct Theme {
     static func of(_ scheme: ColorScheme) -> Theme { scheme == .dark ? .dark : .light }
 }
 
-/// A pane's ground: the palette's background and, where the palette has a glow, a
-/// band of it across the top edge. A view of its own so the sidebar can paint the
-/// same ground the panes do.
+extension EnvironmentValues {
+    /// Whether this pane takes Midnight's band. Home and the full-screen surfaces
+    /// (welcome, sign-in, the plans) keep it; the lists, the word, Profile and
+    /// Settings paint flat and say so with `.environment(\.paneGlow, false)` at the
+    /// end of their chain — outside `paneHeader`, so the header's copy of the ground
+    /// goes flat with the pane instead of leaving a band hanging over it.
+    @Entry var paneGlow = true
+}
+
+/// A pane's ground: the palette's background and, where the palette has a glow and
+/// the pane takes one, a band of it across the top edge. A view of its own so the
+/// sidebar can paint the same ground the panes do.
 struct PaneGround: View {
     let t: Theme
+    @Environment(\.paneGlow) private var banded
 
     /// In points, never a share of the bounds. `PaneHeader` paints this same ground
     /// again in a 52pt strip over the pane, and the two only meet without a seam if
@@ -121,7 +131,7 @@ struct PaneGround: View {
     var body: some View {
         t.background
             .overlay(alignment: .top) {
-                if t.glow != .clear {
+                if t.glow != .clear && banded {
                     // Plain alpha, no blend mode. Full at the edge, half by 45% of
                     // the band, gone at its foot — and faded to the glow at zero
                     // opacity rather than to `.clear`, which drags the ramp

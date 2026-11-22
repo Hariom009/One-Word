@@ -49,8 +49,8 @@ struct HistoryView: View {
                     Divider().overlay(t.hairline)
                     // The book travels with the word: reading an old Medicine day must log
                     // and draw its related words there, not in whatever Home has open.
-                    // Embedded: one ground and one header across rail and word, so the glow
-                    // is a single light rather than one per column.
+                    // Embedded: one ground and one header across rail and word, so the
+                    // pane reads as one surface rather than one per column.
                     WordDetail(word: model.word, shelf: book.id, embedded: true)
                 }
             }
@@ -74,6 +74,7 @@ struct HistoryView: View {
         .onAppear { show() }
         .onChange(of: date) { show() }
         .onChange(of: book) { show() }
+        .environment(\.paneGlow, false)
     }
 
     // MARK: - Rail

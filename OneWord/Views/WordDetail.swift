@@ -35,6 +35,9 @@ struct WordDetail: View {
     /// Home and History host the word inside their own pane: they paint the ground
     /// and put `WordActions` in their header, so the page draws neither.
     var embedded = false
+    /// One page of the phone feed: fixed to the screen, no scroll view of its own,
+    /// no same-vein box. See `cardPage`.
+    var card = false
     /// The sheet's own close, passed only to the word a sheet opens on. Pushed
     /// related words leave it nil, so their Back pops back to that word.
     var close: (() -> Void)? = nil
@@ -53,7 +56,9 @@ struct WordDetail: View {
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
     var body: some View {
-        if embedded {
+        if card {
+            cardPage
+        } else if embedded {
             page
         } else {
             // A screen of its own, opened as a sheet from a list or pushed from a related
@@ -75,9 +80,113 @@ struct WordDetail: View {
                             .accessibilityHidden(true)
                     }
                 }
+                .environment(\.paneGlow, false)
         }
     }
 
+    /// The word itself: photo, headword, meaning, definition, example, and — unless
+    /// this is a feed card — the same-vein box. Shared by the scrolling page and the
+    /// phone feed's fixed card, so there is one editorial layout and not two that
+    /// drift apart.
+    @ViewBuilder
+    private func entry(_ t: Theme, related: [Word]) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            //if showDate { dateLine(t) }
+
+            // A picture book's entry leads with its photo. Fit, never fill:
+            // a crop would behead the giraffe and lose the lighthouse's lamp.
+            if let photo = word.image.flatMap(Self.photo), !locked {
+                photo
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: t.radius(10)))
+                    .frame(maxWidth: isPhone ? .infinity : 480, maxHeight: isPhone ? (card ? 200 : 260) : 320,
+                           alignment: .leading)
+                    .padding(.bottom, 26)
+                    .accessibilityLabel("Photo of \(word.term)")
+            }
+
+            HStack(alignment: .lastTextBaseline, spacing: isPhone ? 10 : 16) {
+                Text(word.term)
+                    .font(doodle.face(isPhone ? 46 : 64))
+                    .tracking(doodle.tracking(isPhone ? 46 : 64))
+                    .foregroundStyle(t.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.4)
+                // A sound book's entry IS the sound: the recording sits right
+                // beside its name. Pronounce, up in the header, still says the word.
+                if let sound = word.sound, !locked {
+                    Button {
+                        speaker.stopSpeaking(at: .immediate)
+                        clip?.stop()   // a second click restarts, never layers
+                        clip = Bundle.main.url(forResource: sound, withExtension: "m4a")
+                            .flatMap { try? AVAudioPlayer(contentsOf: $0) }
+                        clip?.play()
+                    } label: {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 19, weight: .semibold))
+                            .foregroundStyle(t.background)
+                            .offset(x: 2)   // a triangle's weight sits left of its box
+                            .frame(width: 46, height: 46)
+                            .background(t.accent, in: Circle())
+                            .contentShape(Circle())
+                    }
+                    .buttonStyle(.plain)
+                    // Bottom on the headword's baseline, so it stands as tall as its
+                    // ascenders. Left alone, the glyph's own baseline would sink it.
+                    .alignmentGuide(.lastTextBaseline) { $0[.bottom] }
+                    .help("Play the \(word.term)")
+                    .accessibilityLabel("Play the sound: \(word.term)")
+                }
+                Text(word.partOfSpeech)
+                    .font(doodle.face(16).italic())
+                    .foregroundStyle(t.muted)
+            }
+
+            if locked {
+                // A locked shelf's word: the headword is the teaser, the rest is Premium's.
+                PremiumBar(book: .named(shelfID))
+                    .padding(.top, 26)
+            } else {
+                if showHindi, !word.hindi.isEmpty {
+                    Text(word.hindi)
+                        .font(.system(size: isPhone ? 20 : 25))
+                        .foregroundStyle(t.ink.opacity(0.5))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.leading, 18)
+                        .overlay(alignment: .leading) {
+                            Rectangle().fill(t.rule).frame(width: 2)
+                        }
+                        .padding(.top, 26)
+                }
+
+                Text(word.definition)
+                    .font(doodle.face(isPhone ? 19 : 22))
+                    .foregroundStyle(t.definition)
+                    .lineLimit(card ? 6 : nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 26)
+
+                if showExample { footer(t) }
+
+                // No fade on the box: inserted with one while the launch build
+                // ran, it stuck at zero opacity — the box missing until the word
+                // changed. A pop is the price.
+                if !card {
+                    relatedBox(related, t)
+                        .id("vein")
+                }
+            }
+        }
+        .frame(maxWidth: 720, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        // A desk page has margins; a phone has a gutter.
+        .padding(.horizontal, isPhone ? 20 : 56)
+        .padding(.vertical, isPhone ? 20 : 44)
+    }
+
+    /// One word, scrolling: the full entry with its same-vein box. Every route but
+    /// the phone feed shows this one.
     private var page: some View {
         let t = Theme.of(scheme, doodle)
         let related = store.related(to: word, in: shelfID)
@@ -87,100 +196,11 @@ struct WordDetail: View {
                 // In the ScrollView's own stack the fading copy keeps its slot and
                 // shunts the new word down the page on its way out.
                 ZStack(alignment: .topLeading) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        //if showDate { dateLine(t) }
-
-                        // A picture book's entry leads with its photo. Fit, never fill:
-                        // a crop would behead the giraffe and lose the lighthouse's lamp.
-                        if let photo = word.image.flatMap(Self.photo), !locked {
-                            photo
-                                .resizable()
-                                .scaledToFit()
-                                .clipShape(RoundedRectangle(cornerRadius: t.radius(10)))
-                                .frame(maxWidth: isPhone ? .infinity : 480, maxHeight: isPhone ? 260 : 320,
-                                       alignment: .leading)
-                                .padding(.bottom, 26)
-                                .accessibilityLabel("Photo of \(word.term)")
-                        }
-
-                        HStack(alignment: .lastTextBaseline, spacing: isPhone ? 10 : 16) {
-                            Text(word.term)
-                                .font(doodle.face(isPhone ? 46 : 64))
-                                .tracking(doodle.tracking(isPhone ? 46 : 64))
-                                .foregroundStyle(t.ink)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.4)
-                            // A sound book's entry IS the sound: the recording sits right
-                            // beside its name. Pronounce, up in the header, still says the word.
-                            if let sound = word.sound, !locked {
-                                Button {
-                                    speaker.stopSpeaking(at: .immediate)
-                                    clip?.stop()   // a second click restarts, never layers
-                                    clip = Bundle.main.url(forResource: sound, withExtension: "m4a")
-                                        .flatMap { try? AVAudioPlayer(contentsOf: $0) }
-                                    clip?.play()
-                                } label: {
-                                    Image(systemName: "play.fill")
-                                        .font(.system(size: 19, weight: .semibold))
-                                        .foregroundStyle(t.background)
-                                        .offset(x: 2)   // a triangle's weight sits left of its box
-                                        .frame(width: 46, height: 46)
-                                        .background(t.accent, in: Circle())
-                                        .contentShape(Circle())
-                                }
-                                .buttonStyle(.plain)
-                                // Bottom on the headword's baseline, so it stands as tall as its
-                                // ascenders. Left alone, the glyph's own baseline would sink it.
-                                .alignmentGuide(.lastTextBaseline) { $0[.bottom] }
-                                .help("Play the \(word.term)")
-                                .accessibilityLabel("Play the sound: \(word.term)")
-                            }
-                            Text(word.partOfSpeech)
-                                .font(doodle.face(16).italic())
-                                .foregroundStyle(t.muted)
-                        }
-
-                        if locked {
-                            // A locked shelf's word: the headword is the teaser, the rest is Premium's.
-                            PremiumBar(book: .named(shelfID))
-                                .padding(.top, 26)
-                        } else {
-                            if showHindi, !word.hindi.isEmpty {
-                                Text(word.hindi)
-                                    .font(.system(size: isPhone ? 20 : 25))
-                                    .foregroundStyle(t.ink.opacity(0.5))
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .padding(.leading, 18)
-                                    .overlay(alignment: .leading) {
-                                        Rectangle().fill(t.rule).frame(width: 2)
-                                    }
-                                    .padding(.top, 26)
-                            }
-
-                            Text(word.definition)
-                                .font(doodle.face(isPhone ? 19 : 22))
-                                .foregroundStyle(t.definition)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .padding(.top, 26)
-
-                            if showExample { footer(t) }
-
-                            // No fade on the box: inserted with one while the launch build
-                            // ran, it stuck at zero opacity — the box missing until the word
-                            // changed. A pop is the price.
-                            relatedBox(related, t)
-                                .id("vein")
-                        }
-                    }
-                    .frame(maxWidth: 720, alignment: .leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    // A desk page has margins; a phone has a gutter.
-                    .padding(.horizontal, isPhone ? 20 : 56)
-                    .padding(.vertical, isPhone ? 20 : 44)
-                    // A day step swaps the word out from under a view that never
-                    // moves; keyed on the term it cross-dissolves instead of cutting.
-                    .id(word.term)
-                    .transition(.opacity)
+                    entry(t, related: related)
+                        // A day step swaps the word out from under a view that never
+                        // moves; keyed on the term it cross-dissolves instead of cutting.
+                        .id(word.term)
+                        .transition(.opacity)
                 }
                 .onChange(of: word.term) { showRelated = false }
             }
@@ -204,6 +224,18 @@ struct WordDetail: View {
                 if showRelated { withAnimation { proxy.scrollTo("vein", anchor: .bottom) } }
             }
         }
+    }
+
+
+    /// One screen of the phone feed. Nothing here scrolls, on purpose: a scroll view
+    /// inside the feed's paging scroll view eats the drag, and the page stops tracking
+    /// the finger — which is the whole point of the feed. It also records nothing,
+    /// since a lazy stack builds a card a page before you reach it: Home logs the word
+    /// that is actually showing.
+    private var cardPage: some View {
+        entry(Theme.of(scheme, doodle), related: [])
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .clipped()
     }
 
 //    private func dateLine(_ t: Theme) -> some View {
@@ -385,6 +417,7 @@ struct WordDetail: View {
                 Text("\u{201C}\(word.example)\u{201D}")
                     .font(doodle.face(isPhone ? 17 : 20).italic())
                     .foregroundStyle(t.example)
+                    .lineLimit(card ? 3 : nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

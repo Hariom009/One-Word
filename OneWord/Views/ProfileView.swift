@@ -108,6 +108,7 @@ struct ProfileView: View {
         #if os(iOS)
         .manageSubscriptionsSheet(isPresented: $managing)
         #endif
+        .environment(\.paneGlow, false)
     }
 
     /// The plans: their own window on the Mac, a sheet on iPhone and iPad.

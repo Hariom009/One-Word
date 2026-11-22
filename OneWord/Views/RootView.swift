@@ -45,6 +45,11 @@ enum Pane: Hashable, Identifiable {
         }
     }
 
+    /// Midnight's band. Today's word and the plans are the two panes painted with
+    /// it; the lists, the archive, Practice, Profile and Settings are flat. Only
+    /// the sidebar asks — a pane sets its own with `\.paneGlow`.
+    var takesBand: Bool { self == .home || self == .premium }
+
     /// What the pane's icon MEANS. The theme picks the drawing — an SF Symbol or
     /// a doodle — so this table names neither.
     var glyph: Glyph {
@@ -271,7 +276,12 @@ struct RootView: View {
         // meets the pane's copy across the divider and the window reads as one surface.
         // Light and Dark keep the material.
         .scrollContentBackground(doodle.appearance.paintsPalette ? .hidden : .automatic)
-        .background { if doodle.appearance.paintsPalette { PaneGround(t: t) } }
+        // Banded only when the pane beside it is, so the two meet across the divider.
+        .background {
+            if doodle.appearance.paintsPalette {
+                PaneGround(t: t).environment(\.paneGlow, pane.takesBand)
+            }
+        }
         .sheet(isPresented: $writing) { FeedbackView(theme: t, model: feedback) }
         // macOS 27 honours the column's max but lets the divider drag past its min —
         // down to 140pt, where "Search" wraps. The content's own min width holds it.

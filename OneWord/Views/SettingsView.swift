@@ -254,6 +254,7 @@ struct SettingsView: View {
         // `t`, not the sheet's own scheme read: a sheet is its own window, so it
         // is handed the theme this pane is painted with.
         .sheet(isPresented: $writing) { FeedbackView(theme: t, model: feedback) }
+        .environment(\.paneGlow, false)
     }
 
     /// Hands a pre-addressed draft to whatever the mail client is. The opener reports
