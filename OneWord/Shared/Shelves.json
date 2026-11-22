@@ -1,0 +1,16 @@
+{
+  "note": "Which dictionaries this build shows. true: on the shelf, in Search, on the paywall and the widget. false: hidden, though still bundled. Everyday English (words) always shows, whatever it says here: a hidden pick falls back to it. Add a key when a new <id>.json ships.",
+  "shelves": {
+    "words": true,
+    "emotions": true,
+    "philosophy": true,
+    "startup": true,
+    "idioms": true,
+    "pets": true,
+    "sanskrit": true,
+    "pictures": true,
+    "classical": false,
+    "urdu": false,
+    "german": false
+  }
+}

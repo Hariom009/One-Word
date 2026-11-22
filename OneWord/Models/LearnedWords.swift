@@ -87,7 +87,8 @@ enum LearnedWords {
     /// one or two lists rather than all ten.
     static var log: [LearnedWord] {
         // A shelf that has since been removed would fatalError in WordProvider.
-        let shelves = Set(Wordbook.all.map(\.id))
+        // The catalogue, not just the visible shelves: words already read stay in the log.
+        let shelves = Set(Wordbook.catalogue.map(\.id))
         return all
             .filter { shelves.contains($0.key) }
             .flatMap { id, terms in

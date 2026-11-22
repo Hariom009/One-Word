@@ -38,7 +38,9 @@ enum WidgetDictionary: String, AppEnum {
     /// Resolved through Premium: this is the widget's only dictionary read, so the one
     /// gate here covers both the Edit-menu pick and Follow App Settings.
     var resource: String {
-        let id = Premium.resolve(self == .followApp ? AppGroup.dictionaryID : rawValue)
+        let picked = Premium.resolve(self == .followApp ? AppGroup.dictionaryID : rawValue)
+        // A shelf this build hides (Shelves.json) shows Everyday English too.
+        let id = picked == SavedWords.resource ? picked : Shelves.resolve(picked)
         // App-only books: Follow App Settings shows Everyday English while one is the app's pick.
         return id == "pets" || id == "pictures" ? "words" : id
     }

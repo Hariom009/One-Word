@@ -2,8 +2,8 @@
 //  Wordbook.swift
 //  OneWord
 //
-//  A selectable dictionary (word set). One today; more later — add an entry here
-//  plus its bundled `<id>.json` and it shows up in the picker. Named `Wordbook`
+//  A selectable dictionary (word set). Add an entry to `catalogue` plus its bundled
+//  `<id>.json` and a `true` for it in Shelves.json, and it shows up in the picker. Named `Wordbook`
 //  to avoid clashing with Swift's `Dictionary`.
 //  ponytail: covers are the only colored surface — the reading UI stays monochrome.
 //  `cover` is the cloth colour sampled off each painted cover; `isLight` picks the lettering.
@@ -51,13 +51,19 @@ struct Wordbook: Identifiable, Hashable {
         name.hasPrefix("Dictionary of ") ? String(name.dropFirst(14)) : name
     }
 
-    /// Every dictionary the app offers. Grow this as new word sets are added.
-    // v1 ships eight shelves; classical, urdu and german stay defined (and bundled) for the next release.
-    static let all: [Wordbook] = [everydayEnglish, emotions, philosophy, startup, idioms, pets, sanskrit, pictures, saved]
+    /// Every dictionary bundled in this build, shown or not, in shelf order. Grow this as
+    /// new word sets are added (and give each a key in Shelves.json).
+    static let catalogue: [Wordbook] = [everydayEnglish, emotions, philosophy, startup, idioms, pets, sanskrit, pictures,
+                                        classical, urdu, german, saved]
 
-    /// Resolve a stored id back to a Wordbook (falls back to the default).
+    /// Every dictionary the reader sees: the catalogue minus the ones Shelves.json switches
+    /// off for this release. Bookmarks are the reader's own, so they always show.
+    static let all: [Wordbook] = catalogue.filter { $0 == saved || Shelves.isVisible($0.id) }
+
+    /// Resolve a stored id back to a Wordbook (falls back to the default). Looks in the whole
+    /// catalogue, so a word logged on a since-hidden shelf still names its own book.
     static func named(_ id: String) -> Wordbook {
-        all.first { $0.id == id } ?? everydayEnglish
+        catalogue.first { $0.id == id } ?? everydayEnglish
     }
 
     /// The currently selected dictionary, read straight from the App Group. View

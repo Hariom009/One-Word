@@ -94,6 +94,23 @@ enum Check {
         check(Premium.savings(yearly: d("180"), monthly: d("15")) == nil, "no saving, no label")
         check(Premium.savings(yearly: d("100"), monthly: d("0")) == nil, "a zero monthly price can't divide")
 
+        print("\nshelves (Shelves.json)")
+        let args = CommandLine.arguments
+        let real = Shelves.load(URL(fileURLWithPath: args[1]))
+        check(shipped.allSatisfy { real.contains($0) }, "the release config shows every v1 shelf")
+        check(premium.allSatisfy { !real.contains($0) }, "and hides the held-back ones")
+        let keys = (try? JSONSerialization.jsonObject(with: Data(contentsOf: URL(fileURLWithPath: args[1])))
+                    as? [String: Any])?["shelves"] as? [String: Bool] ?? [:]
+        check(keys.keys.allSatisfy { FileManager.default.fileExists(atPath: "\(args[2])/\($0).json") },
+              "every shelf in the config has a bundled <id>.json")
+        let parse = { (s: String) in Shelves.parse(Data(s.utf8)) }
+        check(parse(#"{"shelves":{"emotions":false,"idioms":true}}"#) == ["words", "idioms"], "false hides, true shows")
+        check(parse(#"{"shelves":{"words":false}}"#).contains("words"), "Everyday English shows even when switched off")
+        check(parse("not json") == ["words"], "an unreadable config shows Everyday English alone")
+        check(Shelves.load(nil) == ["words"], "so does a missing one")
+        check(Shelves.resolve("emotions") == "words", "a hidden pick resolves to Everyday English")
+        check(Shelves.resolve("words") == "words", "the fallback resolves to itself")
+
         AppGroup.defaults.removePersistentDomain(forName: AppGroup.id)
         print("\nall checks passed")
     }
@@ -105,7 +122,9 @@ SWIFT
 swiftc -O -default-isolation MainActor -o "$OUT/check" \
     "$ROOT/OneWord/Shared/Word.swift" "$ROOT/OneWord/Shared/WordProvider.swift" \
     "$ROOT/OneWord/Shared/SavedWords.swift" "$ROOT/OneWord/Shared/WordSelectionStore.swift" \
-    "$ROOT/OneWord/Shared/Premium.swift" \
+    "$ROOT/OneWord/Shared/Premium.swift" "$ROOT/OneWord/Shared/Shelves.swift" \
     "$OUT/Shim.swift" "$OUT/PremiumCheck.swift"
 
-"$OUT/check"
+# The release config and the folder its <id>.json books live in. The check binary has no
+# bundle, so Shelves.visible itself reads as "Everyday English alone", the safe default.
+"$OUT/check" "$ROOT/OneWord/Shared/Shelves.json" "$ROOT/OneWord/Shared"

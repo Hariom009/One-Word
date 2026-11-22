@@ -51,6 +51,13 @@ struct OneWordApp: App {
         }
         #endif
         if Features.accounts { Self.configureFirebase() }
+        // A pick on a shelf this release hides (Shelves.json) goes back to Everyday English,
+        // offset and pin with it, the way losing Premium walks a locked pick home.
+        let picked = AppGroup.dictionaryID
+        if picked != SavedWords.resource, Shelves.resolve(picked) != picked {
+            AppGroup.defaults.set(Shelves.fallback, forKey: AppGroup.dictionaryKey)
+            WordSelectionStore.reset()
+        }
         CloudSync.start()
         #if os(iOS)
         // The default category, .soloAmbient, stops the user's music the moment the shelf

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E1F0A11C0FFEE0000000002 /* Shelves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F0A11C0FFEE0000000001 /* Shelves.swift */; };
+		5E1F0A11C0FFEE0000000004 /* Shelves.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E1F0A11C0FFEE0000000003 /* Shelves.json */; };
 		09D61080727D9856F6A3588B /* WordWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E911C1375108796596E7A0B /* WordWidget.swift */; };
 		0A1F0C5E7D2B4E9A8C3D6F01 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0A1F0C5E7D2B4E9A8C3D6F00 /* PrivacyInfo.xcprivacy */; };
 		0BEA103E6CDE9885B0342894 /* pets.json in Resources */ = {isa = PBXBuildFile; fileRef = 566C433B829A765BEBF251DB /* pets.json */; };
@@ -61,6 +63,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5E1F0A11C0FFEE0000000001 /* Shelves.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Shelves.swift; path = OneWord/Shared/Shelves.swift; sourceTree = "<group>"; };
+		5E1F0A11C0FFEE0000000003 /* Shelves.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = Shelves.json; path = OneWord/Shared/Shelves.json; sourceTree = "<group>"; };
 		01BF4AF016573226ACF62597 /* urdu.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = urdu.json; path = OneWord/Shared/urdu.json; sourceTree = "<group>"; };
 		081C7561D3D5DCF0D2323A5A /* german.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = german.json; path = OneWord/Shared/german.json; sourceTree = "<group>"; };
 		0A1F0C5E7D2B4E9A8C3D6F00 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = OneWordWidget/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 				566C433B829A765BEBF251DB /* pets.json */,
 				5044C0F8D4B946DBA6268E90 /* sanskrit.json */,
 				B2139C626E6D2A9B6EC0D8A2 /* SavedWords.swift */,
+				5E1F0A11C0FFEE0000000001 /* Shelves.swift */,
+				5E1F0A11C0FFEE0000000003 /* Shelves.json */,
 			);
 			name = SharedRefs;
 			sourceTree = "<group>";
@@ -288,6 +294,7 @@
 				0A1F0C5E7D2B4E9A8C3D6F01 /* PrivacyInfo.xcprivacy in Resources */,
 				0BEA103E6CDE9885B0342894 /* pets.json in Resources */,
 				FD44A459DC5C46A991046DA5 /* sanskrit.json in Resources */,
+				5E1F0A11C0FFEE0000000004 /* Shelves.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +324,7 @@
 				DE9579143936E10B5687ADC9 /* Theme.swift in Sources */,
 				C5AB0CCFF565F10B96E1CA8F /* AppGroup.swift in Sources */,
 				DA0761F51201AE66FDF45E1F /* SavedWords.swift in Sources */,
+				5E1F0A11C0FFEE0000000002 /* Shelves.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
