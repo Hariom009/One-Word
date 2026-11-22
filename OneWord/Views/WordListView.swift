@@ -52,6 +52,13 @@ struct WordListView: View {
     /// The doodle theme's hand, for the display face. `.face()` hands back the
     /// editorial serif untouched when the handwriting switch is off.
     @Environment(\.doodle) private var doodle
+    /// ⌘K from the sidebar should land in the field, so only Search takes focus;
+    /// Bookmarks waits to be clicked.
+    private var searchField: some View {
+        HeaderSearchField(prompt: everywhere ? "Search every dictionary" : "Search \(model.count) words",
+                          text: $query, focusOnAppear: everywhere)
+    }
+
     var body: some View {
         let t = Theme.of(scheme, doodle)
         // Bookmarks filters its few rows in place; Search is answered off main.
@@ -77,8 +84,8 @@ struct WordListView: View {
                         }
                         .buttonStyle(.plain)
                     }
-                        // Clear, so the pane's ground — Midnight's glow included —
-                        // shows through the rows instead of stopping at them.
+                        // Clear, so the pane's ground shows through the rows
+                        // instead of stopping at them.
                         .listRowBackground(Color.clear)
                         .listRowSeparatorTint(t.hairline)
                 }
@@ -89,12 +96,13 @@ struct WordListView: View {
             }
         }
         .paneBackground(t)
-        // The field rides in the header strip — no row of its own above the list,
-        // which a Bookmarks pane holding three words never needed.
+        // The field rides in the header strip on the Mac; on a phone the centred title
+        // leaves no room, so it takes the row under the bar.
         // A bundled book's list is only ever pushed, from the shelf; Bookmarks and Search are panes.
         .paneHeader(wordbook?.shortName ?? "Search", back: wordbook != nil && wordbook != .saved,
                     ribbon: isPhone && wordbook?.id == SavedWords.resource,
-                    fade: isPhone && !results.isEmpty ? fade : 0) {
+                    fade: isPhone && !results.isEmpty ? fade : 0,
+                    below: isPhone ? AnyView(searchField) : nil) {
             // How many you've kept. Only Bookmarks — every other pane's total is
             // already in the search prompt, and it never changes while you look at it.
             // A phone has no room for it; the ribbon leads the title there instead.
@@ -110,10 +118,7 @@ struct WordListView: View {
                 .help("\(model.count) bookmarked words")
                 .accessibilityLabel("\(model.count) bookmarked words")
             }
-            // ⌘K from the sidebar should land in the field, so only Search takes
-            // focus; Bookmarks waits to be clicked.
-            HeaderSearchField(prompt: everywhere ? "Search every dictionary" : "Search \(model.count) words",
-                              text: $query, focusOnAppear: everywhere)
+            if !isPhone { searchField }
         }
         // Bookmarks isn't a bundled file — a catch or a bookmark while this pane is
         // open changes it.
@@ -129,6 +134,7 @@ struct WordListView: View {
             found = hits
         }
         .task { if everywhere { total = await WordListViewModel.everywhereCount() } }
+        .environment(\.paneGlow, false)
         .sheet(item: $opened) { hit in
             // The sheet's own stack, so a related word can still push within it.
             NavigationStack {

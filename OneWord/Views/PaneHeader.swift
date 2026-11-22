@@ -54,6 +54,7 @@ extension View {
     func paneHeader<Trailing: View>(_ title: String? = nil, back: Bool = false, ribbon: Bool = false,
                                     bare: Bool = false, onBack: (() -> Void)? = nil, fade: CGFloat = 0,
                                     titleAction: (() -> Void)? = nil, spark: Bool = false, backless: Bool = false,
+                                    below: AnyView? = nil,
                                     @ViewBuilder trailing: () -> Trailing) -> some View {
         let pane = safeAreaInset(edge: .top, spacing: 0) {
             // Scrolled down on a phone the strip blurs away; its space stays, so the
@@ -61,7 +62,7 @@ extension View {
             // `fade` follows the finger (0 at the top, 1 a header's height down), so
             // there's no timed animation to fight the scroll.
             PaneHeader(title: title, back: back, ribbon: ribbon, bare: bare, onBack: onBack, titleAction: titleAction,
-                       spark: spark, backless: backless, trailing: trailing())
+                       spark: spark, backless: backless, below: below, trailing: trailing())
                 .blur(radius: fade * 12)
                 .opacity(1 - fade)
                 .scaleEffect(1 - fade * 0.04, anchor: .top)
@@ -125,6 +126,8 @@ struct PaneHeader<Trailing: View>: View {
     var spark = false
     /// A sheet's root strip: no Back at all, even where a presented phone would add one.
     var backless = false
+    /// Phone: a row under the strip — Search's field, which no longer fits beside the title.
+    var below: AnyView? = nil
     let trailing: Trailing
     @Environment(\.colorScheme) private var scheme
     @Environment(\.doodle) private var doodle
@@ -137,7 +140,7 @@ struct PaneHeader<Trailing: View>: View {
     var body: some View {
         let t = Theme.of(scheme, doodle)
         let folded = sidebar.wrappedValue == .detailOnly
-        HStack(spacing: 6) {
+        let strip = HStack(spacing: 6) {
             // No sidebar to fold on a phone: the tab bar is the sidebar.
             if !isPhone && !bare {
                 Button {
@@ -156,43 +159,15 @@ struct PaneHeader<Trailing: View>: View {
                     .keyboardShortcut(bare ? .cancelAction : nil)
             }
 
-            if isPhone {
-                if ribbon { BookmarkRibbon(size: 18) }
-                // One name per strip. The tab bar already says which section this
-                // is, so the pane's title takes the wordmark's place and its face;
-                // a pane with no title of its own keeps the app's name. A bare
-                // strip has neither.
-                if !bare {
-                    let name = Text(title ?? "One Word")
-                        .font(doodle.face(20))
-                        .tracking(doodle.tracking(20))
-                        .foregroundStyle(t.ink)
-                        .lineLimit(1)
-                    if let titleAction {
-                        Button(action: titleAction) {
-                            name.contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        .padding(.leading, showsBack ? 2 : 0)
-                    } else {
-                        name.padding(.leading, showsBack ? 2 : 0)
-                    }
-                    if spark {
-                        Image(systemName: "sparkle")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Theme.skyMark(scheme))
-                            .accessibilityLabel("Premium")
-                    }
-                }
-            } else {
-                // No wordmark: the window is the app, so the strip names only the pane.
-                if let title {
-                    Text(title)
-                        .font(.system(size: 13))
-                        .foregroundStyle(t.muted)
-                        .lineLimit(1)
-                        .padding(.leading, bare ? 0 : 8)
-                }
+            // The Mac names the pane as a window toolbar does: bold, beside the sidebar button.
+            // No wordmark: the window is the app.
+            if !isPhone, let title {
+                Text(title)
+                    .font(.system(size: 15, weight: .semibold))
+                    .tracking(-0.23)
+                    .foregroundStyle(t.ink)
+                    .lineLimit(1)
+                    .padding(.leading, bare ? 0 : 8)
             }
 
             Spacer(minLength: 12)
@@ -204,8 +179,48 @@ struct PaneHeader<Trailing: View>: View {
         .padding(.leading, folded && !isPhone && !bare ? 84 : 16)
         .padding(.trailing, 16)
         .frame(height: 52)
+        // Behind the buttons, so the side buttons keep their taps; the Spacer between
+        // them lets the title's own taps (Home's day picker) through.
+        .background { if isPhone && !bare { phoneTitle(t) } }
         .background { WindowDragArea() }
+
+        VStack(spacing: 0) {
+            strip
+            // A field that won't fit beside a centred title rides under it, on the same ground.
+            if let below {
+                below
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+            }
+        }
         .paneBackground(t)
+    }
+
+    /// iOS's inline title: centred, the system's semibold 17. Clear of the side buttons.
+    private func phoneTitle(_ t: Theme) -> some View {
+        let label = HStack(spacing: 6) {
+            if ribbon { BookmarkRibbon(size: 15) }
+            Text(title ?? "One Word")
+                .font(.system(size: 17, weight: .semibold))
+                .tracking(-0.43)
+                .foregroundStyle(t.ink)
+                .lineLimit(1)
+            if spark {
+                Image(systemName: "sparkle")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Theme.skyMark(scheme))
+                    .accessibilityLabel("Premium")
+            }
+        }
+        return Group {
+            if let titleAction {
+                Button(action: titleAction) { label.contentShape(Rectangle()) }
+                    .buttonStyle(.plain)
+            } else {
+                label
+            }
+        }
+        .padding(.horizontal, 100)
     }
 }
 

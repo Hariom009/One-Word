@@ -81,8 +81,10 @@ struct LearnedListView: View {
             .frame(minWidth: isPhone ? nil : 520, idealWidth: isPhone ? nil : 600, minHeight: 560, idealHeight: 680)
         }
         // Only ever pushed, from Profile.
-        .paneHeader("Learned", back: true) {
-            HeaderSearchField(prompt: "Search \(log.count) words", text: $query)
+        // The field sits beside the title on the Mac, under the centred one on a phone.
+        .paneHeader("Learned", back: true,
+                    below: isPhone ? AnyView(HeaderSearchField(prompt: "Search \(log.count) words", text: $query)) : nil) {
+            if !isPhone { HeaderSearchField(prompt: "Search \(log.count) words", text: $query) }
         }
         .onAppear { log = LearnedWords.log; rebuild() }
         // Reading a word pushed off this very list adds to it, so it has to catch
@@ -92,6 +94,7 @@ struct LearnedListView: View {
             rebuild()
         }
         .onChange(of: query) { _, _ in rebuild() }
+        .environment(\.paneGlow, false)
     }
 
     /// One line of the list. A `Section` header pins itself to the top of a plain
