@@ -26,6 +26,9 @@ struct HomeView: View {
     /// today across midnight rather than freezing on the day it was opened.
     @State private var day: Date?
     @State private var picking = false
+    /// The day the feed was last built around, so returning to the app can tell a new
+    /// day (take its new top) from the same day (leave the scroll where it was).
+    @State private var shownDay = Calendar.current.startOfDay(for: .now)
     /// The end the page is pulled far enough past that letting go brings the next word.
     @State private var armed: Edge?
     /// Where the next word comes in from: the end the page was pulled past.
@@ -128,6 +131,10 @@ struct HomeView: View {
             .onChange(of: day) { show() }
             .onChange(of: scenePhase) { _, phase in
                 guard phase == .active else { return }
+                // Coming back must not yank you out of the days you'd scrolled back into —
+                // the same guard the catch below already uses. A new day is the exception:
+                // the feed has a new top, so take it.
+                guard calendar.startOfDay(for: .now) != shownDay || !model.isPeeking else { return }
                 show()
             }
             // A catch can land while this window is already open and visible.
@@ -173,7 +180,7 @@ struct HomeView: View {
     /// shows the words already passed, in the order they came.
     private func feed(_ t: Theme) -> some View {
         // A picked day stays put, as it did when a pull was the way on: one page, no feed.
-        let slots = day == nil ? Array(model.deck.indices) : [0]
+        let slots = day == nil ? Array(0..<dayCount) : [0]
         // The page height comes from a reader that ignores the safe area, NOT from
         // `containerRelativeFrame`. A scroll container is the screen minus its insets —
         // the header's and the tab bar's — so container-sized pages are about 290pt
@@ -189,7 +196,7 @@ struct HomeView: View {
                             .frame(height: screen.size.height)
                             .id(slot)
                     }
-                    if day == nil && model.deck.count >= model.deckCap {
+                    if day == nil {
                         endPage(t)
                             .frame(height: screen.size.height)
                             .id(Self.endSlot)
@@ -205,25 +212,28 @@ struct HomeView: View {
             .scrollPosition(id: $feedPage)
             .scrollIndicators(.hidden)
             .scrollBounceBehavior(.basedOnSize)
-            .onChange(of: feedPage) { _, slot in
-                guard let slot, slot != Self.endSlot, model.deck.indices.contains(slot) else { return }
+            .onChange(of: feedPage, initial: true) { _, slot in
+                // A picked day is one page showing THAT day; landing would pull today's back.
+                guard day == nil, let slot, slot != Self.endSlot, slot < dayCount else { return }
                 model.land(on: slot)
                 // Logged here, not in the card: a lazy stack builds a card a page before
-                // you reach it, and a word built ahead of you was never read.
-                let shown = model.deck[slot]
-                LearnedWords.record(shown, in: SavedWords.pinned?.term == shown.term
+                // you reach it, and a word built ahead of you was never read. Honest now the
+                // pages are days — every word you can reach WAS your word on the day it names.
+                let shown = model.word
+                LearnedWords.record(shown, in: slot == 0 && SavedWords.pinned?.term == shown.term
                                     ? SavedWords.resource : dictionaryID)
+                // The day before's neighbours get ranked off the main thread now, so opening
+                // its full entry doesn't rank 12k dot products on its first frame.
+                if slot + 1 < dayCount { store.prefetch(model.pageWord(slot + 1), in: dictionaryID) }
             }
-            // The next page's neighbours get ranked off the main thread now, so opening its
-            // full entry doesn't rank 12k dot products on the first frame.
-            .onChange(of: model.deck.count, initial: true) {
-                if let last = model.deck.last { store.prefetch(last, in: dictionaryID) }
-            }
+            // The landing is the feed's only answer to a swipe. `.selection`, not `.success`:
+            // a detent under the thumb, not an achievement.
+            .sensoryFeedback(.selection, trigger: feedPage)
             .sensoryFeedback(.success, trigger: kept)
             .accessibilityElement(children: .contain)
-            .accessibilityAction(named: "Another word") {
+            .accessibilityAction(named: "The day before") {
                 let next = (feedPage ?? 0) + 1
-                if model.deck.indices.contains(next) { withAnimation { feedPage = next } }
+                if next < dayCount { withAnimation { feedPage = next } }
             }
         }
         // On the reader, so `screen.size` is the whole screen and a page covers the
@@ -235,21 +245,25 @@ struct HomeView: View {
     /// keeps it and the way through to its full entry. Only the page you are on counts
     /// as visible — a card built ahead of you holds its clip on the first frame.
     private func card(_ slot: Int, _ t: Theme) -> some View {
-        let w = model.deck[slot]
+        let w = day == nil ? model.pageWord(slot) : model.word
         return WordDetail(word: w, embedded: true, card: true, visible: slot == feedPage,
                           hero: true, onFullEntry: { opened = w })
             .contentShape(Rectangle())
             .onTapGesture(count: 2) { if model.bookmark(w) { kept += 1 } }
     }
 
-    /// The end of the day's feed. One word a day is the whole premise: the feed is a
-    /// short detour from today's word, so it stops and says so rather than running on.
+    /// The foot of the feed: where your days start. One word a day is the whole
+    /// premise, so the scroll ends where you began rather than running on into words
+    /// no day has handed you yet.
     private func endPage(_ t: Theme) -> some View {
-        VStack(spacing: 12) {
-            Text("That's \(model.deckCap) words")
+        let first = date(back: dayCount - 1).formatted(date: .long, time: .omitted)
+        return VStack(spacing: 12) {
+            Text(dayCount > 1 ? "Back to the start" : "Your first word")
                 .font(doodle.face(30)).tracking(doodle.tracking(30))
                 .foregroundStyle(t.ink)
-            Text("Enough for one day. Tomorrow brings a new word of the day, and a fresh set behind it.")
+            Text(dayCount > 1
+                 ? "\(first) was your first word. Every day since is above this one, and tomorrow adds another."
+                 : "You started today. Tomorrow brings your second, and this scroll grows a day at a time.")
                 .font(.system(size: 14))
                 .foregroundStyle(t.muted)
                 .multilineTextAlignment(.center)
@@ -334,25 +348,55 @@ struct HomeView: View {
     /// Today's word through the shared offset and pin; a past day's plain, as History reads it.
     private func show() {
         if let day { model.show(model.wordbook, on: day) } else { model.refresh() }
+        shownDay = calendar.startOfDay(for: .now)
         // The deck was just rebuilt around the word now showing; a stale slot would
         // leave the feed parked on a page that no longer exists.
         feedPage = 0
     }
 
-    /// "Today", or the picked day — "October 3", with the year only once it isn't this one.
+    /// The day your words start: the account's join date, or the first time Home was
+    /// opened when there's no account to read one off. Never later than today.
+    private var joinedDay: Date {
+        // `firstOpened` is stamped in onAppear, which runs AFTER the first body — so zero
+        // here means "this very frame", not 1970. Unguarded it would size the feed at
+        // twenty thousand days before collapsing to one.
+        let stamped = firstOpened > 0 ? Date(timeIntervalSince1970: firstOpened) : .now
+        return calendar.startOfDay(for: min(auth.joined ?? stamped, .now))
+    }
+
+    /// How far the feed runs: today, plus every day back to the one you joined.
+    private var dayCount: Int {
+        max(calendar.dateComponents([.day], from: joinedDay, to: calendar.startOfDay(for: .now)).day ?? 0, 0) + 1
+    }
+
+    /// The day `page` pages down from today.
+    private func date(back page: Int) -> Date {
+        calendar.date(byAdding: .day, value: -max(page, 0), to: .now) ?? .now
+    }
+
+    /// What the strip says the page is: "Today", "Yesterday", the weekday while it's
+    /// still this week, then the date — with the year only once it isn't this one.
+    /// It follows the scroll, so the one thing that changes on every page is the one
+    /// that says which day you're reading. That's why the feed needs no dots or count.
     private var dayTitle: String {
-        guard let day else { return "Today" }
-        return calendar.isDate(day, equalTo: .now, toGranularity: .year)
-            ? day.formatted(.dateTime.month(.wide).day())
-            : day.formatted(.dateTime.month(.wide).day().year())
+        let page = feedPage ?? 0
+        // The foot of the feed keeps the first day's name rather than falling back to today.
+        let shown = day ?? date(back: page == Self.endSlot ? dayCount - 1 : page)
+        if calendar.isDateInToday(shown) { return "Today" }
+        if calendar.isDateInYesterday(shown) { return "Yesterday" }
+        let back = calendar.dateComponents([.day], from: calendar.startOfDay(for: shown),
+                                           to: calendar.startOfDay(for: .now)).day ?? 0
+        if back < 7 { return shown.formatted(.dateTime.weekday(.wide)) }
+        return calendar.isDate(shown, equalTo: .now, toGranularity: .year)
+            ? shown.formatted(.dateTime.month(.wide).day())
+            : shown.formatted(.dateTime.month(.wide).day().year())
     }
 
     /// Phone only: any day from the one you joined up to today. A pick closes it.
     private func dayPicker(_ t: Theme) -> some View {
-        let joined = auth.joined ?? Date(timeIntervalSince1970: firstOpened)
         let selection = Binding(get: { day ?? .now },
                                 set: { day = calendar.isDateInToday($0) ? nil : $0 })
-        let earliest = min(joined, .now)
+        let earliest = joinedDay
         let info = "You can pick any day from \(earliest.formatted(date: .long, time: .omitted)), "
             + "the day you joined One Word, up to today. Your words started the day you did, "
             + "and tomorrow's word isn't out yet."

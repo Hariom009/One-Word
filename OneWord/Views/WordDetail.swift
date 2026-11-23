@@ -215,7 +215,10 @@ struct WordDetail: View {
                 Text(word.definition)
                     .font(doodle.face(hero ? (isPhone ? 17 : 18) : (isPhone ? 19 : 22)))
                     .foregroundStyle(t.definition)
-                    .lineLimit(card ? (hero ? 3 : 6) : nil)
+                    // Six, not three: a feed page that clips the meaning of the word it is
+                    // showing has no business being a full screen. Paid for below — the entry
+                    // starts higher over the hero and "Used as" sits tighter.
+                    .lineLimit(card ? 6 : nil)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, hero ? 12 : 26)
 
@@ -237,12 +240,22 @@ struct WordDetail: View {
         // A desk page has margins; a phone has a gutter.
         .padding(.horizontal, isPhone ? 20 : 56)
         .padding(.vertical, isPhone ? 20 : 44)
-        // The word lands on the hero's fade, a little above its foot.
-        .padding(.top, hero ? Self.heroHeight - (isPhone ? 148 : 154) : 0)
+        // The word lands on the hero's fade, a little above its foot — higher on a feed
+        // card, which has one screen and no scroll to spend, and still well inside the fade.
+        .padding(.top, hero ? Self.heroHeight - (isPhone ? (card ? 196 : 148) : 154) : 0)
         .background(alignment: .top) {
             if hero {
                 HomeHero(word: word, book: .named(shelfID), locked: locked, visible: visible, t: t)
                     .frame(height: Self.heroHeight)
+                    // The picture lags the word as the feed pages, so it reads as ground
+                    // BEHIND the entry rather than glued to it. A quarter of the travel: the
+                    // gap that opens at the hero's foot is the background colour its own
+                    // gradient already ends in, so there's nothing to see through.
+                    // visualEffect, NOT @State off onScrollGeometryChange — this runs per
+                    // frame on the GPU without re-rendering a single card.
+                    .visualEffect { art, proxy in
+                        art.offset(y: card ? -proxy.frame(in: .scrollView).minY * 0.25 : 0)
+                    }
             }
         }
     }
@@ -521,7 +534,7 @@ struct WordDetail: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .entryBlock(t)
+            .entryBlock(t, tight: card)
         } else {
             Label("No example on file", systemImage: "book.closed")
                 .font(.system(size: 11, weight: .semibold))
@@ -642,20 +655,22 @@ private extension View {
     /// `onTap` makes the whole tile a target, padding included — without it only
     /// what's drawn inside answers. Controls inside still win their own clicks.
     @ViewBuilder
-    func entryBlock(_ t: Theme, onTap: (() -> Void)? = nil) -> some View {
+    /// `tight` halves the space above it, for a feed card that has one screen to spend
+    /// and would rather give it to the definition.
+    func entryBlock(_ t: Theme, tight: Bool = false, onTap: (() -> Void)? = nil) -> some View {
         if t.tiles {
             self
                 .padding(.horizontal, 22)
-                .padding(.vertical, 18)
+                .padding(.vertical, tight ? 14 : 18)
                 .background(t.surface, in: RoundedRectangle(cornerRadius: t.radius(10)))
                 .contentShape(RoundedRectangle(cornerRadius: t.radius(10)))
                 .onTapGesture { onTap?() }
-                .padding(.top, 28)
+                .padding(.top, tight ? 16 : 28)
         } else {
             self
-                .padding(.top, 24)
+                .padding(.top, tight ? 14 : 24)
                 .overlay(alignment: .top) { Rectangle().fill(t.hairline).frame(height: 1) }
-                .padding(.top, 34)
+                .padding(.top, tight ? 16 : 34)
         }
     }
 }

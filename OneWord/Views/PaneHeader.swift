@@ -207,6 +207,10 @@ struct PaneHeader<Trailing: View>: View {
                 .tracking(-0.43)
                 .foregroundStyle(t.ink)
                 .lineLimit(1)
+                // Home's strip names the day its feed is on, so this changes with every
+                // page. A cross-fade rather than a cut, short enough not to trail the scroll.
+                .contentTransition(.opacity)
+                .animation(.easeInOut(duration: 0.18), value: title)
             if spark {
                 Image(systemName: "sparkle")
                     .font(.system(size: 12, weight: .semibold))
