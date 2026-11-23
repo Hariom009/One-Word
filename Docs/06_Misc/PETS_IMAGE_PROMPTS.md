@@ -56,6 +56,7 @@ shut and its posture is neutral, the photograph has failed.
 | Minimum size | 1024 × 1365 |
 | Format to save | JPEG or PNG — I downsample to 800px long edge, q72 |
 | File naming | exactly as the table below |
+| Bottom 6% | **discarded on install** — it is where the generator stamps its watermark. Keep nothing there. |
 
 ## 3. The 33 scene lines
 

@@ -12,11 +12,24 @@ them its own way.
 
     python3 -I install_local.py pets ~/Downloads/pets-images "GPT Image"
 """
-import json, os, re, subprocess, sys, datetime
+import json, os, re, subprocess, sys, tempfile, datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 EXTS = (".webp", ".png", ".jpg", ".jpeg", ".heic", ".tif", ".tiff")
+
+# Generators stamp their own mark into the bottom-right corner. Measured on this
+# tool's output: about 25px tall at the very bottom edge of an 800px-high render,
+# so 6% clears it with roughly twice the margin it needs at any source size.
+#
+# Trimming the bottom costs nothing here on purpose: the prompt docs put the subject
+# in the upper two thirds and keep the lower third plain, because the headword prints
+# over it. So this takes the strip the layout was already going to cover.
+#
+# Applied to every generated file, clean or not — a per-image check is a detector that
+# can be wrong, and mine was: a brightness threshold missed the mark on five of seven
+# images whose corner happened to be light, and flagged two that were clean.
+TRIM_BOTTOM = 0.06
 
 def slug(term):
     return re.sub(r"[^a-z0-9]+", "-", term.lower()).strip("-")
@@ -48,14 +61,23 @@ def main():
             continue
         name = f"{book}-{s}"
         dest = os.path.join(out_dir, f"{name}.jpg")
+        src = os.path.join(folder, f)
+        # Crop first, downsample second: trimming after the resize would throw away
+        # detail we had and then crop what is left.
+        cropped = os.path.join(tempfile.gettempdir(), f"{name}-trim.png")
+        subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", src,
+                        "-vf", f"crop=iw:ih*{1 - TRIM_BOTTOM}:0:0", cropped],
+                       check=True, capture_output=True, timeout=180)
         # 800px long edge, q72 — the Picture Book's format, what check_assets enforces.
         subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "72",
-                        "-Z", "800", os.path.join(folder, f), "--out", dest],
+                        "-Z", "800", cropped, "--out", dest],
                        check=True, capture_output=True, timeout=120)
+        os.remove(cropped)
         by_slug[s]["image"] = name
         record[by_slug[s]["term"]] = {"file": f"{name}.jpg", "model": model,
                                       "made": datetime.date.today().isoformat(),
-                                      "source_file": f}
+                                      "source_file": f,
+                                      "trimmed": f"{int(TRIM_BOTTOM*100)}% off the bottom"}
         done += 1
         print(f"  {by_slug[s]['term']:20} {os.path.getsize(dest)/1e3:6.0f} KB  {name}.jpg")
 

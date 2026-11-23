@@ -35,6 +35,17 @@ sh ../check_assets.sh
   (`bark` matched a 1945 newsreel — bark as in ship). `api()` now backs off, and a
   run that had any failure says so and refuses to call its number a measurement.
 
+- **Generators stamp their own watermark.** This one puts a four-pointed sparkle in
+  the bottom-right corner of every render, whatever the prompt says. `install_local.py`
+  trims `TRIM_BOTTOM` (6%) off the bottom of every generated file before downsampling,
+  which clears it with about twice the margin it needs. The strip costs nothing: the
+  prompt docs already keep the subject in the upper two thirds because the headword
+  prints over the bottom.
+- **Do not detect the watermark per image.** A brightness threshold looked like the
+  careful option and was wrong in both directions — it missed the mark on five of seven
+  images whose corner happened to be light, and flagged two that were clean. Trimming
+  unconditionally is both simpler and correct.
+
 ## Knobs
 
 - `FREE_CATEGORIES` — Commons licence categories searched. Adding one costs a round

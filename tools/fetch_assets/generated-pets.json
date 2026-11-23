@@ -21,42 +21,49 @@
   "file": "pets-caterwaul.jpg",
   "model": "generated",
   "made": "2026-11-23",
-  "source_file": "pets-caterwaul.png"
+  "source_file": "pets-caterwaul.png",
+  "trimmed": "6% off the bottom"
  },
  "chattering": {
   "file": "pets-chattering.jpg",
   "model": "generated",
   "made": "2026-11-23",
-  "source_file": "pets-chattering.png"
+  "source_file": "pets-chattering.png",
+  "trimmed": "6% off the bottom"
  },
  "demand bark": {
   "file": "pets-demand-bark.jpg",
   "model": "generated",
   "made": "2026-11-23",
-  "source_file": "pets-demand-bark.png"
+  "source_file": "pets-demand-bark.png",
+  "trimmed": "6% off the bottom"
  },
  "growl": {
   "file": "pets-growl.jpg",
   "model": "generated",
   "made": "2026-11-23",
-  "source_file": "pets-growl.png"
+  "source_file": "pets-growl.png",
+  "trimmed": "6% off the bottom"
  },
  "grumble": {
   "file": "pets-grumble.jpg",
   "model": "generated",
   "made": "2026-11-23",
-  "source_file": "pets-grumble.png"
+  "source_file": "pets-grumble.png",
+  "trimmed": "6% off the bottom"
  },
  "guarding growl": {
   "file": "pets-guarding-growl.jpg",
   "model": "generated",
   "made": "2026-11-23",
-  "source_file": "pets-guarding-growl.png"
+  "source_file": "pets-guarding-growl.png",
+  "trimmed": "6% off the bottom"
  },
  "hiss": {
   "file": "pets-hiss.jpg",
   "model": "generated",
   "made": "2026-11-23",
-  "source_file": "pets-hiss.png"
+  "source_file": "pets-hiss.png",
+  "trimmed": "6% off the bottom"
  }
 }
